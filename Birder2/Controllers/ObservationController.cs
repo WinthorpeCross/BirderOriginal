@@ -38,7 +38,7 @@ namespace Birder2.Controllers
             var user = await _userAccessor.GetUser();
             if (user == null)
             {
-                return NotFound("Not logged in..."); //ToDo: return what?
+                return NotFound("Not logged in..."); //ToDo: return what?  return to login front page
             }
             return View(await _observationRepository.MyObservationsList(user)); // --> do not get user twice! await _userAccessor.GetUser()));
         }
@@ -52,15 +52,13 @@ namespace Birder2.Controllers
                 return NotFound();
             }
 
-            var observation = await _context.Observations
-                .Include(o => o.Bird)
-                .SingleOrDefaultAsync(m => m.ObservationId == id);
+            var observation = await _observationRepository.GetObservationDetails(id);
+
             if (observation == null)
             {
                 return NotFound();
             }
-
-            return View(observation);
+            return View(observation);  //ToDo: if user == logged in user, then allow edit/delete etc.  Might need a viewmodel...
         }
 
         // GET: Observation/Create

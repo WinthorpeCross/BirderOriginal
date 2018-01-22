@@ -30,5 +30,12 @@ namespace Birder2.Services
                     .ToListAsync();
             return await observations;
         }
+
+        public async Task<Observation> GetObservationDetails(int? id)
+        {
+            return await _dbContext.Observations
+                .Include(b => b.Bird)
+                .SingleOrDefaultAsync(m => m.ObservationId == id);
+        }
     }
 }
