@@ -32,6 +32,7 @@ namespace Birder2.Controllers
         }
 
         // GET: Observation
+        //  **** This is My Observations.  Need to overload to request my + mates' observations
         public async Task<IActionResult> Index()
         {
             var user = await _userAccessor.GetUser();
@@ -41,6 +42,7 @@ namespace Birder2.Controllers
             }
             return View(await _observationRepository.MyObservationsList(user)); // --> do not get user twice! await _userAccessor.GetUser()));
         }
+
 
         // GET: Observation/Details/5
         public async Task<IActionResult> Details(int? id)
