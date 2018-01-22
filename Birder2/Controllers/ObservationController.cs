@@ -38,11 +38,10 @@ namespace Birder2.Controllers
             var user = await _userAccessor.GetUser();
             if (user == null)
             {
-                return NotFound("Not logged in..."); //ToDo: return what?  return to login front page
+                return RedirectToAction("Login", "Account");
             }
             return View(await _observationRepository.MyObservationsList(user)); // --> do not get user twice! await _userAccessor.GetUser()));
         }
-
 
         // GET: Observation/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -51,7 +50,6 @@ namespace Birder2.Controllers
             {
                 return NotFound();
             }
-
             var observation = await _observationRepository.GetObservationDetails(id);
 
             if (observation == null)
@@ -62,9 +60,10 @@ namespace Birder2.Controllers
         }
 
         // GET: Observation/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["BirdId"] = new SelectList(_context.Birds, "BirdId", "EnglishName");
+            var birds = await _observationRepository.AllBirdsList();
+            ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName");
             return View();
         }
 
@@ -82,13 +81,15 @@ namespace Birder2.Controllers
 
             if (ModelState.IsValid)
             {
-                observation.DateCreated = _systemClock.Now; //DateTime.Now;
+                observation.DateCreated = _systemClock.Now;
                 _context.Add(observation);
 
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BirdId"] = new SelectList(_context.Birds, "BirdId", "EnglishName", observation.BirdId);
+            
+            var birds = await _observationRepository.AllBirdsList();
+            ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName", observation.BirdId);
             return View(observation);
         }
 
