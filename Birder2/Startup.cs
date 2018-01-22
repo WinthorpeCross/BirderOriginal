@@ -36,6 +36,8 @@ namespace Birder2
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
+            services.AddTransient<IApplicationUserAccessor, ApplicationUserAccessor>();
+
             services.AddMvc();
         }
 
