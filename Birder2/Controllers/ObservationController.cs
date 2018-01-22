@@ -46,6 +46,7 @@ namespace Birder2.Controllers
         // GET: Observation/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            //ToDo: check for logged in user here?
             if (id == null)
             {
                 return NotFound();
@@ -75,13 +76,16 @@ namespace Birder2.Controllers
         public async Task<IActionResult> Create([Bind("ObservationId,ObservationDateTime,Location,Note,BirdId")] Observation observation)
         {
             var user = await _userAccessor.GetUser();
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             observation.ApplicationUser = user;
             
-            //if user == null....
-
             if (ModelState.IsValid)
             {
                 observation.DateCreated = _systemClock.Now;
+                observation.LastUpdateDate = _systemClock.Now;
                 _context.Add(observation);
 
                 await _context.SaveChangesAsync();

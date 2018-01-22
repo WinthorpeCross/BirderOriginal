@@ -11,9 +11,10 @@ using System;
 namespace Birder2.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180122175136_Update_Observation")]
+    partial class Update_Observation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,7 +97,8 @@ namespace Birder2.Data.Migrations
                     b.Property<int>("ObservationId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ApplicationUserId");
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired();
 
                     b.Property<int>("BirdId");
 
@@ -231,7 +233,8 @@ namespace Birder2.Data.Migrations
                 {
                     b.HasOne("Birder2.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Observations")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Birder2.Models.Bird", "Bird")
                         .WithMany("Observations")

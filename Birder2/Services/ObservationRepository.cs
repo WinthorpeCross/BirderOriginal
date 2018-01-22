@@ -21,12 +21,13 @@ namespace Birder2.Services
             return await _dbContext.Birds.ToListAsync();
         }
 
-        public async Task<IEnumerable<Observation>> MyObservationsList(ApplicationUser user) // (string userId)
+        public async Task<IEnumerable<Observation>> MyObservationsList(ApplicationUser user)
         {
             var observations = _dbContext.Observations
                     .Where(u => u.ApplicationUser == user)
                     .Include(b => b.Bird)
-                    .AsNoTracking() //ToDo: what is this?
+                    .OrderByDescending(d => d.ObservationDateTime)
+                    .AsNoTracking()
                     .ToListAsync();
             return await observations;
         }

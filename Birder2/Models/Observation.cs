@@ -21,6 +21,7 @@ namespace Birder2.Models
 
         [Required]
         [Display(Name = "Date and time")]
+        [DisplayFormat(DataFormatString = "{0:dddd, dd MMMM yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime ObservationDateTime { get; set; }
 
         // public double Latitude { get; set; }
@@ -29,11 +30,14 @@ namespace Birder2.Models
         public string Note { get; set; }
 
         public DateTime DateCreated { get; set; }
+        public DateTime LastUpdateDate { get; set; }
         // Photo
 
 
         //Foreign keys
+        //[Required]
         public int BirdId { get; set; }
+        //[Required]
         public string ApplicationUserId { get; set; }
 
         //Navigation properties
