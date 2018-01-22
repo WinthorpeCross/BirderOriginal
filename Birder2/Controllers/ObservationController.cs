@@ -84,14 +84,22 @@ namespace Birder2.Controllers
             
             if (ModelState.IsValid)
             {
-                observation.DateCreated = _systemClock.Now;
-                observation.LastUpdateDate = _systemClock.Now;
-                _context.Add(observation);
+                try
+                {
+                    observation.DateCreated = _systemClock.Now;
+                    observation.LastUpdateDate = _systemClock.Now;
 
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                    await _observationRepository.AddObservation(observation);
+                    return RedirectToAction(nameof(Index));
+                    //_context.Add(observation);
+                    //await _context.SaveChangesAsync();
+                }
+                catch
+                {
+                    //ToDo: Logging / return user to create view, like below?
+                    return NotFound("could not add the observation");
+                }
             }
-            
             var birds = await _observationRepository.AllBirdsList();
             ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName", observation.BirdId);
             return View(observation);

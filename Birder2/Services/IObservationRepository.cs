@@ -11,5 +11,6 @@ namespace Birder2.Services
         Task<IEnumerable<Bird>> AllBirdsList();
         Task<IEnumerable<Observation>> MyObservationsList(ApplicationUser user);
         Task<Observation> GetObservationDetails(int? id);
+        Task<Observation> AddObservation(Observation observation);
     }
 }
