@@ -96,11 +96,11 @@ namespace Birder2.Data.Migrations
                     b.Property<int>("ObservationId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ApplicationUserId");
-
-                    b.Property<string>("ApplicationUserId1");
+                    b.Property<string>("ApplicationUserId");
 
                     b.Property<int>("BirdId");
+
+                    b.Property<DateTime>("DateCreated");
 
                     b.Property<string>("Location");
 
@@ -110,7 +110,7 @@ namespace Birder2.Data.Migrations
 
                     b.HasKey("ObservationId");
 
-                    b.HasIndex("ApplicationUserId1");
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("BirdId");
 
@@ -229,7 +229,7 @@ namespace Birder2.Data.Migrations
                 {
                     b.HasOne("Birder2.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Observations")
-                        .HasForeignKey("ApplicationUserId1");
+                        .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("Birder2.Models.Bird", "Bird")
                         .WithMany("Observations")

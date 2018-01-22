@@ -35,8 +35,12 @@ namespace Birder2
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddSingleton<IMachineClockDateTime, MachineClockDateTime>();
 
             services.AddTransient<IApplicationUserAccessor, ApplicationUserAccessor>();
+
+            //services.AddScoped<IBirdRepository, BirdRepository>();
+            services.AddScoped<IObservationRepository, ObservationRepository>();
 
             services.AddMvc();
         }

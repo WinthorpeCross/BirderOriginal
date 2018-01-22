@@ -5,6 +5,13 @@
     <UserSecretsId>aspnet-Birder2-93D4229D-DE28-4026-BE48-156ABE712AEC</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20180122002719_Initial.cs" />
+    <Compile Remove="Data\Migrations\20180122002719_Initial.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180122023629_start again.cs" />
+    <Compile Remove="Data\Migrations\20180122023629_start again.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />

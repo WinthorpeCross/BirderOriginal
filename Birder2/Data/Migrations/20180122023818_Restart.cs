@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Birder2.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Restart : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,9 +43,9 @@ namespace Birder2.Data.Migrations
                 {
                     ObservationId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ApplicationUserId = table.Column<int>(nullable: false),
-                    ApplicationUserId1 = table.Column<string>(nullable: true),
+                    ApplicationUserId = table.Column<string>(nullable: true),
                     BirdId = table.Column<int>(nullable: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     Location = table.Column<string>(nullable: true),
                     Note = table.Column<string>(nullable: true),
                     ObservationDateTime = table.Column<DateTime>(nullable: false)
@@ -54,8 +54,8 @@ namespace Birder2.Data.Migrations
                 {
                     table.PrimaryKey("PK_Observation", x => x.ObservationId);
                     table.ForeignKey(
-                        name: "FK_Observation_AspNetUsers_ApplicationUserId1",
-                        column: x => x.ApplicationUserId1,
+                        name: "FK_Observation_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -82,9 +82,9 @@ namespace Birder2.Data.Migrations
                 filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Observation_ApplicationUserId1",
+                name: "IX_Observation_ApplicationUserId",
                 table: "Observation",
-                column: "ApplicationUserId1");
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Observation_BirdId",

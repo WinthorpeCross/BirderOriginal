@@ -28,16 +28,17 @@ namespace Birder2.Models
 
         public string Note { get; set; }
 
+        public DateTime DateCreated { get; set; }
         // Photo
 
 
         //Foreign keys
         public int BirdId { get; set; }
-        public int ApplicationUserId { get; set; }
+        public string ApplicationUserId { get; set; }
 
         //Navigation properties
         public Bird Bird { get; set; }
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
 
     }
 }

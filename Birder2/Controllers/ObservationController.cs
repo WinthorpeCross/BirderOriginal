@@ -17,20 +17,29 @@ namespace Birder2.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IApplicationUserAccessor _userAccessor;
+        private readonly IObservationRepository _observationRepository;
+        private readonly IMachineClockDateTime _systemClock;
 
-        public ObservationController(ApplicationDbContext context, IApplicationUserAccessor userAccessor)
+        public ObservationController(ApplicationDbContext context,
+                                     IApplicationUserAccessor userAccessor,
+                                     IObservationRepository observationRepository,
+                                     IMachineClockDateTime systemClock)
         {
             _context = context;
             _userAccessor = userAccessor;
+            _observationRepository = observationRepository;
+            _systemClock = systemClock;
         }
 
         // GET: Observation
         public async Task<IActionResult> Index()
         {
             var user = await _userAccessor.GetUser();
-            //var r = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var applicationDbContext = _context.Observations.Include(o => o.Bird);
-            return View(await applicationDbContext.ToListAsync());
+            if (user == null)
+            {
+                return NotFound("Not logged in..."); //ToDo: return what?
+            }
+            return View(await _observationRepository.MyObservationsList(user)); // --> do not get user twice! await _userAccessor.GetUser()));
         }
 
         // GET: Observation/Details/5
@@ -64,13 +73,18 @@ namespace Birder2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ObservationId,ObservationDateTime,Location,Note,BirdId,ApplicationUserId")] Observation observation)
+        public async Task<IActionResult> Create([Bind("ObservationId,ObservationDateTime,Location,Note,BirdId")] Observation observation)
         {
-            var user = new ApplicationUser();
+            var user = await _userAccessor.GetUser();
+            observation.ApplicationUser = user;
+            
+            //if user == null....
+
             if (ModelState.IsValid)
             {
+                observation.DateCreated = _systemClock.Now; //DateTime.Now;
                 _context.Add(observation);
-                user.Observations.Add(observation); // 
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
