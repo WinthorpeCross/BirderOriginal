@@ -39,7 +39,7 @@ namespace Birder2
 
             services.AddTransient<IApplicationUserAccessor, ApplicationUserAccessor>();
 
-            //services.AddScoped<IBirdRepository, BirdRepository>();
+            services.AddScoped<IBirdRepository, BirdRepository>();
             services.AddScoped<IObservationRepository, ObservationRepository>();
 
             services.AddMvc();

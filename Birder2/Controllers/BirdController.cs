@@ -34,7 +34,6 @@ namespace Birder2.Controllers
             {
                 return NotFound();
             }
-
             var bird = await _birdRepository.GetBirdDetails(id);
 
             if (bird == null)
