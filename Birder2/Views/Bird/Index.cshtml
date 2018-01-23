@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Birder2.Models.Bird>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Image)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EnglishName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.InternationalName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ScientificName)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Image)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnglishName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InternationalName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScientificName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BirdId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.BirdId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.BirdId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
