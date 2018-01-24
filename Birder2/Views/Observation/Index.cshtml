@@ -15,5 +15,8 @@
 
 @foreach (var observation in Model)
 {
+<div class="container">
     @Html.Partial("_Observations", observation)
+    <hr/>
+</div>
 }

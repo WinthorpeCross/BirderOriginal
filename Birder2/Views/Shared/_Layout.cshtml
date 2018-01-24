@@ -5,16 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Birder2</title>
 
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
+            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+            <link rel="stylesheet" href="~/css/site.css" />
+
+        </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
+            <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+                  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+                  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+            <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        </environment>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -40,13 +44,52 @@
             </div>
         </div>
     </nav>
+
+
+
     <div class="container body-content">
-        @RenderBody()
+        <div class="row">
+            <section class="col-lg-7">
+                ***Main Column***
+                @RenderBody()
+            </section>
+
+
+            <aside class="my col col-lg-4">
+                ***Side Column***
+                @* View Components go here... *@
+
+                <div class="well">
+                    -- Bird of the day Test
+
+                </div>
+
+
+                <hr />
+                <hr />
+                -- Bird of the day
+
+                <hr />
+                -- Species spotted count [link to my birds/count of time spotted/links to individual observations]
+
+                <hr />
+                -- Percentage completed
+
+            </aside>
+
+
+        </div>
+
+
+
+
         <hr />
         <footer>
             <p>&copy; 2018 - Birder2</p>
         </footer>
     </div>
+
+
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
