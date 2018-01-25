@@ -3,62 +3,38 @@
     padding-bottom: 20px;
     margin-top: 30px;
     margin-bottom: 40px;
-    /*margin-right: 40px;
-    margin-left: 40px;*/
 }
-
-.body-content {
-    /*background-color: #eecc10;*/
-    /*padding-left: 15px;
-    padding-right: 15px;
-
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;*/
-}
-
-section {
-    background-color: #eecc10;
-    /*padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 0px;
-    padding-right: 10px;*/
-    margin-top: 20px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    margin-left: 00px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    
-}
-
-aside {
-    
-    background-color: #eecc10;
-    /*padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 05px;
-    padding-right: 00px;*/
-    margin-top: 20px;
-    margin-right: 0px;
-    margin-bottom: 10px;
-    margin-left: 20px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-}
-
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
+
+section {
+    background: #ff6a00;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+aside {
+
+}
+
+
+.class--aside-block {
+    background: #ff6a00;
+    margin-bottom: 25px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+
+
+
+
+
 
 
 /* Carousel */

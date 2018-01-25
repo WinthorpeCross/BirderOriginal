@@ -7,16 +7,16 @@
 
 
     <environment include="Development">
-            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-            <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
 
-        </environment>
+    </environment>
     <environment exclude="Development">
-            <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-                  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-                  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-            <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-        </environment>
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -44,38 +44,34 @@
     </nav>
 
 
-
     <div class="container body-content">
         <div class="row">
-            <section class="col-lg-7">
-                ***Main Column***
-                @RenderBody()
-            </section>
+            <div class="col-md-8">
+                <section>
+                    @RenderBody()
+                </section>
+            </div>
 
 
-            <aside class="my col col-lg-4">
-                ***Side Column***
-                @* View Components go here... *@
+            <div class="col-md-4">
+                <aside>
+                    @* block 1 *@
+                    <div class="class--aside-block">
+                        <div class="mini-box">
+                            x
 
-                <div class="well">
-                    -- Bird of the day Test
+                        </div>
+                    </div>
 
-                </div>
+                    @* block 2 *@
+                    <div class="class--aside-block">
+                        <div class="mini-box">
+                            y
 
-
-                <hr />
-                <hr />
-                -- Bird of the day
-
-                <hr />
-                -- Species spotted count [link to my birds/count of time spotted/links to individual observations]
-
-                <hr />
-                -- Percentage completed
-
-            </aside>
-
-
+                        </div>
+                    </div>
+                </aside>
+            </div>
         </div>
 
 
