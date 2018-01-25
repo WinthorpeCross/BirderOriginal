@@ -13,28 +13,34 @@
 }
 
 section {
-    background: #ff6a00;
+    margin: 10px;
+    background: #dce513;
     padding: 10px;
     border-radius: 10px;
+    overflow: hidden;
 }
 
 aside {
-
+    margin: 10px;
 }
 
 
 .class--aside-block {
-    background: #ff6a00;
+    background: #dce513;
     margin-bottom: 25px;
     padding: 10px;
     border-radius: 10px;
 }
 
 
+.class--birdcount-header {
+    text-align:left;
+}
 
-
-
-
+.class--birdcount-count {
+    text-align: center;
+    font-size: 1.875em; /* 30px/16=1.875em */
+}
 
 
 /* Carousel */
