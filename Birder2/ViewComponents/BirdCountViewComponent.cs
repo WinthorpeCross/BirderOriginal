@@ -20,8 +20,7 @@ namespace Birder2.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var bir = await _context.Birds.CountAsync(); // ToListAsync();
-            //var items = await GetItemsAsync(maxPriority, isDone);
+            var bir = await _context.Birds.CountAsync();
             return View("Default", bir.ToString());
         }
 
