@@ -19,13 +19,19 @@ namespace Birder2.Controllers
         {
             ViewData["Message"] = "Your application description page.";
 
-            return View();
+            var model = new Observation()
+            {
+                lat = 53.556533,
+                lng = -2.633028
+            };
+
+            return View(model);
         }
 
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
-
+            
             return View();
         }
 
