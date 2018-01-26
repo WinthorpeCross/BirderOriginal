@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Spatial;
 using System.Threading.Tasks;
 
 namespace Birder2.Models
@@ -17,21 +18,24 @@ namespace Birder2.Models
         public int ObservationId { get; set; }
 
 
-        //Quantity
+        //Quantity spotted
 
         [Required]
         [Display(Name = "Date and time")]
         [DisplayFormat(DataFormatString = "{0:dddd, dd MMMM yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime ObservationDateTime { get; set; }
 
-        // public double Latitude { get; set; }
+        //public Geography LocationGeoTest { get; set; } ---> Not supported in EF Core 2.0
         public string Location { get; set; }
+
+        public double lat { get; set; }
+        public double lng { get; set; }
 
         public string Note { get; set; }
 
         public DateTime DateCreated { get; set; }
         public DateTime LastUpdateDate { get; set; }
-        // Photo
+        // Photos
 
 
         //Foreign keys

@@ -58,17 +58,14 @@
                     @* block 1 *@
                     <div class="class--aside-block">
                         <div class="mini-box">
-                            x
-
+                            @await Component.InvokeAsync("BirdCount")
                         </div>
                     </div>
 
                     @* block 2 *@
                     <div class="class--aside-block">
                         <div class="mini-box">
-                            @await Component.InvokeAsync("BirdCount") @*, new { maxPriority = 2, isDone = false }) *@
-                        
-
+                            @await Component.InvokeAsync("BirdCount")
                         </div>
                     </div>
                 </aside>
