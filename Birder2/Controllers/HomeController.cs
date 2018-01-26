@@ -17,7 +17,14 @@ namespace Birder2.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            //ViewData["Message"] = "Your contact page.";
+
+            return View();
+        }
+
+        public IActionResult Contact()
+        {
+            ViewData["Message"] = "Map example";
 
             var model = new Observation()
             {
@@ -26,13 +33,8 @@ namespace Birder2.Controllers
             };
 
             return View(model);
-        }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-            
-            return View();
+
         }
 
         public IActionResult Error()
