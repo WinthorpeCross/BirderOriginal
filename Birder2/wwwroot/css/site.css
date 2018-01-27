@@ -5,6 +5,10 @@
     margin-bottom: 40px;
 }
 
+.footer--partial-view {
+    margin: 10px;
+}
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {

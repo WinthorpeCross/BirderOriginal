@@ -31,12 +31,9 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Birder2</a>
             </div>
             @* move this to a partial view, inject SigninManager, to make links depend on logged in users or not... *@
-            @* not necessary! *@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">AboutCore</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Map</a></li>
                     <li><a asp-area="" asp-controller="Observation" asp-action="Index">My Observations</a></li>
                     <li><a asp-area="" asp-controller="Bird" asp-action="Index">Birds</a></li>
                 </ul>
@@ -75,15 +72,9 @@
         </div>
 
 
-
-
         <hr />
         <footer>
-            <a asp-controller="Home" asp-action="About">About</a>
-            <a asp-controller="Home" asp-action="Contact">Contact</a>
-            <a asp-controller="Account" asp-action="Register">Privacy</a>
-            @*<a href="/Account/Register">Register</a>*@
-            <p>&copy; 2018 - Birder2</p>
+            @Html.Partial("_FooterPartial")
         </footer>
     </div>
 
