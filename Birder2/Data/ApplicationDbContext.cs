@@ -17,6 +17,8 @@ namespace Birder2.Data
 
         public DbSet<Observation> Observations { get; set; }
         public DbSet<Bird> Birds { get; set; }
+        public DbSet<BirdConserverationStatus> BirdConservationStatuses { get; set; }
+        //public DbSet<ConserverationFlag> ConservationFlags { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -28,6 +30,7 @@ namespace Birder2.Data
 
             builder.Entity<Observation>().ToTable("Observation");
             builder.Entity<Bird>().ToTable("Bird");
+            builder.Entity<BirdConserverationStatus>().ToTable("BirdConservationStatus");
         }
     }
 }

@@ -6,13 +6,31 @@ using System.Threading.Tasks;
 
 namespace Birder2.Models
 {
+
+    public enum ConserverationFlag
+    {
+        Amber,
+        Introduced,
+        Green,
+        Red,
+        Other
+    }
+
+    public class BirdConserverationStatus
+    {
+        [Key]
+        public int BirdConserverationStatusId { get; set; }
+
+        [Required]
+        public ConserverationFlag ConservationFlag { get; set; }
+
+        public string Note { get; set; }
+
+        public ICollection<Bird> Birds { get; set; }
+    }
+
     public class Bird
     {
-        //public Bird()
-        //{
-        //    Observations = new List<Observation>();
-        //}
-
         [Key]
         public int BirdId { get; set; }
 
@@ -38,11 +56,10 @@ namespace Birder2.Models
 
 
 
-        /*
-         * Information about the bird...
-         * 
-         * */
+        public int BirdConserverationStatusId { get; set; }
 
         public ICollection<Observation> Observations { get; set; }
+
+        public BirdConserverationStatus BirdConserverationStatus { get; set; }
     }
 }

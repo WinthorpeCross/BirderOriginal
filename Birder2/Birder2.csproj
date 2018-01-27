@@ -10,6 +10,8 @@
     <Compile Remove="Data\Migrations\20180122002719_Initial.Designer.cs" />
     <Compile Remove="Data\Migrations\20180122023629_start again.cs" />
     <Compile Remove="Data\Migrations\20180122023629_start again.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180127184548_Bird conservation status added.cs" />
+    <Compile Remove="Data\Migrations\20180127184548_Bird conservation status added.Designer.cs" />
   </ItemGroup>
 
 
