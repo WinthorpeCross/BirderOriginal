@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 namespace Birder2.Models
 {
 
-    public enum ConserverationFlag
-    {
-        Amber,
-        Introduced,
-        Green,
-        Red,
-        Other
-    }
+    //public enum ConserverationFlag
+    //{
+    //    Amber,
+    //    Introduced,
+    //    Green,
+    //    Red,
+    //    Other
+    //}
 
     public class BirdConserverationStatus
     {
@@ -22,7 +22,7 @@ namespace Birder2.Models
         public int BirdConserverationStatusId { get; set; }
 
         [Required]
-        public ConserverationFlag ConservationFlag { get; set; }
+        public string ConservationStatus { get; set; }
 
         public string Note { get; set; }
 
