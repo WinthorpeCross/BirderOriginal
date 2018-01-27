@@ -10,9 +10,11 @@ using Birder2.Models;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using Birder2.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Birder2.Controllers
 {
+    [Authorize]
     public class ObservationController : Controller
     {
         private readonly ApplicationDbContext _context;

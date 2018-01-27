@@ -2,9 +2,11 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Birder2.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Birder2.Controllers
 {
+    [Authorize]
     public class BirdController : Controller
     {
         private readonly IBirdRepository _birdRepository;

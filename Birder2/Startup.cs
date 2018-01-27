@@ -59,6 +59,8 @@ namespace Birder2
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            //app.UseWelcomePage()
+
             app.UseStaticFiles();
 
             app.UseAuthentication();

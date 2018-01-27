@@ -5,9 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Birder2.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Birder2.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public IActionResult Index()
@@ -15,6 +17,7 @@ namespace Birder2.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult About()
         {
             //ViewData["Message"] = "Your contact page.";
@@ -22,6 +25,7 @@ namespace Birder2.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Map example";
