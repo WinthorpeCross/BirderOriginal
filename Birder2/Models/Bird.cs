@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Birder2.Models
 {
 
-    //public enum ConserverationFlag
+    //public enum BirdFamily
     //{
     //    Amber,
     //    Introduced,
@@ -55,6 +55,19 @@ namespace Birder2.Models
         public string ScientificName { get; set; }
 
 
+        /*
+        public string Class { get; set; } ALL = AVES
+        public string Order { get; set; }
+        public string Family { get; set; }
+        public string Genus { get; set; }
+        public string Species { get; set; }
+        public string Category { get; set; } //Primary only
+
+        [Display(Name = "Population Size in Britain")]
+        public string PopulationSize { get; set; }
+        [Display(Name = "Status in Britain")]
+        public string Status { get; set; }
+        */
 
         public int BirdConserverationStatusId { get; set; }
 
