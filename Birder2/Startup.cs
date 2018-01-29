@@ -41,6 +41,7 @@ namespace Birder2
 
             services.AddScoped<IBirdRepository, BirdRepository>();
             services.AddScoped<IObservationRepository, ObservationRepository>();
+            services.AddScoped<IAnalysisRepository, AnalysisRepository>();
 
             services.AddMvc();
         }

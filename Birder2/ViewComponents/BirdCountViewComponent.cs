@@ -1,5 +1,6 @@
 ﻿using Birder2.Data;
 using Birder2.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Birder2.ViewComponents
 {
-
+    [Authorize]
     public class BirdCountViewComponent : ViewComponent
     {
         private readonly IAnalysisRepository _analysisRepository;

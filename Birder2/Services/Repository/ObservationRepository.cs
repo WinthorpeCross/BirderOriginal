@@ -36,6 +36,7 @@ namespace Birder2.Services
         {
             return await _dbContext.Observations
                 .Include(b => b.Bird)
+                .Include(au => au.ApplicationUser)
                 .SingleOrDefaultAsync(m => m.ObservationId == id);
         }
 
@@ -44,6 +45,26 @@ namespace Birder2.Services
             _dbContext.Observations.Add(observation);
             await _dbContext.SaveChangesAsync();
             return(observation);  
+        }
+
+        public async Task<Observation> UpdateObservation(Observation observation)
+        {
+            _dbContext.Observations.Update(observation);
+            await _dbContext.SaveChangesAsync();
+            return(observation);
+        }
+
+        public async Task<bool> ObservationExists(int id)
+        {
+            return await _dbContext.Observations.AnyAsync(e => e.ObservationId == id);
+        }
+
+        public async Task<Observation> DeleteObservation(int id)
+        {
+            var observation = await _dbContext.Observations.SingleOrDefaultAsync(m => m.ObservationId == id);
+            _dbContext.Observations.Remove(observation);
+            await _dbContext.SaveChangesAsync();
+            return observation;
         }
     }
 }

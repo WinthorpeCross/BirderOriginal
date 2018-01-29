@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Birder2.Data;
 using Birder2.Models;
-using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
 using Birder2.Services;
 using Microsoft.AspNetCore.Authorization;
 
@@ -17,17 +11,14 @@ namespace Birder2.Controllers
     [Authorize]
     public class ObservationController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly IApplicationUserAccessor _userAccessor;
         private readonly IObservationRepository _observationRepository;
         private readonly IMachineClockDateTime _systemClock;
 
-        public ObservationController(ApplicationDbContext context,
-                                     IApplicationUserAccessor userAccessor,
+        public ObservationController(IApplicationUserAccessor userAccessor,
                                      IObservationRepository observationRepository,
                                      IMachineClockDateTime systemClock)
         {
-            _context = context;
             _userAccessor = userAccessor;
             _observationRepository = observationRepository;
             _systemClock = systemClock;
@@ -83,7 +74,7 @@ namespace Birder2.Controllers
                 return RedirectToAction("Login", "Account");
             }
             observation.ApplicationUser = user;
-            
+
             if (ModelState.IsValid)
             {
                 try
@@ -93,8 +84,6 @@ namespace Birder2.Controllers
 
                     await _observationRepository.AddObservation(observation);
                     return RedirectToAction(nameof(Index));
-                    //_context.Add(observation);
-                    //await _context.SaveChangesAsync();
                 }
                 catch
                 {
@@ -115,13 +104,23 @@ namespace Birder2.Controllers
                 return NotFound();
             }
 
-            var observation = await _context.Observations.SingleOrDefaultAsync(m => m.ObservationId == id);
+            var observation = await _observationRepository.GetObservationDetails(id);
             if (observation == null)
             {
                 return NotFound();
             }
-            ViewData["BirdId"] = new SelectList(_context.Birds, "BirdId", "EnglishName", observation.BirdId);
-            return View(observation);
+
+            try
+            {
+                var birds = await _observationRepository.AllBirdsList();
+                ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName", observation.BirdId);
+                return View(observation);
+            }
+            catch
+            {
+                //ToDo: Logging / return user to create view, like below?
+                return NotFound("could not add the observation");
+            }
         }
 
         // POST: Observation/Edit/5
@@ -131,21 +130,29 @@ namespace Birder2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ObservationId,ObservationDateTime,Location,Note,BirdId,ApplicationUserId")] Observation observation)
         {
+            // ToDo: Look into this update method.
+
             if (id != observation.ObservationId)
             {
                 return NotFound();
             }
 
+            var user = await _userAccessor.GetUser();
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            observation.ApplicationUser = user;
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(observation);
-                    await _context.SaveChangesAsync();
+                    await _observationRepository.UpdateObservation(observation);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ObservationExists(observation.ObservationId))
+                    if (!await _observationRepository.ObservationExists(observation.ObservationId))
                     {
                         return NotFound();
                     }
@@ -154,9 +161,10 @@ namespace Birder2.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));  //return to details view?
             }
-            ViewData["BirdId"] = new SelectList(_context.Birds, "BirdId", "EnglishName", observation.BirdId);
+            var birds = await _observationRepository.AllBirdsList();
+            ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName", observation.BirdId);
             return View(observation);
         }
 
@@ -168,9 +176,8 @@ namespace Birder2.Controllers
                 return NotFound();
             }
 
-            var observation = await _context.Observations
-                .Include(o => o.Bird)
-                .SingleOrDefaultAsync(m => m.ObservationId == id);
+            var observation = await _observationRepository.GetObservationDetails(id);
+
             if (observation == null)
             {
                 return NotFound();
@@ -184,15 +191,19 @@ namespace Birder2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var observation = await _context.Observations.SingleOrDefaultAsync(m => m.ObservationId == id);
-            _context.Observations.Remove(observation);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            try
+            {
+                await _observationRepository.DeleteObservation(id);
+            }
+            catch
+            {
+                //logging
+                return NotFound();
+            }
 
-        private bool ObservationExists(int id)
-        {
-            return _context.Observations.Any(e => e.ObservationId == id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
+
+

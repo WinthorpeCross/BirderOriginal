@@ -38,13 +38,9 @@ namespace Birder2.Models
         // Photos
 
 
-        //Foreign keys
-        //[Required]
         public int BirdId { get; set; }
-        //[Required]
         public string ApplicationUserId { get; set; }
 
-        //Navigation properties
         public Bird Bird { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
 

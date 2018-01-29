@@ -35,9 +35,11 @@ namespace Birder2.Models
         public string Family { get; set; }
 
         public string Genus { get; set; }
+
         [Required]
         [Display(Name = "Scientific Name")]
         public string Species { get; set; }
+
         [Required]
         [Display(Name = "English Vernacular Name")]
         public string EnglishName { get; set; }

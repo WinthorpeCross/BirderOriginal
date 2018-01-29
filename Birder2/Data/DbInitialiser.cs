@@ -36,7 +36,7 @@ namespace Birder2.Data
 
             var birds = new Bird[]
             {
-                new Bird{Class="Aves",Order="Accipitriformes",Family="Accipitridae",Genus="Accipiter",Species="Accipiter gentilis",EnglishName="Goshawk",InternationalName="Northern Goshawk",Category="A",PopulationSize="100-1,000 pairs",Status="Resident Breeder"}
+                new Bird{ Class="Aves",Order="Accipitriformes",Family="Accipitridae",Genus="Accipiter",Species="Accipiter gentilis",EnglishName="Goshawk",InternationalName="Northern Goshawk",Category="A",PopulationSize="100-1,000 pairs",Status="Resident Breeder",Image=birdIcon,BirdConserverationStatusId=3}
 
             };
             foreach (Bird b in birds)
