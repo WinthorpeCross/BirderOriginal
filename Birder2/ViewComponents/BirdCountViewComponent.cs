@@ -1,4 +1,5 @@
 ﻿using Birder2.Data;
+using Birder2.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,16 +12,16 @@ namespace Birder2.ViewComponents
 
     public class BirdCountViewComponent : ViewComponent
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAnalysisRepository _analysisRepository;
 
-        public BirdCountViewComponent(ApplicationDbContext context)
+        public BirdCountViewComponent(IAnalysisRepository analysisRepository)
         {
-            _context = context;
+            _analysisRepository = analysisRepository;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var bir = await _context.Birds.CountAsync();
+            var bir = await _analysisRepository.BirdCount();
             return View("Default", bir.ToString());
         }
 
