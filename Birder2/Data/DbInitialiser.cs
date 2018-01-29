@@ -36,11 +36,8 @@ namespace Birder2.Data
 
             var birds = new Bird[]
             {
-            new Bird{EnglishName="Dipper",InternationalName="White-throated Dipper",ScientificName="Cinclus cinclus",Image=birdIcon,BirdConserverationStatusId=3},
-            new Bird{EnglishName="Kestrel",InternationalName="Common Kestrel",ScientificName="Falco tinnunculus",Image=birdIcon,BirdConserverationStatusId=2},
-            new Bird{EnglishName="Merlin",InternationalName=null,ScientificName="Falco columbarius",Image=birdIcon,BirdConserverationStatusId=2},
-            new Bird{EnglishName="Hoopoe",InternationalName="Eurasian Hoopoe",ScientificName="Upupa epops",Image=birdIcon,BirdConserverationStatusId=3},
-            new Bird{EnglishName="Lesser Black-backed Gull",InternationalName=null,ScientificName="Larus fuscus",Image=birdIcon,BirdConserverationStatusId=3}
+                new Bird{Class="Aves",Order="Accipitriformes",Family="Accipitridae",Genus="Accipiter",Species="Accipiter gentilis",EnglishName="Goshawk",InternationalName="Northern Goshawk",Category="A",PopulationSize="100-1,000 pairs",Status="Resident Breeder"}
+
             };
             foreach (Bird b in birds)
             {

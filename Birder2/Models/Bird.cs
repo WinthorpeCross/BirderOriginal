@@ -6,16 +6,6 @@ using System.Threading.Tasks;
 
 namespace Birder2.Models
 {
-
-    //public enum BirdFamily
-    //{
-    //    Amber,
-    //    Introduced,
-    //    Green,
-    //    Red,
-    //    Other
-    //}
-
     public class BirdConserverationStatus
     {
         [Key]
@@ -34,6 +24,35 @@ namespace Birder2.Models
         [Key]
         public int BirdId { get; set; }
 
+        // Species Names
+        [Required]
+        public string Class { get; set; } //ALL = AVES
+
+        [Required]
+        public string Order { get; set; }
+
+        [Required]
+        public string Family { get; set; }
+
+        public string Genus { get; set; }
+        [Required]
+        [Display(Name = "Scientific Name")]
+        public string Species { get; set; }
+        [Required]
+        [Display(Name = "English Vernacular Name")]
+        public string EnglishName { get; set; }
+
+        [Display(Name = "International Name")]
+        public string InternationalName { get; set; }
+
+        public string Category { get; set; } //Primary only
+
+        [Display(Name = "Population Size in Britain")]
+        public string PopulationSize { get; set; }
+
+        [Display(Name = "Status in Britain")]
+        public string Status { get; set; }
+
         //public class ProductImage
         //{
         //    public int ProductId { get; private set; }
@@ -42,32 +61,6 @@ namespace Birder2.Models
 
         public byte[] Image { get; set; }
 
-        // Species Names
-        [Required]
-        [Display(Name = "English Name")]
-        public string EnglishName { get; set; }
-
-        [Display(Name = "International Name")]
-        public string InternationalName { get; set; }
-
-        [Required]
-        [Display(Name = "Scientific Name")]
-        public string ScientificName { get; set; }
-
-
-        /*
-        public string Class { get; set; } ALL = AVES
-        public string Order { get; set; }
-        public string Family { get; set; }
-        public string Genus { get; set; }
-        public string Species { get; set; }
-        public string Category { get; set; } //Primary only
-
-        [Display(Name = "Population Size in Britain")]
-        public string PopulationSize { get; set; }
-        [Display(Name = "Status in Britain")]
-        public string Status { get; set; }
-        */
 
         public int BirdConserverationStatusId { get; set; }
 

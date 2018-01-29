@@ -10,6 +10,8 @@ namespace Birder2.Models
     public class ApplicationUser : IdentityUser
     {
 
+        public string FirstName { get; set; }
+
         public ICollection<Observation> Observations { get; set; }
     }
 }

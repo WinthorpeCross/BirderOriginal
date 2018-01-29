@@ -23,21 +23,20 @@
             @Html.DisplayFor(model => model.EnglishName)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.Species)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Species)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.InternationalName)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.InternationalName)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ScientificName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ScientificName)
-        </dd>
     </dl>
 </div>
 <div>
-    @*<a asp-action="Edit" asp-route-id="@Model.BirdId">Edit</a> |*@
     <a asp-action="Index">Back to List</a>
 </div>
 
