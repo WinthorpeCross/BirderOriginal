@@ -79,7 +79,7 @@ namespace Birder2.Controllers
             {
                 try
                 {
-                    observation.DateCreated = _systemClock.Now;
+                    observation.CreationDate = _systemClock.Now;
                     observation.LastUpdateDate = _systemClock.Now;
 
                     await _observationRepository.AddObservation(observation);
