@@ -6,15 +6,42 @@ using System.Threading.Tasks;
 
 namespace Birder2.Models
 {
-    public class BirdConserverationStatus
+    public class ConserverationStatus
     {
         [Key]
-        public int BirdConserverationStatusId { get; set; }
+        public int ConserverationStatusId { get; set; }
 
         [Required]
         public string ConservationStatus { get; set; }
 
         public string Note { get; set; }
+
+        public DateTime CreationDate { get; set; }
+
+        public DateTime LastUpdateDate { get; set; }
+
+        public ICollection<Bird> Birds { get; set; }
+    }
+
+    public class BritishStatus
+    {
+        // - https://www.bto.org/about-birds/birdfacts/british-list
+        // - This list includes 603 species (as at 1 January 2017)
+        
+        [Key]
+        public int BritishStatusId { get; set; }
+
+        [Required]
+        [Display(Name = "BTO Status in Britain")]
+        public string BtoStatusInBritain { get; set; }
+
+        [Required]
+        [Display(Name = "Status in Britain")]
+        public string BirderStatusInBritain { get; set; }
+
+        public DateTime CreationDate { get; set; }
+
+        public DateTime LastUpdateDate { get; set; }
 
         public ICollection<Bird> Birds { get; set; }
     }
@@ -52,8 +79,8 @@ namespace Birder2.Models
         [Display(Name = "Population Size in Britain")]
         public string PopulationSize { get; set; }
 
-        [Display(Name = "Status in Britain")]
-        public string Status { get; set; }
+        //[Display(Name = "Status in Britain")]
+        //public string Status { get; set; }
 
         //public class ProductImage
         //{
@@ -63,11 +90,20 @@ namespace Birder2.Models
 
         public byte[] Image { get; set; }
 
+        public DateTime CreationDate { get; set; }
 
-        public int BirdConserverationStatusId { get; set; }
+        public DateTime LastUpdateDate { get; set; }
+
+        //
+
+        public int ConserverationStatusId { get; set; }
+
+        public int BritishStatusId { get; set; }
 
         public ICollection<Observation> Observations { get; set; }
 
-        public BirdConserverationStatus BirdConserverationStatus { get; set; }
+        public ConserverationStatus BirdConserverationStatus { get; set; }
+
+        public BritishStatus BritishStatus { get; set; }
     }
 }
