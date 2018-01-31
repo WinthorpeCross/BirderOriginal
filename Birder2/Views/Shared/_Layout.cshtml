@@ -30,13 +30,10 @@
                 </button>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Birder2</a>
             </div>
-            @* move this to a partial view, inject SigninManager, to make links depend on logged in users or not... *@
+
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Observation" asp-action="Index">My Observations</a></li>
-                    <li><a asp-area="" asp-controller="Bird" asp-action="Index">Birds</a></li>
-                </ul>
+                @await Html.PartialAsync("_NavbarPartial")
+
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
