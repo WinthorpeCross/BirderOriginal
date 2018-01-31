@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Birder2.Data.Migrations
 {
-    public partial class Rebuild : Migration
+    public partial class r : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -56,6 +56,20 @@ namespace Birder2.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ConservationStatus", x => x.ConserverationStatusId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tag",
+                columns: table => new
+                {
+                    TagId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tag", x => x.TagId);
                 });
 
             migrationBuilder.CreateTable(
@@ -130,6 +144,30 @@ namespace Birder2.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ObservationTag",
+                columns: table => new
+                {
+                    TagId = table.Column<int>(nullable: false),
+                    ObervationId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ObservationTag", x => new { x.TagId, x.ObervationId });
+                    table.ForeignKey(
+                        name: "FK_ObservationTag_Observation_ObervationId",
+                        column: x => x.ObervationId,
+                        principalTable: "Observation",
+                        principalColumn: "ObservationId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ObservationTag_Tag_TagId",
+                        column: x => x.TagId,
+                        principalTable: "Tag",
+                        principalColumn: "TagId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
@@ -164,6 +202,11 @@ namespace Birder2.Data.Migrations
                 table: "Observation",
                 column: "BirdId");
 
+            migrationBuilder.CreateIndex(
+                name: "IX_ObservationTag_ObervationId",
+                table: "ObservationTag",
+                column: "ObervationId");
+
             migrationBuilder.AddForeignKey(
                 name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                 table: "AspNetUserTokens",
@@ -180,7 +223,13 @@ namespace Birder2.Data.Migrations
                 table: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ObservationTag");
+
+            migrationBuilder.DropTable(
                 name: "Observation");
+
+            migrationBuilder.DropTable(
+                name: "Tag");
 
             migrationBuilder.DropTable(
                 name: "Bird");

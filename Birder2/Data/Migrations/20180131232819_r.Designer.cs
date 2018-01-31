@@ -11,8 +11,8 @@ using System;
 namespace Birder2.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180131183201_Rebuild")]
-    partial class Rebuild
+    [Migration("20180131232819_r")]
+    partial class r
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -194,6 +194,35 @@ namespace Birder2.Data.Migrations
                     b.ToTable("Observation");
                 });
 
+            modelBuilder.Entity("Birder2.Models.ObservationTag", b =>
+                {
+                    b.Property<int>("TagId");
+
+                    b.Property<int>("ObervationId");
+
+                    b.HasKey("TagId", "ObervationId");
+
+                    b.HasIndex("ObervationId");
+
+                    b.ToTable("ObservationTag");
+                });
+
+            modelBuilder.Entity("Birder2.Models.Tag", b =>
+                {
+                    b.Property<int>("TagId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.HasKey("TagId");
+
+                    b.ToTable("Tag");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -324,6 +353,19 @@ namespace Birder2.Data.Migrations
                     b.HasOne("Birder2.Models.Bird", "Bird")
                         .WithMany("Observations")
                         .HasForeignKey("BirdId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Birder2.Models.ObservationTag", b =>
+                {
+                    b.HasOne("Birder2.Models.Observation", "Observation")
+                        .WithMany("ObservationTags")
+                        .HasForeignKey("ObervationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Birder2.Models.Tag", "Tag")
+                        .WithMany("ObservationTags")
+                        .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

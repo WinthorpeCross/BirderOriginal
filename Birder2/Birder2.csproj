@@ -24,6 +24,18 @@
     <Compile Remove="Data\Migrations\20180127185205_conservation status added.Designer.cs" />
     <Compile Remove="Data\Migrations\20180127190347_enum removed.cs" />
     <Compile Remove="Data\Migrations\20180127190347_enum removed.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180131183201_Rebuild.cs" />
+    <Compile Remove="Data\Migrations\20180131183201_Rebuild.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180131223045_Tags.cs" />
+    <Compile Remove="Data\Migrations\20180131223045_Tags.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180131224535_Tags2.cs" />
+    <Compile Remove="Data\Migrations\20180131224535_Tags2.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180131230032_j.cs" />
+    <Compile Remove="Data\Migrations\20180131230032_j.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180131231053_k.cs" />
+    <Compile Remove="Data\Migrations\20180131231053_k.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180131232047_w.cs" />
+    <Compile Remove="Data\Migrations\20180131232047_w.Designer.cs" />
   </ItemGroup>
 
 

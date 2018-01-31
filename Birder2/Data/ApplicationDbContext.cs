@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Birder2.Models;
 
+
 namespace Birder2.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -19,6 +20,8 @@ namespace Birder2.Data
         public DbSet<Bird> Birds { get; set; }
         public DbSet<ConserverationStatus> ConservationStatuses { get; set; }
         public DbSet<BritishStatus> BritishStatuses { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<ObservationTag> ObservationTags { get; set; }
 
 
 
@@ -33,6 +36,34 @@ namespace Birder2.Data
             builder.Entity<Bird>().ToTable("Bird");
             builder.Entity<ConserverationStatus>().ToTable("ConservationStatus");
             builder.Entity<BritishStatus>().ToTable("BritishStatus");
+            builder.Entity<Tag>().ToTable("Tag");
+            builder.Entity<ObservationTag>().ToTable("ObservationTag");
+
+            builder.Entity<ObservationTag>()
+                .HasKey(c => new { c.TagId, c.ObervationId });
+
+        //        modelBuilder.Entity<BookCategory>()
+        //.HasKey(bc => new { bc.BookId, bc.CategoryId });
+
+            //builder.Entity<ObservationTag>()
+            //    .HasOne(bc => bc.Book)
+            //    .WithMany(b => b.BookCategories)
+            //    .HasForeignKey(bc => bc.BookId);
+
+            builder.Entity<ObservationTag>()
+                    .HasOne(bc => bc.Observation)
+                    .WithMany(b => b.ObservationTags)
+                    .HasForeignKey(bc => bc.ObervationId);
+
+            //modelBuilder.Entity<BookCategory>()
+            //    .HasOne(bc => bc.Category)
+            //    .WithMany(c => c.BookCategories)
+            //    .HasForeignKey(bc => bc.CategoryId);
+
+            builder.Entity<ObservationTag>()
+                    .HasOne(bc => bc.Tag)
+                    .WithMany(c => c.ObservationTags)
+                    .HasForeignKey(bc => bc.TagId);
         }
     }
 }

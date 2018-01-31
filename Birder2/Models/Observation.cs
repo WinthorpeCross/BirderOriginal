@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+
 
 namespace Birder2.Models
 {
@@ -37,6 +39,7 @@ namespace Birder2.Models
 
         public Bird Bird { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
+        public ICollection<ObservationTag> ObservationTags { get; set; }
 
     }
 }
