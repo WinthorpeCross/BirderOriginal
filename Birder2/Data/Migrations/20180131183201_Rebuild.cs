@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Birder2.Data.Migrations
 {
-    public partial class Restart : Migration
+    public partial class Rebuild : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,20 +21,79 @@ namespace Birder2.Data.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles");
 
+            migrationBuilder.AddColumn<string>(
+                name: "FirstName",
+                table: "AspNetUsers",
+                nullable: true);
+
+            migrationBuilder.CreateTable(
+                name: "BritishStatus",
+                columns: table => new
+                {
+                    BritishStatusId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    BirderStatusInBritain = table.Column<string>(nullable: false),
+                    BtoStatusInBritain = table.Column<string>(nullable: false),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    LastUpdateDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BritishStatus", x => x.BritishStatusId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ConservationStatus",
+                columns: table => new
+                {
+                    ConserverationStatusId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ConservationStatus = table.Column<string>(nullable: false),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    LastUpdateDate = table.Column<DateTime>(nullable: false),
+                    Note = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ConservationStatus", x => x.ConserverationStatusId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Bird",
                 columns: table => new
                 {
                     BirdId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    BritishStatusId = table.Column<int>(nullable: false),
+                    Category = table.Column<string>(nullable: true),
+                    Class = table.Column<string>(nullable: false),
+                    ConserverationStatusId = table.Column<int>(nullable: false),
+                    CreationDate = table.Column<DateTime>(nullable: false),
                     EnglishName = table.Column<string>(nullable: false),
+                    Family = table.Column<string>(nullable: false),
+                    Genus = table.Column<string>(nullable: true),
                     Image = table.Column<byte[]>(nullable: true),
                     InternationalName = table.Column<string>(nullable: true),
-                    ScientificName = table.Column<string>(nullable: false)
+                    LastUpdateDate = table.Column<DateTime>(nullable: false),
+                    Order = table.Column<string>(nullable: false),
+                    PopulationSize = table.Column<string>(nullable: true),
+                    Species = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bird", x => x.BirdId);
+                    table.ForeignKey(
+                        name: "FK_Bird_BritishStatus_BritishStatusId",
+                        column: x => x.BritishStatusId,
+                        principalTable: "BritishStatus",
+                        principalColumn: "BritishStatusId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Bird_ConservationStatus_ConserverationStatusId",
+                        column: x => x.ConserverationStatusId,
+                        principalTable: "ConservationStatus",
+                        principalColumn: "ConserverationStatusId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -45,10 +104,14 @@ namespace Birder2.Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ApplicationUserId = table.Column<string>(nullable: true),
                     BirdId = table.Column<int>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: false),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    LastUpdateDate = table.Column<DateTime>(nullable: false),
                     Location = table.Column<string>(nullable: true),
                     Note = table.Column<string>(nullable: true),
-                    ObservationDateTime = table.Column<DateTime>(nullable: false)
+                    ObservationDateTime = table.Column<DateTime>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    lat = table.Column<double>(nullable: false),
+                    lng = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -82,6 +145,16 @@ namespace Birder2.Data.Migrations
                 filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Bird_BritishStatusId",
+                table: "Bird",
+                column: "BritishStatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bird_ConserverationStatusId",
+                table: "Bird",
+                column: "ConserverationStatusId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Observation_ApplicationUserId",
                 table: "Observation",
                 column: "ApplicationUserId");
@@ -112,6 +185,12 @@ namespace Birder2.Data.Migrations
             migrationBuilder.DropTable(
                 name: "Bird");
 
+            migrationBuilder.DropTable(
+                name: "BritishStatus");
+
+            migrationBuilder.DropTable(
+                name: "ConservationStatus");
+
             migrationBuilder.DropIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers");
@@ -119,6 +198,10 @@ namespace Birder2.Data.Migrations
             migrationBuilder.DropIndex(
                 name: "RoleNameIndex",
                 table: "AspNetRoles");
+
+            migrationBuilder.DropColumn(
+                name: "FirstName",
+                table: "AspNetUsers");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",

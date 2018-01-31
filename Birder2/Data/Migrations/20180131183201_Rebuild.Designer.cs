@@ -11,8 +11,8 @@ using System;
 namespace Birder2.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180126131219_proerties for observations added")]
-    partial class proertiesforobservationsadded
+    [Migration("20180131183201_Rebuild")]
+    partial class Rebuild
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,6 +35,8 @@ namespace Birder2.Data.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("FirstName");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -77,19 +79,85 @@ namespace Birder2.Data.Migrations
                     b.Property<int>("BirdId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("BritishStatusId");
+
+                    b.Property<string>("Category");
+
+                    b.Property<string>("Class")
+                        .IsRequired();
+
+                    b.Property<int>("ConserverationStatusId");
+
+                    b.Property<DateTime>("CreationDate");
+
                     b.Property<string>("EnglishName")
                         .IsRequired();
+
+                    b.Property<string>("Family")
+                        .IsRequired();
+
+                    b.Property<string>("Genus");
 
                     b.Property<byte[]>("Image");
 
                     b.Property<string>("InternationalName");
 
-                    b.Property<string>("ScientificName")
+                    b.Property<DateTime>("LastUpdateDate");
+
+                    b.Property<string>("Order")
+                        .IsRequired();
+
+                    b.Property<string>("PopulationSize");
+
+                    b.Property<string>("Species")
                         .IsRequired();
 
                     b.HasKey("BirdId");
 
+                    b.HasIndex("BritishStatusId");
+
+                    b.HasIndex("ConserverationStatusId");
+
                     b.ToTable("Bird");
+                });
+
+            modelBuilder.Entity("Birder2.Models.BritishStatus", b =>
+                {
+                    b.Property<int>("BritishStatusId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("BirderStatusInBritain")
+                        .IsRequired();
+
+                    b.Property<string>("BtoStatusInBritain")
+                        .IsRequired();
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<DateTime>("LastUpdateDate");
+
+                    b.HasKey("BritishStatusId");
+
+                    b.ToTable("BritishStatus");
+                });
+
+            modelBuilder.Entity("Birder2.Models.ConserverationStatus", b =>
+                {
+                    b.Property<int>("ConserverationStatusId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ConservationStatus")
+                        .IsRequired();
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<DateTime>("LastUpdateDate");
+
+                    b.Property<string>("Note");
+
+                    b.HasKey("ConserverationStatusId");
+
+                    b.ToTable("ConservationStatus");
                 });
 
             modelBuilder.Entity("Birder2.Models.Observation", b =>
@@ -101,7 +169,7 @@ namespace Birder2.Data.Migrations
 
                     b.Property<int>("BirdId");
 
-                    b.Property<DateTime>("DateCreated");
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<DateTime>("LastUpdateDate");
 
@@ -110,6 +178,8 @@ namespace Birder2.Data.Migrations
                     b.Property<string>("Note");
 
                     b.Property<DateTime>("ObservationDateTime");
+
+                    b.Property<int>("Quantity");
 
                     b.Property<double>("lat");
 
@@ -230,6 +300,19 @@ namespace Birder2.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Birder2.Models.Bird", b =>
+                {
+                    b.HasOne("Birder2.Models.BritishStatus", "BritishStatus")
+                        .WithMany("Birds")
+                        .HasForeignKey("BritishStatusId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Birder2.Models.ConserverationStatus", "BirdConserverationStatus")
+                        .WithMany("Birds")
+                        .HasForeignKey("ConserverationStatusId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Birder2.Models.Observation", b =>

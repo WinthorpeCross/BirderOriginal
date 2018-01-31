@@ -10,8 +10,20 @@
     <Compile Remove="Data\Migrations\20180122002719_Initial.Designer.cs" />
     <Compile Remove="Data\Migrations\20180122023629_start again.cs" />
     <Compile Remove="Data\Migrations\20180122023629_start again.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180122023818_Restart.cs" />
+    <Compile Remove="Data\Migrations\20180122023818_Restart.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180122175136_Update_Observation.cs" />
+    <Compile Remove="Data\Migrations\20180122175136_Update_Observation.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180122182445_fk_changes.cs" />
+    <Compile Remove="Data\Migrations\20180122182445_fk_changes.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180126131219_proerties for observations added.cs" />
+    <Compile Remove="Data\Migrations\20180126131219_proerties for observations added.Designer.cs" />
     <Compile Remove="Data\Migrations\20180127184548_Bird conservation status added.cs" />
     <Compile Remove="Data\Migrations\20180127184548_Bird conservation status added.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180127185205_conservation status added.cs" />
+    <Compile Remove="Data\Migrations\20180127185205_conservation status added.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180127190347_enum removed.cs" />
+    <Compile Remove="Data\Migrations\20180127190347_enum removed.Designer.cs" />
   </ItemGroup>
 
 

@@ -21,29 +21,28 @@ namespace Birder2.Data
 
             byte[] birdIcon = File.ReadAllBytes(@"C:\Users\rcros\Desktop\if_099374-twitter-bird3_56010.png"); // artywear_yellow_1046.jpg");
 
-            var status = new BirdConserverationStatus[]
+            var status = new ConserverationStatus[]
             {
-                new BirdConserverationStatus{ConservationStatus="Red", Note=null},
-                new BirdConserverationStatus{ConservationStatus="Amber", Note=null},
-                new BirdConserverationStatus{ConservationStatus="Green", Note=null},
-                new BirdConserverationStatus{ConservationStatus="Introduced", Note=null}
+                new ConserverationStatus{ConservationStatus="Red", Note=null},
+                new ConserverationStatus{ConservationStatus="Amber", Note=null},
+                new ConserverationStatus{ConservationStatus="Green", Note=null},
+                new ConserverationStatus{ConservationStatus="Introduced", Note=null}
             };
-            foreach (BirdConserverationStatus bcs in status)
+            foreach (ConserverationStatus cs in status)
             {
-                context.BirdConservationStatuses.Add(bcs);
+                context.ConservationStatuses.Add(cs);
             }
             context.SaveChanges();
 
-            var birds = new Bird[]
-            {
-                new Bird{ Class="Aves",Order="Accipitriformes",Family="Accipitridae",Genus="Accipiter",Species="Accipiter gentilis",EnglishName="Goshawk",InternationalName="Northern Goshawk",Category="A",PopulationSize="100-1,000 pairs",Status="Resident Breeder",Image=birdIcon,BirdConserverationStatusId=3}
-
-            };
-            foreach (Bird b in birds)
-            {
-                context.Birds.Add(b);
-            }
-            context.SaveChanges();
+            //var birds = new Bird[]
+            //{
+            //    new Bird{ Class="Aves",Order="Accipitriformes",Family="Accipitridae",Genus="Accipiter",Species="Accipiter gentilis",EnglishName="Goshawk",InternationalName="Northern Goshawk",Category="A",PopulationSize="100-1,000 pairs",Image=birdIcon,ConserverationStatusId=3}
+            //};
+            //foreach (Bird b in birds)
+            //{
+            //    context.Birds.Add(b);
+            //}
+            //context.SaveChanges();
         }
     }
 }
