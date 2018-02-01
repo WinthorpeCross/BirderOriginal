@@ -23,10 +23,10 @@ namespace Birder2.Data
 
             var status = new ConserverationStatus[]
             {
-                new ConserverationStatus{ConservationStatus="Red", Note=null},
-                new ConserverationStatus{ConservationStatus="Amber", Note=null},
-                new ConserverationStatus{ConservationStatus="Green", Note=null},
-                new ConserverationStatus{ConservationStatus="Introduced", Note=null}
+                new ConserverationStatus{ConservationStatus="Red"},
+                new ConserverationStatus{ConservationStatus="Amber"},
+                new ConserverationStatus{ConservationStatus="Green"},
+                new ConserverationStatus{ConservationStatus="Introduced"}
             };
             foreach (ConserverationStatus cs in status)
             {

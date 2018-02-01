@@ -22,7 +22,14 @@ namespace Birder2.Controllers
         {
             //ViewData["Message"] = "Your contact page.";
 
-            return View();
+            var test = new Observation()
+            {
+                lng = 53.5451,
+                lat = 2.6325,
+
+            };
+
+            return View(test);
         }
 
         [AllowAnonymous]

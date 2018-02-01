@@ -14,7 +14,7 @@ namespace Birder2.Models
         [Required]
         public string ConservationStatus { get; set; }
 
-        public string Note { get; set; }
+        public string Description { get; set; }
 
         public DateTime CreationDate { get; set; }
 
@@ -51,7 +51,6 @@ namespace Birder2.Models
         [Key]
         public int BirdId { get; set; }
 
-        // Species Names
         [Required]
         public string Class { get; set; } //ALL = AVES
 
@@ -61,6 +60,7 @@ namespace Birder2.Models
         [Required]
         public string Family { get; set; }
 
+        [Required]
         public string Genus { get; set; }
 
         [Required]
