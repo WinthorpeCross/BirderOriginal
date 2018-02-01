@@ -16,7 +16,6 @@
     <input onclick="clearMarkers();" type=button value="Hide Markers">
     <input onclick="showMarkers();" type=button value="Show All Markers">
     <input onclick="deleteMarkers();" type=button value="Delete Markers">
-    <input onclick="d();" type="button" value="show model coordinates" />
 </div>
 <div id="map" class="class--map"></div>
 
@@ -40,11 +39,7 @@
         // This event listener will call addMarker() when the map is clicked.
         map.addListener('click', function(event) {
             addMarker(event.latLng);
-            //d(event.latLng);
         });
-
-
-
 
         // Adds a marker at the center of the map.
         addMarker(haightAshbury);
@@ -60,15 +55,8 @@
 
         deleteMarkers(); // hack that prevents more than one marker being placed on the map
         markers.push(marker);
-        document.getElementById('pText').innerHTML = markers[0].position
-        document.getElementById('pText1').innerHTML = markers[0].position.lat();
-        document.getElementById('pText2').innerHTML = markers[0].position.lng();
-
-        //d(location);  //--> delete this rubbish.....................
-
+        updateForm();
       }
-
-
 
       // Sets the map on all markers in the array.
       function setMapOnAll(map) {
@@ -92,18 +80,12 @@
             clearMarkers();
             markers = [];
       }
-      function d(location) {
-          var myLatLng = location.latLng;
-          var lat1 = myLatLng.lat();
-          var lng1 = myLatLng.lng();
-          document.getElementById('pText1').innerHTML = myLatLng
-          //document.getElementById('pText3').innerHTML = location.latLng.lng
+      function updateForm() {
+          document.getElementById('pText').innerHTML = markers[0].position
+          document.getElementById('pText1').innerHTML = markers[0].position.lat();
+          document.getElementById('pText2').innerHTML = markers[0].position.lng();
       }
 
-      @*function d(location) {
-          document.getElementById('pText').innerHTML = location.latLng
-            document.getElementById('pText1').innerHTML = @Model.lng
-      }*@
 </script>
 
 
