@@ -36,6 +36,10 @@
     <Compile Remove="Data\Migrations\20180131231053_k.Designer.cs" />
     <Compile Remove="Data\Migrations\20180131232047_w.cs" />
     <Compile Remove="Data\Migrations\20180131232047_w.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180131232819_r.cs" />
+    <Compile Remove="Data\Migrations\20180131232819_r.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180201010220_w.cs" />
+    <Compile Remove="Data\Migrations\20180201010220_w.Designer.cs" />
   </ItemGroup>
 
 

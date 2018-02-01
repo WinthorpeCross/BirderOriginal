@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
 namespace Birder2.Data.Migrations
@@ -17,13 +15,12 @@ namespace Birder2.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
+                .HasAnnotation("ProductVersion", "1.0.0-rc3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Birder2.Models.ApplicationUser", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<int>("AccessFailedCount");
 
@@ -34,8 +31,6 @@ namespace Birder2.Data.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
-
-                    b.Property<string>("FirstName");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -67,165 +62,14 @@ namespace Birder2.Data.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Birder2.Models.Bird", b =>
-                {
-                    b.Property<int>("BirdId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("BritishStatusId");
-
-                    b.Property<string>("Category");
-
-                    b.Property<string>("Class")
-                        .IsRequired();
-
-                    b.Property<int>("ConserverationStatusId");
-
-                    b.Property<DateTime>("CreationDate");
-
-                    b.Property<string>("EnglishName")
-                        .IsRequired();
-
-                    b.Property<string>("Family")
-                        .IsRequired();
-
-                    b.Property<string>("Genus");
-
-                    b.Property<byte[]>("Image");
-
-                    b.Property<string>("InternationalName");
-
-                    b.Property<DateTime>("LastUpdateDate");
-
-                    b.Property<string>("Order")
-                        .IsRequired();
-
-                    b.Property<string>("PopulationSize");
-
-                    b.Property<string>("Species")
-                        .IsRequired();
-
-                    b.HasKey("BirdId");
-
-                    b.HasIndex("BritishStatusId");
-
-                    b.HasIndex("ConserverationStatusId");
-
-                    b.ToTable("Bird");
-                });
-
-            modelBuilder.Entity("Birder2.Models.BritishStatus", b =>
-                {
-                    b.Property<int>("BritishStatusId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("BirderStatusInBritain")
-                        .IsRequired();
-
-                    b.Property<string>("BtoStatusInBritain")
-                        .IsRequired();
-
-                    b.Property<DateTime>("CreationDate");
-
-                    b.Property<DateTime>("LastUpdateDate");
-
-                    b.HasKey("BritishStatusId");
-
-                    b.ToTable("BritishStatus");
-                });
-
-            modelBuilder.Entity("Birder2.Models.ConserverationStatus", b =>
-                {
-                    b.Property<int>("ConserverationStatusId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ConservationStatus")
-                        .IsRequired();
-
-                    b.Property<DateTime>("CreationDate");
-
-                    b.Property<DateTime>("LastUpdateDate");
-
-                    b.Property<string>("Note");
-
-                    b.HasKey("ConserverationStatusId");
-
-                    b.ToTable("ConservationStatus");
-                });
-
-            modelBuilder.Entity("Birder2.Models.Observation", b =>
-                {
-                    b.Property<int>("ObservationId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ApplicationUserId");
-
-                    b.Property<int>("BirdId");
-
-                    b.Property<DateTime>("CreationDate");
-
-                    b.Property<DateTime>("LastUpdateDate");
-
-                    b.Property<string>("Location");
-
-                    b.Property<string>("Note");
-
-                    b.Property<DateTime>("ObservationDateTime");
-
-                    b.Property<int>("Quantity");
-
-                    b.Property<double>("lat");
-
-                    b.Property<double>("lng");
-
-                    b.HasKey("ObservationId");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("BirdId");
-
-                    b.ToTable("Observation");
-                });
-
-            modelBuilder.Entity("Birder2.Models.ObservationTag", b =>
-                {
-                    b.Property<int>("TagId");
-
-                    b.Property<int>("ObervationId");
-
-                    b.HasKey("TagId", "ObervationId");
-
-                    b.HasIndex("ObervationId");
-
-                    b.ToTable("ObservationTag");
-                });
-
-            modelBuilder.Entity("Birder2.Models.Tag", b =>
-                {
-                    b.Property<int>("TagId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.HasKey("TagId");
-
-                    b.ToTable("Tag");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -239,9 +83,7 @@ namespace Birder2.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -312,6 +154,8 @@ namespace Birder2.Data.Migrations
 
                     b.HasIndex("RoleId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("AspNetUserRoles");
                 });
 
@@ -330,48 +174,10 @@ namespace Birder2.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Birder2.Models.Bird", b =>
-                {
-                    b.HasOne("Birder2.Models.BritishStatus", "BritishStatus")
-                        .WithMany("Birds")
-                        .HasForeignKey("BritishStatusId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Birder2.Models.ConserverationStatus", "BirdConserverationStatus")
-                        .WithMany("Birds")
-                        .HasForeignKey("ConserverationStatusId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Birder2.Models.Observation", b =>
-                {
-                    b.HasOne("Birder2.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("Observations")
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("Birder2.Models.Bird", "Bird")
-                        .WithMany("Observations")
-                        .HasForeignKey("BirdId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Birder2.Models.ObservationTag", b =>
-                {
-                    b.HasOne("Birder2.Models.Observation", "Observation")
-                        .WithMany("ObservationTags")
-                        .HasForeignKey("ObervationId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Birder2.Models.Tag", "Tag")
-                        .WithMany("ObservationTags")
-                        .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
-                        .WithMany()
+                        .WithMany("Claims")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -379,7 +185,7 @@ namespace Birder2.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.HasOne("Birder2.Models.ApplicationUser")
-                        .WithMany()
+                        .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -387,7 +193,7 @@ namespace Birder2.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.HasOne("Birder2.Models.ApplicationUser")
-                        .WithMany()
+                        .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -395,20 +201,12 @@ namespace Birder2.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Birder2.Models.ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.HasOne("Birder2.Models.ApplicationUser")
-                        .WithMany()
+                        .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

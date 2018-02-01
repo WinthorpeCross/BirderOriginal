@@ -40,30 +40,17 @@ namespace Birder2.Data
             builder.Entity<ObservationTag>().ToTable("ObservationTag");
 
             builder.Entity<ObservationTag>()
-                .HasKey(c => new { c.TagId, c.ObervationId });
-
-        //        modelBuilder.Entity<BookCategory>()
-        //.HasKey(bc => new { bc.BookId, bc.CategoryId });
-
-            //builder.Entity<ObservationTag>()
-            //    .HasOne(bc => bc.Book)
-            //    .WithMany(b => b.BookCategories)
-            //    .HasForeignKey(bc => bc.BookId);
+                    .HasKey(ot => new { ot.TagId, ot.ObervationId });
 
             builder.Entity<ObservationTag>()
-                    .HasOne(bc => bc.Observation)
-                    .WithMany(b => b.ObservationTags)
-                    .HasForeignKey(bc => bc.ObervationId);
-
-            //modelBuilder.Entity<BookCategory>()
-            //    .HasOne(bc => bc.Category)
-            //    .WithMany(c => c.BookCategories)
-            //    .HasForeignKey(bc => bc.CategoryId);
+                    .HasOne(ot => ot.Observation)
+                    .WithMany(o => o.ObservationTags)
+                    .HasForeignKey(ot => ot.ObervationId);
 
             builder.Entity<ObservationTag>()
-                    .HasOne(bc => bc.Tag)
-                    .WithMany(c => c.ObservationTags)
-                    .HasForeignKey(bc => bc.TagId);
+                    .HasOne(ot => ot.Tag)
+                    .WithMany(t => t.ObservationTags)
+                    .HasForeignKey(ot => ot.TagId);
         }
     }
 }
