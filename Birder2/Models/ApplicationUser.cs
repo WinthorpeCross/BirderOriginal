@@ -17,5 +17,7 @@ namespace Birder2.Models
         public double DefaultLocationLongitude { get; set; }
 
         public ICollection<Observation> Observations { get; set; }
+
+        public ICollection<Tag> Tags { get; set; }
     }
 }

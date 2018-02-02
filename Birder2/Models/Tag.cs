@@ -19,6 +19,11 @@ namespace Birder2.Models
         public string Description { get; set; }
 
         public ICollection<ObservationTag> ObservationTags { get; set; }
+
+
+        public string ApplicationUserId { get; set; }
+
+        public ApplicationUser ApplicationUser { get; set; }
     }
 
 }
