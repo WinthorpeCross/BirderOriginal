@@ -23,26 +23,39 @@ namespace Birder2.Data
 
             var status = new ConserverationStatus[]
             {
-                new ConserverationStatus{ConservationStatus="Red"},
-                new ConserverationStatus{ConservationStatus="Amber"},
-                new ConserverationStatus{ConservationStatus="Green"},
-                new ConserverationStatus{ConservationStatus="Introduced"}
+                new ConserverationStatus{ConservationStatus="Red",Description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now},
+                new ConserverationStatus{ConservationStatus="Amber",Description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now},
+                new ConserverationStatus{ConservationStatus="Green",Description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now},
+                new ConserverationStatus{ConservationStatus="Introduced",Description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now}
             };
             foreach (ConserverationStatus cs in status)
             {
                 context.ConservationStatuses.Add(cs);
             }
             context.SaveChanges();
-
-            //var birds = new Bird[]
-            //{
-            //    new Bird{ Class="Aves",Order="Accipitriformes",Family="Accipitridae",Genus="Accipiter",Species="Accipiter gentilis",EnglishName="Goshawk",InternationalName="Northern Goshawk",Category="A",PopulationSize="100-1,000 pairs",Image=birdIcon,ConserverationStatusId=3}
-            //};
-            //foreach (Bird b in birds)
-            //{
-            //    context.Birds.Add(b);
-            //}
-            //context.SaveChanges();
+            //
+            var statuses = new BritishStatus[]
+            {
+                new BritishStatus{ BtoStatusInBritain="Winter Visitor",BirderStatusInBritain="Common",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now },
+                   new BritishStatus{ BtoStatusInBritain="Accidental",BirderStatusInBritain="Uncommon",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now }
+            };
+            foreach (BritishStatus bs in statuses)
+            {
+                context.BritishStatuses.Add(bs);
+            }
+            context.SaveChanges();
+            //
+            var birds = new Bird[]
+            {
+                new Bird{ Class="Aves",Order="Accipitriformes",Family="Accipitridae",Genus="Accipiter",Species="Accipiter gentilis"
+                ,EnglishName="Goshawk",InternationalName="Northern Goshawk",Category="A",PopulationSize="100-1,000 pairs"
+                ,Image=birdIcon,ConserverationStatusId=1,BritishStatusId=1}
+            };
+            foreach (Bird b in birds)
+            {
+                context.Birds.Add(b);
+            }
+            context.SaveChanges();
         }
     }
 }
