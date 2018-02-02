@@ -21,8 +21,18 @@
             </div>
             <div class="form-group">
                 <label asp-for="Location" class="control-label"></label>
-                <input asp-for="Location" class="form-control" id="loc" />
+                <input asp-for="Location" class="form-control" id="location" /> //type="hidden"
                 <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LocationLatitude" class="control-label"></label>
+                <input asp-for="LocationLatitude" class="form-control" id="latitude" />
+                <span asp-validation-for="LocationLatitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LocationLongitude" class="control-label"></label>
+                <input asp-for="LocationLongitude" class="form-control" id="longitude" />
+                <span asp-validation-for="LocationLongitude" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Note" class="control-label"></label>
@@ -35,16 +45,18 @@
                 <span asp-validation-for="BirdId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Quantity" class="control-label"></label>
+                <input asp-for="Quantity" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
-<p id="pText">Test</p>
-<p id="pText1">Test</p>
-<p id="pText2">Test</p>
-<p id="pText3">Test</p>
+<p id="statusMessage">Test</p>
 <hr />
 
 <div id="floating-panel">
@@ -56,14 +68,12 @@
 <div id="map" class="class--map"></div>
 
 <script>
-        // In the following example, markers appear when the user clicks on the map.
-        // The markers are stored in an array.
-        // The user can then click an option to hide, show or delete the markers.
       var map;
       var markers = [];
       var x = document.getElementById("pText3");
 
       function getLocation() {
+          x.innerHTML = "Please wait: we're trying to get your location...";
           if (navigator.geolocation) {
               navigator.geolocation.getCurrentPosition(showPosition, showError);
           } else {
@@ -72,8 +82,9 @@
       }
 
       function showPosition(position) {
-          x.innerHTML = "Latitude: " + position.coords.latitude +
-              "<br>Longitude: " + position.coords.longitude;
+          //x.innerHTML = "Latitude: " + position.coords.latitude +
+          //    "<br>Longitude: " + position.coords.longitude;
+          x.innerHTML = "Successfully found your location: [Replace this text with place name from Google API]";
           var y = {lat: position.coords.latitude, lng: position.coords.longitude};
           addMarker(y)
       }
@@ -151,10 +162,9 @@
             markers = [];
       }
       function updateForm() {
-          document.getElementById('loc').value = markers[0].position
-          document.getElementById('pText').innerHTML = markers[0].position
-          document.getElementById('pText1').innerHTML = markers[0].position.lat();
-          document.getElementById('pText2').innerHTML = markers[0].position.lng();
+          document.getElementById('location').value = markers[0].position
+          document.getElementById('latitude').value = markers[0].position.lat();
+          document.getElementById('longitude').value = markers[0].position.lng();
       }
 
 </script>
