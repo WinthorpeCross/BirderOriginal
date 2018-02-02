@@ -66,7 +66,7 @@ namespace Birder2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ObservationId,ObservationDateTime,Location,Note,BirdId")] Observation observation)
+        public async Task<IActionResult> Create([Bind("ObservationId,ObservationDateTime,Location,Note,BirdId,LocationLatitude,LocationLongitude")] Observation observation)
         {
             var user = await _userAccessor.GetUser();
             if (user == null)
