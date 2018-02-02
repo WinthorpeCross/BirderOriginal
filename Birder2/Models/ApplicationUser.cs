@@ -12,6 +12,10 @@ namespace Birder2.Models
 
         public string FirstName { get; set; }
 
+        public double DefaultLocationLatitude { get; set; }
+
+        public double DefaultLocationLongitude { get; set; }
+
         public ICollection<Observation> Observations { get; set; }
     }
 }

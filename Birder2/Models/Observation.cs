@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-
 namespace Birder2.Models
 {
     public class Observation
@@ -10,6 +9,7 @@ namespace Birder2.Models
         /* 
          * This is for an individual bird observation.
          * Consider functionality for mulitiple observations.
+         * (different view model for create multiple observations)
          */
 
         [Key]
@@ -22,8 +22,8 @@ namespace Birder2.Models
 
         //public Geography LocationGeoTest { get; set; } ---> Not supported in EF Core 2.0
         public string Location { get; set; }
-        public double lat { get; set; }
-        public double lng { get; set; }
+        public double LocationLatitude { get; set; }
+        public double LocationLongitude { get; set; }
 
         [Required]
         public int Quantity { get; set; }

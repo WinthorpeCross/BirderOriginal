@@ -20,32 +20,15 @@ namespace Birder2.Controllers
         [AllowAnonymous]
         public IActionResult About()
         {
-            //ViewData["Message"] = "Your contact page.";
-
-            var test = new Observation()
-            {
-                lng = 53.5451,
-                lat = 2.6325,
-
-            };
-
-            return View(test);
+            return View();
         }
-
+ 
         [AllowAnonymous]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Map example";
 
-            var model = new Observation()
-            {
-                lat = 53.556533,
-                lng = -2.633028
-            };
-
-            return View(model);
-
-
+            return View();
         }
 
         public IActionResult Error()

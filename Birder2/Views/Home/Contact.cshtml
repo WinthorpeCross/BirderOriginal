@@ -1,153 +1,52 @@
-﻿@model Observation
-@{
+﻿@{
     ViewData["Title"] = "Map";
 }
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
 
-<p id="pText">Test</p>
-<p id="pText1">Test</p>
 
-<p id="pText2">Test</p>
-<p id="pText3">Test</p>
-<hr />
 
-<div id="floating-panel">
-    <input onclick="clearMarkers();" type=button value="Hide Markers">
-    <input onclick="showMarkers();" type=button value="Show All Markers">
-    <input onclick="deleteMarkers();" type=button value="Delete Markers">
-</div>
+<p id="demo">Click the button to get your position.</p>
+
+<button onclick="getLocation()">Use current location</button>
+
 <div id="map" class="class--map"></div>
 
+
+
 <script>
+    var x = document.getElementById("map");
 
-        // In the following example, markers appear when the user clicks on the map.
-        // The markers are stored in an array.
-        // The user can then click an option to hide, show or delete the markers.
-        var map;
-      var markers = [];
-
-      function initMap() {
-        var haightAshbury = {lat: @Model.lat, lng: @Model.lng};  // set a user's home or default if the user has not set a default location
-
-        map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 12,
-          center: haightAshbury,
-          mapTypeId: 'terrain'
-        });
-
-        // This event listener will call addMarker() when the map is clicked.
-        map.addListener('click', function(event) {
-            addMarker(event.latLng);
-        });
-
-        // Adds a marker at the center of the map.
-        addMarker(haightAshbury);
-      }
-
-      // Adds a marker to the map and push to the array.
-      function addMarker(location) {
-        var marker = new google.maps.Marker({
-          position: location,
-          map: map,
-          //draggable: true
-          });
-
-        deleteMarkers(); // hack that prevents more than one marker being placed on the map
-        markers.push(marker);
-        updateForm();
-      }
-
-      // Sets the map on all markers in the array.
-      function setMapOnAll(map) {
-        for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(map);
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
         }
-      }
+    }
 
-      // Removes the markers from the map, but keeps them in the array.
-      function clearMarkers() {
-            setMapOnAll(null);
+    function showPosition(position) {
+        x.innerHTML = "Latitude: " + position.coords.latitude +
+            "<br>Longitude: " + position.coords.longitude;
+    }
+
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                x.innerHTML = "User denied the request for Geolocation."
+                break;
+            case error.POSITION_UNAVAILABLE:
+                x.innerHTML = "Location information is unavailable."
+                break;
+            case error.TIMEOUT:
+                x.innerHTML = "The request to get user location timed out."
+                break;
+            case error.UNKNOWN_ERROR:
+                x.innerHTML = "An unknown error occurred."
+                break;
         }
-
-      // Shows any markers currently in the array.
-      function showMarkers() {
-            setMapOnAll(map);
-        }
-
-      // Deletes all markers in the array by removing references to them.
-      function deleteMarkers() {
-            clearMarkers();
-            markers = [];
-      }
-      function updateForm() {
-          document.getElementById('pText').innerHTML = markers[0].position
-          document.getElementById('pText1').innerHTML = markers[0].position.lat();
-          document.getElementById('pText2').innerHTML = markers[0].position.lng();
-      }
-
+    }
 </script>
 
 
-@*
-    <p id="demo">Click the button to get your position.</p>
 
-    <button onclick="getLocation()">Try It</button>
-
-    <div id="mapholder"></div>
-
-    <script>
-        var x = document.getElementById("demo");
-
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(initMap2, showError);
-            } else {
-                x.innerHTML = "Geolocation is not supported by this browser.";
-            }
-        }
-
-            function initMap2(position) {
-            //var uluru = { lat: -25.363, lng: 131.044 };
-                //var uluru = { lat: @Model.lat, lng: @Model.lng };
-            var uluru = { lat: position.coords.latitude, lng: position.coords.longitude };
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 4,
-                center: uluru
-            });
-            var marker = new google.maps.Marker({
-                position: uluru,
-                map: map
-            });
-        }
-
-        //function showPosition(position) {
-        //    var latlon = position.coords.latitude + "," + position.coords.longitude;
-        //    var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="
-        //        + latlon + "&zoom=14&size=400x300&key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU";
-        //    document.getElementById("mapholder").innerHTML = "<img src='" + img_url + "'>";
-        //}
-        //To use this code on your website, get a free API key from Google.
-        //Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
-
-        function showError(error) {
-            switch (error.code) {
-                case error.PERMISSION_DENIED:
-                    x.innerHTML = "User denied the request for Geolocation."
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    x.innerHTML = "Location information is unavailable."
-                    break;
-                case error.TIMEOUT:
-                    x.innerHTML = "The request to get user location timed out."
-                    break;
-                case error.UNKNOWN_ERROR:
-                    x.innerHTML = "An unknown error occurred."
-                    break;
-            }
-        }
-    </script>
-
-
-
-*@
