@@ -26,6 +26,8 @@ namespace Birder2.Services
             var observations = _dbContext.Observations
                     .Where(u => u.ApplicationUser == user)
                     .Include(b => b.Bird)
+                    .Include(ot => ot.ObservationTags)
+                        .ThenInclude(t => t.Tag)
                     .OrderByDescending(d => d.ObservationDateTime)
                     .AsNoTracking()
                     .ToListAsync();
@@ -37,6 +39,8 @@ namespace Birder2.Services
             return await _dbContext.Observations
                 .Include(b => b.Bird)
                 .Include(au => au.ApplicationUser)
+                .Include(ot => ot.ObservationTags)
+                    .ThenInclude(t => t.Tag)
                 .SingleOrDefaultAsync(m => m.ObservationId == id);
         }
 
