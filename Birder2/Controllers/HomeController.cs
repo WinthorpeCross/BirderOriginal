@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Birder2.Models;
 using Microsoft.AspNetCore.Authorization;
+using FlickrNet;
 
 namespace Birder2.Controllers
 {
@@ -20,7 +21,26 @@ namespace Birder2.Controllers
         [AllowAnonymous]
         public IActionResult About()
         {
-            return View();
+            string myFlickrApiKey = "7700051a31f80a964a5d0037ad5ed564";
+            string myFlickrSecret = "59f50feafa488bad";
+            string query = "Larus melanocephalus";
+
+            //Flickr flickr = new Flickr(myApiKey);
+            Flickr flickr = new Flickr(myFlickrApiKey, myFlickrSecret);
+
+            PhotoSearchOptions options = new PhotoSearchOptions();
+
+            options.SafeSearch = SafetyLevel.Safe;
+            options.Licenses.Add(LicenseType.AttributionCC);
+            options.MediaType = MediaType.Photos;
+            //var options = new PhotoSearchOptions { Tags = "colorful", PerPage = 20, Page = 1 };
+            options.Text = query;
+
+            options.Extras = PhotoSearchExtras.AllUrls;
+
+            PhotoCollection photos = flickr.PhotosSearch(options);
+
+            return View(photos);
         }
  
         [AllowAnonymous]
