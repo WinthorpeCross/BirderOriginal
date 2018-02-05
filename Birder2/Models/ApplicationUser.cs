@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -16,8 +17,14 @@ namespace Birder2.Models
 
         public double DefaultLocationLongitude { get; set; }
 
+        [Display(Name = "UserPhoto")]
+        public byte[] UserPhoto { get; set; }
+
         public ICollection<Observation> Observations { get; set; }
 
         public ICollection<Tag> Tags { get; set; }
+
+        //public ICollection<ApplicationUser> Followers { get; set; }
+        //public ICollection<ApplicationUser> Following { get; set; }
     }
 }
