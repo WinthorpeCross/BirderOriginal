@@ -21,6 +21,11 @@ namespace Birder2.Controllers
         [AllowAnonymous]
         public IActionResult About()
         {
+            /*
+             * Install-Package FlickrNet -Version 4.0.4-alpha  |  https://www.nuget.org/packages/FlickrNet/4.0.4-alpha
+             * Above FlickerNet package for .NET Core.  Not available through NuGet
+             * see https://github.com/samjudson/flickr-net for documentation
+             * */
             string myFlickrApiKey = "7700051a31f80a964a5d0037ad5ed564";
             string myFlickrSecret = "59f50feafa488bad";
             string query = "Larus melanocephalus";
