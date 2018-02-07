@@ -109,7 +109,11 @@ namespace Birder2.Controllers
             }
 
             //Photo....
-            user.UserPhoto = await _stream.GetPic(model.UserPhoto);
+            //var userPhoto = user.UserPhoto;
+            if (model.UserPhoto != null)
+            {
+                user.UserPhoto = await _stream.GetByteArray(model.UserPhoto);
+            }
 
             await _userManager.UpdateAsync(user);
 

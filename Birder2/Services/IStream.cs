@@ -5,7 +5,7 @@ namespace Birder2.Services
 {
     public interface IStream
     {
-        Task<byte[]> GetPic(IFormFile file);
+        Task<byte[]> GetByteArray(IFormFile file);
     }
 }
     

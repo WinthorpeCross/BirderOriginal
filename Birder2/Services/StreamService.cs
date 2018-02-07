@@ -6,7 +6,7 @@ namespace Birder2.Services
 {
     public class StreamService : IStream
     {
-        public async Task<byte[]> GetPic(IFormFile file)
+        public async Task<byte[]> GetByteArray(IFormFile file)
         {
             using (var ms = new MemoryStream())
             {
