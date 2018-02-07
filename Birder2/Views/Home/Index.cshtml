@@ -1,6 +1,14 @@
-﻿<div>
+﻿@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<div>
 
     <h2>To do:</h2>
+
+    <hr />
+
+    @*<img id="ItemPreview" src="" />*@
+
 
     <hr />
     <h4>Images:</h4>
@@ -16,3 +24,7 @@
     <p>- User profile picture</p>
 
 </div>
+
+@*<script>
+    document.getElementById("ItemPreview").src = "data:image/png;base64, @UserManager.GetUserAsync(User).Result.UserPhoto";
+</script>*@

@@ -220,6 +220,7 @@ namespace Birder2.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -232,7 +233,9 @@ namespace Birder2.Controllers
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
-                    return RedirectToLocal(returnUrl);
+                    //return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index","Manage");
+                    //<a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">
                 }
                 AddErrors(result);
             }
