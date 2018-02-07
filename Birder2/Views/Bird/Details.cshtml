@@ -1,90 +1,54 @@
-﻿@model Bird
+﻿@model Birder2.ViewModels.BirdDetailViewModel
 
 @{
-    ViewData["Title"] = Model.EnglishName;
+    ViewData["Title"] = Model.Bird.EnglishName;
 }
 
-<h2>@Model.EnglishName</h2>
+<h2>@Model.Bird.EnglishName <small><i> @Model.Bird.Species</i></small></h2>
 
 
 <div>
-    <h4>Bird</h4>
-    <hr />
+    <div class="container--horizontal-stack">
+        @foreach (var photo in Model.BirdPhotos)
+        {
+            <div class="wrapper--horizontal-stack">
+                @*<div>
+                        <img src="@photo.LargeSquareThumbnailUrl" alt="" />
+                    </div>*@
+                <a href="@photo.WebUrl" target="_blank">
+                    <img src="@photo.LargeSquareThumbnailUrl" alt="<<>species name>>" title="@photo.Title">
+                </a>
+                @*<div>@photo.Title</div>  WRAP TEXT*@
+            </div>
+        }
+    </div>
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Image)
+        @*<dt>
+            @Html.DisplayNameFor(model => model.Bird.Image)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Image)
+            @Html.DisplayFor(model => model.Bird.Image)
+        </dd>*@
+        <dt>
+            @Html.DisplayNameFor(model => model.Bird.EnglishName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Bird.EnglishName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.EnglishName)
+            @Html.DisplayNameFor(model => model.Bird.Species)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EnglishName)
+            @Html.DisplayFor(model => model.Bird.Species)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Species)
+            @Html.DisplayNameFor(model => model.Bird.InternationalName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Species)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.InternationalName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.InternationalName)
+            @Html.DisplayFor(model => model.Bird.InternationalName)
         </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
-@*
-
-
-@model Birder2.Models.Bird
-
-@{
-    ViewData["Title"] = "Details";
-}
-
-<h2>Details</h2>
-
-<div>
-    <h4>Bird</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Image)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EnglishName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EnglishName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.InternationalName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.InternationalName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ScientificName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ScientificName)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.BirdId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
-
-    *@
