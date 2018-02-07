@@ -1,4 +1,16 @@
-﻿body {
+﻿.container--horizontal-stack {
+    white-space: nowrap;
+    overflow: auto;
+    max-width: 100%;
+}
+
+.wrapper--horizontal-stack {
+    display: inline-block;
+    white-space: normal;
+}
+
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
     margin-top: 30px;

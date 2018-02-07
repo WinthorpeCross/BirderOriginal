@@ -22,7 +22,7 @@ namespace Birder2.Controllers
     [Route("[controller]/[action]")]
     public class ManageController : Controller
     {
-        //private readonly IStream _stream;
+        private readonly IStream _stream;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
@@ -37,15 +37,15 @@ namespace Birder2.Controllers
           SignInManager<ApplicationUser> signInManager,
           IEmailSender emailSender,
           ILogger<ManageController> logger,
-          UrlEncoder urlEncoder)
-          //IStream stream)
+          UrlEncoder urlEncoder,
+          IStream stream)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
             _urlEncoder = urlEncoder;
-            //_stream = stream;
+            _stream = stream;
         }
 
         [TempData]
@@ -108,18 +108,15 @@ namespace Birder2.Controllers
                 }
             }
 
-            //ToDo: Implement service
-            using (var memoryStream = new MemoryStream())
-            {
-                await model.UserPhoto.CopyToAsync(memoryStream);
-                //user.UserPhoto = _stream.GetPic(model.UserPhoto); //memoryStream.ToArray();
-                user.UserPhoto = memoryStream.ToArray();
-            }
+            //Photo....
+            user.UserPhoto = await _stream.GetPic(model.UserPhoto);
+
             await _userManager.UpdateAsync(user);
 
             StatusMessage = "Your profile has been updated";
             return RedirectToAction(nameof(Index));
         }
+        //user.UserPhoto = _stream.GetPic(model.UserPhoto); //memoryStream.ToArray();
 
         [HttpPost]
         [ValidateAntiForgeryToken]

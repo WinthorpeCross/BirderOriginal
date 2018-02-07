@@ -28,20 +28,21 @@ namespace Birder2.Controllers
              * */
             string myFlickrApiKey = "7700051a31f80a964a5d0037ad5ed564";
             string myFlickrSecret = "59f50feafa488bad";
-            string query = "Larus melanocephalus";
+            string query = "Cyanistes caeruleus";
 
             //Flickr flickr = new Flickr(myApiKey);
             Flickr flickr = new Flickr(myFlickrApiKey, myFlickrSecret);
 
-            PhotoSearchOptions options = new PhotoSearchOptions();
+            //PhotoSearchOptions options = new PhotoSearchOptions();
 
-            options.SafeSearch = SafetyLevel.Safe;
-            options.Licenses.Add(LicenseType.AttributionCC);
-            options.MediaType = MediaType.Photos;
-            //var options = new PhotoSearchOptions { Tags = "colorful", PerPage = 20, Page = 1 };
-            options.Text = query;
-
-            options.Extras = PhotoSearchExtras.AllUrls;
+            //options.SafeSearch = SafetyLevel.Safe;
+            //options.Licenses.Add(LicenseType.AttributionCC);
+            //options.MediaType = MediaType.Photos;
+            var options = new PhotoSearchOptions { Text = query, Extras = PhotoSearchExtras.AllUrls, SafeSearch = SafetyLevel.Safe, MediaType = MediaType.Photos };
+            //*Tags = "colorful",*/ PerPage = 20, Page = 1 };
+            //options.Text = query;
+            
+            //options.Extras = PhotoSearchExtras.AllUrls;
 
             PhotoCollection photos = flickr.PhotosSearch(options);
 

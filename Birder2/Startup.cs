@@ -43,7 +43,7 @@ namespace Birder2
             services.AddScoped<IObservationRepository, ObservationRepository>();
             services.AddScoped<IAnalysisRepository, AnalysisRepository>();
 
-            //services.AddTransient<IStream, Stream>();
+            services.AddTransient<IStream, StreamService>();
 
             services.AddMvc();
         }

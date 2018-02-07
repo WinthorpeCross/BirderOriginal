@@ -2,17 +2,33 @@
 @model PhotoCollection
 
 
-
-<div>Page Number: @Model.Page</div>
-
-@foreach (var photo in Model)
-{
-    <div>@photo.PhotoId</div>
-    <div>@photo.Title</div>
-    <div>
-        <img src="@photo.LargeSquareThumbnailUrl" alt="Many cups!" />
+<div class="container--horizontal-stack">
+    @foreach (var photo in Model)
+    {
+    <div class="wrapper--horizontal-stack">
+        @*<div>
+            <img src="@photo.LargeSquareThumbnailUrl" alt="" />
+        </div>*@
+        <a href="@photo.WebUrl" target="_blank">
+            <img src="@photo.LargeSquareThumbnailUrl" alt="<<>species name>">
+        </a>
+        <div>@photo.PhotoId</div>
+        <div>@photo.Title</div> @* WRAP TEXT*@
     </div>
+    }
+</div>
 
+@*
 
-}
+    <div>Page Number: @Model.Page</div>
 
+    @foreach (var photo in Model)
+    {
+        <div>@photo.PhotoId</div>
+        <div>@photo.Title</div>
+        <div>
+            <img src="@photo.LargeSquareThumbnailUrl" alt="Many cups!" />
+        </div>
+    }
+
+*@ 
