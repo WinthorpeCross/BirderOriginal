@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Birder2.Services;
 using Microsoft.AspNetCore.Authorization;
 using Birder2.ViewModels;
-using FlickrNet;
 
 namespace Birder2.Controllers
 {
@@ -12,10 +11,12 @@ namespace Birder2.Controllers
     public class BirdController : Controller
     {
         private readonly IBirdRepository _birdRepository;
+        private readonly IFlickrService _flickrService;
 
-        public BirdController(IBirdRepository birdRepository)
+        public BirdController(IBirdRepository birdRepository, IFlickrService flickrService)
         {
             _birdRepository = birdRepository;
+            _flickrService = flickrService;
         }
 
         // GET: Bird
@@ -39,30 +40,12 @@ namespace Birder2.Controllers
                 return NotFound();
             }
 
-            // ****************************************
-
-            string myFlickrApiKey = "7700051a31f80a964a5d0037ad5ed564";
-            string myFlickrSecret = "59f50feafa488bad";
-            //string query = "Cyanistes caeruleus";
-
-            Flickr flickr = new Flickr(myFlickrApiKey, myFlickrSecret);
-
-            //var options = new PhotoSearchOptions { Text = query, Extras = PhotoSearchExtras.AllUrls, SafeSearch = SafetyLevel.Safe, MediaType = MediaType.Photos };
-
-            // ****************************************
-
             var model = new BirdDetailViewModel()
             {
                 Bird = await _birdRepository.GetBirdDetails(id),
-                //BirdPhotos = flickr.PhotosSearch(options) ---> set species in SERVICE
             };
 
-            //string query = model.Bird.Species;
-            var options = new PhotoSearchOptions { Text = model.Bird.Species, Extras = PhotoSearchExtras.AllUrls, SafeSearch = SafetyLevel.Safe, MediaType = MediaType.Photos };
-            model.BirdPhotos = flickr.PhotosSearch(options);
-
-
-            //var bird = await _birdRepository.GetBirdDetails(id);
+            model.BirdPhotos = _flickrService.GetFlickrPhotoCollection(model.Bird.Species);
 
             if (model.Bird == null)
             {

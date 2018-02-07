@@ -7,12 +7,20 @@ using Microsoft.AspNetCore.Mvc;
 using Birder2.Models;
 using Microsoft.AspNetCore.Authorization;
 using FlickrNet;
+using Birder2.Services;
 
 namespace Birder2.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
+        private readonly IFlickrService _flickrService;
+
+        public HomeController(IFlickrService flickrService)
+        {
+            _flickrService = flickrService;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -21,31 +29,7 @@ namespace Birder2.Controllers
         [AllowAnonymous]
         public IActionResult About()
         {
-            /*
-             * Install-Package FlickrNet -Version 4.0.4-alpha  |  https://www.nuget.org/packages/FlickrNet/4.0.4-alpha
-             * Above FlickerNet package for .NET Core.  Not available through NuGet
-             * see https://github.com/samjudson/flickr-net for documentation
-             * */
-            string myFlickrApiKey = "7700051a31f80a964a5d0037ad5ed564";
-            string myFlickrSecret = "59f50feafa488bad";
-            string query = "Cyanistes caeruleus";
-
-            //Flickr flickr = new Flickr(myApiKey);
-            Flickr flickr = new Flickr(myFlickrApiKey, myFlickrSecret);
-
-            //PhotoSearchOptions options = new PhotoSearchOptions();
-
-            //options.SafeSearch = SafetyLevel.Safe;
-            //options.Licenses.Add(LicenseType.AttributionCC);
-            //options.MediaType = MediaType.Photos;
-            var options = new PhotoSearchOptions { Text = query, Extras = PhotoSearchExtras.AllUrls, SafeSearch = SafetyLevel.Safe, MediaType = MediaType.Photos };
-            //*Tags = "colorful",*/ PerPage = 20, Page = 1 };
-            //options.Text = query;
-            
-            //options.Extras = PhotoSearchExtras.AllUrls;
-
-            PhotoCollection photos = flickr.PhotosSearch(options);
-
+            PhotoCollection photos = _flickrService.GetFlickrPhotoCollection("Cyanistes caeruleus");
             return View(photos);
         }
  

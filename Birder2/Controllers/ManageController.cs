@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -9,11 +8,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Birder2.Models;
 using Birder2.Models.ManageViewModels;
 using Birder2.Services;
-using System.IO;
 using Microsoft.AspNetCore.Http;
 
 namespace Birder2.Controllers

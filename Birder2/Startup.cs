@@ -43,7 +43,9 @@ namespace Birder2
             services.AddScoped<IObservationRepository, ObservationRepository>();
             services.AddScoped<IAnalysisRepository, AnalysisRepository>();
 
+            //ToDo: Work out what type of service these should be - Singletons?
             services.AddTransient<IStream, StreamService>();
+            services.AddTransient<IFlickrService, FlickrService>();
 
             services.AddMvc();
         }
