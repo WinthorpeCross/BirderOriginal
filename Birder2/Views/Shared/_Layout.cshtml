@@ -67,11 +67,13 @@
             </div>
         </div>
 
-        <hr />
-        <footer>
-            @Html.Partial("_FooterPartial")
-        </footer>
     </div>
+    <footer class="container">
+        @Html.Partial("_FooterPartial")
+    </footer>
+    @*<footer class="container-fluid">
+        @Html.Partial("_FooterPartial")
+    </footer>*@
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -94,6 +96,7 @@
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
+
     </environment>
 
     @RenderSection("Scripts", required: false)
