@@ -19,16 +19,28 @@ namespace Birder2.Controllers
             _flickrService = flickrService;
         }
 
-        // GET: Bird
-        public async Task<IActionResult> Index(string searchString)
+        // GET: All Bird Species
+        public async Task<IActionResult> Index(string searchString, string searchType)
         {
-            if (!String.IsNullOrEmpty(searchString))
+            switch (searchType)
             {
-                return View(await _birdRepository.FilteredBirdsList(searchString));
-            }
-            else
-            {
-                return View(await _birdRepository.AllBirdsList());
+                case "CommonBirds":
+                    Console.WriteLine("Case 1");  //----> View Header title
+                    ViewData["searchType"] = searchType;
+                    ViewData["Title"] = "Common British Bird Species";
+                    return View(await _birdRepository.CommonBirdsList(searchString));
+
+                case "MyBirds":
+                    Console.WriteLine("Case 2");  //----> View Header title
+                    ViewData["searchType"] = searchType;
+                    ViewData["Title"] = "My Observed British Bird Species";
+                    return View(await _birdRepository.AllBirdsList(searchString));
+
+                default:
+                    Console.WriteLine("Default case");  //----> View Header title
+                    ViewData["searchType"] = null;
+                    ViewData["Title"] = "All British Bird Species";
+                    return View(await _birdRepository.AllBirdsList(searchString));
             }
         }
 

@@ -1,19 +1,19 @@
 ﻿@model IEnumerable<Birder2.Models.Bird>
 
 @{
-    ViewData["Title"] = "Birds";
+    //ViewData["Title"] = "Birds";
     Layout = "~/Views/Shared/_LayoutNoSidebar.cshtml";
     int counter = 0;
 }
 
-<h2>British Bird Species</h2>
+<h2>@ViewData["Title"] ||| @ViewData["searchType"]</h2>
 
-<form asp-action="Index" method="get">
+<form asp-action="Index" asp-route-searchString="SearchString" asp-route-searchType="@ViewData["searchType"]" method="get">
     <div class="form-actions no-color">
         <p>
             Find by name: <input type="text" name="SearchString" />
             <input type="submit" value="Search" class="btn btn-default" /> |
-            <a asp-action="Index">Back to Full List</a>
+            <a asp-action="Index" asp-route-searchType="@ViewData["searchType"]">Back to Full List</a>
         </p>
     </div>
 </form>

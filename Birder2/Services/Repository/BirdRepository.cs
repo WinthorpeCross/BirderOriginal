@@ -16,19 +16,43 @@ namespace Birder2.Services
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Bird>> AllBirdsList()
+        public async Task<IEnumerable<Bird>> AllBirdsList(string searchString)
         {
-            return await _dbContext.Birds.ToListAsync();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                return await _dbContext.Birds.Where(h => h.EnglishName.ToUpper().Contains(searchString.ToUpper())).ToListAsync();
+            }
+            else
+            {
+                return await _dbContext.Birds.ToListAsync();
+            }
         }
 
-        public async Task<IEnumerable<Bird>> FilteredBirdsList(string searchString)
+        public async Task<IEnumerable<Bird>> CommonBirdsList(string searchString)
         {
-            return await _dbContext.Birds.Where(h => h.EnglishName.ToUpper().Contains(searchString.ToUpper())).ToListAsync();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                return await _dbContext.Birds
+                    .Include(bs => bs.BritishStatus)
+                    .Where(bs => bs.BritishStatus.BirderStatusInBritain == "Common" && bs.EnglishName.ToUpper().Contains(searchString.ToUpper()))
+                    .ToListAsync();
+            }
+            else
+            {
+                return await _dbContext.Birds
+                    .Include(bs => bs.BritishStatus)
+                    .Where(bs => bs.BritishStatus.BirderStatusInBritain == "Common")
+                    .ToListAsync();
+            }
         }
 
         public async Task<Bird> GetBirdDetails(int? id)
         {
             return await _dbContext.Birds.SingleOrDefaultAsync(m => m.BirdId == id);
+                     //           .Include(bcs => bcs.BirdConserverationStatus)
+                     //.Include(bs => bs.BritishStatus)
+                     //.Include(o => o.Observations)
+                     //.ThenInclude(au => au.ApplicationUser)
         }
     }
 }
