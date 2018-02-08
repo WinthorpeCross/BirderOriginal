@@ -48,9 +48,14 @@ namespace Birder2.Data
             var birds = new Bird[]
             {
                 new Bird{ Class="Aves",Order="Accipitriformes",Family="Accipitridae",Genus="Accipiter",Species="Accipiter gentilis"
-                ,EnglishName="Goshawk",InternationalName="Northern Goshawk",Category="A",PopulationSize="100-1,000 pairs"
-                ,ConserverationStatusId=1,BritishStatusId=1
-                ,ThumbnailUrl="https://flic.kr/p/s2kgaL"}
+                    ,EnglishName="Goshawk",InternationalName="Northern Goshawk",Category="A",PopulationSize="100-1,000 pairs"
+                    ,ConserverationStatusId=1,BritishStatusId=1
+                    ,ThumbnailUrl="https://flic.kr/p/s2kgaL"},
+
+                new Bird{ Class="Aves",Order="Passeriformes",Family="Fringillidae",Genus="Acanthis",Species="Acanthis hornemanni"
+                    ,EnglishName="Artic Redpoll",InternationalName=null,Category="A",PopulationSize="100-1,000 records"
+                    ,ConserverationStatusId=1,BritishStatusId=1
+                    ,ThumbnailUrl=null}
             };
             foreach (Bird b in birds)
             {

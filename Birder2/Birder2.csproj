@@ -42,6 +42,12 @@
     <Compile Remove="Data\Migrations\20180201010220_w.Designer.cs" />
     <Compile Remove="Data\Migrations\20180201010541_Rebuild.cs" />
     <Compile Remove="Data\Migrations\20180201010541_Rebuild.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180202102120_Start from scratch.cs" />
+    <Compile Remove="Data\Migrations\20180202102120_Start from scratch.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180202150809_Nav.cs" />
+    <Compile Remove="Data\Migrations\20180202150809_Nav.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180206143834_AppUser.cs" />
+    <Compile Remove="Data\Migrations\20180206143834_AppUser.Designer.cs" />
   </ItemGroup>
 
 

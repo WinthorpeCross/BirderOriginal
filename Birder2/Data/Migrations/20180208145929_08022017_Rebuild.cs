@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Birder2.Data.Migrations
 {
-    public partial class Startfromscratch : Migration
+    public partial class _08022017_Rebuild : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,6 +35,11 @@ namespace Birder2.Data.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "FirstName",
+                table: "AspNetUsers",
+                nullable: true);
+
+            migrationBuilder.AddColumn<byte[]>(
+                name: "UserPhoto",
                 table: "AspNetUsers",
                 nullable: true);
 
@@ -76,12 +81,19 @@ namespace Birder2.Data.Migrations
                 {
                     TagId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ApplicationUserId = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Name = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tag", x => x.TagId);
+                    table.ForeignKey(
+                        name: "FK_Tag_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,7 +115,8 @@ namespace Birder2.Data.Migrations
                     LastUpdateDate = table.Column<DateTime>(nullable: false),
                     Order = table.Column<string>(nullable: false),
                     PopulationSize = table.Column<string>(nullable: true),
-                    Species = table.Column<string>(nullable: false)
+                    Species = table.Column<string>(nullable: false),
+                    ThumbnailUrl = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -219,6 +232,11 @@ namespace Birder2.Data.Migrations
                 table: "ObservationTag",
                 column: "ObervationId");
 
+            migrationBuilder.CreateIndex(
+                name: "IX_Tag_ApplicationUserId",
+                table: "Tag",
+                column: "ApplicationUserId");
+
             migrationBuilder.AddForeignKey(
                 name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                 table: "AspNetUserTokens",
@@ -270,6 +288,10 @@ namespace Birder2.Data.Migrations
 
             migrationBuilder.DropColumn(
                 name: "FirstName",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+                name: "UserPhoto",
                 table: "AspNetUsers");
 
             migrationBuilder.CreateIndex(

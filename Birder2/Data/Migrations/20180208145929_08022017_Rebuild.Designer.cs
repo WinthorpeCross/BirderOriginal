@@ -11,8 +11,8 @@ using System;
 namespace Birder2.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180206143834_AppUser")]
-    partial class AppUser
+    [Migration("20180208145929_08022017_Rebuild")]
+    partial class _08022017_Rebuild
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -118,6 +118,8 @@ namespace Birder2.Data.Migrations
 
                     b.Property<string>("Species")
                         .IsRequired();
+
+                    b.Property<string>("ThumbnailUrl");
 
                     b.HasKey("BirdId");
 
