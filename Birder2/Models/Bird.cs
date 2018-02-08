@@ -86,6 +86,7 @@ namespace Birder2.Models
         //{
         //    public int ProductId { get; private set; }
         //    public byte[] Thumbnail { get; set; }
+        public string ThumbnailUrl { get; set; }
         //}
 
         public byte[] Image { get; set; }

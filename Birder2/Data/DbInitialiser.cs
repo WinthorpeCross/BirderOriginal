@@ -49,7 +49,8 @@ namespace Birder2.Data
             {
                 new Bird{ Class="Aves",Order="Accipitriformes",Family="Accipitridae",Genus="Accipiter",Species="Accipiter gentilis"
                 ,EnglishName="Goshawk",InternationalName="Northern Goshawk",Category="A",PopulationSize="100-1,000 pairs"
-                ,ConserverationStatusId=1,BritishStatusId=1}
+                ,ConserverationStatusId=1,BritishStatusId=1
+                ,ThumbnailUrl="https://flic.kr/p/s2kgaL"}
             };
             foreach (Bird b in birds)
             {

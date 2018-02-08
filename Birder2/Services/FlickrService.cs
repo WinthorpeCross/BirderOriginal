@@ -1,9 +1,4 @@
 ﻿using FlickrNet;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Birder2.Services
 {
@@ -18,7 +13,11 @@ namespace Birder2.Services
             // ToDo: Implement disposable to use the using statement...
             Flickr flickr = new Flickr(myFlickrApiKey, myFlickrSecret);
             {
-                var options = new PhotoSearchOptions { Text = queryString, Extras = PhotoSearchExtras.AllUrls, SafeSearch = SafetyLevel.Safe, MediaType = MediaType.Photos };
+                var options = new PhotoSearchOptions {
+                        Text = queryString,
+                        Extras = PhotoSearchExtras.AllUrls,
+                        SafeSearch = SafetyLevel.Safe,
+                        MediaType = MediaType.Photos };
                 return flickr.PhotosSearch(options);
             }
         }
