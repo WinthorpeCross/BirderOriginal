@@ -1,4 +1,13 @@
-﻿.container--horizontal-stack {
+﻿
+.container--Top5 {
+    overflow: hidden;
+}
+
+.container--progress {
+    overflow: hidden;
+}
+
+.container--horizontal-stack {
     white-space: nowrap;
     overflow: auto;
     max-width: 100%;
