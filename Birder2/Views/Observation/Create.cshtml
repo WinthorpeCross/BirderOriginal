@@ -8,11 +8,8 @@
 
 <h2>Create</h2>
 
-<h4>Observation</h4>
-
-
-
 <hr />
+
 <div class="row">
     <div class="col-lg-12">
         <form asp-action="Create">
@@ -47,15 +44,14 @@
                 @*<select asp-for="Observation.BirdId" class="form-control" asp-items="ViewBag.BirdId"><option value="">Choose bird species...</option></select>*@
                 @Html.DropDownListFor(m => m.Observation.BirdId, new SelectList(Model.Birds, "BirdId", "EnglishName"),
                new {
-                   @class = "form-control selectpicker"
-                   //data_width = "auto",
-                   //data_live_search = "true",
-                   //data_show_subtext = "true",
+                   @class = "form-control selectpicker show-tick",
+                   title = "Choose a bird",
+                   data_live_search = "true",
+                   data_show_subtext = "true",
                })
-
                 <span asp-validation-for="Observation.BirdId" class="text-danger"></span>
-
             </div>
+
             <div class="form-group">
                 <label asp-for="Observation.Quantity" class="control-label"></label>
                 <input asp-for="Observation.Quantity" class="form-control" />

@@ -6,6 +6,7 @@ using Birder2.Models;
 using Birder2.Services;
 using Microsoft.AspNetCore.Authorization;
 using Birder2.ViewModels;
+using System;
 
 namespace Birder2.Controllers
 {
@@ -57,12 +58,10 @@ namespace Birder2.Controllers
         // GET: Observation/Create
         public async Task<IActionResult> Create()
         {
-            //var birds = await _observationRepository.AllBirdsList();
-            //ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName");
-            //return View();
             var model = new CreateObservationViewModel()
             {
-                Observation = new Observation(),
+                Observation = new Observation() { Quantity = 1, ObservationDateTime = _systemClock.Now },
+                // ToDo: include Birder category and sort so common species appear first...
                 Birds = await _observationRepository.AllBirdsList()
             };
             return View(model);
@@ -98,9 +97,13 @@ namespace Birder2.Controllers
                     return NotFound("could not add the observation");
                 }
             }
-            var birds = await _observationRepository.AllBirdsList();
-            ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName", observation.BirdId);
-            return View(observation);
+            var model = new CreateObservationViewModel()
+            {
+                Observation = observation,
+                Birds = await _observationRepository.AllBirdsList()
+            };
+
+            return View(model);
         }
 
         // GET: Observation/Edit/5
