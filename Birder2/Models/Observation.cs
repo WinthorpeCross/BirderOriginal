@@ -12,7 +12,8 @@ namespace Birder2.Models
 
         [Required]
         [Display(Name = "When?")]
-        [DisplayFormat(DataFormatString = "{0:dddd, dd MMMM yyyy HH:mm}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime)]
         public DateTime ObservationDateTime { get; set; }
 
         //public Geography LocationGeoTest { get; set; } ---> Not supported in EF Core 2.0

@@ -6,7 +6,6 @@ using Birder2.Models;
 using Birder2.Services;
 using Microsoft.AspNetCore.Authorization;
 using Birder2.ViewModels;
-using System;
 
 namespace Birder2.Controllers
 {
