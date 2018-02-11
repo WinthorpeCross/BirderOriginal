@@ -1,53 +1,65 @@
-﻿@model Birder2.Models.Observation
+﻿@model Birder2.ViewModels.CreateObservationViewModel
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
 
-@{
+@*@{
     ViewData["Title"] = "Create";
-}
+}*@
 
 <h2>Create</h2>
 
 <h4>Observation</h4>
+
+
+
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-lg-12">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ObservationDateTime" class="control-label"></label>
-                <input asp-for="ObservationDateTime" class="form-control" />
-                <span asp-validation-for="ObservationDateTime" class="text-danger"></span>
+                <label asp-for="Observation.ObservationDateTime" class="control-label"></label>
+                <input asp-for="Observation.ObservationDateTime" class="form-control" />
+                <span asp-validation-for="Observation.ObservationDateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 @*<label asp-for="Location" class="control-label"></label>*@
-                <input asp-for="Location" type="hidden" class="form-control" id="location" />
+                <input asp-for="Observation.Location" type="hidden" class="form-control" id="location" />
                 @*<span asp-validation-for="Location" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 @*<label asp-for="LocationLatitude" class="control-label"></label>*@
-                <input asp-for="LocationLatitude" type="hidden" class="form-control" id="latitude" />
+                <input asp-for="Observation.LocationLatitude" type="hidden" class="form-control" id="latitude" />
                 @*<span asp-validation-for="LocationLatitude" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 @*<label asp-for="LocationLongitude" class="control-label"></label>*@
-                <input asp-for="LocationLongitude"  type="hidden" class="form-control" id="longitude" />
+                <input asp-for="Observation.LocationLongitude" type="hidden" class="form-control" id="longitude" />
                 @*<span asp-validation-for="LocationLongitude" class="text-danger"></span>*@
             </div>
             <div class="form-group">
-                <label asp-for="Note" class="control-label"></label>
-                <input asp-for="Note" class="form-control" />
-                <span asp-validation-for="Note" class="text-danger"></span>
+                <label asp-for="Observation.Note" class="control-label"></label>
+                <input asp-for="Observation.Note" class="form-control" />
+                <span asp-validation-for="Observation.Note" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BirdId" class="control-label"></label>
-                <select asp-for="BirdId" class="form-control" asp-items="ViewBag.BirdId"><option value="">Choose bird species...</option></select>
-                <span asp-validation-for="BirdId" class="text-danger"></span>
+                <label asp-for="Observation.BirdId" class="control-label"></label>
+                @*<select asp-for="Observation.BirdId" class="form-control" asp-items="ViewBag.BirdId"><option value="">Choose bird species...</option></select>*@
+                @Html.DropDownListFor(m => m.Observation.BirdId, new SelectList(Model.Birds, "BirdId", "EnglishName"),
+               new {
+                   @class = "form-control selectpicker"
+                   //data_width = "auto",
+                   //data_live_search = "true",
+                   //data_show_subtext = "true",
+               })
+
+                <span asp-validation-for="Observation.BirdId" class="text-danger"></span>
+
             </div>
             <div class="form-group">
-                <label asp-for="Quantity" class="control-label"></label>
-                <input asp-for="Quantity" class="form-control" />
-                <span asp-validation-for="Quantity" class="text-danger"></span>
+                <label asp-for="Observation.Quantity" class="control-label"></label>
+                <input asp-for="Observation.Quantity" class="form-control" />
+                <span asp-validation-for="Observation.Quantity" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -61,8 +73,8 @@
 
 <div id="floating-panel">
     @*<input onclick="clearMarkers();" type=button value="Hide Markers">
-    <input onclick="showMarkers();" type=button value="Show All Markers">
-    <input onclick="deleteMarkers();" type=button value="Delete Markers">*@
+        <input onclick="showMarkers();" type=button value="Show All Markers">
+        <input onclick="deleteMarkers();" type=button value="Delete Markers">*@
     <input onclick="getLocation();" type=button value="get loc">
 </div>
 <div id="map" class="class--map"></div>
@@ -136,7 +148,7 @@
         deleteMarkers(); // hack that prevents more than one marker being placed on the map
         markers.push(marker);
         updateForm();
-        
+
       }
 
       // Sets the map on all markers in the array.
@@ -169,6 +181,7 @@
       }
 
 </script>
+
 
 <div>
     <a asp-action="Index">Back to List</a>

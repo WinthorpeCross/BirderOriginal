@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Birder2.Models;
 using Birder2.Services;
 using Microsoft.AspNetCore.Authorization;
+using Birder2.ViewModels;
 
 namespace Birder2.Controllers
 {
@@ -56,9 +57,15 @@ namespace Birder2.Controllers
         // GET: Observation/Create
         public async Task<IActionResult> Create()
         {
-            var birds = await _observationRepository.AllBirdsList();
-            ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName");
-            return View();
+            //var birds = await _observationRepository.AllBirdsList();
+            //ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName");
+            //return View();
+            var model = new CreateObservationViewModel()
+            {
+                Observation = new Observation(),
+                Birds = await _observationRepository.AllBirdsList()
+            };
+            return View(model);
         }
 
         // POST: Observation/Create
