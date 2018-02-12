@@ -84,6 +84,17 @@ namespace Birder2.Controllers
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+            //
+            var userName = user.UserName;
+            if (model.Username != userName)
+            {
+                var setUserNameResult = await _userManager.SetUserNameAsync(user, model.Username);
+                if (!setUserNameResult.Succeeded)
+                {
+                    throw new ApplicationException($"Unexpected error occurred setting username for user with ID '{user.Id}'.");
+                }
+            }
+
 
             var email = user.Email;
             if (model.Email != email)
