@@ -84,14 +84,14 @@ namespace Birder2.Controllers
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            //
+            // See documentation notes
             var userName = user.UserName;
             if (model.Username != userName)
-            {               
+            {
                 if (await _userManager.FindByNameAsync(model.Username) != null)
                 {
-                    StatusMessage = "That username is taken.  Please choose an alternative.";  //ToDo:
-                    return RedirectToAction(nameof(Index));
+                    ModelState.AddModelError("Username", $"Username '{model.Username}' is already taken.");
+                    return View(model);
                 }
                 var setUserNameResult = await _userManager.SetUserNameAsync(user, model.Username);
                 if (!setUserNameResult.Succeeded)
@@ -99,7 +99,7 @@ namespace Birder2.Controllers
                     throw new ApplicationException($"Unexpected error occurred setting username for user with ID '{user.Id}'.");
                 }
             }
-
+            
 
             var email = user.Email;
             if (model.Email != email)

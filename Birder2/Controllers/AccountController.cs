@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using Birder2.Models;
 using Birder2.Models.AccountViewModels;
 using Birder2.Services;
+using System.Text.RegularExpressions;
 
 namespace Birder2.Controllers
 {
@@ -57,11 +58,50 @@ namespace Birder2.Controllers
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+
+            // ANDREW !!!
+            if (model.Email.IndexOf('@') > -1)
+            {
+                //Validate email format
+                string emailRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
+                                       @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
+                                          @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
+                Regex re = new Regex(emailRegex);
+                if (!re.IsMatch(model.Email))
+                {
+                    ModelState.AddModelError("Email", "Email is not valid");
+                }
+            }
+            else
+            {
+                //validate Username format
+                string emailRegex = @"^[a-zA-Z0-9]*$";
+                Regex re = new Regex(emailRegex);
+                if (!re.IsMatch(model.Email))
+                {
+                    ModelState.AddModelError("Email", "Username is not valid");
+                }
+            }
+
             if (ModelState.IsValid)
             {
+                var userName = model.Email;
+                if (userName.IndexOf('@') > -1)
+                {
+                    var user = await _userManager.FindByEmailAsync(model.Email);
+                    if (user == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                        return View(model);
+                    }
+                    else
+                    {
+                        userName = user.UserName;
+                    }
+                }
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(userName, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -221,7 +261,7 @@ namespace Birder2.Controllers
             if (ModelState.IsValid)
             {
 
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

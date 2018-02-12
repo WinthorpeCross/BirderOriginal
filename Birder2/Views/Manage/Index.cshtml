@@ -13,46 +13,31 @@
             <div class="form-group">
                 <label asp-for="Username"></label>
                 <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email"></label>
                 @if (Model.IsEmailConfirmed)
-        {
-            <div class="input-group">
-                <input asp-for="Email" class="form-control" />
-                <span class="input-group-addon" aria-hidden="true"><span class="glyphicon glyphicon-ok text-success"></span></span>
-            </div>
-}
-else
-{
-        <input asp-for="Email" class="form-control" />
-        <button asp-action="SendVerificationEmail" class="btn btn-link">Send verification email</button>
-}
+                {
+                    <div class="input-group">
+                        <input asp-for="Email" class="form-control" />
+                        <span class="input-group-addon" aria-hidden="true"><span class="glyphicon glyphicon-ok text-success"></span></span>
+                    </div>
+                }
+                else
+                {
+                    <input asp-for="Email" class="form-control" />
+                    <button asp-action="SendVerificationEmail" class="btn btn-link">Send verification email</button>
+                }
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-            <label asp-for="UserPhoto"></label>
-            <input asp-for="Username" type="file" class="form-control" id="fileUpload" accept=".png,.jpg,.jpeg,.gif,.tif" />
-        </div>*@
-            @*<form method="post" enctype="multipart/form-data" asp-controller="UploadFiles" asp-action="Index">*@
 
             <div class="form-group">
                 <label asp-for="UserPhoto" class="control-label"></label>
                 <input asp-for="UserPhoto" type="file" class="form-control" />
             </div>
-            @*<div class="form-group">
-                <div class="col-md-10">
-                    <p>Upload one or more files using this form:</p>
-                    <input type="file" name="files" multiple />
-                </div>
-            </div>*@
-            @*<div class="form-group">
-            <div class="col-md-10">
-                <input type="submit" value="Upload" />
-            </div>
-        </div>*@
-            @*</form>*@
-            <div class="form-group">
+
+            <div class="form-group" hidden>
                 <label asp-for="PhoneNumber"></label>
                 <input asp-for="PhoneNumber" class="form-control" />
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
