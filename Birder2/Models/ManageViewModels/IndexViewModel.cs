@@ -9,6 +9,7 @@ namespace Birder2.Models.ManageViewModels
 {
     public class IndexViewModel
     {
+        //[CustomValidation]
         public string Username { get; set; }
 
         public bool IsEmailConfirmed { get; set; }

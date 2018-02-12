@@ -26,13 +26,14 @@ namespace Birder2.Models
         //public ICollection<ApplicationUser> Following { get; set; }
     }
 
-    public static class UserManagerExtensions
-    {
-       // public static ApplicationUser SetUserPhoto(this UserManager<ApplicationUser> um, byte[] photo)
+    //public static class UserManagerExtensions
+    //{
+        //public static async Task<ApplicationUser> SetUserPhoto(this UserManager<ApplicationUser> um, byte[] photo)
        // {
+            //var user = from 
             ////Make Async
             //var t = um.Users.
-            //return um?.Users?.SingleOrDefault(x => x.UserName == name);
+        //    return um?.Users?.SingleOrDefault(x => x.UserName == "l");
             //_dbContext.Observations.Update(observation);
             //await _dbContext.SaveChangesAsync();
             //return (observation);
@@ -47,5 +48,5 @@ namespace Birder2.Models
         //{
         //    return um?.Users?.SingleOrDefault(x => x.Address == address);
         //}
-    }
+   // }
 }

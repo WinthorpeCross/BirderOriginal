@@ -87,7 +87,12 @@ namespace Birder2.Controllers
             //
             var userName = user.UserName;
             if (model.Username != userName)
-            {
+            {               
+                if (await _userManager.FindByNameAsync(model.Username) != null)
+                {
+                    StatusMessage = "That username is taken.  Please choose an alternative.";  //ToDo:
+                    return RedirectToAction(nameof(Index));
+                }
                 var setUserNameResult = await _userManager.SetUserNameAsync(user, model.Username);
                 if (!setUserNameResult.Succeeded)
                 {
@@ -122,13 +127,20 @@ namespace Birder2.Controllers
             {
                 user.UserPhoto = await _stream.GetByteArray(model.UserPhoto);
             }
-
+            //var user1 = await UserManagerExtensions.SetUserPhoto(_userManager, user.UserPhoto);
             await _userManager.UpdateAsync(user);
 
             StatusMessage = "Your profile has been updated";
             return RedirectToAction(nameof(Index));
         }
         //user.UserPhoto = _stream.GetPic(model.UserPhoto); //memoryStream.ToArray();
+
+        //public static class UserManagerExtensions
+        //{
+        //    public static async Task<ApplicationUser> SetUserPhoto(TUser user, string phoneNumber)
+        //    { }
+        //}
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
