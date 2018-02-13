@@ -142,6 +142,8 @@ namespace Birder2.Controllers
         //}
 
 
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendVerificationEmail(IndexViewModel model)
@@ -164,6 +166,25 @@ namespace Birder2.Controllers
 
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SetLocation()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var model = new SetLocationViewModel
+            {
+                DefaultLocationLatitude = user.DefaultLocationLatitude,
+                DefaultLocationLongitude = user.DefaultLocationLongitude
+            };
+
+
+            return null;
         }
 
         [HttpGet]
