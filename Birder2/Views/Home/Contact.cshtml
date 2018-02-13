@@ -5,6 +5,144 @@
 <h3>@ViewData["Message"]</h3>
 
 
+<p>Geocoding</p>
+
+
+
+<p id="latitude"></p>
+<p id="longitude"></p>
+
+
+
+
+
+<div id="floating-panel">
+    <input id="address" type="text" value="search...">
+    <input id="submit" type="button" value="Geocode">
+</div>
+@*<div id="map"></div>*@
+<div id="map" class="class--map"></div>
+
+<script>
+    var marker;
+    var map;  // global map variable
+
+
+    function placeMarker(location) {
+        if (marker && marker.setPosition) {
+            //if marker already was created change positon
+            marker.setPosition(location);
+        } else {
+            //create a marker
+            marker = new google.maps.Marker({
+                position: location,
+                map: map,
+                draggable: true
+            });
+        }
+    }
+
+    function initMap() {
+        // no "var" here, initialize the global map variable
+        var observationLocation = {
+                lat: 39.8282,
+                lng: -98.5795
+            };
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 4,
+            center: observationLocation
+        });
+        document.getElementById('latitude').innerHTML = observationLocation.lat;
+        document.getElementById('longitude').innerHTML = observationLocation.lng;
+
+        var geocoder = new google.maps.Geocoder();
+
+        document.getElementById('submit').addEventListener('click', function () {
+            geocodeAddress(geocoder, map);
+        });
+
+        var contentString = "Current Default Location";
+
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+        var marker = new google.maps.Marker({
+            position: observationLocation,
+            map: map,
+            //title: 'Uluru (Ayers Rock)'
+        });
+        marker.addListener('click', function () {
+            infowindow.open(map, marker);
+        });
+    }
+    google.maps.event.addDomListener(window, "load", initMap);
+
+    function geocodeAddress(geocoder, resultsMap) {
+        var address = document.getElementById('address').value;
+        geocoder.geocode({
+            'address': address
+        }, function (results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+                resultsMap.setCenter(results[0].geometry.location);
+                placeMarker(results[0].geometry.location);
+                updateForm(results);
+                
+
+            } else {
+                alert('We could not locate your location for the following reason: ' + status);
+            }
+        });
+
+    }
+
+    function updateForm(results) {
+        document.getElementById('latitude').innerHTML = results[0].geometry.location.lat();
+        document.getElementById('longitude').innerHTML = results[0].geometry.location.lng();
+    }
+</script>
+
+<script>
+
+    var map = null;
+    var geocoder = null;
+
+    function initialize() {
+        if (GBrowserIsCompatible()) {
+            map = new GMap2(document.getElementById("map_canvas"));
+            map.setCenter(new GLatLng(37.4419, -122.1419), 1);
+            map.setUIToDefault();
+            geocoder = new GClientGeocoder();
+        }
+    }
+
+    function showAddress(address) {
+        if (geocoder) {
+            geocoder.getLatLng(
+                address,
+                function (point) {
+                    if (!point) {
+                        alert(address + " not found");
+                    } else {
+                        map.setCenter(point, 15);
+                        var marker = new GMarker(point, { draggable: true });
+                        map.addOverlay(marker);
+                        GEvent.addListener(marker, "dragend", function () {
+                            marker.openInfoWindowHtml(marker.getLatLng().toUrlValue(6));
+                        });
+                        GEvent.addListener(marker, "click", function () {
+                            marker.openInfoWindowHtml(marker.getLatLng().toUrlValue(6));
+                        });
+                        GEvent.trigger(marker, "click");
+                    }
+                }
+            );
+        }
+    }
+</script>
+
+<hr />
+
 <div class="container">
     <div class="row">
         <div class='col-sm-6'>
