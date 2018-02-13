@@ -18,7 +18,6 @@ using System.Text.RegularExpressions;
 namespace Birder2.Controllers
 {
     [Authorize]
-
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
