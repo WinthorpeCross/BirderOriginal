@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Birder2.Data.Migrations
 {
-    public partial class _08022017_Rebuild : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
