@@ -18,6 +18,7 @@ using System.Text.RegularExpressions;
 namespace Birder2.Controllers
 {
     [Authorize]
+
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
@@ -260,8 +261,14 @@ namespace Birder2.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    DefaultLocationLatitude = 54.972237,
+                    DefaultLocationLongitude = -2.4608560000000352 
+                    //Haltwhistle, Northumberland https://en.wikipedia.org/wiki/Haltwhistle
+                };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
