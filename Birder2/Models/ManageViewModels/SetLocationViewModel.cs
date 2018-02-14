@@ -10,5 +10,7 @@ namespace Birder2.Models.ManageViewModels
         public double DefaultLocationLatitude { get; set; }
 
         public double DefaultLocationLongitude { get; set; }
+
+        public string StatusMessage { get; set; }
     }
 }

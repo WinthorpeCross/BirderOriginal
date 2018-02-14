@@ -13,6 +13,10 @@ namespace Birder2.Views.Manage
 
         public static string Index => "Index";
 
+        //
+        public static string SetLocation => "SetLocation";
+        //
+
         public static string ChangePassword => "ChangePassword";
 
         public static string ExternalLogins => "ExternalLogins";
@@ -20,6 +24,10 @@ namespace Birder2.Views.Manage
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
 
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
+
+        //
+        public static string SetLocationNavClass(ViewContext viewContext) => PageNavClass(viewContext, SetLocation);
+        //
 
         public static string ChangePasswordNavClass(ViewContext viewContext) => PageNavClass(viewContext, ChangePassword);
 

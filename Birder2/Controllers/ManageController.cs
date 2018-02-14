@@ -180,10 +180,19 @@ namespace Birder2.Controllers
             var model = new SetLocationViewModel
             {
                 DefaultLocationLatitude = user.DefaultLocationLatitude,
-                DefaultLocationLongitude = user.DefaultLocationLongitude
+                DefaultLocationLongitude = user.DefaultLocationLongitude,
+                StatusMessage = StatusMessage
             };
 
+            return View(model);
 
+            //return null;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SetLocation(SetLocationViewModel model)
+        {
             return null;
         }
 
