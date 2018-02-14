@@ -185,15 +185,38 @@ namespace Birder2.Controllers
             };
 
             return View(model);
-
-            //return null;
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SetLocation(SetLocationViewModel model)
         {
-            return null;
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var coOrdinate = user.DefaultLocationLatitude + "," + user.DefaultLocationLongitude;
+            if (model.DefaultLocationLatitude + "," + model.DefaultLocationLongitude != coOrdinate)
+            {
+                user.DefaultLocationLatitude = model.DefaultLocationLatitude;
+                user.DefaultLocationLongitude = model.DefaultLocationLongitude;
+
+                var setCoOrdinate = await _userManager.UpdateAsync(user);
+                if (!setCoOrdinate.Succeeded)
+                {
+                    throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
+                }
+            }
+
+            StatusMessage = "Your default location has been updated";
+            return RedirectToAction(nameof(SetLocation));
         }
 
         [HttpGet]

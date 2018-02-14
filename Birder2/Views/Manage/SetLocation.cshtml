@@ -8,9 +8,11 @@
 
 @Html.Partial("_StatusMessage", Model.StatusMessage)
 
-<p class="text-info">
-    You do not have a local username/password for this site. Add a local
-    account so you can log in without an external login.
+<p>
+    On this page you can set your default location.  With a default
+    location, it is quicker to record observations in your regular spot - 
+    like your garden.
+    New accounts have <a href="url">Haltwhistle</a> as the default location.
 </p>
 
 <div class="row">
@@ -18,14 +20,10 @@
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group" hidden>
-                <label asp-for="DefaultLocationLatitude"></label>
                 <input asp-for="DefaultLocationLatitude" class="form-control" id="latitude" />
-                @*<span asp-validation-for="NewPassword" class="text-danger"></span>*@
             </div>
             <div class="form-group" hidden>
-                <label asp-for="DefaultLocationLongitude"></label>
                 <input asp-for="DefaultLocationLongitude" class="form-control" id="longitude" />
-                @*<span asp-validation-for="ConfirmPassword" class="text-danger"></span>*@
             </div>
             <button type="submit" id="set" class="btn btn-default"></button>
         </form>
