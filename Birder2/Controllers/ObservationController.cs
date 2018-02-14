@@ -10,13 +10,13 @@ using Birder2.ViewModels;
 namespace Birder2.Controllers
 {
     [Authorize]
-    public class ObservationController : Controller
+    public class x_ObservationController : Controller
     {
         private readonly IApplicationUserAccessor _userAccessor;
         private readonly IObservationRepository _observationRepository;
         private readonly IMachineClockDateTime _systemClock;
 
-        public ObservationController(IApplicationUserAccessor userAccessor,
+        public x_ObservationController(IApplicationUserAccessor userAccessor,
                                      IObservationRepository observationRepository,
                                      IMachineClockDateTime systemClock)
         {
@@ -122,7 +122,7 @@ namespace Birder2.Controllers
             try
             {
                 var birds = await _observationRepository.AllBirdsList();
-                ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName", observation.BirdId);
+                ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName"); //, observation.BirdId);
                 return View(observation);
             }
             catch
@@ -173,7 +173,7 @@ namespace Birder2.Controllers
                 return RedirectToAction(nameof(Index));  //return to details view?
             }
             var birds = await _observationRepository.AllBirdsList();
-            ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName", observation.BirdId);
+            ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName"); //, observation.BirdId);
             return View(observation);
         }
 

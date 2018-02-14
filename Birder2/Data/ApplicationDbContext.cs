@@ -22,6 +22,7 @@ namespace Birder2.Data
         public DbSet<BritishStatus> BritishStatuses { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<ObservationTag> ObservationTags { get; set; }
+        public DbSet<ObservationBird> ObservationBirds { get; set; }
 
 
 
@@ -51,6 +52,23 @@ namespace Birder2.Data
                     .HasOne(ot => ot.Tag)
                     .WithMany(t => t.ObservationTags)
                     .HasForeignKey(ot => ot.TagId);
+
+            builder.Entity<ObservationBird>().ToTable("ObservationBird");
+
+            builder.Entity<ObservationBird>()
+                    .HasKey(ot => new { ot.BirdId, ot.ObervationId });
+
+            builder.Entity<ObservationBird>()
+                    .HasOne(pt => pt.Bird)
+                    .WithMany(t => t.ObservationBirds)
+                    .HasForeignKey(pt => pt.BirdId);
+
+            builder.Entity<ObservationBird>()
+                .HasOne(pt => pt.Observation)
+                .WithMany(p => p.ObservationBirds)
+                .HasForeignKey(pt => pt.ObervationId);
+
+
         }
     }
 }

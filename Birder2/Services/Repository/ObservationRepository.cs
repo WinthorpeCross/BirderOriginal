@@ -25,7 +25,7 @@ namespace Birder2.Services
         {
             var observations = _dbContext.Observations
                     .Where(u => u.ApplicationUser == user)
-                    .Include(b => b.Bird)
+                    .Include(b => b.ObservationBirds)
                     .Include(ot => ot.ObservationTags)
                         .ThenInclude(t => t.Tag)
                     .OrderByDescending(d => d.ObservationDateTime)
@@ -37,7 +37,7 @@ namespace Birder2.Services
         public async Task<Observation> GetObservationDetails(int? id)
         {
             return await _dbContext.Observations
-                .Include(b => b.Bird)
+                .Include(b => b.ObservationBirds)
                 .Include(au => au.ApplicationUser)
                 .Include(ot => ot.ObservationTags)
                     .ThenInclude(t => t.Tag)

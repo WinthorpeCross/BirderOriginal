@@ -17,7 +17,7 @@ namespace Birder2.Models
         public DateTime ObservationDateTime { get; set; }
 
         //public Geography LocationGeoTest { get; set; } ---> Not supported in EF Core 2.0
-        public string Location { get; set; }  //use instead of separate lat/long if Geography comes available
+        //public string Location { get; set; }  //use instead of separate lat/long if Geography comes available
         public double LocationLatitude { get; set; }
         public double LocationLongitude { get; set; }
 
@@ -30,11 +30,11 @@ namespace Birder2.Models
         public DateTime CreationDate { get; set; }
         public DateTime LastUpdateDate { get; set; }
 
-        [Display(Name = "Observed species")]
-        public int BirdId { get; set; }
+        //[Display(Name = "Observed species")]
+        //public int BirdId { get; set; }
         public string ApplicationUserId { get; set; }
 
-        public Bird Bird { get; set; }
+        public ICollection<ObservationBird> ObservationBirds { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public ICollection<ObservationTag> ObservationTags { get; set; }
 
