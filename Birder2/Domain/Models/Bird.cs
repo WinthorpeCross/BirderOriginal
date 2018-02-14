@@ -101,7 +101,7 @@ namespace Birder2.Models
 
         public int BritishStatusId { get; set; }
 
-        public ICollection<ObservationBird> ObservationBirds { get; set; }
+        public ICollection<Observation> Observations { get; set; }
 
         public ConserverationStatus BirdConserverationStatus { get; set; }
 

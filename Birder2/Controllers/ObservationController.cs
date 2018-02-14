@@ -6,17 +6,18 @@ using Birder2.Models;
 using Birder2.Services;
 using Microsoft.AspNetCore.Authorization;
 using Birder2.ViewModels;
+using System.Collections.Generic;
 
 namespace Birder2.Controllers
 {
     [Authorize]
-    public class x_ObservationController : Controller
+    public class ObservationController : Controller
     {
         private readonly IApplicationUserAccessor _userAccessor;
         private readonly IObservationRepository _observationRepository;
         private readonly IMachineClockDateTime _systemClock;
 
-        public x_ObservationController(IApplicationUserAccessor userAccessor,
+        public ObservationController(IApplicationUserAccessor userAccessor,
                                      IObservationRepository observationRepository,
                                      IMachineClockDateTime systemClock)
         {
@@ -59,10 +60,13 @@ namespace Birder2.Controllers
         {
             var model = new CreateObservationViewModel()
             {
-                Observation = new Observation() { /*Quantity = 1,*/ ObservationDateTime = _systemClock.Now },
+                Observation = new Observation() { Quantity = 1, ObservationDateTime = _systemClock.Now },
+                
                 // ToDo: include Birder category and sort so common species appear first...
                 Birds = await _observationRepository.AllBirdsList()
             };
+            //model.Observation.ObservationBirds = new List<ObservationBird>();
+            //model.Observation.ObservationBirds.Add(new ObservationBird { Quantity = 1 });
             return View(model);
         }
 

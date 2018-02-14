@@ -21,20 +21,20 @@ namespace Birder2.Models
         public double LocationLatitude { get; set; }
         public double LocationLongitude { get; set; }
 
-        //[Required]
-        //[Display(Name = "How many?")]
-        //public int Quantity { get; set; }
+        [Required]
+        [Display(Name = "How many?")]
+        public int Quantity { get; set; }
 
         public string Note { get; set; }
 
         public DateTime CreationDate { get; set; }
         public DateTime LastUpdateDate { get; set; }
 
-        //[Display(Name = "Observed species")]
-        //public int BirdId { get; set; }
+        [Display(Name = "Observed species")]
+        public int BirdId { get; set; }
         public string ApplicationUserId { get; set; }
 
-        public ICollection<ObservationBird> ObservationBirds { get; set; }
+        public Bird Bird { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public ICollection<ObservationTag> ObservationTags { get; set; }
 
