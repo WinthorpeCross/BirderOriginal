@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 
-namespace Birder2.Models.ManageViewModels
+namespace Birder2.ViewModels
 {
     public class ExternalLoginsViewModel
     {

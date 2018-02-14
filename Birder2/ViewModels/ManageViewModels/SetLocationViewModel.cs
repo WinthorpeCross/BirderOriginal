@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Birder2.Models.ManageViewModels
+namespace Birder2.ViewModels
 {
     public class SetLocationViewModel
     {

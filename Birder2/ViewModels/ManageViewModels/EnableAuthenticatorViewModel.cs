@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Birder2.Models.ManageViewModels
+namespace Birder2.ViewModels
 {
     public class EnableAuthenticatorViewModel
     {

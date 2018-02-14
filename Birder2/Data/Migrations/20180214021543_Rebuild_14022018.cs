@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
-using System.Collections.Generic;
 
 namespace Birder2.Data.Migrations
 {
-    public partial class initial : Migration
+    public partial class Rebuild_14022018 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -33,13 +32,8 @@ namespace Birder2.Data.Migrations
                 nullable: false,
                 defaultValue: 0.0);
 
-            migrationBuilder.AddColumn<string>(
-                name: "FirstName",
-                table: "AspNetUsers",
-                nullable: true);
-
             migrationBuilder.AddColumn<byte[]>(
-                name: "UserPhoto",
+                name: "ProfileImage",
                 table: "AspNetUsers",
                 nullable: true);
 
@@ -287,11 +281,7 @@ namespace Birder2.Data.Migrations
                 table: "AspNetUsers");
 
             migrationBuilder.DropColumn(
-                name: "FirstName",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "UserPhoto",
+                name: "ProfileImage",
                 table: "AspNetUsers");
 
             migrationBuilder.CreateIndex(

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Birder2.Models.ManageViewModels
+namespace Birder2.ViewModels
 {
     public class IndexViewModel
     {
@@ -22,8 +22,8 @@ namespace Birder2.Models.ManageViewModels
         [Display(Name = "Phone number")]
         public string PhoneNumber { get; set; }
 
-        [Display(Name = "UserPhoto")]
-        public IFormFile UserPhoto { get; set; }
+        [Display(Name = "Profile Image")]
+        public IFormFile ProfileImage { get; set; }
 
         public string StatusMessage { get; set; }
     }

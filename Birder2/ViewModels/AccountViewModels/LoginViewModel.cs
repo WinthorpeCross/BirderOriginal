@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-namespace Birder2.Models.AccountViewModels
+
+namespace Birder2.ViewModels
 {
     public class LoginViewModel
     {

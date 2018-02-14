@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Birder2.Models;
-using Birder2.Models.ManageViewModels;
+using Birder2.ViewModels;
 using Birder2.Services;
 using Microsoft.AspNetCore.Http;
 
@@ -123,9 +123,9 @@ namespace Birder2.Controllers
 
             //Photo....
             //var userPhoto = user.UserPhoto;
-            if (model.UserPhoto != null)
+            if (model.ProfileImage != null)
             {
-                user.UserPhoto = await _stream.GetByteArray(model.UserPhoto);
+                user.ProfileImage = await _stream.GetByteArray(model.ProfileImage);
             }
             //var user1 = await UserManagerExtensions.SetUserPhoto(_userManager, user.UserPhoto);
             await _userManager.UpdateAsync(user);

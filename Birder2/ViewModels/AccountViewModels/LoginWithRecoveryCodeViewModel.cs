@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Birder2.Models.AccountViewModels
+namespace Birder2.ViewModels
 {
     public class LoginWithRecoveryCodeViewModel
     {

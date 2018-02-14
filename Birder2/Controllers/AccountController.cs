@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Birder2.Models;
-using Birder2.Models.AccountViewModels;
+using Birder2.ViewModels;
 using Birder2.Services;
 using System.Text.RegularExpressions;
 

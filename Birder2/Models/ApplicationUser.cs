@@ -9,14 +9,12 @@ namespace Birder2.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public string FirstName { get; set; }
-
         public double DefaultLocationLatitude { get; set; }
 
         public double DefaultLocationLongitude { get; set; }
 
-        [Display(Name = "UserPhoto")]
-        public byte[] UserPhoto { get; set; }
+        [Display(Name = "Profile Image")]
+        public byte[] ProfileImage { get; set; }
 
         public ICollection<Observation> Observations { get; set; }
 

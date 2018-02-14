@@ -11,8 +11,8 @@ using System;
 namespace Birder2.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180213005938_initial")]
-    partial class initial
+    [Migration("20180214021543_Rebuild_14022018")]
+    partial class Rebuild_14022018
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,8 +40,6 @@ namespace Birder2.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("FirstName");
-
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
@@ -58,14 +56,14 @@ namespace Birder2.Data.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
+                    b.Property<byte[]>("ProfileImage");
+
                     b.Property<string>("SecurityStamp");
 
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
-
-                    b.Property<byte[]>("UserPhoto");
 
                     b.HasKey("Id");
 

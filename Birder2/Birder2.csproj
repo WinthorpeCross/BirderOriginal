@@ -48,6 +48,8 @@
     <Compile Remove="Data\Migrations\20180202150809_Nav.Designer.cs" />
     <Compile Remove="Data\Migrations\20180206143834_AppUser.cs" />
     <Compile Remove="Data\Migrations\20180206143834_AppUser.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180213005938_initial.cs" />
+    <Compile Remove="Data\Migrations\20180213005938_initial.Designer.cs" />
   </ItemGroup>
 
 
