@@ -1,8 +1,4 @@
-﻿using Birder2.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Birder2.Models
 {
@@ -12,5 +8,9 @@ namespace Birder2.Models
         public Bird Bird { get; set; }
         public int ObervationId { get; set; }
         public Observation Observation { get; set; }
+
+        [Required]
+        [Display(Name = "How many?")]
+        public int Quantity { get; set; }
     }
 }

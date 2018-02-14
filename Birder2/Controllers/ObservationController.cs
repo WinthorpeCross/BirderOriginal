@@ -59,7 +59,7 @@ namespace Birder2.Controllers
         {
             var model = new CreateObservationViewModel()
             {
-                Observation = new Observation() { Quantity = 1, ObservationDateTime = _systemClock.Now },
+                Observation = new Observation() { /*Quantity = 1,*/ ObservationDateTime = _systemClock.Now },
                 // ToDo: include Birder category and sort so common species appear first...
                 Birds = await _observationRepository.AllBirdsList()
             };

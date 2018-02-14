@@ -21,9 +21,9 @@ namespace Birder2.Models
         public double LocationLatitude { get; set; }
         public double LocationLongitude { get; set; }
 
-        [Required]
-        [Display(Name = "How many?")]
-        public int Quantity { get; set; }
+        //[Required]
+        //[Display(Name = "How many?")]
+        //public int Quantity { get; set; }
 
         public string Note { get; set; }
 
