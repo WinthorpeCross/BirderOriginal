@@ -60,14 +60,29 @@ namespace Birder2.Controllers
         {
             var model = new CreateObservationViewModel()
             {
-                Observation = new Observation() { Quantity = 1, ObservationDateTime = _systemClock.Now },
-                
-                // ToDo: include Birder category and sort so common species appear first...
+                Observation = new Observation() { /*Quantity = 1,*/ ObservationDateTime = _systemClock.Now },
+
+                // ToDo: include Birder category to sort the list by common species
                 Birds = await _observationRepository.AllBirdsList()
             };
-            //model.Observation.ObservationBirds = new List<ObservationBird>();
-            //model.Observation.ObservationBirds.Add(new ObservationBird { Quantity = 1 });
+
+            
+            //model.MyOberservations.Add(new Observation { Quantity = 1 });
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddTweet(CreateObservationViewModel viewModel)
+        { // copy BIND from below for validation ---->
+            try
+            {
+                //viewModel.Tweets.Add(viewModel.Tweet);
+                return PartialView("_AllTweets", viewModel);
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         // POST: Observation/Create
@@ -75,24 +90,32 @@ namespace Birder2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ObservationId,ObservationDateTime,Location,Note,BirdId,LocationLatitude,LocationLongitude")] Observation observation)
+        public async Task<IActionResult> Create(CreateObservationViewModel viewModel)
+            //[Bind("Observation.ObservationId,Observation.ObservationDateTime,Observation.Location,Observation.Note,Observation.BirdId,Observation.LocationLatitude,Observation.LocationLongitude")] CreateObservationViewModel viewModel)
         {
             var user = await _userAccessor.GetUser();
             if (user == null)
             {
                 return RedirectToAction("Login", "Account");
             }
-            observation.ApplicationUser = user;
+            viewModel.Observation.ApplicationUser = user;
+
+            viewModel.MyOberservations.Add(viewModel.Observation);
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    observation.CreationDate = _systemClock.Now;
-                    observation.LastUpdateDate = _systemClock.Now;
+                    viewModel.MyOberservations.Add(viewModel.Observation);
+                    viewModel.Birds = await _observationRepository.AllBirdsList();
+                    //viewModel.Observation.CreationDate = _systemClock.Now;
+                    //viewModel.Observation.LastUpdateDate = _systemClock.Now;
 
-                    await _observationRepository.AddObservation(observation);
-                    return RedirectToAction(nameof(Index));
+                    //await _observationRepository.AddObservation(observation);
+                    //return RedirectToAction(nameof(Index));
+                    viewModel.Observation.Quantity = 1;
+                    viewModel.Observation.Bird = null;
+                    return View(viewModel);
                 }
                 catch
                 {
@@ -100,13 +123,14 @@ namespace Birder2.Controllers
                     return NotFound("could not add the observation");
                 }
             }
-            var model = new CreateObservationViewModel()
-            {
-                Observation = observation,
-                Birds = await _observationRepository.AllBirdsList()
-            };
 
-            return View(model);
+            //var model = new CreateObservationViewModel()
+            //{
+            //    Observation = observation,
+            //    Birds = await _observationRepository.AllBirdsList()
+            //};
+
+            return View(viewModel);
         }
 
         // GET: Observation/Edit/5
@@ -126,7 +150,7 @@ namespace Birder2.Controllers
             try
             {
                 var birds = await _observationRepository.AllBirdsList();
-                ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName"); //, observation.BirdId);
+                ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName", observation.BirdId);
                 return View(observation);
             }
             catch
@@ -177,7 +201,7 @@ namespace Birder2.Controllers
                 return RedirectToAction(nameof(Index));  //return to details view?
             }
             var birds = await _observationRepository.AllBirdsList();
-            ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName"); //, observation.BirdId);
+            ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName", observation.BirdId);
             return View(observation);
         }
 

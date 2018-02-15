@@ -1,6 +1,35 @@
 ﻿@using FlickrNet
 @model PhotoCollection
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
+<div data-bind="foreach: users">
+    <input type="text" data-bind="value: name" />
+    <input type="number" data-bind="value: qty" /><br />
+</div>
+<button data-bind="click: addUser">Add user</button>
+
+<ul data-bind="foreach: users">
+    <li data-bind="text: name"></li>
+    <li data-bind="text: qty"></li>
+</ul>
+
+<script>
+
+    var model = {
+        users: ko.observableArray(),
+        addUser: function () {
+            this.users.push({ name: ko.observable() });
+        }
+    };
+
+    ko.applyBindings(model);
+</script>
+
+
+
+
+
+
 <p id="latitude"></p>
 <p id="longitude"></p>
 <p id="location"></p>
@@ -11,7 +40,7 @@
 </div>
 <div id="map" class="class--map"></div>
 
-                    
+
 <script>
     var markers = [];
 
