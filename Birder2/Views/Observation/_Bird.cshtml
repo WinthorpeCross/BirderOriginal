@@ -3,21 +3,23 @@
 
 <section>
 
-        row #1 [get from loop]
+    <p>#1 <b>@Model.Quantity </b> @Model.Bird.EnglishName <i> @Model.Bird.Species</i></p>
+    @*row #1 [get from loop]*@
 
-        <div class="form-group">
-            <label asp-for="Quantity" class="control-label"></label>
-            <input asp-for="Quantity" class="form-control" />
-            @*<span asp-validation-for="BrirdName" class="text-danger"></span>*@
-        </div>
+    @*<input type="text" data-bind="value: name" />
+    <input type="number" data-bind="value: qty" /><br />
+    <label asp-for="Quantity" class="control-label"></label>
+    <input asp-for="Quantity" class="form-control" />*@
+    @*<span asp-validation-for="BrirdName" class="text-danger"></span>*@
 
-        @*<div class="form-group">
+
+    @*<div class="form-group">
             <label asp-for="Quantity" class="control-label"></label>
             <input asp-for="Quantity" class="form-control" />
             <span asp-validation-for="Quantity" class="text-danger"></span>
         </div>*@
 
-    </section>
+</section>
 
 @*<section>
 

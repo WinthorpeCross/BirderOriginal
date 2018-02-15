@@ -7,6 +7,7 @@ namespace Birder2.Services
     public interface IObservationRepository
     {
         Task<IEnumerable<Bird>> AllBirdsList();
+        Task<Bird> GetSelectedBird(int id);
         Task<IEnumerable<Observation>> MyObservationsList(ApplicationUser user);
         Task<Observation> GetObservationDetails(int? id);
         Task<Observation> AddObservation(Observation observation);

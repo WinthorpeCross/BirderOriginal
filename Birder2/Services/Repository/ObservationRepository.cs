@@ -1,7 +1,6 @@
 ﻿using Birder2.Data;
 using Birder2.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +18,11 @@ namespace Birder2.Services
         public async Task<IEnumerable<Bird>> AllBirdsList()
         {
             return await _dbContext.Birds.ToListAsync();
+        }
+
+        public async Task<Bird> GetSelectedBird(int id)
+        {
+            return await _dbContext.Birds.SingleOrDefaultAsync(m => m.BirdId == id);
         }
 
         public async Task<IEnumerable<Observation>> MyObservationsList(ApplicationUser user)

@@ -60,14 +60,12 @@ namespace Birder2.Controllers
         {
             var model = new CreateObservationViewModel()
             {
-                Observation = new Observation() { /*Quantity = 1,*/ ObservationDateTime = _systemClock.Now },
+                Observation = new Observation() { Quantity = 1, ObservationDateTime = _systemClock.Now },
 
                 // ToDo: include Birder category to sort the list by common species
                 Birds = await _observationRepository.AllBirdsList()
             };
 
-            
-            //model.MyOberservations.Add(new Observation { Quantity = 1 });
             return View(model);
         }
 
@@ -100,12 +98,13 @@ namespace Birder2.Controllers
             }
             viewModel.Observation.ApplicationUser = user;
 
-            viewModel.MyOberservations.Add(viewModel.Observation);
+            //viewModel.MyOberservations.Add(viewModel.Observation);
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    viewModel.Observation.Bird = await _observationRepository.GetSelectedBird(viewModel.Observation.BirdId);
                     viewModel.MyOberservations.Add(viewModel.Observation);
                     viewModel.Birds = await _observationRepository.AllBirdsList();
                     //viewModel.Observation.CreationDate = _systemClock.Now;
@@ -113,8 +112,8 @@ namespace Birder2.Controllers
 
                     //await _observationRepository.AddObservation(observation);
                     //return RedirectToAction(nameof(Index));
-                    viewModel.Observation.Quantity = 1;
-                    viewModel.Observation.Bird = null;
+                    //viewModel.Observation.Quantity = 1;
+                    //viewModel.Observation.Bird = null;
                     return View(viewModel);
                 }
                 catch
