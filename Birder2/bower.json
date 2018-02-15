@@ -1,0 +1,28 @@
+{
+  "name": "Birder2",
+  "authors": [
+    "Andrew <andrew.cross11@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals",
+    "node",
+    "yui"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "knockout-sortable": "v1.1.0",
+    "knockout": "v3.4.2"
+  }
+}
