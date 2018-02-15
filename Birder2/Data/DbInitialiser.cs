@@ -61,6 +61,29 @@ namespace Birder2.Data
             {
                 context.Birds.Add(b);
             }
+
+            var orders = new SalesOrder[]
+            {
+                new SalesOrder
+                {
+                    CustomerName = "Adam",
+                    PONumber = "9876"
+                    //SalesOrderItems =
+                    //{
+                    //                new SalesOrderItem{ProductCode = "ABC", Quantity = 10, UnitPrice = 1.23m },
+                    //                new SalesOrderItem{ProductCode = "XYZ", Quantity = 7, UnitPrice = 14.57m },
+                    //                new SalesOrderItem{ProductCode = "SAMPLE", Quantity = 3, UnitPrice = 15.00m }
+                    //}
+                },
+                new SalesOrder { CustomerName = "Michael" },
+                new SalesOrder { CustomerName = "David", PONumber = "Acme 9" }
+            };
+
+            foreach (SalesOrder so in orders)
+            {
+                context.SalesOrders.Add(so);
+            }
+
             context.SaveChanges();
         }
     }

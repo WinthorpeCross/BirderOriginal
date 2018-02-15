@@ -7,6 +7,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
 <ul class="nav navbar-nav">
+    <li><a asp-area="" asp-controller="SalesOrders" asp-action="Index">Sales</a></li>
     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
     <li><a asp-area="" asp-controller="Observation" asp-action="Index">My Observations</a></li>
     <li class="dropdown">

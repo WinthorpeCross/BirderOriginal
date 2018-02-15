@@ -22,6 +22,8 @@ namespace Birder2.Data
         public DbSet<BritishStatus> BritishStatuses { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<ObservationTag> ObservationTags { get; set; }
+
+        public DbSet<SalesOrder> SalesOrders { get; set; }
         
 
 
@@ -32,6 +34,7 @@ namespace Birder2.Data
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+            builder.Entity<SalesOrder>().ToTable("SalesOrder");
 
             builder.Entity<Observation>().ToTable("Observation");
             builder.Entity<Bird>().ToTable("Bird");

@@ -1,0 +1,72 @@
+﻿@model Birder2.ViewModels.SalesOrderViewModel
+@using Newtonsoft.Json
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
+
+@{ string data = JsonConvert.SerializeObject(Model); }
+<script src="~/js/salesorderviewmodel.js"></script>
+@*<script src="~/Scripts/knockout-3.1.0.js"></script>*@
+<script src="~/Scripts/knockout.mapping-latest.js"></script>
+<script type='text/javascript' src="~/js/knockout-3.4.2.js"></script>
+<script type='text/javascript'>
+        var salesOrderViewModel = new SalesOrderViewModel(@Html.Raw(data));
+        ko.applyBindings(salesOrderViewModel);
+</script>
+
+
+<p data-bind="text: MessageToClient"></p>
+
+<div>
+    <div>
+        <label>Customer Name</label>
+        <span data-bind="text: CustomerName"></span>
+    </div>
+    <div>
+        <label>PO No.</label>
+        <span data-bind="text: PONumber"></span>
+    </div>
+</div>
+
+
+@*@section scripts{
+        <script src="~/Scripts/knockout-3.1.0.js"></script>
+        <script src="~/Scripts/knockout.mapping-latest.js"></script>
+
+        <script src="~/Scripts/jquery.validate.js"></script>
+        <script src="~/Scripts/jquery-validate.bootstrap-tooltip.js"></script>
+
+        <script src="~/Scripts/salesorderviewmodel.js"></script>
+        @*<script type="text/javascript">
+                var salesOrderViewModel = new SalesOrderViewModel(@Html.Raw(data));
+                ko.applyBindings(salesOrderViewModel);
+            </script>
+    }*@
+
+
+
+
+
+
+@*<div>
+        <h4>SalesOrder</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.CustomerName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CustomerName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PONumber)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PONumber)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.SalesOrderId">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>*@
