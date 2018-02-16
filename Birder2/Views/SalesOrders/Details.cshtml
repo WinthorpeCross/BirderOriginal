@@ -1,18 +1,21 @@
 ﻿@model Birder2.ViewModels.SalesOrderViewModel
 @using Newtonsoft.Json
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-debug.js"></script>*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
 
 @{ string data = JsonConvert.SerializeObject(Model); }
-<script src="~/js/salesorderviewmodel.js"></script>
+
+@*<script src="~/js/site.js"></script>*@
 @*<script src="~/Scripts/knockout-3.1.0.js"></script>*@
-<script src="~/Scripts/knockout.mapping-latest.js"></script>
-<script type='text/javascript' src="~/js/knockout-3.4.2.js"></script>
-<script type='text/javascript'>
+@*<script src="~/Scripts/knockout.mapping-latest.js"></script>*@
+@*<script type='text/javascript' src="~/js/knockout-3.4.2.js"></script>*@
+@*<script>
         var salesOrderViewModel = new SalesOrderViewModel(@Html.Raw(data));
         ko.applyBindings(salesOrderViewModel);
-</script>
+</script>*@
 
 
 <p data-bind="text: MessageToClient"></p>
@@ -27,7 +30,38 @@
         <span data-bind="text: PONumber"></span>
     </div>
 </div>
+    
+<hr />
 
+@*<div data-bind="foreach: users">
+    <input type="text" data-bind="value: name" /><br />
+</div>
+<button data-bind="click: addUser">Add user</button>
+
+<ul data-bind="foreach: users">
+    <li data-bind="text: name"></li>
+</ul>*@
+
+<script>
+
+    //var model = {
+    //    users: ko.observableArray(),
+    //    addUser: function () {
+    //        this.users.push({ name: ko.observable() });
+    //    }
+    //};
+
+    //ko.applyBindings(model);
+
+        var salesOrderViewModel = new SalesOrderViewModel(@Html.Raw(data));
+    ko.applyBindings(salesOrderViewModel);
+
+    SalesOrderItemViewModel = function (data) {
+        var self = this;
+        ko.mapping.fromJS(data, {}, self);
+    }
+
+</script>
 
 @*@section scripts{
         <script src="~/Scripts/knockout-3.1.0.js"></script>

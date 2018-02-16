@@ -1,16 +1,15 @@
 ﻿@using FlickrNet
 @model PhotoCollection
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
+
 <div data-bind="foreach: users">
-    <input type="text" data-bind="value: name" />
-    <input type="number" data-bind="value: qty" /><br />
+    <input type="text" data-bind="value: name" /><br />
 </div>
 <button data-bind="click: addUser">Add user</button>
 
 <ul data-bind="foreach: users">
     <li data-bind="text: name"></li>
-    <li data-bind="text: qty"></li>
 </ul>
 
 <script>
@@ -23,6 +22,7 @@
     };
 
     ko.applyBindings(model);
+
 </script>
 
 
