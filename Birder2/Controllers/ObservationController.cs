@@ -88,33 +88,26 @@ namespace Birder2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateObservationViewModel viewModel)
-            //[Bind("Observation.ObservationId,Observation.ObservationDateTime,Observation.Location,Observation.Note,Observation.BirdId,Observation.LocationLatitude,Observation.LocationLongitude")] CreateObservationViewModel viewModel)
+        public async Task<IActionResult> Create([Bind("ObservationId,ObservationDateTime,Location,Note,BirdId,LocationLatitude,LocationLongitude")] Observation observation)
         {
             var user = await _userAccessor.GetUser();
             if (user == null)
             {
                 return RedirectToAction("Login", "Account");
             }
-            viewModel.Observation.ApplicationUser = user;
-
-            //viewModel.MyOberservations.Add(viewModel.Observation);
+            observation.ApplicationUser = user;
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    viewModel.Observation.Bird = await _observationRepository.GetSelectedBird(viewModel.Observation.BirdId);
-                    viewModel.MyOberservations.Add(viewModel.Observation);
-                    viewModel.Birds = await _observationRepository.AllBirdsList();
-                    //viewModel.Observation.CreationDate = _systemClock.Now;
-                    //viewModel.Observation.LastUpdateDate = _systemClock.Now;
+                    //viewModel.Observation.Bird = await _observationRepository.GetSelectedBird(viewModel.Observation.BirdId);
+                    //viewModel.MyOberservations.Add(viewModel.Observation);
+                    observation.CreationDate = _systemClock.Now;
+                    observation.LastUpdateDate = _systemClock.Now;
 
-                    //await _observationRepository.AddObservation(observation);
-                    //return RedirectToAction(nameof(Index));
-                    //viewModel.Observation.Quantity = 1;
-                    //viewModel.Observation.Bird = null;
-                    return View(viewModel);
+                    await _observationRepository.AddObservation(observation);
+                    return RedirectToAction(nameof(Index));
                 }
                 catch
                 {
@@ -123,13 +116,13 @@ namespace Birder2.Controllers
                 }
             }
 
-            //var model = new CreateObservationViewModel()
-            //{
-            //    Observation = observation,
-            //    Birds = await _observationRepository.AllBirdsList()
-            //};
+            var model = new CreateObservationViewModel()
+            {
+                Observation = observation,
+                Birds = await _observationRepository.AllBirdsList()
+            };
 
-            return View(viewModel);
+            return View(model);
         }
 
         // GET: Observation/Edit/5

@@ -53,8 +53,20 @@ namespace Birder2.Controllers
 
             //var model = JsonConvert.SerializeObject(salesOrderViewModel);
             return View(salesOrderViewModel);
+        }
 
-            //return View(salesOrder);
+        public JsonResult Save([FromBody]SalesOrderViewModel salesOrderViewModel)
+        {
+            //SalesModel salesOrder = new SalesModel();
+            //salesOrder.CustomerName = salesOrderViewModel.CustomerName;
+            //salesOrder.PONumber = salesOrderViewModel.PONumber;
+
+            //_context.SalesModels.Add(salesOrder);
+            //_context.SaveChanges();
+
+            //salesOrderViewModel.MessageToClient = string.Format("{0}’s sales order has been added to the database.", salesOrder.CustomerName);
+
+            return Json(new { salesOrderViewModel });
         }
 
         // GET: SalesOrders/Create

@@ -1,106 +1,43 @@
 ﻿@model Birder2.ViewModels.SalesOrderViewModel
 @using Newtonsoft.Json
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
-@*<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-debug.js"></script>*@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.js"></script>
+@{
+    ViewBag.Title = "Create a Sales Order";
+}
 
+@{
+    string data = JsonConvert.SerializeObject(Model);
+}
 
-@{ string data = JsonConvert.SerializeObject(Model); }
-
-@*<script src="~/js/site.js"></script>*@
-@*<script src="~/Scripts/knockout-3.1.0.js"></script>*@
-@*<script src="~/Scripts/knockout.mapping-latest.js"></script>*@
-@*<script type='text/javascript' src="~/js/knockout-3.4.2.js"></script>*@
-@*<script>
+@section scripts{
+    <script src="~/js/knockout-3.4.2.js"></script>
+    <script src="~/js/knockout.mapping-latest.js"></script>
+    <script src="~/js/salesorderviewmodel.js"></script>
+    <script type="text/javascript">
         var salesOrderViewModel = new SalesOrderViewModel(@Html.Raw(data));
         ko.applyBindings(salesOrderViewModel);
-</script>*@
-
+    </script>
+}
 
 <p data-bind="text: MessageToClient"></p>
 
 <div>
     <div>
-        <label>Customer Name</label>
-        <span data-bind="text: CustomerName"></span>
+        <label>Customer Name:</label>
+        <input data-bind="value: CustomerName" />
     </div>
     <div>
-        <label>PO No.</label>
-        <span data-bind="text: PONumber"></span>
+        <label>P.O. Number:</label>
+        <input data-bind="value: PONumber" />
     </div>
 </div>
-    
-<hr />
 
-@*<div data-bind="foreach: users">
-    <input type="text" data-bind="value: name" /><br />
-</div>
-<button data-bind="click: addUser">Add user</button>
+<p><button data-bind="click: save">Save</button></p>
 
-<ul data-bind="foreach: users">
-    <li data-bind="text: name"></li>
-</ul>*@
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
 
 <script>
 
-    //var model = {
-    //    users: ko.observableArray(),
-    //    addUser: function () {
-    //        this.users.push({ name: ko.observable() });
-    //    }
-    //};
-
-    //ko.applyBindings(model);
-
-        var salesOrderViewModel = new SalesOrderViewModel(@Html.Raw(data));
-    ko.applyBindings(salesOrderViewModel);
-
-    SalesOrderItemViewModel = function (data) {
-        var self = this;
-        ko.mapping.fromJS(data, {}, self);
-    }
-
 </script>
-
-@*@section scripts{
-        <script src="~/Scripts/knockout-3.1.0.js"></script>
-        <script src="~/Scripts/knockout.mapping-latest.js"></script>
-
-        <script src="~/Scripts/jquery.validate.js"></script>
-        <script src="~/Scripts/jquery-validate.bootstrap-tooltip.js"></script>
-
-        <script src="~/Scripts/salesorderviewmodel.js"></script>
-        @*<script type="text/javascript">
-                var salesOrderViewModel = new SalesOrderViewModel(@Html.Raw(data));
-                ko.applyBindings(salesOrderViewModel);
-            </script>
-    }*@
-
-
-
-
-
-
-@*<div>
-        <h4>SalesOrder</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.CustomerName)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CustomerName)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.PONumber)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.PONumber)
-            </dd>
-        </dl>
-    </div>
-    <div>
-        <a asp-action="Edit" asp-route-id="@Model.SalesOrderId">Edit</a> |
-        <a asp-action="Index">Back to List</a>
-    </div>*@

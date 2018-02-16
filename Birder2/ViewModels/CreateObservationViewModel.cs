@@ -8,42 +8,21 @@ namespace Birder2.ViewModels
     {
         public Observation Observation { get; set; }
         public IEnumerable<Bird> Birds { get; set; }
+    }
+}
 
-        private ICollection<Observation> _myObservations;
-        public ICollection<Observation> MyOberservations
-        {
-            get
-            {
-                return _myObservations ?? (_myObservations = new List<Observation>());
-            }
-            set
-            {
-                _myObservations = value;
-            }
-        }
-
-        //public List<BirdyViewModel> h { get; set; }
-        //private ICollection<BirdyViewModel> _courseAssignments;
-        //public ICollection<BirdyViewModel> CourseAssignments
+        //private ICollection<Observation> _myObservations;
+        //public ICollection<Observation> MyOberservations
         //{
         //    get
         //    {
-        //        return _courseAssignments ?? (_courseAssignments = new List<BirdyViewModel>());
+        //        return _myObservations ?? (_myObservations = new List<Observation>());
         //    }
         //    set
         //    {
-        //        _courseAssignments = value;
+        //        _myObservations = value;
         //    }
         //}
-    }
 
-    //public class BirdyViewModel
-    //{
-    //    [Required]
-    //    public string BrirdName { get; set; }
 
-    //    [Required]
-    //    public int Quantity { get; set; }
-    //}
-}
 
