@@ -55,20 +55,6 @@ namespace Birder2.Controllers
             return View(salesOrderViewModel);
         }
 
-        //public JsonResult Save([FromBody]SalesOrderViewModel salesOrderViewModel)
-        //{
-            //SalesModel salesOrder = new SalesModel();
-            //salesOrder.CustomerName = salesOrderViewModel.CustomerName;
-            //salesOrder.PONumber = salesOrderViewModel.PONumber;
-
-            //_context.SalesModels.Add(salesOrder);
-            //_context.SaveChanges();
-
-            //salesOrderViewModel.MessageToClient = string.Format("{0}’s sales order has been added to the database.", salesOrder.CustomerName);
-
-        //    return Json(new { salesOrderViewModel });
-        //}
-
         // GET: SalesOrders/Create
         public IActionResult Create()
         {
@@ -77,15 +63,6 @@ namespace Birder2.Controllers
             //salesOrderViewModel.ObjectState = ObjectState.Added;
             return View(salesOrderViewModel);
         }
-
-        //[HttpPost]
-        //public JsonResult Save([FromBody]SalesOrderViewModel salesOrderViewModel)
-
-        ////[HttpPost]
-        //public IActionResult Go()
-        //{
-        //    return View("Index");
-        //}
 
         [HttpPost]
         public JsonResult Save([FromBody]SalesOrderViewModel salesOrderViewModel)
@@ -96,26 +73,11 @@ namespace Birder2.Controllers
 
             _context.SalesOrders.Add(salesOrder);
             _context.SaveChanges();
-
+            salesOrderViewModel.SalesOrderId = salesOrder.SalesOrderId;
             salesOrderViewModel.MessageToClient = string.Format("{0}’s sales order has been added to the database.", salesOrder.CustomerName);
 
             return Json(JsonConvert.SerializeObject(salesOrderViewModel));
-
-            //return Json(salesOrderViewModel);
-            //return RedirectToAction(nameof(Index));
-            //return Json( new { salesOrderViewModel });
-
-            //return NotFound();
-            //return RedirectToAction("Index");
-            //return View("Index");
-            //return DoSomething();
         }
-
-        private IActionResult DoSomething()
-        {
-            return RedirectToAction(nameof(Index));
-        }
-
 
         // GET: SalesOrders/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -138,9 +100,8 @@ namespace Birder2.Controllers
                 PONumber = salesOrder.PONumber
             };
             salesOrderViewModel.MessageToClient = string.Format("The original value of Customer Name is {0}.", salesOrderViewModel.CustomerName);
+
             return View(salesOrderViewModel);
-
-
         }
 
         // POST: SalesOrders/Edit/5
@@ -238,3 +199,13 @@ namespace Birder2.Controllers
         }
     }
 }
+
+
+//return Json(salesOrderViewModel);
+//return RedirectToAction(nameof(Index));
+//return Json( new { salesOrderViewModel });
+
+//return NotFound();
+//return RedirectToAction("Index");
+//return View("Index");
+//return DoSomething();

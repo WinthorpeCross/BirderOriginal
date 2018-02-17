@@ -31,12 +31,17 @@ namespace Birder2.ViewModels
 
         //public List<int> SalesOrderItemsToDelete { get; set; }
 
-        [DataMember]
+
         public string MessageToClient { get; set; }
 
         //public ObjectState ObjectState { get; set; }
 
         //public byte[] RowVersion { get; set; }
     }
+
+    //public interface IObjectWithState
+    //{
+    //    public IObjectWithState ObjectState {
+    //}
 }
 

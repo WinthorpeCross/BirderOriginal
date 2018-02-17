@@ -12,26 +12,36 @@
                 "content-type": "application/json; charset=utf-8"
             },
             success: function (data) {
+                var obj = JSON.parse(data);
+                self.PONumber(obj.PONumber);
+                self.CustomerName(obj.CustomerName);
+                self.MessageToClient(obj.MessageToClient);
+                self.SalesOrderId(obj.SalesOrderId);
+
+                window.location.replace("./Details/" + obj.SalesOrderId);
+
                 //alert("success");
                 //console.log(obj);
                 //ko.fromJS(data.salesOrderViewModel, {}, self);
-                var obj = JSON.parse(data);
-                self.PONumber(obj.PONumber);
-                self.MessageToClient(obj.CustomerName);
-                self.MessageToClient(obj.MessageToClient);
+                //if (data.SalesOrderViewModel)
+
+                //var obj = JSON.parse(data);
+                //    self.PONumber(obj.PONumber);
+                //    self.CustomerName(obj.CustomerName);
+                //    self.MessageToClient(obj.MessageToClient);
             },
             error: function (textStatus, errorThrown) {
                 alert("error");
+                //window.location.replace("./Details/" + obj.SalesOrderId);
+                //redirect to an error page?
             },
-            always: function (data) {
-            },
+            //always: function (data) {
+            //},
         });
     };
 };
             
             
-            
-
 
 
 
