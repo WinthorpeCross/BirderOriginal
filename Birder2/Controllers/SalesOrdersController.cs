@@ -92,8 +92,8 @@ namespace Birder2.Controllers
 
             salesOrderViewModel.MessageToClient = string.Format("{0}’s sales order has been added to the database.", salesOrder.CustomerName);
 
-            //return Json(JsonConvert.SerializeObject(salesOrderViewModel));
-            return Json( new { salesOrderViewModel });
+             return Json(JsonConvert.SerializeObject(salesOrderViewModel));
+            //return Json( new { salesOrderViewModel });
         }
 
         // POST: SalesOrders/Create

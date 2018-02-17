@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
 namespace Birder2.ViewModels
 {
+    //[DataContract]
     public class SalesOrderViewModel
     {
         //public SalesOrderViewModel()
@@ -18,15 +20,18 @@ namespace Birder2.ViewModels
         //[Required(ErrorMessage = "Server: You cannot create a sales order unless you supply the customer's name.")]
         //[StringLength(30, ErrorMessage = "Server: Customer names must be 30 characters or shorter.")]
         //[CheckScore(3.14)]
+        //DataMember]
         public string CustomerName { get; set; }
 
         //[StringLength(10, ErrorMessage = "Server: PO numbers must be 10 characters or shorter.")]
+        //[DataMember]
         public string PONumber { get; set; }
 
         //public List<SalesOrderItemViewModel> SalesOrderItems { get; set; }
 
         //public List<int> SalesOrderItemsToDelete { get; set; }
 
+        [DataMember]
         public string MessageToClient { get; set; }
 
         //public ObjectState ObjectState { get; set; }
