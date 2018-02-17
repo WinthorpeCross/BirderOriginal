@@ -12,7 +12,10 @@
     <script src="~/js/salesorderviewmodel.js"></script>
     <script type="text/javascript">
         var salesOrderViewModel = new SalesOrderViewModel(@Html.Raw(data));
-        ko.applyBindings(salesOrderViewModel);
+        //ko.applyBindings(salesOrderViewModel);
+        $(document).ready(function () {
+            ko.applyBindings(salesOrderViewModel);
+        });
     </script>
 }
 <p data-bind="text: MessageToClient"></p>
@@ -27,11 +30,10 @@
     </div>
 </div>
 
-
 <p><button data-bind="click: save">Save</button></p>
 
-
-
-<script>
-
-</script>
+@*<script>
+        $(document).ready(function () {
+            ko.applyBindings(salesOrderViewModel);
+        });
+</script>*@

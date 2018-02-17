@@ -1,39 +1,37 @@
-﻿@model Birder2.Models.SalesOrder
-
+﻿@model Birder2.ViewModels.SalesOrderViewModel
+@using Newtonsoft.Json
 @{
-    ViewData["Title"] = "Edit";
+    ViewBag.Title = "Edit Order Details";
 }
-
-<h2>Edit</h2>
-
-<h4>SalesOrder</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="SalesOrderId" />
-            <div class="form-group">
-                <label asp-for="CustomerName" class="control-label"></label>
-                <input asp-for="CustomerName" class="form-control" />
-                <span asp-validation-for="CustomerName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PONumber" class="control-label"></label>
-                <input asp-for="PONumber" class="form-control" />
-                <span asp-validation-for="PONumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
+@{
+    string data = JsonConvert.SerializeObject(Model);
+}
+@section scripts{
+    <script src="~/js/knockout-3.4.2.js"></script>
+    <script src="~/js/knockout.mapping-latest.js"></script>
+    <script src="~/js/salesorderviewmodel.js"></script>
+    <script type="text/javascript">
+        var salesOrderViewModel = new SalesOrderViewModel(@Html.Raw(data));
+        ko.applyBindings(salesOrderViewModel);
+    </script>
+}
+<p data-bind="text: MessageToClient"></p>
+<div>
+    <div>
+        <label>Customer Name:</label>
+        <input data-bind="value: CustomerName" />
+    </div>
+    <div>
+        <label>P.O. Number:</label>
+        <input data-bind="value: PONumber" />
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+<p><button data-bind="click: save">Save</button></p>
+
+
+
+<script>
+
+</script>

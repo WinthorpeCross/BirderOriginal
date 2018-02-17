@@ -12,12 +12,19 @@
                 "content-type": "application/json; charset=utf-8"
             },
             success: function (data) {
-                if (data.salesOrderViewModel)
-                    ko.mapping.fromJS(data.salesOrderViewModel, {}, self);
+                //alert("success");
+                //console.log(obj);
+                //ko.fromJS(data.salesOrderViewModel, {}, self);
+                var obj = JSON.parse(data);
+                self.PONumber(obj.PONumber);
+                self.MessageToClient(obj.CustomerName);
+                self.MessageToClient(obj.MessageToClient);
+            },
+            error: function (textStatus, errorThrown) {
+                alert("error");
             },
             always: function (data) {
-                console.log(data);
-            }
+            },
         });
     };
 };

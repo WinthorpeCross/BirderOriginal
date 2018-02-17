@@ -80,9 +80,16 @@ namespace Birder2.Controllers
 
         //[HttpPost]
         //public JsonResult Save([FromBody]SalesOrderViewModel salesOrderViewModel)
-        [HttpPost] //("[action]")]
+
+        ////[HttpPost]
+        //public IActionResult Go()
+        //{
+        //    return View("Index");
+        //}
+
+        [HttpPost]
         public JsonResult Save([FromBody]SalesOrderViewModel salesOrderViewModel)
-        { 
+        {
             SalesOrder salesOrder = new SalesOrder();
             salesOrder.CustomerName = salesOrderViewModel.CustomerName;
             salesOrder.PONumber = salesOrderViewModel.PONumber;
@@ -92,25 +99,23 @@ namespace Birder2.Controllers
 
             salesOrderViewModel.MessageToClient = string.Format("{0}’s sales order has been added to the database.", salesOrder.CustomerName);
 
-             return Json(JsonConvert.SerializeObject(salesOrderViewModel));
+            return Json(JsonConvert.SerializeObject(salesOrderViewModel));
+
+            //return Json(salesOrderViewModel);
+            //return RedirectToAction(nameof(Index));
             //return Json( new { salesOrderViewModel });
+
+            //return NotFound();
+            //return RedirectToAction("Index");
+            //return View("Index");
+            //return DoSomething();
         }
 
-        // POST: SalesOrders/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SalesOrderId,CustomerName,PONumber")] SalesOrder salesOrder)
+        private IActionResult DoSomething()
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(salesOrder);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(salesOrder);
+            return RedirectToAction(nameof(Index));
         }
+
 
         // GET: SalesOrders/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -134,6 +139,8 @@ namespace Birder2.Controllers
             };
             salesOrderViewModel.MessageToClient = string.Format("The original value of Customer Name is {0}.", salesOrderViewModel.CustomerName);
             return View(salesOrderViewModel);
+
+
         }
 
         // POST: SalesOrders/Edit/5
@@ -170,6 +177,31 @@ namespace Birder2.Controllers
             }
             return View(salesOrder);
         }
+
+
+
+
+
+
+
+
+        // POST: SalesOrders/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("SalesOrderId,CustomerName,PONumber")] SalesOrder salesOrder)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(salesOrder);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(salesOrder);
+        }
+
+
 
         // GET: SalesOrders/Delete/5
         public async Task<IActionResult> Delete(int? id)
