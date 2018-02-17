@@ -2,15 +2,33 @@
     var self = this;
     ko.mapping.fromJS(data, {}, self);
 
-    //self.save = function () {
-    //    $.ajax({
-    //        url: "/Sales/Save/",
-    //        type: "POST",
-    //        data: ko.toJSON(self, dataConverter),
-    //        contentType: "application/json",
-    //        success: function (data) {
-    //            if (data.salesOrderViewModel != null)
-    //                ko.mapping.fromJS(data.salesOrderViewModel, {}, self);
+    self.save = function () {
+        $.ajax({
+            url: "/SalesOrders/Save/",
+            type: "POST",
+            data: ko.toJSON(self),
+            headers:
+            {
+                "content-type": "application/json; charset=utf-8"
+            },
+            success: function (data) {
+                if (data.salesOrderViewModel)
+                    ko.mapping.fromJS(data.salesOrderViewModel, {}, self);
+            },
+            always: function (data) {
+                console.log(data);
+            }
+        });
+    };
+};
+            
+            
+            
+
+
+
+
+
 
     //            if (data.newLocation != null)
     //                window.location = data.newLocation;
@@ -53,7 +71,7 @@
     //    if (salesOrderItem.SalesOrderItemId() > 0 && self.SalesOrderItemsToDelete.indexOf(salesOrderItem.SalesOrderItemId()) == -1)
     //        self.SalesOrderItemsToDelete.push(salesOrderItem.SalesOrderItemId());
     //};
-};
+//};
 
 
 
@@ -61,110 +79,110 @@
 
 
 
-var ObjectState = {
-    Unchanged: 0,
-    Added: 1,
-    Modified: 2,
-    Deleted: 3
-};
+    //var ObjectState = {
+    //    Unchanged: 0,
+    //    Added: 1,
+    //    Modified: 2,
+    //    Deleted: 3
+    //};
 
 
-var salesOrderItemMapping = {
-    'SalesOrderItems': {
-        key: function (salesOrderItem) {
-            return ko.utils.unwrapObservable(salesOrderItem.SalesOrderItemId);
-        },
-        create: function (options) {
-            return new SalesOrderItemViewModel(options.data);
-        }
-    }
-};
-
-
-var dataConverter = function (key, value) {
-    if (key === 'RowVersion' && Array.isArray(value)) {
-        var str = String.fromCharCode.apply(null, value);
-        return btoa(str);
-    }
-
-    return value;
-};
-
-
-SalesOrderItemViewModel = function (data) {
-    var self = this;
-    ko.mapping.fromJS(data, {}, self);
-
-    self.flagSalesOrderItemAsEdited = function () {
-        if (self.ObjectState() != ObjectState.Added) {
-            self.ObjectState(ObjectState.Modified);
-        }
-
-        return true;
-    },
-
-        self.ExtendedPrice = ko.computed(function () {
-            return (self.Quantity() * self.UnitPrice()).toFixed(2);
-        });
-};
-
-
-
-
-
-//$("form").validate({
-//    submitHandler: function () {
-//        salesOrderViewModel.save();
-//    },
-
-//    rules: {
-//        CustomerName: {
-//            required: true,
-//            maxlength: 30
+//var salesOrderItemMapping = {
+//    'SalesOrderItems': {
+//        key: function (salesOrderItem) {
+//            return ko.utils.unwrapObservable(salesOrderItem.SalesOrderItemId);
 //        },
-//        PONumber: {
-//            maxlength: 10
-//        },
-//        ProductCode: {
-//            required: true,
-//            maxlength: 15,
-//            alphaonly: true
-//        },
-//        Quantity: {
-//            required: true,
-//            digits: true,
-//            range: [1, 1000000]
-//        },
-//        UnitPrice: {
-//            required: true,
-//            number: true,
-//            range: [0, 100000]
-//        }
-//    },
-
-//    messages: {
-//        CustomerName: {
-//            required: "You cannot create a sales order unless you supply the customer's name.",
-//            maxlength: "Customer names must be 30 characters or shorter."
-//        },
-//        ProductCode: {
-//            alphaonly: "Product codes consist of letters only."
-//        }
-//    },
-
-//    tooltip_options: {
-//        CustomerName: {
-//            placement: 'right'
-//        },
-//        PONumber: {
-//            placement: 'right'
+//        create: function (options) {
+//            return new SalesOrderItemViewModel(options.data);
 //        }
 //    }
-//});
+//};
 
 
-//$.validator.addMethod("alphaonly",
-//    function (value) {
-//        return /^[A-Za-z]+$/.test(value);
-//    }
-//);
+//var dataConverter = function (key, value) {
+//            if (key === 'RowVersion' && Array.isArray(value)) {
+//                var str = String.fromCharCode.apply(null, value);
+//                return btoa(str);
+//            }
+
+//            return value;
+//        };
+
+
+//        SalesOrderItemViewModel = function (data) {
+//            var self = this;
+//            ko.mapping.fromJS(data, {}, self);
+
+//            self.flagSalesOrderItemAsEdited = function () {
+//                if (self.ObjectState() != ObjectState.Added) {
+//                    self.ObjectState(ObjectState.Modified);
+//                }
+
+//                return true;
+//            },
+
+//                self.ExtendedPrice = ko.computed(function () {
+//                    return (self.Quantity() * self.UnitPrice()).toFixed(2);
+//                });
+//        };
+
+
+
+
+
+        //$("form").validate({
+        //    submitHandler: function () {
+        //        salesOrderViewModel.save();
+        //    },
+
+        //    rules: {
+        //        CustomerName: {
+        //            required: true,
+        //            maxlength: 30
+        //        },
+        //        PONumber: {
+        //            maxlength: 10
+        //        },
+        //        ProductCode: {
+        //            required: true,
+        //            maxlength: 15,
+        //            alphaonly: true
+        //        },
+        //        Quantity: {
+        //            required: true,
+        //            digits: true,
+        //            range: [1, 1000000]
+        //        },
+        //        UnitPrice: {
+        //            required: true,
+        //            number: true,
+        //            range: [0, 100000]
+        //        }
+        //    },
+
+        //    messages: {
+        //        CustomerName: {
+        //            required: "You cannot create a sales order unless you supply the customer's name.",
+        //            maxlength: "Customer names must be 30 characters or shorter."
+        //        },
+        //        ProductCode: {
+        //            alphaonly: "Product codes consist of letters only."
+        //        }
+        //    },
+
+        //    tooltip_options: {
+        //        CustomerName: {
+        //            placement: 'right'
+        //        },
+        //        PONumber: {
+        //            placement: 'right'
+        //        }
+        //    }
+        //});
+
+
+        //$.validator.addMethod("alphaonly",
+        //    function (value) {
+        //        return /^[A-Za-z]+$/.test(value);
+        //    }
+        //);

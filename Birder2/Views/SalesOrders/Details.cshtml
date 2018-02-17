@@ -1,14 +1,11 @@
 ﻿@model Birder2.ViewModels.SalesOrderViewModel
 @using Newtonsoft.Json
-
 @{
-    ViewBag.Title = "Create a Sales Order";
+    ViewBag.Title = "Sales Order Details";
 }
-
 @{
     string data = JsonConvert.SerializeObject(Model);
 }
-
 @section scripts{
     <script src="~/js/knockout-3.4.2.js"></script>
     <script src="~/js/knockout.mapping-latest.js"></script>
@@ -18,25 +15,21 @@
         ko.applyBindings(salesOrderViewModel);
     </script>
 }
-
 <p data-bind="text: MessageToClient"></p>
-
 <div>
     <div>
         <label>Customer Name:</label>
-        <input data-bind="value: CustomerName" />
+        <span data-bind="text: CustomerName" />
     </div>
     <div>
         <label>P.O. Number:</label>
-        <input data-bind="value: PONumber" />
+        <span data-bind="text: PONumber" />
     </div>
 </div>
 
 <p><button data-bind="click: save">Save</button></p>
 
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
 
 <script>
 

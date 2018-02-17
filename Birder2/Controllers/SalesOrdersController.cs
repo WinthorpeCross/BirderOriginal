@@ -55,8 +55,8 @@ namespace Birder2.Controllers
             return View(salesOrderViewModel);
         }
 
-        public JsonResult Save([FromBody]SalesOrderViewModel salesOrderViewModel)
-        {
+        //public JsonResult Save([FromBody]SalesOrderViewModel salesOrderViewModel)
+        //{
             //SalesModel salesOrder = new SalesModel();
             //salesOrder.CustomerName = salesOrderViewModel.CustomerName;
             //salesOrder.PONumber = salesOrderViewModel.PONumber;
@@ -66,13 +66,34 @@ namespace Birder2.Controllers
 
             //salesOrderViewModel.MessageToClient = string.Format("{0}’s sales order has been added to the database.", salesOrder.CustomerName);
 
-            return Json(new { salesOrderViewModel });
-        }
+        //    return Json(new { salesOrderViewModel });
+        //}
 
         // GET: SalesOrders/Create
         public IActionResult Create()
         {
-            return View();
+            SalesOrderViewModel salesOrderViewModel = new SalesOrderViewModel();
+            salesOrderViewModel.MessageToClient = "I originated from the viewmodel, rather than the model.";
+            //salesOrderViewModel.ObjectState = ObjectState.Added;
+            return View(salesOrderViewModel);
+        }
+
+        //[HttpPost]
+        //public JsonResult Save([FromBody]SalesOrderViewModel salesOrderViewModel)
+        [HttpPost] //("[action]")]
+        public JsonResult Save([FromBody]SalesOrderViewModel salesOrderViewModel)
+        { 
+            SalesOrder salesOrder = new SalesOrder();
+            salesOrder.CustomerName = salesOrderViewModel.CustomerName;
+            salesOrder.PONumber = salesOrderViewModel.PONumber;
+
+            _context.SalesOrders.Add(salesOrder);
+            _context.SaveChanges();
+
+            salesOrderViewModel.MessageToClient = string.Format("{0}’s sales order has been added to the database.", salesOrder.CustomerName);
+
+            //return Json(JsonConvert.SerializeObject(salesOrderViewModel));
+            return Json( new { salesOrderViewModel });
         }
 
         // POST: SalesOrders/Create
@@ -104,7 +125,15 @@ namespace Birder2.Controllers
             {
                 return NotFound();
             }
-            return View(salesOrder);
+            //
+            SalesOrderViewModel salesOrderViewModel = new SalesOrderViewModel()
+            {
+                SalesOrderId = salesOrder.SalesOrderId,
+                CustomerName = salesOrder.CustomerName,
+                PONumber = salesOrder.PONumber
+            };
+            salesOrderViewModel.MessageToClient = string.Format("The original value of Customer Name is {0}.", salesOrderViewModel.CustomerName);
+            return View(salesOrderViewModel);
         }
 
         // POST: SalesOrders/Edit/5
