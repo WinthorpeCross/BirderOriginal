@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Birder2.ViewModels
+﻿namespace Birder2.ViewModels
 {
     //<---- *****Move to a new branch when observation is setup with Knockout ***** ---->
 
