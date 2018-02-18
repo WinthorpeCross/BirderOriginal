@@ -11,8 +11,8 @@ using System;
 namespace Birder2.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180218124131_SalesOrderItem")]
-    partial class SalesOrderItem
+    [Migration("20180218163352_restart")]
+    partial class restart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -415,7 +415,7 @@ namespace Birder2.Data.Migrations
             modelBuilder.Entity("Birder2.Models.SalesOrderItem", b =>
                 {
                     b.HasOne("Birder2.Models.SalesOrder", "SalesOrder")
-                        .WithMany()
+                        .WithMany("SalesOrderItems")
                         .HasForeignKey("SalesOrderId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -50,6 +50,18 @@
     <Compile Remove="Data\Migrations\20180206143834_AppUser.Designer.cs" />
     <Compile Remove="Data\Migrations\20180213005938_initial.cs" />
     <Compile Remove="Data\Migrations\20180213005938_initial.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180214021543_Rebuild_14022018.cs" />
+    <Compile Remove="Data\Migrations\20180214021543_Rebuild_14022018.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180214151244_Many-Many Observation-Bird relationship.cs" />
+    <Compile Remove="Data\Migrations\20180214151244_Many-Many Observation-Bird relationship.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180214160002_Qty moved to ObservationBird.cs" />
+    <Compile Remove="Data\Migrations\20180214160002_Qty moved to ObservationBird.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180214172553_refresh.cs" />
+    <Compile Remove="Data\Migrations\20180214172553_refresh.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180215155335_d.cs" />
+    <Compile Remove="Data\Migrations\20180215155335_d.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180215162629_f.cs" />
+    <Compile Remove="Data\Migrations\20180215162629_f.Designer.cs" />
   </ItemGroup>
 
 

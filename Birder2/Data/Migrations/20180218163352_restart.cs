@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
+using System.Collections.Generic;
 
 namespace Birder2.Data.Migrations
 {
-    public partial class Rebuild_14022018 : Migration
+    public partial class restart : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -70,6 +71,20 @@ namespace Birder2.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SalesOrder",
+                columns: table => new
+                {
+                    SalesOrderId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CustomerName = table.Column<string>(nullable: true),
+                    PONumber = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SalesOrder", x => x.SalesOrderId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tag",
                 columns: table => new
                 {
@@ -130,6 +145,28 @@ namespace Birder2.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SalesOrderItems",
+                columns: table => new
+                {
+                    SalesOrderItemId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ProductCode = table.Column<string>(nullable: true),
+                    Quantity = table.Column<int>(nullable: false),
+                    SalesOrderId = table.Column<int>(nullable: false),
+                    UnitPrice = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SalesOrderItems", x => x.SalesOrderItemId);
+                    table.ForeignKey(
+                        name: "FK_SalesOrderItems_SalesOrder_SalesOrderId",
+                        column: x => x.SalesOrderId,
+                        principalTable: "SalesOrder",
+                        principalColumn: "SalesOrderId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Observation",
                 columns: table => new
                 {
@@ -139,7 +176,6 @@ namespace Birder2.Data.Migrations
                     BirdId = table.Column<int>(nullable: false),
                     CreationDate = table.Column<DateTime>(nullable: false),
                     LastUpdateDate = table.Column<DateTime>(nullable: false),
-                    Location = table.Column<string>(nullable: true),
                     LocationLatitude = table.Column<double>(nullable: false),
                     LocationLongitude = table.Column<double>(nullable: false),
                     Note = table.Column<string>(nullable: true),
@@ -227,6 +263,11 @@ namespace Birder2.Data.Migrations
                 column: "ObervationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SalesOrderItems_SalesOrderId",
+                table: "SalesOrderItems",
+                column: "SalesOrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tag_ApplicationUserId",
                 table: "Tag",
                 column: "ApplicationUserId");
@@ -250,10 +291,16 @@ namespace Birder2.Data.Migrations
                 name: "ObservationTag");
 
             migrationBuilder.DropTable(
+                name: "SalesOrderItems");
+
+            migrationBuilder.DropTable(
                 name: "Observation");
 
             migrationBuilder.DropTable(
                 name: "Tag");
+
+            migrationBuilder.DropTable(
+                name: "SalesOrder");
 
             migrationBuilder.DropTable(
                 name: "Bird");

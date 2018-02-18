@@ -31,4 +31,4 @@ namespace Birder2.ViewModels
         //public byte[] RowVersion { get; set; }
     }
 }
-}
+

@@ -414,7 +414,7 @@ namespace Birder2.Data.Migrations
             modelBuilder.Entity("Birder2.Models.SalesOrderItem", b =>
                 {
                     b.HasOne("Birder2.Models.SalesOrder", "SalesOrder")
-                        .WithMany()
+                        .WithMany("SalesOrderItems")
                         .HasForeignKey("SalesOrderId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
