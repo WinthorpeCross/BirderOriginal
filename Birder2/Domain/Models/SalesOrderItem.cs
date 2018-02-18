@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Birder2.Models
 {
+    //<---- *****Move to a new branch when observation is setup with Knockout ***** ---->
+
+
     public class SalesOrderItem //: IObjectWithState
     {
         public int SalesOrderItemId { get; set; }

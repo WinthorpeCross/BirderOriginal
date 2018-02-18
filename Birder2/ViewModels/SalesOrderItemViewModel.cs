@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 
 namespace Birder2.ViewModels
 {
+    //<---- *****Move to a new branch when observation is setup with Knockout ***** ---->
+
     public class SalesOrderItemViewModel //: IObjectWithState
     {
         public int SalesOrderItemId { get; set; }

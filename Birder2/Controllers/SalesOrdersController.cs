@@ -12,6 +12,8 @@ using Newtonsoft.Json;
 
 namespace Birder2.Controllers
 {
+    //<---- *****Move to a new branch when observation is setup with Knockout ***** ---->
+
     public class SalesOrdersController : Controller
     {
         private readonly ApplicationDbContext _context;

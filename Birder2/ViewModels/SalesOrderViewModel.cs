@@ -9,11 +9,11 @@ namespace Birder2.ViewModels
     //[DataContract]
     public class SalesOrderViewModel
     {
-        //public SalesOrderViewModel()
-        //{
-        //    SalesOrderItems = new List<SalesOrderItemViewModel>();
-        //    SalesOrderItemsToDelete = new List<int>();
-        //}
+        public SalesOrderViewModel()
+        {
+            SalesOrderItems = new List<SalesOrderItemViewModel>();
+            //SalesOrderItemsToDelete = new List<int>();
+        }
 
         public int SalesOrderId { get; set; }
 
@@ -27,7 +27,7 @@ namespace Birder2.ViewModels
         //[DataMember]
         public string PONumber { get; set; }
 
-        //public List<SalesOrderItemViewModel> SalesOrderItems { get; set; }
+        public List<SalesOrderItemViewModel> SalesOrderItems { get; set; }
 
         //public List<int> SalesOrderItemsToDelete { get; set; }
 
