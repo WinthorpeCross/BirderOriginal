@@ -31,6 +31,22 @@ SalesOrderViewModel = function (data) {
     var self = this;
     ko.mapping.fromJS(data, salesOrderItemMapping, self);
 
+    self.addSalesOrderItem = function () {
+        var salesOrderItem = new SalesOrderItemViewModel({ SalesOrderItemId: 0, ProductCode: "", Quantity: 1, UnitPrice: 0 });// ObjectState: ObjectState.Added });
+        self.SalesOrderItems.push(salesOrderItem);
+    },
+
+    self.Total = ko.computed(function () {
+
+        var total = 0;
+        total += self.SalesOrderItems().length;
+        //ko.utils.arrayForEach(self.SalesOrderItems(), function (salesOrderItem) {
+            //total += self.SalesOrderItems.length();
+            //total += parseFloat(salesOrderItem.ExtendedPrice());
+        //});
+        return total;
+    }),
+
     self.save = function () {
         $.ajax({
             url: "/SalesOrders/Save/",
@@ -58,7 +74,7 @@ SalesOrderViewModel = function (data) {
                 alert("error");
                 //window.location.replace("./Details/" + obj.SalesOrderId);
                 //redirect to an error page?
-            },
+            }//,
             //always: function (data) {
             //},
         });
@@ -91,7 +107,7 @@ SalesOrderViewModel = function (data) {
                 alert("error");
                 //window.location.replace("./Details/" + obj.SalesOrderId);
                 //redirect to an error page?
-            },
+            }//,
             //always: function (data) {
             //},
         });
@@ -126,10 +142,7 @@ SalesOrderViewModel = function (data) {
     //    return true;
     //},
 
-    //self.addSalesOrderItem = function () {
-    //    var salesOrderItem = new SalesOrderItemViewModel({ SalesOrderItemId: 0, ProductCode: "", Quantity: 1, UnitPrice: 0, ObjectState: ObjectState.Added });
-    //    self.SalesOrderItems.push(salesOrderItem);
-    //},
+
 
     //self.Total = ko.computed(function () {
     //    var total = 0;

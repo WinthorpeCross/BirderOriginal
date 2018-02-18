@@ -19,27 +19,29 @@
     </script>
 }
 
-<p data-bind="text: MessageToClient"></p>
-<div>
+@Html.Partial("_Edit")
+
+@*<p data-bind="text: MessageToClient"></p>
     <div>
-        <div hidden>
-            <label>Customer Id:</label>
-            <text data-bind="text: SalesOrderId" />
+        <div>
+            <div hidden>
+                <label>Customer Id:</label>
+                <text data-bind="text: SalesOrderId" />
+            </div>
+            <label>Customer Name:</label>
+            <input data-bind="value: CustomerName" />
         </div>
-        <label>Customer Name:</label>
-        <input data-bind="value: CustomerName" />
+        <div>
+            <label>P.O. Number:</label>
+            <input data-bind="value: PONumber" />
+        </div>
     </div>
-    <div>
-        <label>P.O. Number:</label>
-        <input data-bind="value: PONumber" />
-    </div>
-</div>
 
 
-<p><button data-bind="click: edit">Save</button></p>
+    <p><button data-bind="click: edit">Save</button></p>
 
 
 
-<script>
+    <script>
 
-</script>
+    </script>*@

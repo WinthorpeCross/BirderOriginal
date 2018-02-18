@@ -89,7 +89,9 @@ namespace Birder2.Controllers
                 return NotFound();
             }
 
-            var salesOrder = await _context.SalesOrders.SingleOrDefaultAsync(m => m.SalesOrderId == id);
+            var salesOrder = await _context.SalesOrders
+                .Include(n => n.SalesOrderItems)
+                .SingleOrDefaultAsync(m => m.SalesOrderId == id);
             if (salesOrder == null)
             {
                 return NotFound();
@@ -101,6 +103,21 @@ namespace Birder2.Controllers
                 CustomerName = salesOrder.CustomerName,
                 PONumber = salesOrder.PONumber
             };
+            foreach (SalesOrderItem salesOrderItem in salesOrder.SalesOrderItems)
+            {
+                SalesOrderItemViewModel salesOrderItemViewModel = new SalesOrderItemViewModel();
+                salesOrderItemViewModel.SalesOrderItemId = salesOrderItem.SalesOrderItemId;
+                salesOrderItemViewModel.ProductCode = salesOrderItem.ProductCode;
+                salesOrderItemViewModel.Quantity = salesOrderItem.Quantity;
+                salesOrderItemViewModel.UnitPrice = salesOrderItem.UnitPrice;
+
+                //salesOrderItemViewModel.ObjectState = ObjectState.Unchanged;
+                //salesOrderItemViewModel.RowVersion = salesOrderItem.RowVersion;
+
+                salesOrderItemViewModel.SalesOrderId = salesOrder.SalesOrderId;
+
+                salesOrderViewModel.SalesOrderItems.Add(salesOrderItemViewModel);
+            }
             salesOrderViewModel.MessageToClient = string.Format("The original value of Customer Name is {0}.", salesOrderViewModel.CustomerName);
 
             return View(salesOrderViewModel);
@@ -117,6 +134,7 @@ namespace Birder2.Controllers
             if (salesOrderViewModel.SalesOrderId == 0)
             {
                 return Json(""); // on edit function check for null id
+                //return Json(new { newLocation = "/Sales/Index/" });
             }
 
 
@@ -125,6 +143,7 @@ namespace Birder2.Controllers
             if (salesOrder == null)
             {
                 return Json("");
+                //return Json(new { newLocation = "/Sales/Index/" });
             }
 
             salesOrder.CustomerName = salesOrderViewModel.CustomerName;
@@ -136,6 +155,7 @@ namespace Birder2.Controllers
             _context.SaveChanges();
 
             return Json(JsonConvert.SerializeObject(salesOrderViewModel));
+            //return Json(new { newLocation = "/Sales/Index/" });
         }
     
 

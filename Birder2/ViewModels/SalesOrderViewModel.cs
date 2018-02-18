@@ -37,7 +37,9 @@ namespace Birder2.ViewModels
         //public ObjectState ObjectState { get; set; }
 
         //public byte[] RowVersion { get; set; }
-    }
+
+
+}
 
     //public interface IObjectWithState
     //{
