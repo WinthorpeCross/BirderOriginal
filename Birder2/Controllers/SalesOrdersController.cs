@@ -108,43 +108,34 @@ namespace Birder2.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SalesOrderId,CustomerName,PONumber")] SalesOrder salesOrder)
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("SalesOrderId,CustomerName,PONumber")] SalesOrder salesOrder)
+        public JsonResult Edit([FromBody]SalesOrderViewModel salesOrderViewModel)
         {
-            if (id != salesOrder.SalesOrderId)
+            if (salesOrderViewModel.SalesOrderId == 0)
             {
-                return NotFound();
+                return Json(""); // on edit function check for null id
             }
 
-            if (ModelState.IsValid)
+
+            var salesOrder = _context.SalesOrders
+                .SingleOrDefault(m => m.SalesOrderId == salesOrderViewModel.SalesOrderId);
+            if (salesOrder == null)
             {
-                try
-                {
-                    _context.Update(salesOrder);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SalesOrderExists(salesOrder.SalesOrderId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return Json("");
             }
-            return View(salesOrder);
+
+            salesOrder.CustomerName = salesOrderViewModel.CustomerName;
+            salesOrder.PONumber = salesOrderViewModel.PONumber;
+            salesOrderViewModel.MessageToClient =
+                string.Format("The new value of Cusomer Name is {0}.", salesOrderViewModel.CustomerName);
+
+            _context.Update(salesOrder);
+            _context.SaveChanges();
+
+            return Json(JsonConvert.SerializeObject(salesOrderViewModel));
         }
-
-
-
-
-
-
-
+    
 
         // POST: SalesOrders/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 

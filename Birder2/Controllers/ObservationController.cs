@@ -69,19 +69,6 @@ namespace Birder2.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public ActionResult AddTweet(CreateObservationViewModel viewModel)
-        { // copy BIND from below for validation ---->
-            try
-            {
-                //viewModel.Tweets.Add(viewModel.Tweet);
-                return PartialView("_AllTweets", viewModel);
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
         // POST: Observation/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 

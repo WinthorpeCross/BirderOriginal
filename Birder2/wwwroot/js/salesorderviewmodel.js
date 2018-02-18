@@ -24,11 +24,39 @@
                 //console.log(obj);
                 //ko.fromJS(data.salesOrderViewModel, {}, self);
                 //if (data.SalesOrderViewModel)
+            },
+            error: function (textStatus, errorThrown) {
+                alert("error");
+                //window.location.replace("./Details/" + obj.SalesOrderId);
+                //redirect to an error page?
+            },
+            //always: function (data) {
+            //},
+        });
+    };
 
-                //var obj = JSON.parse(data);
-                //    self.PONumber(obj.PONumber);
-                //    self.CustomerName(obj.CustomerName);
-                //    self.MessageToClient(obj.MessageToClient);
+    self.edit = function () {
+        $.ajax({
+            url: "/SalesOrders/Edit/",
+            type: "POST",
+            data: ko.toJSON(self),
+            headers:
+            {
+                "content-type": "application/json; charset=utf-8"
+            },
+            success: function (data) {
+                var obj = JSON.parse(data);
+                self.PONumber(obj.PONumber);
+                self.CustomerName(obj.CustomerName);
+                self.MessageToClient(obj.MessageToClient);
+                self.SalesOrderId(obj.SalesOrderId);
+
+                //window.location.replace("./Details/" + obj.SalesOrderId);
+
+                //alert("success");
+                //console.log(obj);
+                //ko.fromJS(data.salesOrderViewModel, {}, self);
+                //if (data.SalesOrderViewModel)
             },
             error: function (textStatus, errorThrown) {
                 alert("error");
