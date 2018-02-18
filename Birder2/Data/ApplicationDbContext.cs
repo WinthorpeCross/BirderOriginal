@@ -24,8 +24,7 @@ namespace Birder2.Data
         public DbSet<ObservationTag> ObservationTags { get; set; }
 
         public DbSet<SalesOrder> SalesOrders { get; set; }
-        
-
+        public DbSet<SalesOrderItem> SalesOrderItems { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -55,10 +54,6 @@ namespace Birder2.Data
                     .HasOne(ot => ot.Tag)
                     .WithMany(t => t.ObservationTags)
                     .HasForeignKey(ot => ot.TagId);
-
-            
-
-
         }
     }
 }
