@@ -3,7 +3,7 @@
     ko.mapping.fromJS(data, observedSpeciesMapping, self);
 
     self.addObservedSpecies = function () {
-        var observedSpecies = new ObservedSpeciesViewModel({ Id: 0, /*Bird: new Bird,*/ Quantity: 1 });// ObjectState: ObjectState.Added });
+        var observedSpecies = new ObservedSpeciesViewModel({ Id: 0, BirdId: 0, Quantity: 1 });
         self.ObservedSpecies.push(observedSpecies);
     }
 };

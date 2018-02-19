@@ -22,7 +22,7 @@ namespace Birder2.ViewModels
     {
         public int Id { get; set; }
         public int Quantity { get; set; }
-        //public Bird Bird { get; set; }
+        public int BirdId { get; set; }
     }
 }
 

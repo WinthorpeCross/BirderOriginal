@@ -70,19 +70,19 @@
                 @*<td class="form-group"><input name="ProductCode" class="form-control input-sm" data-bind="@*attr: {'id': 'ProductCode_' + $index()}, value: ProductCode, event: {change: flagSalesOrderItemAsEdited}, hasfocus: true" /></td>*@
                 <td class="form-group"><input name="ObservedSpecies.Quantity" class="form-control input-sm text-right" data-bind="@*attr: {'id': 'Quantity_' + $index()},*@ value: Quantity@*, event: {change: flagSalesOrderItemAsEdited}*@" /></td>
                 
-                @*<td class="form-group">
+                <td class="form-group">
                     @Html.DropDownListFor(m => m.Observation.BirdId,
 new SelectList(Model.Birds, "BirdId", "EnglishName"),
 
 new
 {
-    @class = "form-control selectpicker show-tick",
-    @data_bind = "options: Model.Birds, optionsText: 'EnglishName'",
+    @class = "form-control selectpicker.render show-tick",
+    data_bind = "value: BirdId",
     title = "Choose a bird",
     data_live_search = "true",
     data_show_subtext = "true",
 })
-                </td>*@
+                </td>
                                                                                            @*<select   data-bind="options: availableCars, optionsText: 'carName', value: selecIdtedCar, optionsCaption: 'Choose...'">*@
                     <td class="form-group">delete</td>                                       @*Model.Birds, "BirdId", "EnglishName"*@
                     @*<td class="form-group"><span class="form-control text-right" data-bind="text: ExtendedPrice"></span></td>
@@ -123,7 +123,10 @@ new
 </form>
 
 
-
+<hr />
+<hr />
+<hr />
+<hr />
 
 
 

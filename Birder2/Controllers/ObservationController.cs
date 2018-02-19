@@ -77,7 +77,7 @@ namespace Birder2.Controllers
             ObservedSpeciesViewModel osvm = new ObservedSpeciesViewModel()
             {
                 Id = 0,
-                Quantity = 1
+                Quantity = 1,
             };
 
             model.ObservedSpecies.Add(osvm);
