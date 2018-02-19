@@ -7,6 +7,7 @@ using Birder2.Services;
 using Microsoft.AspNetCore.Authorization;
 using Birder2.ViewModels;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Birder2.Controllers
 {
@@ -55,15 +56,6 @@ namespace Birder2.Controllers
             return View(observation);  //ToDo: if user == logged in user, then allow edit/delete etc.  Might need a viewmodel...
         }
 
-        //// GET: SalesOrders/Create
-        //public IActionResult Create()
-        //{
-        //    SalesOrderViewModel salesOrderViewModel = new SalesOrderViewModel();
-        //    salesOrderViewModel.MessageToClient = "I originated from the viewmodel, rather than the model.";
-        //    //salesOrderViewModel.ObjectState = ObjectState.Added;
-        //    return View(salesOrderViewModel);
-        //}
-        // GET: Observation/Create
         public async Task<IActionResult> Create()
         {
             var model = new CreateObservationViewModel()
@@ -82,11 +74,15 @@ namespace Birder2.Controllers
 
             model.ObservedSpecies.Add(osvm);
 
-
-
             return View(model);
         }
 
+        [HttpPost]
+        public JsonResult Post([FromBody]CreateObservationViewModel viewModel)
+        {
+
+            return Json(JsonConvert.SerializeObject(viewModel));
+        }
 
         // POST: Observation/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
