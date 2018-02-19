@@ -17,7 +17,8 @@
     <script src="~/js/createobservationviewmodel.js"></script>
     <script type="text/javascript">
         var createObservationViewModel = new CreateObservationViewModel(@Html.Raw(data));
-        createObservationViewModel.Observation.LocationLatitude = 8.222
+        createObservationViewModel.Observation.LocationLatitude = @UserManager.GetUserAsync(User).Result.DefaultLocationLatitude
+        createObservationViewModel.Observation.LocationLongitude = @UserManager.GetUserAsync(User).Result.DefaultLocationLongitude
         ko.applyBindings(createObservationViewModel);
     </script>
 }
