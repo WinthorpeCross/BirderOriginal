@@ -55,16 +55,34 @@ namespace Birder2.Controllers
             return View(observation);  //ToDo: if user == logged in user, then allow edit/delete etc.  Might need a viewmodel...
         }
 
+        //// GET: SalesOrders/Create
+        //public IActionResult Create()
+        //{
+        //    SalesOrderViewModel salesOrderViewModel = new SalesOrderViewModel();
+        //    salesOrderViewModel.MessageToClient = "I originated from the viewmodel, rather than the model.";
+        //    //salesOrderViewModel.ObjectState = ObjectState.Added;
+        //    return View(salesOrderViewModel);
+        //}
         // GET: Observation/Create
         public async Task<IActionResult> Create()
         {
             var model = new CreateObservationViewModel()
             {
-                Observation = new Observation() { Quantity = 1, ObservationDateTime = _systemClock.Now },
-
+                Observation = new Observation() { ObservationDateTime = _systemClock.Now },
+                MessageToClient = "I originated from the viewmodel, rather than the model.",
                 // ToDo: include Birder category to sort the list by common species
                 Birds = await _observationRepository.AllBirdsList()
             };
+
+            ObservedSpeciesViewModel osvm = new ObservedSpeciesViewModel()
+            {
+                Id = 0,
+                Quantity = 1
+            };
+
+            model.ObservedSpecies.Add(osvm);
+
+
 
             return View(model);
         }
