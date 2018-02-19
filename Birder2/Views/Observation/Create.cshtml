@@ -17,6 +17,7 @@
     <script src="~/js/createobservationviewmodel.js"></script>
     <script type="text/javascript">
         var createObservationViewModel = new CreateObservationViewModel(@Html.Raw(data));
+        createObservationViewModel.Observation.LocationLatitude = 8.222
         ko.applyBindings(createObservationViewModel);
     </script>
 }
@@ -41,7 +42,7 @@
             <input class="form-control" data-bind="datePicker : Observation.ObservationDateTime" type="date" />
         </div>
     </div>
-    <div class="form-group" hidden>
+    <div class="form-group">
         <input class="form-control" name="Observation.LocationLatitude" data-bind="value: Observation.LocationLatitude" />
         <input class="form-control" name="Observation.LocationLongitude" data-bind="value: Observation.LocationLongitude" />
     </div>
