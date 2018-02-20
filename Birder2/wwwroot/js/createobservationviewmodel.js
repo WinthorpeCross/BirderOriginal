@@ -2,10 +2,18 @@
     var self = this;
     ko.mapping.fromJS(data, observedSpeciesMapping, self);
 
+    ko.bindingHandlers.selectPicker = {
+        init: function (element, valueAccessor, allBindings) {
+            $(element).selectpicker('render');
+        }
+    };
+
     self.addObservedSpecies = function () {
         var observedSpecies = new ObservedSpeciesViewModel({ Id: 0, BirdId: 0, Quantity: 1 });
         self.ObservedSpecies.push(observedSpecies);
-    }
+    };
+
+
 
     self.post = function () {
         $.ajax({

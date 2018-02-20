@@ -24,13 +24,12 @@
         <span class="control-label" name="MessageToClient" data-bind="text: MessageToClient" />
     </div>
 
-    <div class="form-group">
+    <div class="form-group" hidden>
         <label class="col-sm-2 control-label" for="Observation.ObservationId">Id:</label>
         <div class="col-sm-10">
             <span class="form-control" name="Obervation.ObservationId" data-bind="text: Observation.ObservationId@*, event: {change: flagSalesOrderAsEdited}*@" />
         </div>
     </div>
-
     <div class="form-group">
         <label class="col-sm-2 control-label" for="Observation.ObservationId">Date:</label>
         <div class="col-sm-10">
@@ -54,7 +53,7 @@
     <table class="table table-striped">
         <tr>
             <th class="text-right">Quantity</th>
-            <th class="text-right">Bird</th>
+            <th class="text-right">Bird species</th>
             <th><button class="btn btn-info btn-xs" data-bind="click: addObservedSpecies">Add</button></th>
         </tr>
         <tbody data-bind="foreach: ObservedSpecies">
@@ -65,9 +64,9 @@
                         new SelectList(Model.Birds, "BirdId", "EnglishName"),
                         new
                         {
-                            @class = "form-control",
-                            data_bind = "value: BirdId",
-                            title = "Choose a bird",
+                            @class = "form-control selectpicker showtick",
+                            data_bind = "selectPicker: {}, value: BirdId",
+                            title = "Choose a bird species...",
                             data_live_search = "true",
                             data_show_subtext = "true"
                         })
