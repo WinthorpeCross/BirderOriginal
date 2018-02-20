@@ -78,8 +78,41 @@ namespace Birder2.Controllers
         }
 
         [HttpPost]
-        public JsonResult Post([FromBody]CreateObservationViewModel viewModel)
+        public async Task<JsonResult> Post([FromBody]CreateObservationViewModel viewModel)
         {
+            //Observation observationToAdd = new Observation();
+            var user = await _userAccessor.GetUser();
+            if (user == null)
+            {
+                return Json(JsonConvert.SerializeObject(viewModel));
+                //return Json(new { newLocation = "/Sales/Index/" });
+            }
+
+            //roll back in case any cannot be updated?
+            foreach (ObservedSpeciesViewModel observedSpecies in viewModel.ObservedSpecies)
+            {
+                try
+                {
+                    Observation observationToAdd = new Observation();
+                    observationToAdd.ObservationDateTime = viewModel.Observation.ObservationDateTime;
+                    observationToAdd.LocationLatitude = viewModel.Observation.LocationLatitude;
+                    observationToAdd.LocationLongitude = viewModel.Observation.LocationLongitude;
+                    observationToAdd.Note = viewModel.Observation.Note;
+
+                    observationToAdd.ApplicationUser = user;
+
+                    observationToAdd.CreationDate = _systemClock.Now;
+                    observationToAdd.LastUpdateDate = _systemClock.Now;
+                    observationToAdd.Bird = await _observationRepository.GetSelectedBird(observedSpecies.BirdId);
+                    observationToAdd.Quantity = observedSpecies.Quantity;
+                    await _observationRepository.AddObservation(observationToAdd);
+                }
+                catch
+                {
+                    return Json(JsonConvert.SerializeObject(viewModel));
+                    //return Json(new { newLocation = "/Sales/Index/" });
+                }
+            }
 
             return Json(JsonConvert.SerializeObject(viewModel));
         }

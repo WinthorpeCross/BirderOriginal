@@ -62,15 +62,15 @@
                 <td class="form-group"><input name="ObservedSpecies.Quantity" class="form-control input-sm text-right" data-bind="@*attr: {'id': 'Quantity_' + $index()},*@ value: Quantity@*, event: {change: flagSalesOrderItemAsEdited}*@" /></td>
                 <td class="form-group">
                     @Html.DropDownListFor(m => m.Observation.BirdId,
-                             new SelectList(Model.Birds, "BirdId", "EnglishName"),
-                             new
-                             {
-                                 @class = "form-control selectpicker.render show-tick",
-                                 data_bind = "value: BirdId",
-                                 title = "Choose a bird",
-                                 data_live_search = "true",
-                                 data_show_subtext = "true"
-                             })
+                        new SelectList(Model.Birds, "BirdId", "EnglishName"),
+                        new
+                        {
+                            @class = "form-control",
+                            data_bind = "value: BirdId",
+                            title = "Choose a bird",
+                            data_live_search = "true",
+                            data_show_subtext = "true"
+                        })
                 </td>
                 <td class="form-group">delete</td>
             </tr>

@@ -23,7 +23,7 @@
                 self.MessageToClient(obj.MessageToClient);
                 self.SalesOrderId(obj.SalesOrderId);
 
-                window.location.replace("./Details/" + obj.SalesOrderId);
+                window.location.replace("./Index/"); // + obj.SalesOrderId);
 
                 //alert("success");
                 //console.log(obj);
