@@ -17,11 +17,8 @@
                 "content-type": "application/json; charset=utf-8"
             },
             success: function (data) {
+                alert("success");
                 var obj = JSON.parse(data);
-                self.PONumber(obj.PONumber);
-                self.CustomerName(obj.CustomerName);
-                self.MessageToClient(obj.MessageToClient);
-                self.SalesOrderId(obj.SalesOrderId);
 
                 window.location.replace("./Index/"); // + obj.SalesOrderId);
 
