@@ -64,7 +64,7 @@ namespace Birder2.Controllers
                 PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,
                 StatusMessage = StatusMessage
-            };
+        };
 
             return View(model);
         }

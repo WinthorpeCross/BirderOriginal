@@ -62,6 +62,14 @@
     <Compile Remove="Data\Migrations\20180215155335_d.Designer.cs" />
     <Compile Remove="Data\Migrations\20180215162629_f.cs" />
     <Compile Remove="Data\Migrations\20180215162629_f.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180220113858_f.cs" />
+    <Compile Remove="Data\Migrations\20180220113858_f.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180220124802_j.cs" />
+    <Compile Remove="Data\Migrations\20180220124802_j.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180220133428_t.cs" />
+    <Compile Remove="Data\Migrations\20180220133428_t.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180220134002_y.cs" />
+    <Compile Remove="Data\Migrations\20180220134002_y.Designer.cs" />
   </ItemGroup>
 
 
