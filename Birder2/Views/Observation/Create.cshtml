@@ -62,14 +62,14 @@
                 <td class="form-group">
                     @Html.DropDownListFor(m => m.Observation.BirdId,
                         new SelectList(Model.Birds, "BirdId", "EnglishName"),
-                        new
-                        {
-                            @class = "form-control selectpicker showtick",
-                            data_bind = "selectPicker: {}, value: BirdId",
-                            title = "Choose a bird species...",
-                            data_live_search = "true",
-                            data_show_subtext = "true"
-                        })
+                            new
+                            {
+                                @class = "form-control selectpicker showtick",
+                                data_bind = "selectPicker: {}, value: BirdId",
+                                title = "Choose a bird species...",
+                                data_live_search = "true",
+                                data_show_subtext = "true"
+                            })
                 </td>
                 <td class="form-group">delete</td>
             </tr>
