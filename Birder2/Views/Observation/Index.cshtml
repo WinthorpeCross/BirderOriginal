@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<Birder2.Models.Observation>
 
-
 @{
     ViewData["Title"] = "My Observations";
 }
@@ -9,15 +8,14 @@
 
 <div>
     <p>
-        <a asp-action="Create">Create Single Species Observation</a>
-        <a asp-action="Create">Create Multiple Species Observation</a>
+        <a asp-action="Create">Post an Observation</a>
     </p>
 </div>
 
 @foreach (var observation in Model)
 {
-<div class="container">
-    @Html.Partial("_Observations", observation)
-    <hr/>
-</div>
+    <div class="container">
+        @Html.Partial("_Observations", observation)
+        <hr/>
+    </div>
 }

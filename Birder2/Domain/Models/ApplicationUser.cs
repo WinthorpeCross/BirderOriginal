@@ -20,9 +20,38 @@ namespace Birder2.Models
 
         public ICollection<Tag> Tags { get; set; }
 
-        //public ICollection<ApplicationUser> Followers { get; set; }
-        //public ICollection<ApplicationUser> Following { get; set; }
+
+
+        public virtual ICollection<Network> Following { get; set; }
+        public virtual ICollection<Network> Followers { get; set; }
+
     }
+
+
+
+    //public class Friendship
+    //{
+    //    public string Id { get; set; }
+    //    public ApplicationUser ApplicationUser { get; set; }
+
+    //    public string FriendId { get; set; }
+    //    public ApplicationUser Friend { get; set; }
+
+    //    public StatusCode Status { get; set; }
+
+    //    public string ActionUserId { get; set; }
+    //    public ApplicationUser ActionUser { get; set; }
+
+    //    public byte[] Timestamp { get; set; }
+    //}
+
+    //public enum StatusCode
+    //{
+    //    Pending = 0,
+    //    Accepted = 1,
+    //    Declined = 2,
+    //    Blocked = 3
+    //}
 }
 
    

@@ -8,6 +8,8 @@ using Birder2.Models;
 using Microsoft.AspNetCore.Authorization;
 using FlickrNet;
 using Birder2.Services;
+using Birder2.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Birder2.Controllers
 {
@@ -15,14 +17,21 @@ namespace Birder2.Controllers
     public class HomeController : Controller
     {
         private readonly IFlickrService _flickrService;
+        private readonly ApplicationDbContext _context;
+        private readonly IApplicationUserAccessor _userAccessor;
 
-        public HomeController(IFlickrService flickrService)
+        public HomeController(ApplicationDbContext context, IFlickrService flickrService, IApplicationUserAccessor userAccessor)
         {
+            _context = context;
             _flickrService = flickrService;
+            _userAccessor = userAccessor;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var user = await _userAccessor.GetUser();
+            var t = _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefault(x => x.Id == user.Id);
+
             return View();
         }
 

@@ -7,6 +7,7 @@ using Birder2.Services;
 using Microsoft.AspNetCore.Authorization;
 using Birder2.ViewModels;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Birder2.Controllers
 {
@@ -55,20 +56,66 @@ namespace Birder2.Controllers
             return View(observation);  //ToDo: if user == logged in user, then allow edit/delete etc.  Might need a viewmodel...
         }
 
-        // GET: Observation/Create
         public async Task<IActionResult> Create()
         {
             var model = new CreateObservationViewModel()
             {
-                Observation = new Observation() { Quantity = 1, ObservationDateTime = _systemClock.Now },
-
+                Observation = new Observation() { ObservationDateTime = _systemClock.Now },
+                MessageToClient = "I originated from the viewmodel, rather than the model.",
                 // ToDo: include Birder category to sort the list by common species
                 Birds = await _observationRepository.AllBirdsList()
             };
 
+            ObservedSpeciesViewModel osvm = new ObservedSpeciesViewModel()
+            {
+                Id = 0,
+                Quantity = 1,
+            };
+
+            model.ObservedSpecies.Add(osvm);
+
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<JsonResult> Post([FromBody]CreateObservationViewModel viewModel)
+        {
+            //Observation observationToAdd = new Observation();
+            var user = await _userAccessor.GetUser();
+            if (user == null)
+            {
+                return Json(JsonConvert.SerializeObject(viewModel));
+                //return Json(new { newLocation = "/Sales/Index/" });
+            }
+
+            //roll back in case any cannot be updated?
+            foreach (ObservedSpeciesViewModel observedSpecies in viewModel.ObservedSpecies)
+            {
+                try
+                {
+                    Observation observationToAdd = new Observation();
+                    observationToAdd.ObservationDateTime = viewModel.Observation.ObservationDateTime;
+                    observationToAdd.LocationLatitude = viewModel.Observation.LocationLatitude;
+                    observationToAdd.LocationLongitude = viewModel.Observation.LocationLongitude;
+                    observationToAdd.Note = viewModel.Observation.Note;
+
+                    observationToAdd.ApplicationUser = user;
+
+                    observationToAdd.CreationDate = _systemClock.Now;
+                    observationToAdd.LastUpdateDate = _systemClock.Now;
+                    observationToAdd.Bird = await _observationRepository.GetSelectedBird(observedSpecies.BirdId);
+                    observationToAdd.Quantity = observedSpecies.Quantity;
+                    await _observationRepository.AddObservation(observationToAdd);
+                }
+                catch
+                {
+                    return Json(JsonConvert.SerializeObject(viewModel));
+                    //return Json(new { newLocation = "/Sales/Index/" });
+                }
+            }
+
+            return Json(JsonConvert.SerializeObject(viewModel));
+        }
 
         // POST: Observation/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Birder2.Models
@@ -20,10 +21,10 @@ namespace Birder2.Models
             return await userManager.FindByNameOrEmailAsync(username, password);
         }
 
-        //public static ApplicationUser FindByCardIDAsync(this UserManager<ApplicationUser> um, string cardId)
-        //{
-        //    return um?.Users?.SingleOrDefault(x => x.CardID == cardId);
-        //}
+        public static ApplicationUser FindByCardIDAsync(this UserManager<ApplicationUser> um, string cardId)
+        {
+            return  um?.Users?.SingleOrDefault(x => x.Id == cardId);
+        }
     }
 }
 
