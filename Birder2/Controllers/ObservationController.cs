@@ -66,14 +66,6 @@ namespace Birder2.Controllers
                 Birds = await _observationRepository.AllBirdsList()
             };
 
-            ObservedSpeciesViewModel osvm = new ObservedSpeciesViewModel()
-            {
-                Id = 0,
-                Quantity = 1,
-            };
-
-            model.ObservedSpecies.Add(osvm);
-
             return View(model);
         }
 
