@@ -6,7 +6,6 @@ using Birder2.Models;
 using Birder2.Services;
 using Microsoft.AspNetCore.Authorization;
 using Birder2.ViewModels;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Birder2.Controllers
@@ -69,16 +68,21 @@ namespace Birder2.Controllers
             return View(model);
         }
 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //public async Task<IActionResult> Create([Bind("ObservationId,ObservationDateTime,Location,Note,BirdId,LocationLatitude,LocationLongitude")] Observation observation)
         [HttpPost]
+        //[ValidateAntiForgeryToken]
         public async Task<JsonResult> Post([FromBody]CreateObservationViewModel viewModel)
         {
-            //Observation observationToAdd = new Observation();
             var user = await _userAccessor.GetUser();
             if (user == null)
             {
                 return Json(JsonConvert.SerializeObject(viewModel));
                 //return Json(new { newLocation = "/Sales/Index/" });
             }
+
+            //loop here to set the bird for earch observation?
 
             //roll back in case any cannot be updated?
             foreach (ObservedSpeciesViewModel observedSpecies in viewModel.ObservedSpecies)
@@ -109,47 +113,9 @@ namespace Birder2.Controllers
             return Json(JsonConvert.SerializeObject(viewModel));
         }
 
-        // POST: Observation/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ObservationId,ObservationDateTime,Location,Note,BirdId,LocationLatitude,LocationLongitude")] Observation observation)
-        {
-            var user = await _userAccessor.GetUser();
-            if (user == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-            observation.ApplicationUser = user;
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    //viewModel.Observation.Bird = await _observationRepository.GetSelectedBird(viewModel.Observation.BirdId);
-                    //viewModel.MyOberservations.Add(viewModel.Observation);
-                    observation.CreationDate = _systemClock.Now;
-                    observation.LastUpdateDate = _systemClock.Now;
 
-                    await _observationRepository.AddObservation(observation);
-                    return RedirectToAction(nameof(Index));
-                }
-                catch
-                {
-                    //ToDo: Logging / return user to create view, like below?
-                    return NotFound("could not add the observation");
-                }
-            }
 
-            var model = new CreateObservationViewModel()
-            {
-                Observation = observation,
-                Birds = await _observationRepository.AllBirdsList()
-            };
-
-            return View(model);
-        }
 
         // GET: Observation/Edit/5
         public async Task<IActionResult> Edit(int? id)

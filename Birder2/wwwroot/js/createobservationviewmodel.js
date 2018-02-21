@@ -13,7 +13,12 @@
         self.ObservedSpecies.push(observedSpecies);
     };
 
+    self.Total = ko.computed(function () {
 
+        var total = 0;
+        total += self.ObservedSpecies().length;
+        return total;
+    }),
 
     self.post = function () {
         $.ajax({
@@ -25,8 +30,8 @@
                 "content-type": "application/json; charset=utf-8"
             },
             success: function (data) {
-                alert("success");
-                var obj = JSON.parse(data);
+                //alert("success");
+                //var obj = JSON.parse(data);
 
                 window.location.replace("./Index/"); // + obj.SalesOrderId);
 

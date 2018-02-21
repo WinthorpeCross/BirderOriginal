@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Birder2.ViewComponents
 {
+    //Tweet of the Day
     public class TweetDayViewComponent : ViewComponent
     {
         public async Task<IViewComponentResult> InvokeAsync()
