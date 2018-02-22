@@ -22,6 +22,7 @@ namespace Birder2.Data
         public DbSet<BritishStatus> BritishStatuses { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<ObservationTag> ObservationTags { get; set; }
+        public DbSet<TweetDay> TweetDays { get; set; }
 
         public DbSet<SalesOrder> SalesOrders { get; set; }
         public DbSet<SalesOrderItem> SalesOrderItems { get; set; }
@@ -35,12 +36,13 @@ namespace Birder2.Data
             // Add your customizations after calling base.OnModelCreating(builder);
             builder.Entity<SalesOrder>().ToTable("SalesOrder");
 
-            builder.Entity<Observation>().ToTable("Observation");
+            builder.Entity<Observation>().ToTable("Observation"); 
             builder.Entity<Bird>().ToTable("Bird");
             builder.Entity<ConserverationStatus>().ToTable("ConservationStatus");
             builder.Entity<BritishStatus>().ToTable("BritishStatus");
             builder.Entity<Tag>().ToTable("Tag");
             builder.Entity<ObservationTag>().ToTable("ObservationTag");
+            builder.Entity<TweetDay>().ToTable("TweetDay");
 
             builder.Entity<ObservationTag>()
                     .HasKey(ot => new { ot.TagId, ot.ObervationId });

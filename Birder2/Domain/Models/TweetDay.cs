@@ -19,6 +19,9 @@ namespace Birder2.Models
         [Url]
         public string InformationUrl { get; set; }
 
+        public DateTime CreationDate { get; set; }
+
+        public DateTime LastUpdateDate { get; set; }
 
         public int BirdId { get; set; }
 

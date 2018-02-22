@@ -104,5 +104,7 @@ namespace Birder2.Models
         public ConserverationStatus BirdConserverationStatus { get; set; }
 
         public BritishStatus BritishStatus { get; set; }
+
+        public TweetDay TweetDay { get; set; }
     }
 }

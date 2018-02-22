@@ -278,6 +278,33 @@ namespace Birder2.Data.Migrations
                     b.ToTable("Tag");
                 });
 
+            modelBuilder.Entity("Birder2.Models.TweetDay", b =>
+                {
+                    b.Property<int>("TweetDayId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("BirdId");
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<DateTime>("DisplayDay");
+
+                    b.Property<string>("ImageUrl");
+
+                    b.Property<string>("InformationUrl");
+
+                    b.Property<DateTime>("LastUpdateDate");
+
+                    b.Property<string>("TweetUrl");
+
+                    b.HasKey("TweetDayId");
+
+                    b.HasIndex("BirdId")
+                        .IsUnique();
+
+                    b.ToTable("TweetDay");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -450,6 +477,14 @@ namespace Birder2.Data.Migrations
                     b.HasOne("Birder2.Models.ApplicationUser")
                         .WithMany("Tags")
                         .HasForeignKey("ApplicationUserId");
+                });
+
+            modelBuilder.Entity("Birder2.Models.TweetDay", b =>
+                {
+                    b.HasOne("Birder2.Models.Bird", "Bird")
+                        .WithOne("TweetDay")
+                        .HasForeignKey("Birder2.Models.TweetDay", "BirdId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

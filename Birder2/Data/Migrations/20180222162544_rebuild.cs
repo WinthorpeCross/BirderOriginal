@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Birder2.Data.Migrations
 {
-    public partial class restart : Migration
+    public partial class rebuild : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,6 +68,30 @@ namespace Birder2.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ConservationStatus", x => x.ConserverationStatusId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Network",
+                columns: table => new
+                {
+                    ApplicationUserId = table.Column<string>(nullable: false),
+                    FollowerId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Network", x => new { x.ApplicationUserId, x.FollowerId });
+                    table.ForeignKey(
+                        name: "FK_Network_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Network_AspNetUsers_FollowerId",
+                        column: x => x.FollowerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -200,6 +224,31 @@ namespace Birder2.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TweetDay",
+                columns: table => new
+                {
+                    TweetDayId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    BirdId = table.Column<int>(nullable: false),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    DisplayDay = table.Column<DateTime>(nullable: false),
+                    ImageUrl = table.Column<string>(nullable: true),
+                    InformationUrl = table.Column<string>(nullable: true),
+                    LastUpdateDate = table.Column<DateTime>(nullable: false),
+                    TweetUrl = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TweetDay", x => x.TweetDayId);
+                    table.ForeignKey(
+                        name: "FK_TweetDay_Bird_BirdId",
+                        column: x => x.BirdId,
+                        principalTable: "Bird",
+                        principalColumn: "BirdId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ObservationTag",
                 columns: table => new
                 {
@@ -248,6 +297,11 @@ namespace Birder2.Data.Migrations
                 column: "ConserverationStatusId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Network_FollowerId",
+                table: "Network",
+                column: "FollowerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Observation_ApplicationUserId",
                 table: "Observation",
                 column: "ApplicationUserId");
@@ -272,6 +326,12 @@ namespace Birder2.Data.Migrations
                 table: "Tag",
                 column: "ApplicationUserId");
 
+            migrationBuilder.CreateIndex(
+                name: "IX_TweetDay_BirdId",
+                table: "TweetDay",
+                column: "BirdId",
+                unique: true);
+
             migrationBuilder.AddForeignKey(
                 name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                 table: "AspNetUserTokens",
@@ -288,10 +348,16 @@ namespace Birder2.Data.Migrations
                 table: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Network");
+
+            migrationBuilder.DropTable(
                 name: "ObservationTag");
 
             migrationBuilder.DropTable(
                 name: "SalesOrderItems");
+
+            migrationBuilder.DropTable(
+                name: "TweetDay");
 
             migrationBuilder.DropTable(
                 name: "Observation");

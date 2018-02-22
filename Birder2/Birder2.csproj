@@ -62,6 +62,8 @@
     <Compile Remove="Data\Migrations\20180215155335_d.Designer.cs" />
     <Compile Remove="Data\Migrations\20180215162629_f.cs" />
     <Compile Remove="Data\Migrations\20180215162629_f.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180218163352_restart.cs" />
+    <Compile Remove="Data\Migrations\20180218163352_restart.Designer.cs" />
     <Compile Remove="Data\Migrations\20180220113858_f.cs" />
     <Compile Remove="Data\Migrations\20180220113858_f.Designer.cs" />
     <Compile Remove="Data\Migrations\20180220124802_j.cs" />
@@ -70,6 +72,12 @@
     <Compile Remove="Data\Migrations\20180220133428_t.Designer.cs" />
     <Compile Remove="Data\Migrations\20180220134002_y.cs" />
     <Compile Remove="Data\Migrations\20180220134002_y.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180220134255_e.cs" />
+    <Compile Remove="Data\Migrations\20180220134255_e.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180220134837_y.cs" />
+    <Compile Remove="Data\Migrations\20180220134837_y.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180222145632_TweetDay_added.cs" />
+    <Compile Remove="Data\Migrations\20180222145632_TweetDay_added.Designer.cs" />
   </ItemGroup>
 
 
