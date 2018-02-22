@@ -33,7 +33,7 @@ SalesOrderViewModel = function (data) {
 
     self.addSalesOrderItem = function () {
         var salesOrderItem = new SalesOrderItemViewModel({ SalesOrderItemId: 0, ProductCode: "", Quantity: 1, UnitPrice: 0 });// ObjectState: ObjectState.Added });
-        self.SalesOrderItems.push(salesOrderItem);
+        self.SalesOrderItemspush(salesOrderItem);
     },
 
     self.Total = ko.computed(function () {
