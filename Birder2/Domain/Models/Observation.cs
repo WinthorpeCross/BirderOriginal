@@ -28,6 +28,7 @@ namespace Birder2.Models
         public string Note { get; set; }
 
         public DateTime CreationDate { get; set; }
+
         public DateTime LastUpdateDate { get; set; }
 
         [Display(Name = "Observed species")]

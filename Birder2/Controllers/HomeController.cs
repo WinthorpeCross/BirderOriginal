@@ -27,12 +27,44 @@ namespace Birder2.Controllers
             _userAccessor = userAccessor;
         }
 
+        public class TestViewModel
+        {
+            public int FollowersCount { get; set; }
+            public int FollowingCount { get; set; }
+
+        }
+
         public async Task<IActionResult> Index()
         {
             var user = await _userAccessor.GetUser();
-            var t = _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefault(x => x.Id == user.Id);
+            var loggedinUser = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.Id == user.Id);
+            var userX = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "UserX");
+            var userY = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "UserY");
+            var userZ = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "UserZ");
 
-            return View();
+            var a = 1;
+
+            userX.Following.Add(new Network
+            {
+                ApplicationUser = userY,
+                Follower = userY
+            });
+
+            _context.SaveChanges();
+
+            userX = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "UserX");
+            userY = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "UserY");
+            userZ = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "UserZ");
+
+            var b = 1;
+
+
+            var model = new TestViewModel()
+            {
+                //FollowersCount = t.Followers.Count(),
+                //FollowingCount = t.Following.Count()
+            };
+            return View(model);
         }
 
         [AllowAnonymous]
