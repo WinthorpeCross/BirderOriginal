@@ -70,20 +70,6 @@ namespace Birder2.Data
                 .HasOne(l => l.Follower)
                 .WithMany(a => a.Following)
                 .HasForeignKey(l => l.FollowerId);
-
-            //builder.Entity<Friendship>()
-            //   .HasIndex(x => new { x.Id, x.FriendId })
-            //   .IsUnique();
-
-            //builder.Entity<Friendship>()
-            //   .HasOne(x => x.ApplicationUser)
-            //   .WithMany(y => y.FriendRequestsMade)
-            //   .HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
-
-            //builder.Entity<Friendship>()
-            //    .HasOne(x => x.Friend)
-            //    .WithMany(y => y.FriendRequestsAccepted)
-            //    .HasForeignKey(x => x.FriendId);
         }
     }
 }
