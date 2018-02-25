@@ -7,7 +7,6 @@
 @if (SignInManager.IsSignedIn(User))
 {
 <ul class="nav navbar-nav">
-    <li><a asp-area="" asp-controller="SalesOrders" asp-action="Index">Sales</a></li>
     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
     <li><a asp-area="" asp-controller="Observation" asp-action="Index">My Observations</a></li>
     <li class="dropdown">
@@ -19,6 +18,8 @@
             <li><a asp-area="" asp-controller="Bird" asp-action="Index" asp-route-searchType="MyBirds">My Observered Species</a></li>
         </ul>
     </li>
+    <li><a asp-area="" asp-controller="Home" asp-action="Index">Life List</a></li>
+    <li><a asp-area="" asp-controller="Home" asp-action="Index">Year List</a></li>
 </ul>
 }
 else

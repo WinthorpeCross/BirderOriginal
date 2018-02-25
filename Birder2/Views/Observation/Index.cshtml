@@ -12,10 +12,67 @@
     </p>
 </div>
 
+
+<form id="sort-filter-form" class="form-horizontal">
+    <div class="form-group">
+        <div class="col-sm-3">
+            <label class="control-label">Sort By</label>
+            <select name="OrderByOptions" class="form-control sort-filter-width" onchange="BookList.sendForm(this)" data-val="true" data-val-required="The OrderByOptions field is required." id="SortFilterPageData_OrderByOptions">
+                <option selected="selected" value="0">sort by...</option>
+                <option value="1">Votes &#x2191;</option>
+                <option value="2">Publication Date &#x2191;</option>
+                <option value="3">Price &#x2193;</option>
+                <option value="4">Price &#x2191;</option>
+            </select>
+        </div>
+
+        <div class="col-sm-3">
+            <label class="control-label">Filter Type</label>
+            <select name="FilterBy" class="form-control sort-filter-width" onchange="BookList.filterByHasChanged(this)" data-val="true" data-val-required="The FilterBy field is required." id="SortFilterPageData_FilterBy">
+                <option selected="selected" value="0">All</option>
+                <option value="1">By Votes...</option>
+                <option value="2">By Year published...</option>
+            </select>
+        </div>
+
+        <div class="col-sm-3 dim-filter-value" id="filter-value-group">
+            <label class="control-label">Filter By</label>
+            <select name="FilterValue" id="filter-value-dropdown" class="form-control sort-filter-width" disabled onchange="BookList.sendForm(this)">
+                <option>Select filter type...</option>
+            </select>
+        </div>
+
+        <div class="col-sm-2">
+            <label class="control-label">Page</label>
+            <div>
+                <input name="PageNum" class="form-control page-control-width page-num-input" onchange="BookList.sendForm(this)" type="number" data-val="true" data-val-required="The PageNum field is required." id="SortFilterPageData_PageNum" value="1">
+                <span class="num-pages-text">of 10,000</span>
+            </div>
+        </div>
+
+        <div class="col-sm-1">
+            <label class="control-label">Page&nbsp;Size</label>
+            <select name="PageSize" class="form-control page-control-width" onchange="BookList.sendForm(this)" data-val="true" data-val-required="The PageSize field is required." id="SortFilterPageData_PageSize">
+                <option value="5">5</option>
+                <option selected="selected" value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="500">500</option>
+                <option value="1000">1000</option>
+            </select>
+        </div>
+    </div>
+
+    <input id="PrevCheckState" name="PrevCheckState" type="hidden" value=0,,10,10000>
+</form>
+<br />
+
+
 @foreach (var observation in Model)
 {
     <div class="container">
         @Html.Partial("_Observations", observation)
-        <hr/>
+        <hr />
     </div>
 }

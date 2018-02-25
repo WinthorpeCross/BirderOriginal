@@ -47,15 +47,21 @@ namespace Birder2.Data
             //
             var birds = new Bird[]
             {
-                new Bird{ Class="Aves",Order="Accipitriformes",Family="Accipitridae",Genus="Accipiter",Species="Accipiter gentilis"
+                new Bird { Class="Aves",Order="Accipitriformes",Family="Accipitridae",Genus="Accipiter",Species="Accipiter gentilis"
                     ,EnglishName="Goshawk",InternationalName="Northern Goshawk",Category="A",PopulationSize="100-1,000 pairs"
                     ,ConserverationStatusId=1,BritishStatusId=1
-                    ,ThumbnailUrl="https://flic.kr/p/s2kgaL"},
+                    ,ThumbnailUrl="http://farm3.staticflickr.com/2818/9312384651_76a7b6ff84_s.jpg"},
 
-                new Bird{ Class="Aves",Order="Passeriformes",Family="Fringillidae",Genus="Acanthis",Species="Acanthis hornemanni"
+                new Bird { Class="Aves",Order="Passeriformes",Family="Fringillidae",Genus="Acanthis",Species="Acanthis hornemanni"
                     ,EnglishName="Artic Redpoll",InternationalName=null,Category="A",PopulationSize="100-1,000 records"
                     ,ConserverationStatusId=1,BritishStatusId=1
-                    ,ThumbnailUrl=null}
+                    ,ThumbnailUrl="http://farm8.staticflickr.com/7263/13667553233_5bd7837a4f_s.jpg"},
+
+                new Bird { Class="Aves",Order="Charadriiformes",Family="Scolopacidae",Genus="Scolopax",Species="Scolopax rusticola"
+                    ,EnglishName="Woodcock",InternationalName="Eurasian Woodcock",Category="A",PopulationSize="10-100,000 pairs"
+                    ,ConserverationStatusId=1,BritishStatusId=1
+                    ,ThumbnailUrl="http://farm6.staticflickr.com/5288/5290609250_7ea5df20fc_s.jpg"}
+
             };
             foreach (Bird b in birds)
             {

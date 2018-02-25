@@ -77,17 +77,8 @@ namespace Birder2.Models
         [Display(Name = "Population Size in Britain")]
         public string PopulationSize { get; set; }
 
-        //[Display(Name = "Status in Britain")]
-        //public string Status { get; set; }
-
-        //public class ProductImage
-        //{
-        //    public int ProductId { get; private set; }
-        //    public byte[] Thumbnail { get; set; }
+        [Url]
         public string ThumbnailUrl { get; set; }
-        //}
-
-        public byte[] Image { get; set; }
 
         public DateTime CreationDate { get; set; }
 
