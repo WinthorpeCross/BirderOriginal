@@ -8,43 +8,45 @@
 @section scripts{
     <script src="~/js/knockout-3.4.2.js"></script>
     <script src="~/js/knockout.mapping-latest.js"></script>
+    <script src="~/js/jqueryvalidate.js"></script>
     <script src="~/js/createobservationviewmodel.js"></script>
+
     <script type="text/javascript">
         var createObservationViewModel = new CreateObservationViewModel(@Html.Raw(data));
-        createObservationViewModel.Observation.LocationLatitude = @UserManager.GetUserAsync(User).Result.DefaultLocationLatitude
-            createObservationViewModel.Observation.LocationLongitude = @UserManager.GetUserAsync(User).Result.DefaultLocationLongitude
+              createObservationViewModel.Observation.LocationLatitude = @UserManager.GetUserAsync(User).Result.DefaultLocationLatitude
+              createObservationViewModel.Observation.LocationLongitude = @UserManager.GetUserAsync(User).Result.DefaultLocationLongitude
             ko.applyBindings(createObservationViewModel);
-            $(select).selectpicker('render');
     </script>
 }
 <h2>Create an observation</h2>
-<form>
+<form id="form">
     <div class="form-group">
-        @* change to Partial View like Manage Index *@
-        <span class="control-label" name="MessageToClient" data-bind="text: MessageToClient" />
+         <span class="control-label" name="MessageToClient" data-bind="text: MessageToClient" />
     </div>
 
     <div class="form-group" hidden>
         <label class="col-sm-2 control-label" for="Observation.ObservationId">Id:</label>
         <div class="col-sm-10">
-            <span class="form-control" name="Obervation.ObservationId" data-bind="text: Observation.ObservationId@*, event: {change: flagSalesOrderAsEdited}*@" />
+            <span class="form-control" name="Obervation.ObservationId" data-bind="text: Observation.ObservationId" />
         </div>
     </div>
+
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="Observation.ObservationId">Date:</label>
+        <label class="col-sm-2 control-label" for="Observation.ObservationDateTime">Date:</label>
         <div class="col-sm-10">
             <input class="form-control" data-bind="datePicker : Observation.ObservationDateTime" type="date" />
         </div>
     </div>
-    <div class="form-group">
-        <input class="form-control" name="Observation.LocationLatitude" data-bind="value: Observation.LocationLatitude" />
-        <input class="form-control" name="Observation.LocationLongitude" data-bind="value: Observation.LocationLongitude" />
-    </div>
-    <div class="form-group" spellcheck="true">
-        <label class="col-sm-2 control-label" for="Observation.Note">Note:</label>
-        <div class="col-sm-10">
-            <input class="form-control" name="Observation.Note" data-bind="value: Observation.Note" />
+
+        <div class="form-group">
+            <input class="form-control" name="Observation.LocationLatitude" data-bind="value: Observation.LocationLatitude" />
+            <input class="form-control" name="Observation.LocationLongitude" data-bind="value: Observation.LocationLongitude" />
         </div>
+
+    <div class="form-group">
+        <label class="control-label" for="Observation.Note">Note:</label>
+        <input class="form-control" id="Note" name="Observation.Note" data-bind="value: Observation.Note" />
+
     </div>
 
     <hr />
@@ -58,18 +60,18 @@
         </tr>
         <tbody data-bind="foreach: ObservedSpecies">
             <tr>
-                <td class="form-group"><input name="ObservedSpecies.Quantity" class="form-control input-sm text-right" data-bind="@*attr: {'id': 'Quantity_' + $index()},*@ value: Quantity@*, event: {change: flagSalesOrderItemAsEdited}*@" /></td>
+                <td class="form-group"><input name="ObservedSpecies.Quantity" class="form-control input-sm text-right" data-bind="value: Quantity" /></td>
                 <td class="form-group">
                     @Html.DropDownListFor(m => m.Observation.BirdId,
-                         new SelectList(Model.Birds, "BirdId", "EnglishName"),
-                             new
-                             {
-                                 @class = "form-control selectpicker showtick",
-                                 data_bind = "selectPicker: {}, value: BirdId",
-                                 title = "Choose a bird species...",
-                                 data_live_search = "true",
-                                 data_show_subtext = "true"
-                             })
+                        new SelectList(Model.Birds, "BirdId", "EnglishName"),
+                            new
+                            {
+                                @class = "form-control selectpicker showtick",
+                                data_bind = "selectPicker: {}, value: BirdId",
+                                title = "Choose a bird species...",
+                                data_live_search = "true",
+                                data_show_subtext = "true"
+                            })
                 </td>
                 <td class="form-group">delete</td>
             </tr>
@@ -83,7 +85,8 @@
     </table>
 
 
-    <p><button data-bind="click: post">Post</button></p>
+    <p><button class="btn btn-primary" type="submit">Post</button></p>
+    @*<p><button data-bind="click: post">Post</button></p>*@
 </form>
 
 

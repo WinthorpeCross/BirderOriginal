@@ -65,3 +65,18 @@ ObservedSpeciesViewModel = function (data) {
     var self = this;
     ko.mapping.fromJS(data, observedSpeciesMapping, self);  
 };
+
+
+$("#form").validate({
+    submitHandler: function () {
+        createObservationViewModel.post();
+    },
+
+    rules: {
+        "Observation.Note": {
+            required: true
+        //Obervation.Note: {
+        //    required: true
+        }
+    }
+});
