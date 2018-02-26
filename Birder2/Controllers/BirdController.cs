@@ -5,6 +5,11 @@ using Birder2.Services;
 using Microsoft.AspNetCore.Authorization;
 using Birder2.ViewModels;
 
+/*
+ * Perhaps use IEnumerable - not IQueryable -  for the Birds list because it is likely to be repeatedly searched and filtered?
+ * Total size is just 600 rows.
+*/
+
 namespace Birder2.Controllers
 {
     [Authorize]
@@ -19,8 +24,14 @@ namespace Birder2.Controllers
             _flickrService = flickrService;
         }
 
+        public class SortFilterPageOptions
+        {
+            public string uio { get; set; }
+        }
+
+
         // GET: All Bird Species
-        public async Task<IActionResult> Index(string searchString, string searchType)
+        public async Task<IActionResult> Index(string searchString, string searchType, SortFilterPageOptions options)
         {
             switch (searchType)
             {
