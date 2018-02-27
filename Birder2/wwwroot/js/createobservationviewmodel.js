@@ -8,6 +8,55 @@
         }
     };
 
+    ko.bindingHandlers.datepicker = {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            //initialize datepicker with some optional options
+            var options = {
+                format: 'DD/MM/YYYY HH:mm',
+                defaultDate: valueAccessor()()
+            };
+
+            if (allBindingsAccessor() !== undefined) {
+                if (allBindingsAccessor().datepickerOptions !== undefined) {
+                    options.format = allBindingsAccessor().datepickerOptions.format !== undefined ? allBindingsAccessor().datepickerOptions.format : options.format;
+                }
+            }
+
+            $(element).datetimepicker(options);
+
+            //when a user changes the date, update the view model
+            ko.utils.registerEventHandler(element, "dp.change", function (event) {
+                var value = valueAccessor();
+                if (ko.isObservable(value)) {
+                    value(event.date);
+                }
+            });
+
+            var defaultVal = $(element).val();
+            var value = valueAccessor();
+            value(moment(defaultVal, options.format));
+        },
+        update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            var thisFormat = 'DD/MM/YYYY HH:mm';
+
+            if (allBindingsAccessor() !== undefined) {
+                if (allBindingsAccessor().datepickerOptions !== undefined) {
+                    thisFormat = allBindingsAccessor().datepickerOptions.format !== undefined ? allBindingsAccessor().datepickerOptions.format : thisFormat;
+                }
+            }
+
+            var value = valueAccessor();
+            var unwrapped = ko.utils.unwrapObservable(value());
+
+            if (unwrapped === undefined || unwrapped === null) {
+                element.value = new moment(new Date());
+                console.log("undefined");
+            } else {
+                element.value = unwrapped.format(thisFormat);
+            }
+        }
+    };
+
     self.addObservedSpecies = function () {
         var observedSpecies = new ObservedSpeciesViewModel({ BirdId: 0, Quantity: 1 });
         self.ObservedSpecies.push(observedSpecies);
@@ -77,6 +126,22 @@ $("#form").validate({
             required: true
         //Obervation.Note: {
         //    required: true
-        }
+        },
+        "Observation.BirdId": {
+            required: true
+            //Obervation.Note: {
+            //    required: true
+        },
+        "Observation.ObservationDateTime": {
+            //required: true,
+            date: true
+
+            //Obervation.Note: {
+            //    required: true
+        },
+
     }
 });
+
+
+

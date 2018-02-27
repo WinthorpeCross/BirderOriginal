@@ -18,7 +18,9 @@
             ko.applyBindings(createObservationViewModel);
     </script>
 }
+
 <h2>Create an observation</h2>
+
 <form id="form">
     <div class="form-group">
          <span class="control-label" name="MessageToClient" data-bind="text: MessageToClient" />
@@ -45,7 +47,7 @@
 
     <div class="form-group">
         <label class="control-label" for="Observation.Note">Note:</label>
-        <input class="form-control" id="Note" name="Observation.Note" data-bind="value: Observation.Note" />
+        <input class="form-control" name="Observation.Note" data-bind="value: Observation.Note" />
 
     </div>
 
