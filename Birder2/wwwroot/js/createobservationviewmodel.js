@@ -9,7 +9,7 @@
     };
 
     self.addObservedSpecies = function () {
-        var observedSpecies = new ObservedSpeciesViewModel({ BirdId: 0, Quantity: 1 });
+        var observedSpecies = new ObservedSpeciesViewModel({ Id: 0, BirdId: 0, Quantity: 1 });
         self.ObservedSpecies.push(observedSpecies);
     };
 
@@ -74,6 +74,9 @@ $("#form").validate({
 
     rules: {
         "Observation.NoteGeneral": {
+            required: true
+        },
+        Quantity: {
             required: true
         },
         "Observation.BirdId": {
