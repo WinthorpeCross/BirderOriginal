@@ -1,4 +1,3 @@
-using System;
 
 namespace Birder2.Models
 {

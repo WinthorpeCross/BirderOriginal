@@ -91,6 +91,7 @@ namespace Birder2.Controllers
                 if (await _userManager.FindByNameAsync(model.Username) != null)
                 {
                     ModelState.AddModelError("Username", $"Username '{model.Username}' is already taken.");
+                    
                     return View(model);
                 }
                 var setUserNameResult = await _userManager.SetUserNameAsync(user, model.Username);

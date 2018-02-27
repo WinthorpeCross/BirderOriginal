@@ -33,21 +33,29 @@
                 "content-type": "application/json; charset=utf-8"
             },
             success: function (data) {
-                //alert("success");
-                //var obj = JSON.parse(data);
-
-                window.location.replace("./Index/"); // + obj.SalesOrderId);
+                alert("success");
+                var obj = JSON.parse(data);
+                self.MessageToClient(obj.MessageToClient);
+                //window.location.replace("./Index/"); // + obj.SalesOrderId);
 
                 //alert("success");
                 //console.log(obj);
                 //ko.fromJS(data.salesOrderViewModel, {}, self);
                 //if (data.SalesOrderViewModel)
-            },
-            error: function (textStatus, errorThrown) {
-                alert("error");
+            }
+            //error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //    alert("error");
+            //    if (XMLHttpRequest.status == 400) {
+            //        $('#MessageToClient').text(XMLHttpRequest.responseText);
+            //    }
+            //    else {
+            //        $('#MessageToClient').text('The web server had an error.');
+            //    }
+            //}
+                
                 //window.location.replace("./Details/" + obj.SalesOrderId);
                 //redirect to an error page?
-            }//,
+            //,
             //always: function (data) {
             //},
         });

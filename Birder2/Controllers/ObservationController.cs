@@ -7,6 +7,7 @@ using Birder2.Services;
 using Microsoft.AspNetCore.Authorization;
 using Birder2.ViewModels;
 using Newtonsoft.Json;
+using System;
 
 namespace Birder2.Controllers
 {
@@ -79,7 +80,21 @@ namespace Birder2.Controllers
             if (user == null)
             {
                 return Json(JsonConvert.SerializeObject(viewModel));
+
                 //return Json(new { newLocation = "/Sales/Index/" });
+            }
+
+            //if (ModelState.IsValid)
+            //{
+            ////}
+            if (viewModel.ObservedSpecies.Count == 0)
+            {
+                ModelState.AddModelError("NoteGeneral", $"NoteGeneral  is already taken.");
+                //return;
+                //throw new ModelStateException(ModelState); ModelState.
+                //throw new NullReferenceException();
+                viewModel.MessageToClient = "jk";
+                return Json(JsonConvert.SerializeObject(viewModel));
             }
 
             //loop here to set the bird for earch observation?
