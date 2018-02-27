@@ -6,6 +6,7 @@ namespace Birder2.Models
 {
     public class Observation
     {
+        //male/female/juvenile?
         [Key]
         public int ObservationId { get; set; }
 

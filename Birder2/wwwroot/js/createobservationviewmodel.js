@@ -90,7 +90,7 @@ $("#form").validate({
         },
         "Observation.ObservationDateTime": {
             date: true
-        }
+        },
     },
 
     messages: {
