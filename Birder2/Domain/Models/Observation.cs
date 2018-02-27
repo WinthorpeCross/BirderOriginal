@@ -6,7 +6,6 @@ namespace Birder2.Models
 {
     public class Observation
     {
-        // This is for an individual bird observation.  Consider functionality for mulitiple observations (different view model for create multiple observations)
         [Key]
         public int ObservationId { get; set; }
 
