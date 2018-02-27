@@ -13,6 +13,10 @@
         self.ObservedSpecies.push(observedSpecies);
     };
 
+    self.removeObservedSpecies = function () {
+        self.ObservedSpecies.pop();
+    };
+
     self.Total = ko.computed(function () {
         var total = 0;
         total += self.ObservedSpecies().length;
@@ -73,11 +77,13 @@ $("#form").validate({
     },
 
     rules: {
-        "Observation.NoteGeneral": {
-            required: true
-        },
+        //"Observation.NoteGeneral": {
+        //    required: true
+        //},
         Quantity: {
-            required: true
+            required: true,
+            digits: true,
+            range: [0, 100000]
         },
         "Observation.BirdId": {
             required: true
@@ -85,8 +91,37 @@ $("#form").validate({
         "Observation.ObservationDateTime": {
             date: true
         }
+    },
+
+    messages: {
+        "Observation.BirdId": {
+            required: "You must choose a bird species."//,
+            //maxlength: "Customer names must be 30 characters or shorter."
+        },
+        //Quantity: {
+        //    required: "Quantity must be digits only",
+        //    digitsonly: "k"
+        //}
+    },
+
+    tooltip_options: {
+        Quantity: {
+            placement: 'right'
+        },
+        PONumber: {
+            placement: 'right'
+        }
     }
 });
+
+
+// example of custom validation
+$.validator.addMethod("alphaonly",
+    function (value) {
+        return /^[A-Za-z]+$/.test(value);
+    }
+);
+
 
 
 

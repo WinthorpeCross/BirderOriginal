@@ -94,6 +94,11 @@ namespace Birder2.Controllers
                     observationToAdd.LocationLatitude = viewModel.Observation.LocationLatitude;
                     observationToAdd.LocationLongitude = viewModel.Observation.LocationLongitude;
                     observationToAdd.NoteGeneral = viewModel.Observation.NoteGeneral;
+                    observationToAdd.NoteHabitat = viewModel.Observation.NoteHabitat;
+                    observationToAdd.NoteWeather = viewModel.Observation.NoteWeather;
+                    observationToAdd.NoteAppearance = viewModel.Observation.NoteAppearance;
+                    observationToAdd.NoteBehaviour = viewModel.Observation.NoteBehaviour;
+                    observationToAdd.NoteVocalisation = viewModel.Observation.NoteVocalisation;
 
                     observationToAdd.ApplicationUser = user;
 
