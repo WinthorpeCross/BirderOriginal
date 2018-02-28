@@ -10,17 +10,17 @@
 
 
 @*<p id="latitude"></p>
-<p id="longitude"></p>
+    <p id="longitude"></p>
 
 
 
 
 
-<div id="floating-panel">
-    <input id="address" type="text" value="search...">
-    <input id="submit" type="button" value="Geocode">
-</div>
-@*<div id="map"></div>*@
+    <div id="floating-panel">
+        <input id="address" type="text" value="search...">
+        <input id="submit" type="button" value="Geocode">
+    </div>
+    @*<div id="map"></div>*@
 <div id="map" class="class--map"></div>
 
 <script>
@@ -45,9 +45,9 @@
     function initMap() {
         // no "var" here, initialize the global map variable
         var observationLocation = {
-                lat: 39.8282,
-                lng: -98.5795
-            };
+            lat: 39.8282,
+            lng: -98.5795
+        };
         map = new google.maps.Map(document.getElementById('map'), {
             zoom: 4,
             center: observationLocation
@@ -87,7 +87,7 @@
                 resultsMap.setCenter(results[0].geometry.location);
                 placeMarker(results[0].geometry.location);
                 updateForm(results);
-                
+
 
             } else {
                 alert('We could not locate your location for the following reason: ' + status);
@@ -142,6 +142,13 @@
 </script>
 
 <hr />
+
+<script type="text/javascript" src="/bower_components/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/bower_components/moment/min/moment.min.js"></script>
+<script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
 
 <div class="container">
     <div class="row">

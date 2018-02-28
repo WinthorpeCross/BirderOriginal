@@ -24,6 +24,7 @@
   "dependencies": {
     "knockout-sortable": "v1.1.0",
     "knockout": "v3.4.2",
-    "jquery-validation": "1.17.0"
+    "jquery-validation": "1.17.0",
+    "eonasdan-bootstrap-datetimepicker": "v4.17.45"
   }
 }
