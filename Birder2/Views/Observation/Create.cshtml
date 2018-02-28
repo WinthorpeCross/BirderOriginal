@@ -22,9 +22,7 @@
 
 <h2>Create an observation</h2>
 
-
 <p id="MessageToClient" data-bind="text: MessageToClient"></p>
-@Html.Partial("_StatusMessage", Model.MessageToClient)
 
 <form id="form">
     @*<div class="form-group">
@@ -120,7 +118,7 @@
         <tr>
             <td>&nbsp;</td>
             <td class="form-group"><span class="form-control text-right">Total species:</span></td>
-            <td class="form-group"><span class="form-control text-left" data-bind="text: Total"></span></td>
+            <td class="form-group"><span name="Total" class="form-control text-left" data-bind="text: Total"></span></td>
             @*<td>&nbsp;</td>*@
         </tr>
     </table>

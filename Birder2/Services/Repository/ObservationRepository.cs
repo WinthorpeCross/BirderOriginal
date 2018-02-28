@@ -17,6 +17,7 @@ namespace Birder2.Services
 
         public async Task<IEnumerable<Bird>> AllBirdsList()
         {
+            // ToDo: include Birder category to sort the list by common species
             return await _dbContext.Birds.ToListAsync();
         }
 

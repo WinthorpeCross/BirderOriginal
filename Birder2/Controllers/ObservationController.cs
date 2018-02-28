@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using Birder2.ViewModels;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Birder2.Controllers
 {
@@ -57,15 +59,13 @@ namespace Birder2.Controllers
         }
 
         public async Task<IActionResult> Create()
-        {
+        {         
             var model = new CreateObservationViewModel()
             {
                 Observation = new Observation() { ObservationDateTime = _systemClock.Now },
-                MessageToClient = "I originated from the viewmodel, rather than the model.",
-                // ToDo: include Birder category to sort the list by common species
-                Birds = await _observationRepository.AllBirdsList()
+                MessageToClient = "",
+                Birds = await _observationRepository.AllBirdsList(),
             };
-
             return View(model);
         }
 
@@ -84,53 +84,69 @@ namespace Birder2.Controllers
                 //return Json(new { newLocation = "/Sales/Index/" });
             }
 
-            //if (ModelState.IsValid)
-            //{
-            ////}
             if (viewModel.ObservedSpecies.Count == 0)
             {
-                ModelState.AddModelError("NoteGeneral", $"NoteGeneral  is already taken.");
-                //return;
-                //throw new ModelStateException(ModelState); ModelState.
-                //throw new NullReferenceException();
-                viewModel.MessageToClient = "jk";
+                //ModelState.AddModelError("ObservredSpeciesCollection", "You must choose at least one species of bird.");
+                //string errors = JsonConvert.SerializeObject(ModelState.Values
+                //                .SelectMany(state => state.Errors)
+                //                .Select(error => error.ErrorMessage));
+
+                viewModel.IsModelStateValid = false;
+                viewModel.MessageToClient = "You must choose at least one observed bird species.";
+
+                //return Json(JsonConvert.SerializeObject(ModelState));
                 return Json(JsonConvert.SerializeObject(viewModel));
             }
 
             //loop here to set the bird for earch observation?
-
-            //roll back in case any cannot be updated?
-            foreach (ObservedSpeciesViewModel observedSpecies in viewModel.ObservedSpecies)
+            if (ModelState.IsValid)
             {
-                try
-                {
-                    Observation observationToAdd = new Observation();
-                    observationToAdd.ObservationDateTime = viewModel.Observation.ObservationDateTime;
-                    observationToAdd.LocationLatitude = viewModel.Observation.LocationLatitude;
-                    observationToAdd.LocationLongitude = viewModel.Observation.LocationLongitude;
-                    observationToAdd.NoteGeneral = viewModel.Observation.NoteGeneral;
-                    observationToAdd.NoteHabitat = viewModel.Observation.NoteHabitat;
-                    observationToAdd.NoteWeather = viewModel.Observation.NoteWeather;
-                    observationToAdd.NoteAppearance = viewModel.Observation.NoteAppearance;
-                    observationToAdd.NoteBehaviour = viewModel.Observation.NoteBehaviour;
-                    observationToAdd.NoteVocalisation = viewModel.Observation.NoteVocalisation;
 
-                    observationToAdd.ApplicationUser = user;
-
-                    observationToAdd.CreationDate = _systemClock.Now;
-                    observationToAdd.LastUpdateDate = _systemClock.Now;
-                    observationToAdd.Bird = await _observationRepository.GetSelectedBird(observedSpecies.BirdId);
-                    observationToAdd.Quantity = observedSpecies.Quantity;
-                    await _observationRepository.AddObservation(observationToAdd);
-                }
-                catch
+                //roll back in case any cannot be updated?
+                foreach (ObservedSpeciesViewModel observedSpecies in viewModel.ObservedSpecies)
                 {
-                    return Json(JsonConvert.SerializeObject(viewModel));
-                    //return Json(new { newLocation = "/Sales/Index/" });
+                    try
+                    {
+                        Observation observationToAdd = new Observation();
+                        observationToAdd.ObservationDateTime = viewModel.Observation.ObservationDateTime;
+                        observationToAdd.LocationLatitude = viewModel.Observation.LocationLatitude;
+                        observationToAdd.LocationLongitude = viewModel.Observation.LocationLongitude;
+                        observationToAdd.NoteGeneral = viewModel.Observation.NoteGeneral;
+                        observationToAdd.NoteHabitat = viewModel.Observation.NoteHabitat;
+                        observationToAdd.NoteWeather = viewModel.Observation.NoteWeather;
+                        observationToAdd.NoteAppearance = viewModel.Observation.NoteAppearance;
+                        observationToAdd.NoteBehaviour = viewModel.Observation.NoteBehaviour;
+                        observationToAdd.NoteVocalisation = viewModel.Observation.NoteVocalisation;
+
+                        observationToAdd.ApplicationUser = user;
+
+                        observationToAdd.CreationDate = _systemClock.Now;
+                        observationToAdd.LastUpdateDate = _systemClock.Now;
+                        observationToAdd.Bird = await _observationRepository.GetSelectedBird(observedSpecies.BirdId);
+                        observationToAdd.Quantity = observedSpecies.Quantity;
+                        await _observationRepository.AddObservation(observationToAdd);
+                    }
+                    catch
+                    {
+                        return Json(JsonConvert.SerializeObject(viewModel));
+                        //return Json(new { newLocation = "/Sales/Index/" });
+                    }
                 }
+
+                viewModel.IsModelStateValid = true;
+                return Json(JsonConvert.SerializeObject(viewModel));
             }
+            else
+            {
+                string errors = JsonConvert.SerializeObject(ModelState.Values
+                                .SelectMany(state => state.Errors)
+                               .Select(error => error.ErrorMessage));
 
-            return Json(JsonConvert.SerializeObject(viewModel));
+                    viewModel.IsModelStateValid = false;
+                    viewModel.MessageToClient = errors;
+                return Json(JsonConvert.SerializeObject(viewModel));
+                //return Json(JsonConvert.SerializeObject(ModelState));
+            }
         }
 
 

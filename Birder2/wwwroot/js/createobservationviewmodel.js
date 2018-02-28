@@ -14,7 +14,8 @@
     };
 
     self.removeObservedSpecies = function () {
-        self.ObservedSpecies.pop();
+        if (self.ObservedSpecies().length > 1)
+            self.ObservedSpecies.pop();
     };
 
     self.Total = ko.computed(function () {
@@ -33,31 +34,24 @@
                 "content-type": "application/json; charset=utf-8"
             },
             success: function (data) {
-                alert("success");
-                var obj = JSON.parse(data);
-                self.MessageToClient(obj.MessageToClient);
-                //window.location.replace("./Index/"); // + obj.SalesOrderId);
 
-                //alert("success");
-                //console.log(obj);
-                //ko.fromJS(data.salesOrderViewModel, {}, self);
-                //if (data.SalesOrderViewModel)
+                var obj = JSON.parse(data);
+                if (obj.IsModelStateValid === false) {
+                    self.MessageToClient(obj.MessageToClient);
+                }
+                else {
+                    window.location.replace("./Index/");
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("error");
+                if (XMLHttpRequest.status === 400) {
+                    $('#MessageToClient').text(XMLHttpRequest.responseText);
+                }
+                else {
+                    $('#MessageToClient').text('The web server had an error.  The issue has been logged for investigation by the developer.');
+                }
             }
-            //error: function (XMLHttpRequest, textStatus, errorThrown) {
-            //    alert("error");
-            //    if (XMLHttpRequest.status == 400) {
-            //        $('#MessageToClient').text(XMLHttpRequest.responseText);
-            //    }
-            //    else {
-            //        $('#MessageToClient').text('The web server had an error.');
-            //    }
-            //}
-                
-                //window.location.replace("./Details/" + obj.SalesOrderId);
-                //redirect to an error page?
-            //,
-            //always: function (data) {
-            //},
         });
     };
 };
@@ -85,8 +79,8 @@ $("#form").validate({
     },
 
     rules: {
-        //"Observation.NoteGeneral": {
-        //    required: true
+        //ObservedSpecies: {
+        //    min: 1
         //},
         Quantity: {
             required: true,
@@ -98,7 +92,7 @@ $("#form").validate({
         },
         "Observation.ObservationDateTime": {
             date: true
-        },
+        }
     },
 
     messages: {
@@ -106,10 +100,10 @@ $("#form").validate({
             required: "You must choose a bird species."//,
             //maxlength: "Customer names must be 30 characters or shorter."
         },
-        //Quantity: {
-        //    required: "Quantity must be digits only",
-        //    digitsonly: "k"
-        //}
+        Quantity: {
+            required: "Quantity must be digits only",
+            digitsonly: "k"
+        }
     },
 
     tooltip_options: {

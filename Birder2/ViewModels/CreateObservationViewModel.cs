@@ -15,13 +15,16 @@ namespace Birder2.ViewModels
         public Observation Observation { get; set; }
         public IEnumerable<Bird> Birds { get; set; }
         public List<ObservedSpeciesViewModel> ObservedSpecies { get; set; }
+        public bool IsModelStateValid { get; set; }
         public string MessageToClient { get; set; }
     }
 
     public class ObservedSpeciesViewModel
     {
         public int Id { get; set; }
+        [Required]
         public int Quantity { get; set; }
+        [Required]
         public int BirdId { get; set; }
     }
 }
