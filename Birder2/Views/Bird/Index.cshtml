@@ -14,7 +14,7 @@
     <div class="form-group">
         <div class="col-sm-3">
             <label class="control-label">Sort By</label>
-            <select name="OrderByOptions" class="form-control sort-filter-width" onchange="BookList.sendForm(this)" data-val="true" data-val-required="The OrderByOptions field is required." id="SortFilterPageData_OrderByOptions">
+            <select name="OrderByOptions" class="form-control sort-filter-width" onchange="BookList.sendForm(this)" data-val="true" data-val-required="The OrderByOptions field is required." id="SortFilterPageData_OrderByOptions" disabled>
                 <option selected="selected" value="0">sort by...</option>
                 <option value="1">Votes &#x2191;</option>
                 <option value="2">Publication Date &#x2191;</option>
@@ -25,7 +25,7 @@
 
         <div class="col-sm-3">
             <label class="control-label">Filter Type</label>
-            <select name="FilterBy" class="form-control sort-filter-width" onchange="BookList.filterByHasChanged(this)" data-val="true" data-val-required="The FilterBy field is required." id="SortFilterPageData_FilterBy">
+            <select name="FilterBy" class="form-control sort-filter-width" onchange="BookList.filterByHasChanged(this)" data-val="true" data-val-required="The FilterBy field is required." id="SortFilterPageData_FilterBy" disabled>
                 <option selected="selected" value="0">All</option>
                 <option value="1">By Votes...</option>
                 <option value="2">By Year published...</option>

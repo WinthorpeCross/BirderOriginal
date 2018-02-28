@@ -30,6 +30,7 @@ namespace Birder2.Services
         {
             var observations = _dbContext.Observations
                     .Where(u => u.ApplicationUser == user)
+                    .Include(au => au.ApplicationUser)
                     .Include(b => b.Bird)
                     .Include(ot => ot.ObservationTags)
                         .ThenInclude(t => t.Tag)

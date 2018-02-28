@@ -4,21 +4,24 @@
     <div class="media">
         <div class="media-left media-middle">
             @*<img src="~/images/if_099374-twitter-bird3_56010.png" class="media-object" style="width:60px">*@
-            <img src="@Model.Bird.ThumbnailUrl" class="media-object" style="width:60px">
+            <img src="@Model.Bird.ThumbnailUrl" class="media-object">
         </div>
         <div class="media-body">
             <h3 class="media-heading">@Model.Bird.EnglishName <small><i> @Model.Bird.Species</i></small></h3>
-            <h5><span class="glyphicon glyphicon-time"></span> @Html.DisplayFor(modelItem => Model.ObservationDateTime)  | <span class="glyphicon glyphicon-globe"></span>  | <span class="glyphicon glyphicon-picture"></span> 5</h5>
-            @*<p>@Model.Note</p>*@
+            <h5><span class="glyphicon glyphicon-time"></span> @Html.DisplayFor(modelItem => Model.ObservationDateTime) by @Model.ApplicationUser.UserName </h5>
+            @*| <span class="glyphicon glyphicon-globe"></span>  | <span class="glyphicon glyphicon-picture"></span> 5</h5> *@
+            <div>
+                <a asp-action="Edit" asp-route-id="@Model.ObservationId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@Model.ObservationId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@Model.ObservationId">Delete</a>
+            </div> 
         </div>
     </div>
-    <div>
 
-    </div>
-    <div>
+    @*<div class="container">
         <a asp-action="Edit" asp-route-id="@Model.ObservationId">Edit</a> |
         <a asp-action="Details" asp-route-id="@Model.ObservationId">Details</a> |
         <a asp-action="Index">¿Post to Twitter/Facebook?</a> |
         <a asp-action="Delete" asp-route-id="@Model.ObservationId">Delete</a>
-    </div>
+    </div>*@
 </section>
