@@ -13,12 +13,25 @@
 <h4>Observed by <b> @Model.ApplicationUser.UserName [link to profile page]</b> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h4>
 @{
     if (Model.ApplicationUserId == UserManager.GetUserAsync(User).Result.Id)
-        { <p> Find out more about the <a asp-controller="Bird" asp-action="Details" asp-route-id="@Model.Bird.BirdId">@Model.Bird.EnglishName</a> and the details of your other sightings of this species.</p> }
-    else
-        { <p> Find out more about the <a asp-controller="Bird" asp-action="Details" asp-route-id="@Model.Bird.BirdId">@Model.Bird.EnglishName</a> and the details of your sightings of this species.</p> }
-} 
+    { <p> Find out more about the <a asp-controller="Bird" asp-action="Details" asp-route-id="@Model.Bird.BirdId">@Model.Bird.EnglishName</a> and the details of your other sightings of this species.</p> }
+else
+{ <p> Find out more about the <a asp-controller="Bird" asp-action="Details" asp-route-id="@Model.Bird.BirdId">@Model.Bird.EnglishName</a> and the details of your sightings of this species.</p> }
+}
 
 @* Use above to display appropriate options (no edit/delete as appropriate) *@
+
+<h4>Notes:</h4>
+<div class="row">
+    <div class="col-xs-3 col-sm-2 col-lg-1">
+        <p>@Html.DisplayNameFor(model => model.NoteGeneral)</p>
+    </div>
+    <div class="col-xs-9 col-sm-10 col-lg-11">
+        @Html.DisplayFor(model => model.NoteGeneral)
+    </div>
+    
+</div>
+
+
 
 <div>
 
@@ -55,6 +68,8 @@
     <a asp-action="Edit" asp-route-id="@Model.ObservationId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+<small>Observation created: @Model.CreationDate; last update: @Model.LastUpdateDate</small>
 
 <script>
 
