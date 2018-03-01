@@ -8,11 +8,11 @@
         </div>
         <div class="media-body">
             <h3 class="media-heading">@Model.Bird.EnglishName <small><i> @Model.Bird.Species</i></small></h3>
-            <h5><span class="glyphicon glyphicon-time"></span> @Html.DisplayFor(modelItem => Model.ObservationDateTime) by @Model.ApplicationUser.UserName </h5>
+            <h5>Observation by <b> @Model.ApplicationUser.UserName </b> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h5>
             @*| <span class="glyphicon glyphicon-globe"></span>  | <span class="glyphicon glyphicon-picture"></span> 5</h5> *@
             <div>
+                <a asp-action="Details" asp-route-id="@Model.ObservationId">View</a> |
                 <a asp-action="Edit" asp-route-id="@Model.ObservationId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@Model.ObservationId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@Model.ObservationId">Delete</a>
             </div> 
         </div>

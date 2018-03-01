@@ -1,8 +1,4 @@
-﻿
-
-
-
-@{
+﻿@{
     ViewData["Title"] = "Client-side playground";
 }
 <h2>@ViewData["Title"]</h2>
@@ -13,62 +9,84 @@
 
 <hr />
 
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 
 
-<script src="~/js/jquery-ui.js"></script>
-<script src="~/js/datetimepicker.js"></script>
-@*<script type="text/javascript" src="/bower_components/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/bower_components/moment/min/moment.min.js"></script>
-    <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />*@
-
-<div class="example-container">
-    <p>Timepicker comes with a collection of localization files and one combined file with all available localizations.  $.timepicker.regional["your localization code here"] is a simple object with preset options:</p>
-    <div>
-        <input type="text" name="basic_example_4" id="basic_example_1" value="" />
+<div class="container">
+    <div class="row">
+        <div class='col-sm-6'>
+            <div class="form-group">
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
-    <p>Timepicker comes with a collection of localization files and one combined file with all available localizations.  $.timepicker.regional["your localization code here"] is a simple object with preset options:</p>
-    <p>Timepicker comes with a collection of localization files and one combined file with all available localizations.  $.timepicker.regional["your localization code here"] is a simple object with preset options:</p>
-    <p>Timepicker comes with a collection of localization files and one combined file with all available localizations.  $.timepicker.regional["your localization code here"] is a simple object with preset options:</p>
-    <p>Timepicker comes with a collection of localization files and one combined file with all available localizations.  $.timepicker.regional["your localization code here"] is a simple object with preset options:</p>
-    <p>Timepicker comes with a collection of localization files and one combined file with all available localizations.  $.timepicker.regional["your localization code here"] is a simple object with preset options:</p>
-    <script>
-        $('#basic_example_1').datetimepicker();
-    </script>
 </div>
 
-<link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css" />
-<link rel="stylesheet" media="all" type="text/css" href="jquery-ui-timepicker-addon.css" />
+
+<script>
+    $(function () {
+        $('#datetimepicker1').datetimepicker();
+    });
+</script>
+
+
+
+@*
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+
+
+    <script src="~/js/jquery-ui.js"></script>
+    <script src="~/js/datetimepicker.js"></script>
+
+
+    <div class="example-container">
+        <p>Timepicker comes with a collection of localization files and one combined file with all available localizations.  $.timepicker.regional["your localization code here"] is a simple object with preset options:</p>
+        <div>
+            <input type="text" name="basic_example_4" id="basic_example_1" value="" />
+        </div>
+        <p>Timepicker comes with a collection of localization files and one combined file with all available localizations.  $.timepicker.regional["your localization code here"] is a simple object with preset options:</p>
+        <p>Timepicker comes with a collection of localization files and one combined file with all available localizations.  $.timepicker.regional["your localization code here"] is a simple object with preset options:</p>
+        <p>Timepicker comes with a collection of localization files and one combined file with all available localizations.  $.timepicker.regional["your localization code here"] is a simple object with preset options:</p>
+        <p>Timepicker comes with a collection of localization files and one combined file with all available localizations.  $.timepicker.regional["your localization code here"] is a simple object with preset options:</p>
+        <p>Timepicker comes with a collection of localization files and one combined file with all available localizations.  $.timepicker.regional["your localization code here"] is a simple object with preset options:</p>
+        <script>
+            $('#basic_example_1').datetimepicker();
+        </script>
+    </div>
+
+    <link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" media="all" type="text/css" href="jquery-ui-timepicker-addon.css" />
 
 
 
 
-@* Bootstrap-select... *@
-<div>
-    <select class="form-control selectpicker show-tick" title="h">
-        <optgroup label="Picnic">
-            <option>Mustard</option>
-            <option>Ketchup</option>
-            <option>Relish</option>
-        </optgroup>
-        <optgroup label="Camping">
-            <option>Tent</option>
-            <option>Flashlight</option>
-            <option>Toilet Paper</option>
-        </optgroup>
-    </select>
 
-    <select class="selectpicker" data-live-search="true">
-        <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
-        <option data-tokens="mustard">Burger, Shake and a Smile</option>
-        <option data-tokens="frosting">Sugar, Spice and all things nice</option>
-    </select>
-</div>
+    <div>
+        <select class="form-control selectpicker show-tick" title="h">
+            <optgroup label="Picnic">
+                <option>Mustard</option>
+                <option>Ketchup</option>
+                <option>Relish</option>
+            </optgroup>
+            <optgroup label="Camping">
+                <option>Tent</option>
+                <option>Flashlight</option>
+                <option>Toilet Paper</option>
+            </optgroup>
+        </select>
 
-@*  *@
+        <select class="selectpicker" data-live-search="true">
+            <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
+            <option data-tokens="mustard">Burger, Shake and a Smile</option>
+            <option data-tokens="frosting">Sugar, Spice and all things nice</option>
+        </select>
+    </div>
+
+*@
 
 
 

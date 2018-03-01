@@ -55,16 +55,16 @@
                 <td class="form-group col-sm-3"><input name="Quantity" class="form-control input-sm text-right" data-bind="attr: {'Id': 'Quantity_' + $index()}, value: Quantity" /></td>
                 <td colspan="2" class="form-group">
                     @Html.DropDownListFor(m => m.Observation.BirdId,
-                                                                 new SelectList(Model.Birds, "BirdId", "EnglishName"),
-                                                                 new
-                                                                 {
-                                                                     @name = "BirdId",
-                                                                     @class = "form-control selectpicker showtick",
-                                                                     data_bind = "attr: {'Id': 'BirdId_' + $index()}, selectPicker: {}, value: BirdId",
-                                                                     title = "Choose a bird species...",
-                                                                     data_live_search = "true",
-                                                                     data_show_subtext = "true"
-                                                                 })
+                                                                      new SelectList(Model.Birds, "BirdId", "EnglishName"),
+                                                                      new
+                                                                      {
+                                                                          @name = "BirdId",
+                                                                          @class = "form-control selectpicker showtick",
+                                                                          data_bind = "attr: {'Id': 'BirdId_' + $index()}, selectPicker: {}, value: BirdId",
+                                                                          title = "Choose a bird species...",
+                                                                          data_live_search = "true",
+                                                                          data_show_subtext = "true"
+                                                                      })
                 </td>
                 @*<td class="form-group"></td>*@
             </tr>
@@ -114,13 +114,13 @@
 
 
     <div class="form-group">
-        <label class="control-label" for="Observation.LocationLatitude">Observation location (use the map control to set the location):</label>
+        <label class="control-label">Observation location (use the map control to set the location):</label>
         <input class="form-control" id="set" disabled />
     </div>
-    <div class="form-group" hidden>
-        <input class="form-control" name="Observation.LocationLatitude" data-bind="value: Observation.LocationLatitude" id="latitude" hidden />
-        <input class="form-control" name="Observation.LocationLongitude" data-bind="value: Observation.LocationLongitude" id="longitude"  />
-    </div>
+    @*<div class="form-group">
+        <input class="form-control" name="Observation.LocationLatitude" data-bind="value: Observation.LocationLatitude" id="latitude" />
+        <input class="form-control" name="Observation.LocationLongitude" data-bind="value: Observation.LocationLongitude" id="longitude" />
+    </div>*@
 
     <div class="container" id="floating-panel">
         <input id="address" type="text" value="">
@@ -172,12 +172,7 @@
                 if (status == google.maps.GeocoderStatus.OK) {
                     if (results[0]) {
                         //alert(results[0].formatted_address);
-                        document.getElementById('set').innerHTML =
-                            "<font size=2 color=green>" +
-                            "Set your default location as: <br /> " +
-                            "<b>" + results[0].formatted_address + "</b>." +
-                            "</font>" +
-                            "<br>"
+                        document.getElementById('set').value = results[0].formatted_address
                         addMarker(results[0].geometry.location);
                     }
                 }
@@ -191,12 +186,7 @@
                 if (status == google.maps.GeocoderStatus.OK) {
                     if (results[0]) {
                         //alert(results[0].formatted_address);
-                        document.getElementById('set').innerHTML =
-                            "<font size=2 color=green>" +
-                            "Set your default location as: <br /> " +
-                            "<b>" + results[0].formatted_address + "</b>." +
-                            "</font>" +
-                            "<br>"
+                        document.getElementById('set').value = results[0].formatted_address
                         addMarker(event.latLng);
                     }
                 }
@@ -238,8 +228,8 @@
             markers = [];
         }
         function updateForm() {
-            document.getElementById('latitude').value = markers[0].position.lat();
-            document.getElementById('longitude').value = markers[0].position.lng();
+            createObservationViewModel.Observation.LocationLatitude(markers[0].position.lat());
+            createObservationViewModel.Observation.LocationLongitude(markers[0].position.lng());
         }
     }
 </script>

@@ -28,6 +28,7 @@ namespace Birder2.Services
 
         public async Task<IEnumerable<Observation>> MyObservationsList(ApplicationUser user)
         {
+            //Change to IQueryable collection - this collection will be refreshed regularly
             var observations = _dbContext.Observations
                     .Where(u => u.ApplicationUser == user)
                     .Include(au => au.ApplicationUser)
