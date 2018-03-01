@@ -1,35 +1,47 @@
 ﻿@model Birder2.Models.Observation
-
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
 @{
     ViewData["Title"] = "Details";
 }
 
-<h2>Sighting Details</h2>
+@*This page allows anyone to view a public observation.
+    Therefore, do not include user specific data like bird count, etc...
+*@
 
-<p> See more information about the @Model.Bird.EnglishName and details of your sightings... </p>
+<h1>@Model.Bird.EnglishName <small><i> @Model.Bird.Species</i></small></h1>
+<h4>Observed by <b> @Model.ApplicationUser.UserName [link to profile page]</b> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h4>
+@{
+    if (Model.ApplicationUserId == UserManager.GetUserAsync(User).Result.Id)
+        { <p> Find out more about the <a asp-controller="Bird" asp-action="Details" asp-route-id="@Model.Bird.BirdId">@Model.Bird.EnglishName</a> and the details of your other sightings of this species.</p> }
+    else
+        { <p> Find out more about the <a asp-controller="Bird" asp-action="Details" asp-route-id="@Model.Bird.BirdId">@Model.Bird.EnglishName</a> and the details of your sightings of this species.</p> }
+} 
+
+@* Use above to display appropriate options (no edit/delete as appropriate) *@
 
 <div>
 
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ObservationDateTime)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ObservationDateTime)
-        </dd>
+        @*<dt>
+                @Html.DisplayNameFor(model => model.ObservationDateTime)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ObservationDateTime)
+            </dd>*@
         <dt>
             @Html.DisplayNameFor(model => model.NoteGeneral)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.NoteGeneral)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Bird)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Bird.EnglishName)
-        </dd>
+        @*<dt>
+                @Html.DisplayNameFor(model => model.Bird)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Bird.EnglishName)
+            </dd>*@
     </dl>
 </div>
 
