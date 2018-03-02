@@ -59,7 +59,7 @@ namespace Birder2.Controllers
         }
 
         public async Task<IActionResult> Create()
-        {         
+        {
             var model = new CreateObservationViewModel()
             {
                 Observation = new Observation() { ObservationDateTime = _systemClock.Now },
@@ -142,8 +142,8 @@ namespace Birder2.Controllers
                                 .SelectMany(state => state.Errors)
                                .Select(error => error.ErrorMessage));
 
-                    viewModel.IsModelStateValid = false;
-                    viewModel.MessageToClient = errors;
+                viewModel.IsModelStateValid = false;
+                viewModel.MessageToClient = errors;
                 return Json(JsonConvert.SerializeObject(viewModel));
                 //return Json(JsonConvert.SerializeObject(ModelState));
             }
@@ -259,6 +259,26 @@ namespace Birder2.Controllers
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ListLife()
+        {
+            var user = await _userAccessor.GetUser();
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            /*IQueryable<LifeListViewModel> model =*/
+            var model = await _observationRepository.GetLifeList(user.Id);
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ListYear()
+        {
+            return View();
         }
     }
 }

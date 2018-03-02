@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Birder2.Models;
+using Birder2.ViewModels;
 
 
 namespace Birder2.Data
@@ -71,5 +72,8 @@ namespace Birder2.Data
                 .WithMany(a => a.Following)
                 .HasForeignKey(l => l.FollowerId);
         }
+
+
+        public DbSet<Birder2.ViewModels.LifeListViewModel> LifeListViewModel { get; set; }
     }
 }

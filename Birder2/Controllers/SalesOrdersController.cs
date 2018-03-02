@@ -11,6 +11,7 @@ namespace Birder2.Controllers
 {
     //<---- *****Move to a new branch when observation is setup with Knockout ***** ---->
 
+
     public class SalesOrdersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,6 +20,8 @@ namespace Birder2.Controllers
         {
             _context = context;
         }
+
+        
 
         // GET: SalesOrders
         public async Task<IActionResult> Index()

@@ -1,5 +1,6 @@
 ﻿using Birder2.Data;
 using Birder2.Models;
+using Birder2.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,28 @@ namespace Birder2.Services
         public ObservationRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public async Task<IQueryable<LifeListViewModel>> GetLifeList(string userId)
+        {
+            return  /*IQueryable<LifeListViewModel> model =*/
+                (from obs in _dbContext.Observations
+                 //.Include(au => au.ApplicationUser)
+                 .Include(b => b.Bird)
+                 .ThenInclude(f => f.BritishStatus)
+                 .Include(b => b.Bird)
+                 .ThenInclude(u => u.BirdConserverationStatus)
+                 .Where(u => u.ApplicationUser.Id == userId)
+                 group obs by obs.Bird into b
+                 select new LifeListViewModel
+                 {
+                     Vernacular = b.FirstOrDefault().Bird.EnglishName,
+                     ScientificName = b.FirstOrDefault().Bird.Species,
+                     PopSize = b.FirstOrDefault().Bird.PopulationSize,
+                     BtoStatus = b.FirstOrDefault().Bird.BritishStatus.BtoStatusInBritain,
+                     ConservationStatus = b.FirstOrDefault().Bird.BirdConserverationStatus.ConservationStatus,
+                     Count = b.Count(),
+                 });
         }
 
         public async Task<IEnumerable<Bird>> AllBirdsList()
