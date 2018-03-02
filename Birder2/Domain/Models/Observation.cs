@@ -42,7 +42,6 @@ namespace Birder2.Models
         public string NoteVocalisation { get; set; }
         // If the bird sang or made other sounds during your observation, use mnemonics or descriptions of how it sounded. Also note non-vocal sounds such as wing noises or drumming.
 
-
         [Required]
         [Display(Name = "Date/Time")]
         [DisplayFormat(DataFormatString = "{0:dddd, dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
