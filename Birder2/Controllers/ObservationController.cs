@@ -160,11 +160,6 @@ namespace Birder2.Controllers
             {
                 return NotFound();
             }
-            //var observation = await _observationRepository.GetObservationDetails(id);
-            //if (observation == null)
-            //{
-            //    return NotFound();
-            //}
 
             try
             {
@@ -173,8 +168,7 @@ namespace Birder2.Controllers
                     Birds = await _observationRepository.AllBirdsList(),
                     Observation = await _observationRepository.GetObservationDetails(id)
                 };
-                //var birds = await _observationRepository.AllBirdsList();
-                //ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName", observation.BirdId);
+
                 if (model.Observation == null)
                 {
                     return NotFound();
