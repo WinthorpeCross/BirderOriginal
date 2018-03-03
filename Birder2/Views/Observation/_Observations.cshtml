@@ -8,7 +8,7 @@
         </div>
         <div class="media-body">
             <h3 class="media-heading">@Model.Bird.EnglishName <small><i> @Model.Bird.Species</i></small></h3>
-            <h5>Observation by <b> @Model.ApplicationUser.UserName [link to profile page]</b> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h5>
+            <h5>Spotted by <b> @Model.ApplicationUser.UserName [link to profile page]</b> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h5>
             @*| <span class="glyphicon glyphicon-globe"></span>  | <span class="glyphicon glyphicon-picture"></span> 5</h5> *@
             <div>
                 <a asp-action="Details" asp-route-id="@Model.ObservationId">View</a> @* |

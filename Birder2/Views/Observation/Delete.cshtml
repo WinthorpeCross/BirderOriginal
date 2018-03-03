@@ -4,42 +4,22 @@
     ViewData["Title"] = "Delete";
 }
 
-<h2>Delete</h2>
+@{
+    ViewData["Title"] = "Details";
 
-<h3>Are you sure you want to delete this?</h3>
+    var statusMessageClass = Model.Quantity > 1 ? "were" : "was";
+    <h1>@Model.Bird.EnglishName <small><i> @Model.Bird.Species</i></small></h1>
+    <h4><b>@Model.Quantity</b> @statusMessageClass spotted on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h4>
+}
+
+<h3>Are you sure you want to delete your observation?</h3>
 <div>
-    <h4>Observation</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ObservationDateTime)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ObservationDateTime)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.NoteGeneral)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NoteGeneral)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ApplicationUserId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ApplicationUserId)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Bird)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Bird.EnglishName)
-        </dd>
-    </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="ObservationId" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index" class="btn btn-link">Back to List</a>
     </form>
+    <small>Observation created: @Model.CreationDate; last update: @Model.LastUpdateDate</small>
 </div>
