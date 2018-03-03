@@ -38,7 +38,7 @@ namespace Birder2.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-            return View(await _observationRepository.MyObservationsList(user)); // --> do not get user twice! await _userAccessor.GetUser()));
+            return View(await _observationRepository.MyObservationsList(user.Id)); // --> do not get user twice! await _userAccessor.GetUser()));
         }
 
         // GET: Observation/Details/5
@@ -269,7 +269,7 @@ namespace Birder2.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-            /*IQueryable<LifeListViewModel> model =*/
+
             var model = await _observationRepository.GetLifeList(user.Id);
 
             return View(model);

@@ -49,11 +49,11 @@ namespace Birder2.Services
             return await _dbContext.Birds.SingleOrDefaultAsync(m => m.BirdId == id);
         }
 
-        public async Task<IEnumerable<Observation>> MyObservationsList(ApplicationUser user)
+        public async Task<IEnumerable<Observation>> MyObservationsList(string userId)
         {
             //Change to IQueryable collection - this collection will be refreshed regularly
             var observations = _dbContext.Observations
-                    .Where(u => u.ApplicationUser == user)
+                    .Where(u => u.ApplicationUser.Id == userId)
                     .Include(au => au.ApplicationUser)
                     .Include(b => b.Bird)
                     .Include(ot => ot.ObservationTags)

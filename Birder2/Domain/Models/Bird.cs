@@ -80,6 +80,9 @@ namespace Birder2.Models
         [Url]
         public string ThumbnailUrl { get; set; }
 
+        [Url]
+        public string SongUrl { get; set; }
+
         public DateTime CreationDate { get; set; }
 
         public DateTime LastUpdateDate { get; set; }

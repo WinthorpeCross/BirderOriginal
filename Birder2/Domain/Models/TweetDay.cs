@@ -10,15 +10,6 @@ namespace Birder2.Models
 
         public DateTime DisplayDay { get; set; }
 
-        [Url]
-        public string TweetUrl { get; set; }
-
-        [Url]
-        public string ImageUrl { get; set; }
-
-        [Url]
-        public string InformationUrl { get; set; }
-
         public DateTime CreationDate { get; set; }
 
         public DateTime LastUpdateDate { get; set; }
