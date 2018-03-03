@@ -1,18 +1,17 @@
 ﻿@model Birder2.Models.Observation
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
-@{
-    ViewData["Title"] = "Details";
-}
-
 @*This page allows anyone to view a public observation.
     Therefore, do not include user specific data like bird count, etc...
 *@
-
-<h1>@Model.Bird.EnglishName <small><i> @Model.Bird.Species</i></small></h1>
-<h4>Observed by <b> @Model.ApplicationUser.UserName [link to profile page]</b> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h4>
 @{
-    if (Model.ApplicationUserId == UserManager.GetUserAsync(User).Result.Id)
+    ViewData["Title"] = "Details";
+
+    var statusMessageClass = Model.Quantity > 1 ? "were" : "was";
+<h1>@Model.Bird.EnglishName <small><i> @Model.Bird.Species</i></small></h1>
+<h4><b>@Model.Quantity</b> @statusMessageClass observed by <b> @Model.ApplicationUser.UserName [link to profile page]</b> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h4>
+
+if (Model.ApplicationUserId == UserManager.GetUserAsync(User).Result.Id)
     { <p> Find out more about the <a asp-controller="Bird" asp-action="Details" asp-route-id="@Model.Bird.BirdId">@Model.Bird.EnglishName</a> and the details of your other sightings of this species.</p> }
 else
 { <p> Find out more about the <a asp-controller="Bird" asp-action="Details" asp-route-id="@Model.Bird.BirdId">@Model.Bird.EnglishName</a> and the details of your sightings of this species.</p> }
