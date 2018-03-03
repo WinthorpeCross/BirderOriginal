@@ -14,10 +14,6 @@
             <input type="hidden" asp-for="Observation.ObservationId" />
             <input asp-for="Observation.LocationLatitude" id="latitude" />
             <input asp-for="Observation.LocationLongitude" id="longitude" />
-            @*<div class="form-group">
-            <input class="form-control" name="Observation.LocationLatitude" data-bind="value: Observation.LocationLatitude" id="latitude" />
-            <input class="form-control" name="Observation.LocationLongitude" data-bind="value: Observation.LocationLongitude" id="longitude" />
-        </div>*@
 
             <div>
                 <div class="row">
@@ -51,16 +47,16 @@
                                     <label asp-for="Observation.BirdId" class="control-label"></label>
                                     @*<select asp-for="Observation.BirdId" class="form-control" asp-items="ViewBag.BirdId"></select>*@
                                     @Html.DropDownListFor(m => m.Observation.BirdId,
-                  new SelectList(Model.Birds, "BirdId", "EnglishName"),
-                  new
-                  {
-                      @name = "BirdId",
-                      @class = "form-control selectpicker showtick",
-                                         //data_bind = "attr: {'Id': 'BirdId_' + $index()}, selectPicker: {}, value: BirdId",
-                                         title = "Choose a bird species...",
-                      data_live_search = "true",
-                      data_show_subtext = "true"
-                  })
+                                        new SelectList(Model.Birds, "BirdId", "EnglishName"),
+                                            new
+                                            {
+                                                                       @name = "BirdId",
+                                                                       @class = "form-control selectpicker showtick",
+                                                                                          //data_bind = "attr: {'Id': 'BirdId_' + $index()}, selectPicker: {}, value: BirdId",
+                                                                                          title = "Choose a bird species...",
+                                                                       data_live_search = "true",
+                                                                       data_show_subtext = "true"
+                                            })
                                     <span asp-validation-for="Observation.BirdId" class="text-danger"></span>
                                 </div>
                             </div>
@@ -163,16 +159,13 @@
 
 
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save changes" class="btn btn-default" />
                 <a asp-action="Index" class="btn btn-link">   Back to Observations feed</a>
             </div>
         </form>
-</div>
+    </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
