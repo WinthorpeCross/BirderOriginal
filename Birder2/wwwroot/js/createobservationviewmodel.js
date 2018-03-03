@@ -85,7 +85,7 @@ $("#form").validate({
         Quantity: {
             required: true,
             digits: true,
-            range: [0, 100000]
+            min: 1
         },
         "Observation.BirdId": {
             required: true
@@ -108,11 +108,11 @@ $("#form").validate({
 
     tooltip_options: {
         Quantity: {
-            placement: 'right'
+            placement: 'bottom'
         },
-        PONumber: {
-            placement: 'right'
-        }
+        //PONumber: {
+        //    placement: 'right'
+        //}
     }
 });
 

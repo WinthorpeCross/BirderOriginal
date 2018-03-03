@@ -58,6 +58,7 @@ namespace Birder2.Controllers
             return View(observation);  //ToDo: if user == logged in user, then allow edit/delete etc.  Might need a viewmodel...
         }
 
+        [HttpGet]
         public async Task<IActionResult> Create()
         {
             var model = new CreateObservationViewModel()
@@ -152,7 +153,6 @@ namespace Birder2.Controllers
 
 
 
-
         // GET: Observation/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -160,23 +160,31 @@ namespace Birder2.Controllers
             {
                 return NotFound();
             }
-
-            var observation = await _observationRepository.GetObservationDetails(id);
-            if (observation == null)
-            {
-                return NotFound();
-            }
+            //var observation = await _observationRepository.GetObservationDetails(id);
+            //if (observation == null)
+            //{
+            //    return NotFound();
+            //}
 
             try
             {
-                var birds = await _observationRepository.AllBirdsList();
-                ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName", observation.BirdId);
-                return View(observation);
+                var model = new EditObservationViewModel
+                {
+                    Birds = await _observationRepository.AllBirdsList(),
+                    Observation = await _observationRepository.GetObservationDetails(id)
+                };
+                //var birds = await _observationRepository.AllBirdsList();
+                //ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName", observation.BirdId);
+                if (model.Observation == null)
+                {
+                    return NotFound();
+                }
+                return View(model);
             }
             catch
             {
                 //ToDo: Logging / return user to create view, like below?
-                return NotFound("could not add the observation");
+                return NotFound("could not edit the observation");
             }
         }
 

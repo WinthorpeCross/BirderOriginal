@@ -62,8 +62,9 @@
     </table>
 
     <div class="form-group">
+        @*<input asp-for="Observation.ObservationDateTime" data-bind="datePicker : Observation.ObservationDateTime" class="form-control"/>*@
         <label class="control-label" for="Observation.ObservationDateTime">Date:</label>
-        <input class="form-control" data-bind="datePicker : Observation.ObservationDateTime" type="date" />
+        <input class="form-control" data-bind="datePicker : Observation.ObservationDateTime" type="date"/>
     </div>
 
     <div class="form-group">

@@ -14,7 +14,7 @@ namespace Birder2.Models
         public double LocationLatitude { get; set; }
         public double LocationLongitude { get; set; }
 
-        [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "The value must be greater than 0")]
         [Display(Name = "Quantity")]
         public int Quantity { get; set; }
 
