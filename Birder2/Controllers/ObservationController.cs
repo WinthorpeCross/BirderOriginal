@@ -187,7 +187,9 @@ namespace Birder2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ObservationId,ObservationDateTime,Location,Note,BirdId,ApplicationUserId")] Observation observation)
+        public async Task<IActionResult> Edit(int id, [Bind("ObservationId,ObservationDateTime,Quantity,LocationLatitude,LocationLongitude," +
+                                                                "NoteGeneral,NoteHabitat,NoteWeather,NoteAppearance,NoteBehaviour," +
+                                                                    "NoteVocalisation,BirdId,ApplicationUserId")] Observation observation)
         {
             // ToDo: Look into this update method.
 
@@ -197,17 +199,32 @@ namespace Birder2.Controllers
             }
 
             var user = await _userAccessor.GetUser();
-            if (user == null)
+            if (user.Id != observation.ApplicationUserId)
             {
                 return RedirectToAction("Login", "Account");
             }
-            observation.ApplicationUser = user;
-
+            
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await _observationRepository.UpdateObservation(observation);
+                    Observation observationEdited = await _observationRepository.GetObservationDetails(id);
+                    observationEdited.ObservationDateTime = observation.ObservationDateTime;
+                    observationEdited.LocationLatitude = observation.LocationLatitude;
+                    observationEdited.LocationLongitude = observation.LocationLongitude;
+                    observationEdited.NoteGeneral = observation.NoteGeneral;
+                    observationEdited.NoteHabitat = observation.NoteHabitat;
+                    observationEdited.NoteWeather = observation.NoteWeather;
+                    observationEdited.NoteAppearance = observation.NoteAppearance;
+                    observationEdited.NoteBehaviour = observation.NoteBehaviour;
+                    observationEdited.NoteVocalisation = observation.NoteVocalisation;
+
+                    observationEdited.ApplicationUser = user;
+
+                    observationEdited.LastUpdateDate = _systemClock.Now;
+                    observationEdited.Bird = await _observationRepository.GetSelectedBird(observation.BirdId);
+                    observationEdited.Quantity = observation.Quantity;
+                    await _observationRepository.UpdateObservation(observationEdited);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -222,9 +239,18 @@ namespace Birder2.Controllers
                 }
                 return RedirectToAction(nameof(Index));  //return to details view?
             }
-            var birds = await _observationRepository.AllBirdsList();
-            ViewData["BirdId"] = new SelectList(birds, "BirdId", "EnglishName", observation.BirdId);
-            return View(observation);
+
+            var model = new EditObservationViewModel
+            {
+                Birds = await _observationRepository.AllBirdsList(),
+                Observation = await _observationRepository.GetObservationDetails(id)
+            };
+
+            if (model.Observation == null)
+            {
+                return NotFound();
+            }
+            return View(model);
         }
 
         // GET: Observation/Delete/5

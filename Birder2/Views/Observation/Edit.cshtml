@@ -12,8 +12,9 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Observation.ObservationId" />
-            <input asp-for="Observation.LocationLatitude" id="latitude" />
-            <input asp-for="Observation.LocationLongitude" id="longitude" />
+            <input type="hidden" asp-for="Observation.ApplicationUserId" />
+            <input type="hidden" asp-for="Observation.LocationLatitude" id="latitude" />
+            <input type="hidden" asp-for="Observation.LocationLongitude" id="longitude" />
 
             <div>
                 <div class="row">
@@ -47,16 +48,16 @@
                                     <label asp-for="Observation.BirdId" class="control-label"></label>
                                     @*<select asp-for="Observation.BirdId" class="form-control" asp-items="ViewBag.BirdId"></select>*@
                                     @Html.DropDownListFor(m => m.Observation.BirdId,
-                                        new SelectList(Model.Birds, "BirdId", "EnglishName"),
-                                            new
-                                            {
-                                                                       @name = "BirdId",
-                                                                       @class = "form-control selectpicker showtick",
-                                                                                          //data_bind = "attr: {'Id': 'BirdId_' + $index()}, selectPicker: {}, value: BirdId",
-                                                                                          title = "Choose a bird species...",
-                                                                       data_live_search = "true",
-                                                                       data_show_subtext = "true"
-                                            })
+                                  new SelectList(Model.Birds, "BirdId", "EnglishName"),
+                                      new
+                                      {
+                                          @name = "BirdId",
+                                          @class = "form-control selectpicker showtick",
+                                                             //data_bind = "attr: {'Id': 'BirdId_' + $index()}, selectPicker: {}, value: BirdId",
+                                                             title = "Choose a bird species...",
+                                          data_live_search = "true",
+                                          data_show_subtext = "true"
+                                      })
                                     <span asp-validation-for="Observation.BirdId" class="text-danger"></span>
                                 </div>
                             </div>
@@ -162,6 +163,7 @@
                 <input type="submit" value="Save changes" class="btn btn-default" />
                 <a asp-action="Index" class="btn btn-link">   Back to Observations feed</a>
             </div>
+            <small>Observation created: @Model.Observation.CreationDate; last update: @Model.Observation.LastUpdateDate</small>
         </form>
     </div>
 </div>
@@ -270,8 +272,8 @@
             markers = [];
         }
         function updateForm() {
-            createObservationViewModel.Observation.LocationLatitude(markers[0].position.lat());
-            createObservationViewModel.Observation.LocationLongitude(markers[0].position.lng());
+            document.getElementById('latitude').value = markers[0].position.lat();
+            document.getElementById('longitude').value = markers[0].position.lng();
         }
     }
 </script>
