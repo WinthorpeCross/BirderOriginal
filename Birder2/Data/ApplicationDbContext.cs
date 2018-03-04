@@ -72,5 +72,8 @@ namespace Birder2.Data
                 .WithMany(a => a.Following)
                 .HasForeignKey(l => l.FollowerId);
         }
+
+
+        public DbSet<Birder2.Models.Network> Network { get; set; }
     }
 }
