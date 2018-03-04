@@ -36,34 +36,38 @@ namespace Birder2.Controllers
 
         public async Task<IActionResult> Index()
         {
-            //var user = await _userAccessor.GetUser();
-            //var loggedinUser = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.Id == user.Id);
-            //var userX = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "UserX");
-            //var userY = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "UserY");
-            //var userZ = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "UserZ");
+            var user = await _userAccessor.GetUser();
+            var loggedinUser = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.Id == user.Id);
+            var userX = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "Winthorpe");
+            var userY = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "Tenko");
+            var userZ = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "Max");
 
-            //var a = 1;
+            var a = 1;
 
-            //userX.Following.Add(new Network
+            //I follow or unfollow someone else.  That's the only action
+            // X follows Y
+            //userY.Followers.Add(new Network
             //{
-            //    ApplicationUser = userY,
-            //    Follower = userY
+            //    Follower = userX
             //});
+            // X unfollows Y
+            //userX.Following.Remove(userY.Followers.FirstOrDefault());
+            //groupToUpdate.GruposUsuarios.Remove(groupToUpdate.GruposUsuarios.Where(ugu => ugu.UserId == userToUpdate.Id).FirstOrDefault());
 
-            //_context.SaveChanges();
+            _context.SaveChanges();
 
-            //userX = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "UserX");
-            //userY = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "UserY");
-            //userZ = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "UserZ");
+            userX = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "Winthorpe");
+            userY = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "Tenko");
+            userZ = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "Max");
 
-            //var b = 1;
+            var b = 1;
 
 
-            //var model = new TestViewModel()
-            //{
-            //    //FollowersCount = t.Followers.Count(),
-            //    //FollowingCount = t.Following.Count()
-            //};
+            var model = new TestViewModel()
+            {
+                //FollowersCount = t.Followers.Count(),
+                //FollowingCount = t.Following.Count()
+            };
             return View();
         }
 
