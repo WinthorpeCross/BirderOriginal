@@ -4,7 +4,6 @@ namespace Birder2.ViewModels
 {
     public class LifeListViewModel
     {
-        public int Id { get; set; }
         [Display(Name = "Species")]
         public string Vernacular { get; set; }
         public string ScientificName { get; set; }

@@ -78,6 +78,8 @@
     <Compile Remove="Data\Migrations\20180220134837_y.Designer.cs" />
     <Compile Remove="Data\Migrations\20180222145632_TweetDay_added.cs" />
     <Compile Remove="Data\Migrations\20180222145632_TweetDay_added.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180304095146_i.cs" />
+    <Compile Remove="Data\Migrations\20180304095146_i.Designer.cs" />
   </ItemGroup>
 
 

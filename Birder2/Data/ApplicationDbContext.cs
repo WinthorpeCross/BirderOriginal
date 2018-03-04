@@ -72,8 +72,5 @@ namespace Birder2.Data
                 .WithMany(a => a.Following)
                 .HasForeignKey(l => l.FollowerId);
         }
-
-
-        public DbSet<Birder2.ViewModels.LifeListViewModel> LifeListViewModel { get; set; }
     }
 }
