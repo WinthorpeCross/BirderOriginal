@@ -46,19 +46,22 @@ namespace Birder2.Controllers
 
             //I follow or unfollow someone else.  That's the only action
             // X follows Y
-            //userY.Followers.Add(new Network
+            //userZ.Followers.Add(new Network
             //{
             //    Follower = userX
             //});
             // X unfollows Y
-            //userX.Following.Remove(userY.Followers.FirstOrDefault());
+            //userX.Following.Remove(userZ.Followers.FirstOrDefault());
             //groupToUpdate.GruposUsuarios.Remove(groupToUpdate.GruposUsuarios.Where(ugu => ugu.UserId == userToUpdate.Id).FirstOrDefault());
 
-            _context.SaveChanges();
+            //_context.SaveChanges();
 
             userX = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "Winthorpe");
             userY = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "Tenko");
             userZ = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "Max");
+            var f = userX.Following.ToList();
+            //var follower
+            //var userToFollow
 
             var b = 1;
 

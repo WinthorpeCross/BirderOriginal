@@ -18,23 +18,21 @@ namespace Birder2.Services
 
         public async Task<IQueryable<LifeListViewModel>> GetLifeList(string userId)
         {
-            return  /*IQueryable<LifeListViewModel> model =*/
-                (from obs in _dbContext.Observations
-                 //.Include(au => au.ApplicationUser)
+            return (from observations in _dbContext.Observations
                  .Include(b => b.Bird)
-                 .ThenInclude(f => f.BritishStatus)
+                    .ThenInclude(f => f.BritishStatus)
                  .Include(b => b.Bird)
-                 .ThenInclude(u => u.BirdConserverationStatus)
+                    .ThenInclude(u => u.BirdConserverationStatus)
                  .Where(u => u.ApplicationUser.Id == userId)
-                 group obs by obs.Bird into b
+                 group observations by observations.Bird into species
                  select new LifeListViewModel
                  {
-                     Vernacular = b.FirstOrDefault().Bird.EnglishName,
-                     ScientificName = b.FirstOrDefault().Bird.Species,
-                     PopSize = b.FirstOrDefault().Bird.PopulationSize,
-                     BtoStatus = b.FirstOrDefault().Bird.BritishStatus.BtoStatusInBritain,
-                     ConservationStatus = b.FirstOrDefault().Bird.BirdConserverationStatus.ConservationStatus,
-                     Count = b.Count(),
+                     Vernacular = species.FirstOrDefault().Bird.EnglishName,
+                     ScientificName = species.FirstOrDefault().Bird.Species,
+                     PopSize = species.FirstOrDefault().Bird.PopulationSize,
+                     BtoStatus = species.FirstOrDefault().Bird.BritishStatus.BtoStatusInBritain,
+                     ConservationStatus = species.FirstOrDefault().Bird.BirdConserverationStatus.ConservationStatus,
+                     Count = species.Count()
                  });
         }
 
