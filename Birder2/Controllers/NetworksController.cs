@@ -8,6 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using Birder2.Data;
 using Birder2.Services;
 
+/*
+<script>
+    document.getElementById("ItemPreview").src = "data:image/png;base64, @UserManager.GetUserAsync(User).Result.UserPhoto";
+</script>
+*/
+
 namespace Birder2.Controllers
 {
     public class NetworksController : Controller
