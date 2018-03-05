@@ -1,0 +1,17 @@
+﻿@model Network
+    @*<div><a href="https://www.flaticon.com/authors/vectors-market" title="Vectors Market"></a><a href="https://www.flaticon.com/" title="Flaticon"></a><a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank"></a></div>*@
+    <section>
+        <div class="media">
+            <div class="media-left media-middle">
+                <img src="~/images/man.png" class="media-object">
+                @*<img src="@Model.Bird.ThumbnailUrl" class="media-object">*@
+            </div>
+            <div class="media-body">
+                <h3 class="media-heading">@Model.ApplicationUser.UserName </h3>
+                @*<h5>Spotted by<b> @Model.ApplicationUser.UserName [link to profile page]</b> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h5>*@
+                <div>
+                    <a asp-action="Unfollow" asp-route-id="@Model.ApplicationUser.UserName">Unfollow</a>
+                </div>
+            </div>
+        </div>
+    </section>

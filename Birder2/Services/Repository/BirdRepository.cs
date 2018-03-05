@@ -48,9 +48,10 @@ namespace Birder2.Services
 
         public async Task<Bird> GetBirdDetails(int? id)
         {
-            return await _dbContext.Birds.SingleOrDefaultAsync(m => m.BirdId == id);
-                     //           .Include(bcs => bcs.BirdConserverationStatus)
-                     //.Include(bs => bs.BritishStatus)
+            return await _dbContext.Birds
+                .Include(bcs => bcs.BirdConserverationStatus)
+                .Include(bs => bs.BritishStatus)
+                .SingleOrDefaultAsync(m => m.BirdId == id);
                      //.Include(o => o.Observations)
                      //.ThenInclude(au => au.ApplicationUser)
         }

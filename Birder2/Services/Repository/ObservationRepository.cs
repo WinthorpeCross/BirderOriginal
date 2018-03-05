@@ -30,7 +30,7 @@ namespace Birder2.Services
                      Vernacular = species.FirstOrDefault().Bird.EnglishName,
                      ScientificName = species.FirstOrDefault().Bird.Species,
                      PopSize = species.FirstOrDefault().Bird.PopulationSize,
-                     BtoStatus = species.FirstOrDefault().Bird.BritishStatus.BtoStatusInBritain,
+                     BtoStatus = species.FirstOrDefault().Bird.BtoStatusInBritain,
                      ConservationStatus = species.FirstOrDefault().Bird.BirdConserverationStatus.ConservationStatus,
                      Count = species.Count()
                  });

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using FlickrNet;
 using Birder2.Services;
 using Birder2.Data;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace Birder2.Controllers
 {
@@ -27,50 +27,8 @@ namespace Birder2.Controllers
             _userAccessor = userAccessor;
         }
 
-        public class TestViewModel
-        {
-            public int FollowersCount { get; set; }
-            public int FollowingCount { get; set; }
-
-        }
-
         public async Task<IActionResult> Index()
         {
-            var user = await _userAccessor.GetUser();
-            var loggedinUser = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.Id == user.Id);
-            var userX = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "Winthorpe");
-            var userY = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "Tenko");
-            var userZ = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "Max");
-
-            var a = 1;
-
-            //I follow or unfollow someone else.  That's the only action
-            // X follows Y
-            //userZ.Followers.Add(new Network
-            //{
-            //    Follower = userX
-            //});
-            // X unfollows Y
-            //userX.Following.Remove(userZ.Followers.FirstOrDefault());
-            //groupToUpdate.GruposUsuarios.Remove(groupToUpdate.GruposUsuarios.Where(ugu => ugu.UserId == userToUpdate.Id).FirstOrDefault());
-
-            //_context.SaveChanges();
-
-            userX = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "Winthorpe");
-            userY = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "Tenko");
-            userZ = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "Max");
-            var f = userX.Following.ToList();
-            //var follower
-            //var userToFollow
-
-            var b = 1;
-
-
-            var model = new TestViewModel()
-            {
-                //FollowersCount = t.Followers.Count(),
-                //FollowingCount = t.Following.Count()
-            };
             return View();
         }
 

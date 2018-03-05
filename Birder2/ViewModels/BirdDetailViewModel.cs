@@ -1,6 +1,5 @@
 ﻿using Birder2.Models;
 using FlickrNet;
-using System.Collections.Generic;
 
 namespace Birder2.ViewModels
 {

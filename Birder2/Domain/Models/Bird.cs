@@ -4,46 +4,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Birder2.Models
 {
-    public class ConserverationStatus
-    {
-        [Key]
-        public int ConserverationStatusId { get; set; }
-
-        [Required]
-        public string ConservationStatus { get; set; }
-
-        public string Description { get; set; }
-
-        public DateTime CreationDate { get; set; }
-
-        public DateTime LastUpdateDate { get; set; }
-
-        public ICollection<Bird> Birds { get; set; }
-    }
-
-    public class BritishStatus
-    {
-        // - https://www.bto.org/about-birds/birdfacts/british-list
-        // - This list includes 603 species (as at 1 January 2017)
-        
-        [Key]
-        public int BritishStatusId { get; set; }
-
-        [Required]
-        [Display(Name = "BTO Status in Britain")]
-        public string BtoStatusInBritain { get; set; }
-
-        [Required]
-        [Display(Name = "Status in Britain")]
-        public string BirderStatusInBritain { get; set; }
-
-        public DateTime CreationDate { get; set; }
-
-        public DateTime LastUpdateDate { get; set; }
-
-        public ICollection<Bird> Birds { get; set; }
-    }
-
     public class Bird
     {
         [Key]
@@ -74,8 +34,15 @@ namespace Birder2.Models
 
         public string Category { get; set; } //Primary only
 
-        [Display(Name = "Population Size in Britain")]
+        //
+        // - https://www.bto.org/about-birds/birdfacts/british-list
+        // - This list includes 603 species (as at 1 January 2017)
+
+        [Display(Name = "BTO Population Size in Britain")]
         public string PopulationSize { get; set; }
+
+        [Display(Name = "BTO Status in Britain")]
+        public string BtoStatusInBritain { get; set; }
 
         [Url]
         public string ThumbnailUrl { get; set; }
