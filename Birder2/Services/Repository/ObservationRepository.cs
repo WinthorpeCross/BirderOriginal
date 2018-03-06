@@ -48,7 +48,22 @@ namespace Birder2.Services
             return await _dbContext.Birds.SingleOrDefaultAsync(m => m.BirdId == id);
         }
 
-        public async Task<IEnumerable<Observation>> MyObservationsList(string userId, int filter)
+        public async Task<IEnumerable<Observation>> MyObservationsList(string userId)
+        {
+            //Change to IQueryable collection - this collection will be refreshed regularly
+            var observations = _dbContext.Observations
+                .Where(o => o.ApplicationUserId == userId)
+                    .Include(au => au.ApplicationUser)
+                    .Include(b => b.Bird)
+                    .Include(ot => ot.ObservationTags)
+                        .ThenInclude(t => t.Tag)
+                    .OrderByDescending(d => d.ObservationDateTime)
+                    .AsNoTracking()
+                    .ToListAsync();
+            return await observations;
+        }
+
+        public async Task<IEnumerable<Observation>> MyObservationsList(string userId, string filter)
         {
             var loggedinUser = await _dbContext.Users
                 .Include(x => x.Followers)
@@ -62,8 +77,12 @@ namespace Birder2.Services
             //var f = loggedinUser.Following.ToList();
 
             var userNetwork = (from p in loggedinUser.Following
-                     select p.ApplicationUser.Id.ToString())
-                    .Append(loggedinUser.Id.ToString());
+                               select p.ApplicationUser.Id.ToString());
+
+            if (string.IsNullOrEmpty(filter)) // My NeworkAndMe
+            {
+                userNetwork.Append(loggedinUser.Id.ToString());
+            }
 
             //Change to IQueryable collection - this collection will be refreshed regularly
             var observations = _dbContext.Observations

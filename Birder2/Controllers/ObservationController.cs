@@ -30,17 +30,27 @@ namespace Birder2.Controllers
         }
 
         // GET: Observation
-        //  **** This is My Observations.  Need to overload to request my + mates' observations
-        public async Task<IActionResult> Index(int filter = 0)
+        public async Task<IActionResult> Index(string filter)
         {
             var user = await _userAccessor.GetUser();
             if (user == null)
             {
                 return RedirectToAction("Login", "Account");
             }
-            var model = await _observationRepository.MyObservationsList(user.Id, filter);
-            return View(model);
+            try
+            {
+                if (filter == "MineOnly")
+                {
+                    return View(await _observationRepository.MyObservationsList(user.Id));
+                }
+                return View(await _observationRepository.MyObservationsList(user.Id, filter));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
         }
+
 
         // GET: Observation/Details/5
         public async Task<IActionResult> Details(int? id)

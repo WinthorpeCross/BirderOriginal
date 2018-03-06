@@ -10,7 +10,8 @@ namespace Birder2.Services
     {
         Task<IEnumerable<Bird>> AllBirdsList();
         Task<Bird> GetSelectedBird(int id);
-        Task<IEnumerable<Observation>> MyObservationsList(string userId, int filter);
+        Task<IEnumerable<Observation>> MyObservationsList(string userId);
+        Task<IEnumerable<Observation>> MyObservationsList(string userId, string filter);
         Task<Observation> GetObservationDetails(int? id);
         Task<Observation> AddObservation(Observation observation);
         Task<Observation> UpdateObservation(Observation observation);
