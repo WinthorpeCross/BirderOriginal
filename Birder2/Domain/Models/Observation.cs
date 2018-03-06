@@ -50,6 +50,8 @@ namespace Birder2.Models
         public DateTime CreationDate { get; set; }
         public DateTime LastUpdateDate { get; set; }
 
+        //public PrivacyLevel {get;set;} ENUM
+
         [Display(Name = "Observed species")]
         public int BirdId { get; set; }
         public string ApplicationUserId { get; set; }

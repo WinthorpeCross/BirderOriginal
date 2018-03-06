@@ -39,16 +39,16 @@
                 <td class="form-group col-sm-3"><input name="Quantity" class="form-control input-sm text-right" data-bind="attr: {'Id': 'Quantity_' + $index()}, value: Quantity" /></td>
                 <td colspan="2" class="form-group">
                     @Html.DropDownListFor(m => m.Observation.BirdId,
-                                                                      new SelectList(Model.Birds, "BirdId", "EnglishName"),
-                                                                      new
-                                                                      {
-                                                                          @name = "BirdId",
-                                                                          @class = "form-control selectpicker showtick",
-                                                                          data_bind = "attr: {'Id': 'BirdId_' + $index()}, selectPicker: {}, value: BirdId",
-                                                                          title = "Choose a bird species...",
-                                                                          data_live_search = "true",
-                                                                          data_show_subtext = "true"
-                                                                      })
+                        new SelectList(Model.Birds, "BirdId", "EnglishName"),
+                            new
+                            {
+                                @name = "BirdId",
+                                @class = "form-control selectpicker showtick",
+                                data_bind = "attr: {'Id': 'BirdId_' + $index()}, selectPicker: {}, value: BirdId",
+                                title = "Choose a bird species...",
+                                data_live_search = "true",
+                                data_show_subtext = "true"
+                            })
                 </td>
                 @*<td class="form-group"></td>*@
             </tr>

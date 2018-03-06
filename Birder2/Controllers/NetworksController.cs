@@ -70,6 +70,7 @@ var a = 1;
 //    Follower = userY //Follower  <-- Independent
 //});
 // X unfollows Y
+loggedinUser.Following.Add(loggedinUser.Followers.FirstOrDefault());
 //userX.Following.Remove(userZ.Followers.FirstOrDefault());
 //groupToUpdate.GruposUsuarios.Remove(groupToUpdate.GruposUsuarios.Where(ugu => ugu.UserId == userToUpdate.Id).FirstOrDefault());
 

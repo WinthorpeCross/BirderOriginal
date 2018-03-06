@@ -1,4 +1,6 @@
 ﻿@model Observation
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
 
 <section>
     <div class="media">
@@ -8,12 +10,18 @@
         </div>
         <div class="media-body">
             <h3 class="media-heading">@Model.Bird.EnglishName <small><i> @Model.Bird.Species</i></small></h3>
-            <h5>Spotted by<b> @Model.ApplicationUser.UserName [link to profile page]</b> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h5>
-            <div>
-                <a asp-action="Details" asp-route-id="@Model.ObservationId">View</a> @* |
-                <a asp-action="Edit" asp-route-id="@Model.ObservationId">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@Model.ObservationId">Delete</a> *@
-            </div> 
+            @{
+                if (Model.ApplicationUserId == UserManager.GetUserAsync(User).Result.Id)
+                {
+                    <h5>Spotted by <b>You</b> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h5>
+                }
+                else
+                {
+                    <h5>Spotted by<b> @Model.ApplicationUser.UserName [link to profile page]</b> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h5>
+                } }
+        <div>
+            <a asp-action="Details" asp-route-id="@Model.ObservationId">View</a>
         </div>
-    </div>
-</section>
+        </div>
+            </div>
+        </section>

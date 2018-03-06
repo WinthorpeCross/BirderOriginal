@@ -4,7 +4,8 @@ using Birder2.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Threading.Tasks; 
+
 
 namespace Birder2.Services
 {
@@ -47,11 +48,26 @@ namespace Birder2.Services
             return await _dbContext.Birds.SingleOrDefaultAsync(m => m.BirdId == id);
         }
 
-        public async Task<IEnumerable<Observation>> MyObservationsList(string userId)
+        public async Task<IEnumerable<Observation>> MyObservationsList(string userId, int filter)
         {
+            var loggedinUser = await _dbContext.Users
+                .Include(x => x.Followers)
+                    .ThenInclude(x => x.Follower)
+                .Include(y => y.Following)
+                    .ThenInclude(r => r.ApplicationUser)
+                .Where(x => x.Id == userId)
+                .FirstOrDefaultAsync();
+
+            //loggedinUser.Following.Add(loggedinUser.Followers.FirstOrDefault());
+            //var f = loggedinUser.Following.ToList();
+
+            var userNetwork = (from p in loggedinUser.Following
+                     select p.ApplicationUser.Id.ToString())
+                    .Append(loggedinUser.Id.ToString());
+
             //Change to IQueryable collection - this collection will be refreshed regularly
             var observations = _dbContext.Observations
-                    .Where(u => u.ApplicationUser.Id == userId)
+                .Where(o => userNetwork.Contains(o.ApplicationUser.Id))
                     .Include(au => au.ApplicationUser)
                     .Include(b => b.Bird)
                     .Include(ot => ot.ObservationTags)

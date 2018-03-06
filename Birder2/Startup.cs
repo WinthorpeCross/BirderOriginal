@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Birder2.Data;
 using Birder2.Models;
 using Birder2.Services;
+using AutoMapper;
 
 namespace Birder2
 {
@@ -35,6 +36,8 @@ namespace Birder2
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddAutoMapper();
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
