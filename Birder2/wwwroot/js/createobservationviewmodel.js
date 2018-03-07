@@ -34,7 +34,6 @@
                 "content-type": "application/json; charset=utf-8"
             },
             success: function (data) {
-
                 var obj = JSON.parse(data);
                 if (obj.IsModelStateValid === false) {
                     self.MessageToClient(obj.MessageToClient);

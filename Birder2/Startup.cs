@@ -12,6 +12,7 @@ using Birder2.Data;
 using Birder2.Models;
 using Birder2.Services;
 using AutoMapper;
+using Newtonsoft.Json;
 
 namespace Birder2
 {
@@ -53,7 +54,10 @@ namespace Birder2
             services.AddTransient<IStream, StreamService>();
             services.AddTransient<IFlickrService, FlickrService>();
 
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions
+                (options => {
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

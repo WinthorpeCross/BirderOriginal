@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using FlickrNet;
 using Birder2.Services;
 using Birder2.Data;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace Birder2.Controllers
 {

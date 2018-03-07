@@ -1,28 +1,90 @@
 ﻿@model ApplicationUser
 
+@using Newtonsoft.Json
 @{
-    ViewData["Title"] = "Index";
+    string data = JsonConvert.SerializeObject(Model,
+                        new JsonSerializerSettings()
+                        {
+                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                        });
+
 }
+@section scripts{
+    <script src="~/js/knockout-3.4.2.js"></script>
+    <script src="~/js/knockout.mapping-latest.js"></script>
+    <script src="~/js/jqueryvalidate.js"></script>
+    <script src="~/js/jquery-validate.bootstrap-tooltip.js"></script>
+    <script src="~/js/manageNetworkViewModel.js"></script>
+
+    <script type="text/javascript">
+        var manageNetworkViewModel = new ManageNetworkViewModel(@Html.Raw(data));
+        ko.applyBindings(manageNetworkViewModel);
+
+    </script>
+}
+
 
 <h2>Index</h2>
 
+    <p>You are following @Model.Following.Count() <i>Birders</i>:</p>
 
-<p>You are following @Model.Following.Count() <i>Birders</i>:</p>
+    <!-- ko foreach: Following -->
+    <section>
+        <div class="media">
+            <div class="media-left media-middle">
+                <img src="~/images/man.png" class="media-object">
+                @*<img src="@Model.Bird.ThumbnailUrl" class="media-object">*@
+            </div>
+            <div class="media-body">
+                <h3 class="media-heading"><span data-bind="text: ApplicationUser.UserName" /></h3>
+                @*<h5>Spotted by<b> @Model.ApplicationUser.UserName [link to profile page]</b> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h5>*@
+                <div>
+                    <a asp-action="Unfollow" asp-route-id="data-bind=" text: ApplicationUser.UserName">Unfollow</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /ko -->
 
-@foreach (var following in Model.Following)
-{
-    <div class="container">
-        @Html.Partial("_Following", following)
-    </div>
-}
+    <hr />
 
-<hr />
+    <p>@Model.Followers.Count() <i>Birders</i> follow you:</p>
 
-<p>@Model.Following.Count() <i>Birders</i> follow you:</p>
+    <!-- ko foreach: Followers -->
+    <section>
+        <div class="media">
+            <div class="media-left media-middle">
+                <img src="~/images/man.png" class="media-object">
+                @*<img src="@Model.Bird.ThumbnailUrl" class="media-object">*@
+            </div>
+            <div class="media-body">
+                <h3 class="media-heading"><span data-bind="text: Follower.UserName" /></h3>
+                @*<h5>Spotted by<b> @Model.ApplicationUser.UserName [link to profile page]</b> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h5>*@
+                <div>
+                    @*<a asp-action="Unfollow" asp-route-id="@Model.ApplicationUser.UserName">Unfollow</a>*@
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /ko -->
+    @*<p>You are following @Model.Following.Count() <i>Birders</i>:</p>
 
-@foreach (var follower in Model.Following)
-{
-    <div class="container">
-        @Html.Partial("_Follower", follower)
-    </div>
-}
+        @foreach (var following in Model.Following)
+        {
+            <div class="container">
+                @Html.Partial("_Following", following)
+            </div>
+        }
+
+        <hr />
+
+        <p>@Model.Followers.Count() <i>Birders</i> follow you:</p>
+
+        @foreach (var follower in Model.Followers)
+        {
+            <div class="container">
+                @Html.Partial("_Follower", follower)
+            </div>
+        }
+
+    *@

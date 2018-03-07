@@ -46,8 +46,9 @@ namespace Birder2.Controllers
                 .Where(x => x.Id == user.Id)
                 .FirstOrDefaultAsync();
             //var applicationDbContext = _context.Network.Include(n => n.ApplicationUser).Include(n => n.Follower);
-            var f = loggedinUser.Following.ToList();
+
             return View(loggedinUser);
+            //return Ok(loggedinUser);
         }
     }
 }
