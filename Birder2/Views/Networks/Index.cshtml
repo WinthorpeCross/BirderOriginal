@@ -31,8 +31,6 @@
 </p>
 
 <h3>You are following <span data-bind="text: FollowingCount"></span> <i>Birders</i>:</h3>
-@*<div><span> data-bind="text: ApplicationUser.UserName" </span></div>*@
-@*<p>You are following @Model.Following.Count() <i>Birders</i>:</p>*@
 
 <!-- ko foreach: Following -->
 <section>
@@ -53,10 +51,9 @@
 </section>
 <!-- /ko -->
 
-<hr />
+<br />
 
 <h3><span data-bind="text: FollowersCount"></span> <i>Birders</i> follow you:</h3>
-@*<p>@Model.Followers.Count() <i>Birders</i> follow you:</p>*@
 
 <!-- ko foreach: Followers -->
 <section>

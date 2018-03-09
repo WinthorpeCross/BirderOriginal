@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Birder2.Data;
 using Birder2.Services;
@@ -66,7 +65,10 @@ namespace Birder2.Controllers
             var userToFollow = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.Id == viewModel.Id);
 
 
-            // check if loggedinUser = userToFollow
+            if (loggedinUser == userToFollow)
+            {
+                return Json(JsonConvert.SerializeObject("An error occured"));
+            }
 
             userToFollow.Followers.Add(new Network
             {
@@ -75,12 +77,54 @@ namespace Birder2.Controllers
 
             _context.SaveChanges();
 
-            loggedinUser = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.Id == user.Id);
 
-            userToFollow = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.Id == viewModel.Id);
+            return Json(JsonConvert.SerializeObject(viewModel));
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Follow2([FromBody]Network viewModel)
+        {
+            var user = await _userAccessor.GetUser();
+            var loggedinUser = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.Id == user.Id);
+
+            var userToFollow = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.Id == viewModel.ApplicationUser.Id);
+
+            if (loggedinUser == userToFollow)
+            {
+                return Json(JsonConvert.SerializeObject("An error occured"));
+            }
+
+            userToFollow.Followers.Add(new Network
+            {
+                Follower = loggedinUser //Follower  <-- Independent
+            });
+
+            _context.SaveChanges();
+
+            return Json(JsonConvert.SerializeObject(viewModel));
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> UnFollow2([FromBody]ApplicationUser viewModel)
+        {
+            var user = await _userAccessor.GetUser();
+            var loggedinUser = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.Id == user.Id);
+
+            var userToUnfollow = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.Id == viewModel.Id);
+
+            if (loggedinUser == userToUnfollow)
+            {
+                return Json(JsonConvert.SerializeObject("An error occured"));
+            }
+
+            loggedinUser.Following.Remove(userToUnfollow.Followers.FirstOrDefault());
+
+            _context.SaveChanges();
 
 
             return Json(JsonConvert.SerializeObject(viewModel));
+
 
         }
 
@@ -92,25 +136,20 @@ namespace Birder2.Controllers
 
             var userToUnfollow = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.Id == viewModel.ApplicationUser.Id);
 
+            if (loggedinUser == userToUnfollow)
+            {
+                return Json(JsonConvert.SerializeObject("An error occured"));
+            }
 
             loggedinUser.Following.Remove(userToUnfollow.Followers.FirstOrDefault());
 
             _context.SaveChanges();
-
-            // loggedin user following count
-            // independent user followers count
 
 
             return Json(JsonConvert.SerializeObject(viewModel));
 
 
         }
-
-        /*
-         * Find followers
-         * Follow action
-         * */
-
 
         // GET: Networks
         public async Task<IActionResult> Index()
