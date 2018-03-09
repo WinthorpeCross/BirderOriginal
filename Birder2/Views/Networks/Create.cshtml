@@ -1,4 +1,4 @@
-﻿@model Birder2.Controllers.NetworksController.FollowUserViewModel
+﻿@model Birder2.ViewModels.FollowUserViewModel
 @using Newtonsoft.Json
 @{
     string data = JsonConvert.SerializeObject(Model,
@@ -6,8 +6,42 @@
                         {
                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                         });
-
 }
+
+<form asp-action="Create" asp-route-searchCriterion="SearchString" method="get">
+    <div class="form-group">
+        <label asp-for="SearchCriterion" class="control-label"></label>
+        <input asp-for="SearchCriterion" class="form-control" />
+        <span asp-validation-for="SearchCriterion" name="SearchString" class="text-danger"></span>
+        <div class="form-group pull-right">
+            <input type="submit" value="Find Birders" class="btn btn-default" />
+        </div>
+    </div>
+</form>
+
+<br />
+
+<!-- ko foreach: SearchResults -->
+<section>
+    <div class="media">
+        <div class="media-left media-middle">
+            <img src="~/images/man.png" class="media-object">
+            @*<img src="@Model.Bird.ThumbnailUrl" class="media-object">*@
+        </div>
+        <div class="media-body">
+            <h3 class="media-heading"><span data-bind="text: UserName" /></h3>
+            <div class="form-group"><button class="btn btn-danger btn-xs" data-bind="click: $parent.follow">Follow</button></div>
+            @*attr: {'Id': 'Quantity_' + $index()}, value: Quantity"*@
+        </div>
+    </div>
+</section>
+<!-- /ko -->
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
 @section scripts{
     <script src="~/js/knockout-3.4.2.js"></script>
     <script src="~/js/knockout.mapping-latest.js"></script>
@@ -20,50 +54,6 @@
         ko.applyBindings(followUserViewModel);
     </script>
 }
-
-
-<!-- ko foreach: SearchResults -->
-<section>
-    <div class="media">
-        <div class="media-left media-middle">
-            <img src="~/images/man.png" class="media-object">
-            @*<img src="@Model.Bird.ThumbnailUrl" class="media-object">*@
-        </div>
-        <div class="media-body">
-            <h3 class="media-heading"><span data-bind="text: UserName" /></h3>
-            <div class="form-group"><button class="btn btn-danger btn-xs" data-bind="click: $parent.follow">Follow</button></div>
-                                                                                   @*attr: {'Id': 'Quantity_' + $index()}, value: Quantity"*@
-        </div>
-    </div>
-</section>
-<!-- /ko -->
-
-
-@*<h4>Network</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="ApplicationUserId" class="control-label"></label>
-                    <select asp-for="ApplicationUserId" class ="form-control" asp-items="ViewBag.ApplicationUserId"></select>
-                </div>
-                <div class="form-group">
-                    <label asp-for="FollowerId" class="control-label"></label>
-                    <select asp-for="FollowerId" class ="form-control" asp-items="ViewBag.FollowerId"></select>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </form>
-        </div>
-    </div>*@
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @*@section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     }*@

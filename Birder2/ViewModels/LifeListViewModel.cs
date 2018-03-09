@@ -1,10 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-
+﻿
 namespace Birder2.ViewModels
 {
     public class LifeListViewModel
     {
-        [Display(Name = "Species")]
         public string Vernacular { get; set; }
         public string ScientificName { get; set; }
         public string PopSize { get; set; }

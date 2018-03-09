@@ -28,21 +28,3 @@ namespace Birder2.ViewModels
         public int BirdId { get; set; }
     }
 }
-
-
-
-        //private ICollection<Observation> _myObservations;
-        //public ICollection<Observation> MyOberservations
-        //{
-        //    get
-        //    {
-        //        return _myObservations ?? (_myObservations = new List<Observation>());
-        //    }
-        //    set
-        //    {
-        //        _myObservations = value;
-        //    }
-        //}
-
-
-

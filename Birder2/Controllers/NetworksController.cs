@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,12 +6,16 @@ using Birder2.Data;
 using Birder2.Services;
 using Birder2.Models;
 using Newtonsoft.Json;
+using Birder2.ViewModels;
 
 /*
 <script>
     document.getElementById("ItemPreview").src = "data:image/png;base64, @UserManager.GetUserAsync(User).Result.UserPhoto";
 </script>
 */
+
+
+
 
 namespace Birder2.Controllers
 {
@@ -28,31 +30,23 @@ namespace Birder2.Controllers
             _userAccessor = userAccessor;
         }
 
-        public class FollowUserViewModel
-        {
-            public string SearchCriterion { get; set; }
-            public string StatusMessage { get; set; }
-            private IEnumerable<ApplicationUser> _searchResults;
-            public IEnumerable<ApplicationUser> SearchResults
-            {
-                get
-                {
-                    return _searchResults ?? (_searchResults = new List<ApplicationUser>());
-                }
-                set
-                {
-                    _searchResults = value;
-                }
-            }
-        }
-
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(string searchCriterion)
         {
             FollowUserViewModel followUserViewModel = new FollowUserViewModel();
 
-            followUserViewModel.SearchResults = _context.Users.Include(x => x.Followers).Include(y => y.Following).ToList();
-
+            if (string.IsNullOrEmpty(searchCriterion))
+            {
+                // ToDo: Suggested Birders to follow...
+                // --> check for users that follow me but i do not follow...
+                followUserViewModel.SearchResults = _context.Users.Include(x => x.Followers).Include(y => y.Following).ToList();
+                followUserViewModel.SearchCriterion = searchCriterion;
+            }
+            else
+            {
+                followUserViewModel.SearchResults = _context.Users.Include(x => x.Followers).Include(y => y.Following).Where(un => un.NormalizedUserName.Contains(searchCriterion.ToUpper())).ToList();
+                followUserViewModel.SearchCriterion = searchCriterion;
+            }
             return View(followUserViewModel);
         }
 
@@ -170,37 +164,6 @@ namespace Birder2.Controllers
     }
 }
 
-/*
-
-var user = await _userAccessor.GetUser();
-var loggedinUser = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.Id == user.Id);
-var userX = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "Winthorpe");
-var userY = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "Tenko");
-var userZ = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "Max");
-
-var a = 1;
-
-//I follow or unfollow someone else.  That's the only action
-// X follows Y
-//Followed  <-- Dependent
-//userZ.Followers.Add(new Network
-//{
-//    Follower = userY //Follower  <-- Independent
-//});
-// X unfollows Y
-loggedinUser.Following.Add(loggedinUser.Followers.FirstOrDefault());
+//loggedinUser.Following.Add(loggedinUser.Followers.FirstOrDefault());
 //userX.Following.Remove(userZ.Followers.FirstOrDefault());
-//groupToUpdate.GruposUsuarios.Remove(groupToUpdate.GruposUsuarios.Where(ugu => ugu.UserId == userToUpdate.Id).FirstOrDefault());
 
-//_context.SaveChanges();
-
-userX = await _context.Users.Include(x => x.Followers).Include(y => y.Followers).FirstOrDefaultAsync(x => x.UserName == "Winthorpe");
-userY = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "Tenko");
-userZ = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.UserName == "Max");
-var f = userX.Following.ToList();
-//var follower
-//var userToFollow
-
-var b = 1;
-
-*/
