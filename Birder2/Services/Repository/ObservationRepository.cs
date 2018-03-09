@@ -63,7 +63,7 @@ namespace Birder2.Services
             return await observations;
         }
 
-        public async Task<IEnumerable<Observation>> MyObservationsList(string userId, string filter)
+        public async Task<IEnumerable<Observation>> MyNetworkObservationsList(string userId)
         {
             var loggedinUser = await _dbContext.Users
                 .Include(x => x.Followers)

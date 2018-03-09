@@ -30,20 +30,32 @@ namespace Birder2.Controllers
         }
 
         // GET: Observation
-        public async Task<IActionResult> Index(string filter)
+        public async Task<IActionResult> Index(bool showUserObservationsOnly)
         {
+            //
             var user = await _userAccessor.GetUser();
             if (user == null)
             {
                 return RedirectToAction("Login", "Account");
             }
+            //
+
+            ObservationsIndexViewModel viewModel = new ObservationsIndexViewModel()
+            {
+                ShowUserObservationsOnly = showUserObservationsOnly
+            };
+            
+
+
             try
             {
-                if (filter == "MineOnly")
+                if (showUserObservationsOnly == true)
                 {
-                    return View(await _observationRepository.MyObservationsList(user.Id));
+                    viewModel.Observations = await _observationRepository.MyObservationsList(user.Id);
+                    return View(viewModel);
                 }
-                return View(await _observationRepository.MyObservationsList(user.Id));
+                viewModel.Observations = await _observationRepository.MyNetworkObservationsList(user.Id);
+                return View(viewModel);
             }
             catch (Exception ex)
             {
