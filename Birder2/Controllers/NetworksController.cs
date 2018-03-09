@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Birder2.Data;
 using Birder2.Services;
+using Birder2.Models;
+using Newtonsoft.Json;
 
 /*
 <script>
@@ -27,8 +29,84 @@ namespace Birder2.Controllers
             _userAccessor = userAccessor;
         }
 
+        public class FollowUserViewModel
+        {
+            public string SearchCriterion { get; set; }
+            public string StatusMessage { get; set; }
+            private IEnumerable<ApplicationUser> _searchResults;
+            public IEnumerable<ApplicationUser> SearchResults
+            {
+                get
+                {
+                    return _searchResults ?? (_searchResults = new List<ApplicationUser>());
+                }
+                set
+                {
+                    _searchResults = value;
+                }
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            FollowUserViewModel followUserViewModel = new FollowUserViewModel();
+
+            followUserViewModel.SearchResults = _context.Users.Include(x => x.Followers).Include(y => y.Following).ToList();
+
+            return View(followUserViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Follow([FromBody]ApplicationUser viewModel)
+        {
+            var user = await _userAccessor.GetUser();
+            var loggedinUser = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.Id == user.Id);
+
+            var userToFollow = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.Id == viewModel.Id);
+
+
+            // check if loggedinUser = userToFollow
+
+            userToFollow.Followers.Add(new Network
+            {
+                Follower = loggedinUser //Follower  <-- Independent
+            });
+
+            _context.SaveChanges();
+
+            loggedinUser = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.Id == user.Id);
+
+            userToFollow = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.Id == viewModel.Id);
+
+
+            return Json(JsonConvert.SerializeObject(viewModel));
+
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> UnFollow([FromBody]Network viewModel)
+        {
+            var user = await _userAccessor.GetUser();
+            var loggedinUser = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.Id == user.Id);
+
+            var userToUnfollow = await _context.Users.Include(x => x.Followers).Include(y => y.Following).FirstOrDefaultAsync(x => x.Id == viewModel.ApplicationUser.Id);
+
+
+            loggedinUser.Following.Remove(userToUnfollow.Followers.FirstOrDefault());
+
+            _context.SaveChanges();
+
+            // loggedin user following count
+            // independent user followers count
+
+
+            return Json(JsonConvert.SerializeObject(viewModel));
+
+
+        }
+
         /*
-         * Unfollow action
          * Find followers
          * Follow action
          * */

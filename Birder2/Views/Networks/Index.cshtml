@@ -26,65 +26,76 @@
 
 <h2>Index</h2>
 
-    <p>You are following @Model.Following.Count() <i>Birders</i>:</p>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 
-    <!-- ko foreach: Following -->
-    <section>
-        <div class="media">
-            <div class="media-left media-middle">
-                <img src="~/images/man.png" class="media-object">
-                @*<img src="@Model.Bird.ThumbnailUrl" class="media-object">*@
-            </div>
-            <div class="media-body">
-                <h3 class="media-heading"><span data-bind="text: ApplicationUser.UserName" /></h3>
-                @*<h5>Spotted by<b> @Model.ApplicationUser.UserName [link to profile page]</b> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h5>*@
-                <div>
-                    <a asp-action="Unfollow" asp-route-id="data-bind=" text: ApplicationUser.UserName">Unfollow</a>
-                </div>
+<h3>You are following <span data-bind="text: FollowingCount"></span> <i>Birders</i>:</h3>
+@*<div><span> data-bind="text: ApplicationUser.UserName" </span></div>*@
+@*<p>You are following @Model.Following.Count() <i>Birders</i>:</p>*@
+
+<!-- ko foreach: Following -->
+<section>
+    <div class="media">
+        <div class="media-left media-middle">
+            <img src="~/images/man.png" class="media-object">
+            @*<img src="@Model.Bird.ThumbnailUrl" class="media-object">*@
+        </div>
+        <div class="media-body">
+            <h3 class="media-heading"><span data-bind="text: ApplicationUser.UserName" /></h3>
+            @*<h5>Spotted by<b> @Model.ApplicationUser.UserName [link to profile page]</b> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h5>*@
+            <div>
+                <div class="form-group"><button class="btn btn-danger btn-xs" data-bind="click: $parent.unFollow">Unfollow</button></div>
+                @*<button data-bind="click: changeButtonText, text: buttonText"></button>*@
             </div>
         </div>
-    </section>
-    <!-- /ko -->
+    </div>
+</section>
+<!-- /ko -->
+
+<hr />
+
+<h3><span data-bind="text: FollowersCount"></span> <i>Birders</i> follow you:</h3>
+@*<p>@Model.Followers.Count() <i>Birders</i> follow you:</p>*@
+
+<!-- ko foreach: Followers -->
+<section>
+    <div class="media">
+        <div class="media-left media-middle">
+            <img src="~/images/man.png" class="media-object">
+            @*<img src="@Model.Bird.ThumbnailUrl" class="media-object">*@
+        </div>
+        <div class="media-body">
+            <h3 class="media-heading"><span data-bind="text: Follower.UserName" /></h3>
+            @*<h5>Spotted by<b> @Model.ApplicationUser.UserName [link to profile page]</b> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h5>*@
+            <div>
+                @*<a asp-action="Unfollow" asp-route-id="@Model.ApplicationUser.UserName">Unfollow</a>*@
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /ko -->
+
+
+
+@*<p>You are following @Model.Following.Count() <i>Birders</i>:</p>
+
+    @foreach (var following in Model.Following)
+    {
+        <div class="container">
+            @Html.Partial("_Following", following)
+        </div>
+    }
 
     <hr />
 
     <p>@Model.Followers.Count() <i>Birders</i> follow you:</p>
 
-    <!-- ko foreach: Followers -->
-    <section>
-        <div class="media">
-            <div class="media-left media-middle">
-                <img src="~/images/man.png" class="media-object">
-                @*<img src="@Model.Bird.ThumbnailUrl" class="media-object">*@
-            </div>
-            <div class="media-body">
-                <h3 class="media-heading"><span data-bind="text: Follower.UserName" /></h3>
-                @*<h5>Spotted by<b> @Model.ApplicationUser.UserName [link to profile page]</b> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h5>*@
-                <div>
-                    @*<a asp-action="Unfollow" asp-route-id="@Model.ApplicationUser.UserName">Unfollow</a>*@
-                </div>
-            </div>
+    @foreach (var follower in Model.Followers)
+    {
+        <div class="container">
+            @Html.Partial("_Follower", follower)
         </div>
-    </section>
-    <!-- /ko -->
-    @*<p>You are following @Model.Following.Count() <i>Birders</i>:</p>
+    }
 
-        @foreach (var following in Model.Following)
-        {
-            <div class="container">
-                @Html.Partial("_Following", following)
-            </div>
-        }
-
-        <hr />
-
-        <p>@Model.Followers.Count() <i>Birders</i> follow you:</p>
-
-        @foreach (var follower in Model.Followers)
-        {
-            <div class="container">
-                @Html.Partial("_Follower", follower)
-            </div>
-        }
-
-    *@
+*@

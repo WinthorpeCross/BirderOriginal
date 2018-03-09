@@ -76,17 +76,21 @@ namespace Birder2.Services
             //loggedinUser.Following.Add(loggedinUser.Followers.FirstOrDefault());
             //var f = loggedinUser.Following.ToList();
 
+            // PROBLEM WHEN FOLLOWERS = 0 -- cannot append own Id
+
             var userNetwork = (from p in loggedinUser.Following
                                select p.ApplicationUser.Id.ToString());
+            //Therefore changed to less efficient || in LINQ WHERE
 
-            if (string.IsNullOrEmpty(filter)) // My NeworkAndMe
-            {
-                userNetwork.Append(loggedinUser.Id.ToString());
-            }
+
+            //if (string.IsNullOrEmpty(filter)) // My NeworkAndMe
+            //{
+            //    userNetwork.Append(loggedinUser.Id.ToString());
+            //}
 
             //Change to IQueryable collection - this collection will be refreshed regularly
             var observations = _dbContext.Observations
-                .Where(o => userNetwork.Contains(o.ApplicationUser.Id))
+                .Where(o => userNetwork.Contains(o.ApplicationUser.Id) || o.ApplicationUser.Id == loggedinUser.Id)
                     .Include(au => au.ApplicationUser)
                     .Include(b => b.Bird)
                     .Include(ot => ot.ObservationTags)

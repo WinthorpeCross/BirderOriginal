@@ -43,7 +43,7 @@ namespace Birder2.Controllers
                 {
                     return View(await _observationRepository.MyObservationsList(user.Id));
                 }
-                return View(await _observationRepository.MyObservationsList(user.Id, filter));
+                return View(await _observationRepository.MyObservationsList(user.Id));
             }
             catch (Exception ex)
             {

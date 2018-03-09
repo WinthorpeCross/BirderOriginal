@@ -108,7 +108,7 @@ $("#form").validate({
     tooltip_options: {
         Quantity: {
             placement: 'bottom'
-        },
+        }
         //PONumber: {
         //    placement: 'right'
         //}
