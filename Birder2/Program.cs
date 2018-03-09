@@ -27,10 +27,8 @@ namespace Birder2
                     logger.LogError(ex, "An error occurred while seeding the database.");
                 }
             }
-
             host.Run();
         }
-
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)

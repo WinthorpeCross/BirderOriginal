@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Birder2.Models;
 using Birder2.Services;
@@ -9,7 +8,6 @@ using Birder2.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace Birder2.Controllers
 {
@@ -63,22 +61,20 @@ namespace Birder2.Controllers
             }
         }
 
-
         // GET: Observation/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            //ToDo: check for logged in user here?
-            if (id == null)
-            {
-                return NotFound();
-            }
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
             var observation = await _observationRepository.GetObservationDetails(id);
 
             if (observation == null)
             {
                 return NotFound();
             }
-            return View(observation);  //ToDo: if user == logged in user, then allow edit/delete etc.  Might need a viewmodel...
+            return View(observation);
         }
 
         [HttpGet]
