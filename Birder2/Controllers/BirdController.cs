@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Birder2.Services;
 using Microsoft.AspNetCore.Authorization;
 using Birder2.ViewModels;
+using Microsoft.Extensions.Logging;
+using Birder2.Extensions;
 
 /*
  * Perhaps use IEnumerable - not IQueryable -  for the Birds list because it is likely to be repeatedly searched and filtered?
@@ -17,11 +19,14 @@ namespace Birder2.Controllers
     {
         private readonly IBirdRepository _birdRepository;
         private readonly IFlickrService _flickrService;
+        private readonly ILogger _logger;
 
-        public BirdController(IBirdRepository birdRepository, IFlickrService flickrService)
+        public BirdController(IBirdRepository birdRepository, IFlickrService flickrService
+                                ,ILogger<BirdController> logger)
         {
             _birdRepository = birdRepository;
             _flickrService = flickrService;
+            _logger = logger;
         }
 
         public class SortFilterPageOptions
@@ -33,6 +38,7 @@ namespace Birder2.Controllers
         // GET: All Bird Species
         public async Task<IActionResult> Index(string searchString, string searchType, SortFilterPageOptions options)
         {
+            _logger.LogInformation(LoggingEvents.ListItems, "Bird Index called");
             switch (searchType)
             {
                 case "CommonBirds":
@@ -58,6 +64,7 @@ namespace Birder2.Controllers
         // GET: Bird/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            _logger.LogInformation(LoggingEvents.GetItem, "Getting bird {ID}", id);
             if (id == null)
             {
                 return NotFound();
@@ -74,7 +81,15 @@ namespace Birder2.Controllers
             {
                 return NotFound();
             }
-            return View(model);
+            try
+            {
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(1, ex, "GetById({ID}) NOT FOUND", id);
+                return NotFound();
+            }
         }
     }
 }
