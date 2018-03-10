@@ -14,6 +14,13 @@ using Birder2.Extensions;
 
 namespace Birder2.Controllers
 {
+    // ToDo: --Various--
+    /*
+     * ViewModel
+     * Filter Options
+     * 
+     */
+
     [Authorize]
     public class BirdController : Controller
     {
@@ -67,18 +74,20 @@ namespace Birder2.Controllers
             _logger.LogInformation(LoggingEvents.GetItem, "Getting bird {ID}", id);
             if (id == null)
             {
+                _logger.LogWarning(LoggingEvents.GetItemNotFound, "GetById({ID}) ID PARAMETER IS NULL", id);
                 return NotFound();
             }
 
             var model = new BirdDetailViewModel()
             {
                 Bird = await _birdRepository.GetBirdDetails(id),
-            };
 
+            };
             model.BirdPhotos = _flickrService.GetFlickrPhotoCollection(model.Bird.Species);
 
             if (model.Bird == null)
             {
+                _logger.LogWarning(LoggingEvents.GetItemNotFound, "GetById({ID}) BIRD NOT FOUND", id);
                 return NotFound();
             }
             try
