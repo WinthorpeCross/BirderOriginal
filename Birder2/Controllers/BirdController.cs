@@ -65,6 +65,8 @@ namespace Birder2.Controllers
                     ViewData["searchType"] = null;
                     ViewData["Title"] = "All British Bird Species";
                     return View(await _birdRepository.AllBirdsList(searchString));
+
+                    // log parameters on error....
             }
         }
 
@@ -74,29 +76,31 @@ namespace Birder2.Controllers
             _logger.LogInformation(LoggingEvents.GetItem, "Getting bird {ID}", id);
             if (id == null)
             {
-                _logger.LogWarning(LoggingEvents.GetItemNotFound, "GetById({ID}) ID PARAMETER IS NULL", id);
+                _logger.LogWarning(LoggingEvents.GetItemNotFound, "Details({ID}) - ID PARAMETER IS NULL", id);
                 return NotFound();
             }
 
-            var model = new BirdDetailViewModel()
-            {
-                Bird = await _birdRepository.GetBirdDetails(id),
+            var model = new BirdDetailViewModel();
 
-            };
-            model.BirdPhotos = _flickrService.GetFlickrPhotoCollection(model.Bird.Species);
-
-            if (model.Bird == null)
-            {
-                _logger.LogWarning(LoggingEvents.GetItemNotFound, "GetById({ID}) BIRD NOT FOUND", id);
-                return NotFound();
-            }
             try
             {
-                return View(model);
+                model.Bird = await _birdRepository.GetBirdDetails(id);
+                model.BirdPhotos = _flickrService.GetFlickrPhotoCollection(model.Bird.Species);
+
+                if (model.Bird == null)
+                {
+                    _logger.LogWarning(LoggingEvents.GetItemNotFound, "Details({ID}) BIRD NOT FOUND", id);
+                    return NotFound();
+                }
+                else
+                {
+                    return View(model);
+                }
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(1, ex, "GetById({ID}) NOT FOUND", id);
+                // What to log?
+                _logger.LogError(LoggingEvents.GetItemNotFound, ex, "Details({ID}) NOT FOUND", id);
                 return NotFound();
             }
         }
