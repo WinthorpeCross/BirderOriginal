@@ -7,6 +7,7 @@ using Birder2.Services;
 using Birder2.Models;
 using Newtonsoft.Json;
 using Birder2.ViewModels;
+using Microsoft.Extensions.Logging;
 
 /*
 <script>
@@ -23,11 +24,14 @@ namespace Birder2.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IApplicationUserAccessor _userAccessor;
+        private readonly ILogger _logger;
 
-        public NetworksController(ApplicationDbContext context, IApplicationUserAccessor userAccessor)
+        public NetworksController(ApplicationDbContext context, IApplicationUserAccessor userAccessor
+                                    ,ILogger<Network> logger)
         {
             _context = context;
             _userAccessor = userAccessor;
+            _logger = logger;
         }
 
         [HttpGet]

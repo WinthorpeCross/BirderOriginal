@@ -100,7 +100,8 @@ namespace Birder2.Controllers
             catch (Exception ex)
             {
                 // What to log?
-                _logger.LogError(LoggingEvents.GetItemNotFound, ex, "Details({ID}) NOT FOUND", id);
+                _logger.LogError(LoggingEvents.GetItemNotFound, ex, "Details({ID}) error", id);
+                //_logger.LogError($"failed to return Birds details page: {ex}");//  <--
                 return NotFound();
             }
         }
