@@ -37,7 +37,7 @@ namespace Birder2.Models
         //
         // - https://www.bto.org/about-birds/birdfacts/british-list
         // - This list includes 603 species (as at 1 January 2017)
-
+        //
         [Display(Name = "BTO Population Size in Britain")]
         public string PopulationSize { get; set; }
 

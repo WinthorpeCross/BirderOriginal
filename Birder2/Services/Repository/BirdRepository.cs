@@ -21,16 +21,9 @@ namespace Birder2.Services
             return await _dbContext.Birds.ToListAsync();
         }
 
-        public async Task<IEnumerable<Bird>> AllBirdsList(string searchString)
+        public async Task<IEnumerable<Bird>> AllBirdsList(int birdId)
         {
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                return await _dbContext.Birds.Where(h => h.EnglishName.ToUpper().Contains(searchString.ToUpper())).ToListAsync();
-            }
-            else
-            {
-                return await _dbContext.Birds.ToListAsync();
-            }
+            return await _dbContext.Birds.Where(b => b.BirdId == birdId).ToListAsync();
         }
 
         public async Task<IEnumerable<Bird>> CommonBirdsList(string searchString)
