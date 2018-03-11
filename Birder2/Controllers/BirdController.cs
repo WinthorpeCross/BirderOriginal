@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Birder2.ViewModels;
 using Microsoft.Extensions.Logging;
 using Birder2.Extensions;
+using System.Collections.Generic;
+using Birder2.Models;
 
 /*
  * Perhaps use IEnumerable - not IQueryable -  for the Birds list because it is likely to be repeatedly searched and filtered?
@@ -41,33 +43,47 @@ namespace Birder2.Controllers
             public string uio { get; set; }
         }
 
+        public class BirdIndexViewModel
+        {
+            public int SelectedBirdId { get; set; }
+            public IEnumerable<Bird> BirdsList { get; set; }
+            public IEnumerable<Bird> AllBirdsDropDownList { get; set; }
+        }
+
 
         // GET: All Bird Species
         public async Task<IActionResult> Index(string searchString, string searchType, SortFilterPageOptions options)
         {
             _logger.LogInformation(LoggingEvents.ListItems, "Bird Index called");
-            switch (searchType)
-            {
-                case "CommonBirds":
-                    Console.WriteLine("Case 1");  //----> View Header title
-                    ViewData["searchType"] = searchType;
-                    ViewData["Title"] = "Common British Bird Species";
-                    return View(await _birdRepository.CommonBirdsList(searchString));
 
-                case "MyBirds":
-                    Console.WriteLine("Case 2");  //----> View Header title
-                    ViewData["searchType"] = searchType;
-                    ViewData["Title"] = "My Observed British Bird Species";
-                    return View(await _birdRepository.AllBirdsList(searchString));
+            BirdIndexViewModel viewModel = new BirdIndexViewModel();
+            viewModel.AllBirdsDropDownList = await _birdRepository.AllBirdsList();
+            viewModel.BirdsList = await _birdRepository.AllBirdsList();
 
-                default:
-                    Console.WriteLine("Default case");  //----> View Header title
-                    ViewData["searchType"] = null;
-                    ViewData["Title"] = "All British Bird Species";
-                    return View(await _birdRepository.AllBirdsList(searchString));
+            return View(viewModel);
 
-                    // log parameters on error....
-            }
+            //switch (searchType)
+            //{
+            //    case "CommonBirds":
+            //        Console.WriteLine("Case 1");  //----> View Header title
+            //        ViewData["searchType"] = searchType;
+            //        ViewData["Title"] = "Common British Bird Species";
+            //        return View(await _birdRepository.CommonBirdsList(searchString));
+
+            //    case "MyBirds":
+            //        Console.WriteLine("Case 2");  //----> View Header title
+            //        ViewData["searchType"] = searchType;
+            //        ViewData["Title"] = "My Observed British Bird Species";
+            //        return View(await _birdRepository.AllBirdsList(searchString));
+
+            //    default:
+            //        Console.WriteLine("Default case");  //----> View Header title
+            //        ViewData["searchType"] = null;
+            //        ViewData["Title"] = "All British Bird Species";
+            //        return View(await _birdRepository.AllBirdsList(searchString));
+
+            //        // log parameters on error....
+            //}
         }
 
         // GET: Bird/Details/5

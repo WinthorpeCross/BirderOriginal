@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Birder2.Models.Bird>
+﻿@model Birder2.Controllers.BirdController.BirdIndexViewModel
 
 @{
     //ViewData["Title"] = "Birds";
@@ -6,21 +6,25 @@
     int counter = 0;
 }
 
-<h2>@ViewData["Title"]
-    @ViewData["searchType"]</h2>
+<h2>
+    @ViewData["Title"]
+@ViewData["searchType"]
+</h2>
+
 
 
 <form id="sort-filter-form" class="form-horizontal">
     <div class="form-group">
         <div class="col-sm-3">
             <label class="control-label">Sort By</label>
-            <select name="OrderByOptions" class="form-control sort-filter-width" onchange="BookList.sendForm(this)" data-val="true" data-val-required="The OrderByOptions field is required." id="SortFilterPageData_OrderByOptions">
-                <option selected="selected" value="0">sort by...</option>
-                <option value="1">Votes &#x2191;</option>
-                <option value="2">Publication Date &#x2191;</option>
-                <option value="3">Price &#x2193;</option>
-                <option value="4">Price &#x2191;</option>
-            </select>
+            @Html.DropDownListFor(m => m.SelectedBirdId,
+                 new SelectList(Model.AllBirdsDropDownList, "BirdId", "EnglishName"),
+                     new
+                     {
+                         @class = "form-control selectpicker showtick",
+                         title = "Choose a bird species...",
+                         data_live_search = "true"
+                     })
         </div>
 
         <div class="col-sm-3">
@@ -40,25 +44,25 @@
         </div>
 
         @*<div class="col-sm-2">
-            <label class="control-label">Page</label>
-            <div>
-                <input name="PageNum" class="form-control page-control-width page-num-input" onchange="BookList.sendForm(this)" type="number" data-val="true" data-val-required="The PageNum field is required." id="SortFilterPageData_PageNum" value="1" disabled>
-                <span class="num-pages-text">of 10,000</span>
-            </div>
-        </div>*@
+                <label class="control-label">Page</label>
+                <div>
+                    <input name="PageNum" class="form-control page-control-width page-num-input" onchange="BookList.sendForm(this)" type="number" data-val="true" data-val-required="The PageNum field is required." id="SortFilterPageData_PageNum" value="1" disabled>
+                    <span class="num-pages-text">of 10,000</span>
+                </div>
+            </div>*@
 
         @*<div class="col-sm-1">
-            <label class="control-label">Page&nbsp;Size</label>
-            <select name="PageSize" class="form-control page-control-width" onchange="BookList.sendForm(this)" data-val="true" data-val-required="The PageSize field is required." id="SortFilterPageData_PageSize" disabled>
-                <option value="5">5</option>
-                <option selected="selected" value="10">10</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-                <option value="500">500</option>
-                <option value="1000">1000</option>
-            </select>
-        </div>*@
+                <label class="control-label">Page&nbsp;Size</label>
+                <select name="PageSize" class="form-control page-control-width" onchange="BookList.sendForm(this)" data-val="true" data-val-required="The PageSize field is required." id="SortFilterPageData_PageSize" disabled>
+                    <option value="5">5</option>
+                    <option selected="selected" value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="500">500</option>
+                    <option value="1000">1000</option>
+                </select>
+            </div>*@
     </div>
 
     <input id="PrevCheckState" name="PrevCheckState" type="hidden" value=0,,10,10000>
@@ -77,12 +81,12 @@
 
 
 <div class="row">
-    @foreach (var item in Model)
+    @foreach (var item in Model.BirdsList)
     {
         if (counter != 0 && counter % 3 == 0)
         {
             @:</div>
-            @:<div class="row">
+        @:<div class="row">
         }
 
         <div class="col-md-4">
@@ -90,7 +94,7 @@
                 <a href="Bird/Details/@item.BirdId" />
                 @if (item.ThumbnailUrl != null)
                 {
-                    <img src="@item.ThumbnailUrl" alt="ASP.NET" class="img-responsive"/>
+                    <img src="@item.ThumbnailUrl" alt="ASP.NET" class="img-responsive" />
                 }
                 else
                 {

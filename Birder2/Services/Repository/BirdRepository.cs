@@ -16,6 +16,11 @@ namespace Birder2.Services
             _dbContext = dbContext;
         }
 
+        public async Task<IEnumerable<Bird>> AllBirdsList()
+        {
+            return await _dbContext.Birds.ToListAsync();
+        }
+
         public async Task<IEnumerable<Bird>> AllBirdsList(string searchString)
         {
             if (!String.IsNullOrEmpty(searchString))

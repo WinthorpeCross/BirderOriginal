@@ -8,6 +8,7 @@ namespace Birder2.Services
 {
     public interface IBirdRepository
     {
+        Task<IEnumerable<Bird>> AllBirdsList();
         Task<IEnumerable<Bird>> AllBirdsList(string searchString);
         Task<IEnumerable<Bird>> CommonBirdsList(string searchString);
         Task<Bird> GetBirdDetails(int? id);
