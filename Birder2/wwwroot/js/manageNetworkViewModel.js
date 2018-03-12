@@ -3,8 +3,8 @@
     ko.mapping.fromJS(data, {}, self);
 
 
-    self.FollowingCount = ko.observable(self.Following().length);
-    self.FollowersCount = ko.observable(self.Followers().length);
+    self.FollowingCount = ko.observable(self.FollowingList().length);
+    self.FollowersCount = ko.observable(self.FollowersList().length);
 
     self.unFollow = function (data, event) {
         if (event.target.innerText === 'Unfollow') {
@@ -19,7 +19,8 @@
                         "content-type": "application/json; charset=utf-8"
                     },
                 success: function (data) {
-                    //alert("success");
+                    var obj = JSON.parse(data);
+                    self.StatusMessage("You have unfollowed " + obj.UserName);
                     event.target.innerText = 'Follow';
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -37,7 +38,7 @@
             //alert("Follow route?");
 
             $.ajax({
-                url: "/Networks/Follow2/",
+                url: "/Networks/Follow/",
                 type: "POST",
                 data: ko.toJSON(data),
                 headers:
@@ -46,6 +47,8 @@
                     },
                 success: function (data) {
                     //alert("success");
+                    var obj = JSON.parse(data);
+                    self.StatusMessage("You are now following " + obj.UserName);
                     event.target.innerText = 'Unfollow';
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {

@@ -10,12 +10,12 @@ namespace Birder2.ViewModels
         [Display(Name = "Search by username (type search term):")]
         public string SearchCriterion { get; set; }
         public string StatusMessage { get; set; }
-        private IEnumerable<ApplicationUser> _searchResults;
-        public IEnumerable<ApplicationUser> SearchResults
+        private IEnumerable<UserViewModel> _searchResults;
+        public IEnumerable<UserViewModel> SearchResults
         {
             get
             {
-                return _searchResults ?? (_searchResults = new List<ApplicationUser>());
+                return _searchResults ?? (_searchResults = new List<UserViewModel>());
             }
             set
             {
