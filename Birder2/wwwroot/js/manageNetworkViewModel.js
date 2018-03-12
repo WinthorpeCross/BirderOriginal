@@ -2,7 +2,6 @@
     var self = this;
     ko.mapping.fromJS(data, {}, self);
 
-
     self.FollowingCount = ko.observable(self.FollowingList().length);
     self.FollowersCount = ko.observable(self.FollowersList().length);
 
@@ -24,12 +23,13 @@
                     event.target.innerText = 'Follow';
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert("error");
+                    //alert("error");
+                    self.StatusMessage("An error occurred");
                     if (XMLHttpRequest.status === 400) {
-                        $('#MessageToClient').text(XMLHttpRequest.responseText);
+                        $('#StatusMessage').text(XMLHttpRequest.responseText);
                     }
                     else {
-                        $('#MessageToClient').text('The web server had an error.  The issue has been logged for investigation by the developer.');
+                        $('#StatusMessage').text('The web server had an error.  The issue has been logged for investigation by the developer.');
                     }
                 }
             });
@@ -52,13 +52,13 @@
                     event.target.innerText = 'Unfollow';
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert("error");
+                    self.StatusMessage("An error occurred");
                     if (XMLHttpRequest.status === 400) {
                         alert(XMLHttpRequest.responseText);
-                        $('#MessageToClient').text(XMLHttpRequest.responseText);
+                        $('#StatusMessage').text(XMLHttpRequest.responseText);
                     }
                     else {
-                        $('#MessageToClient').text('The web server had an error.  The issue has been logged for investigation by the developer.');
+                        $('#StatusMessage').text('The web server had an error.  The issue has been logged for investigation by the developer.');
                     }
                 }
             })

@@ -1,13 +1,13 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Birder2.Data;
+﻿using Birder2.Data;
 using Birder2.Services;
 using Birder2.Models;
-using Newtonsoft.Json;
 using Birder2.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System.Linq;
+using System.Threading.Tasks;
 
 /*
 <script>

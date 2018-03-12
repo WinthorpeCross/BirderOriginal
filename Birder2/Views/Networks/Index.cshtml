@@ -1,33 +1,10 @@
-﻿@*model ApplicationUser*@
-@model Birder2.ViewModels.NetworkIndexViewModel
-
+﻿@model Birder2.ViewModels.NetworkIndexViewModel
 @using Newtonsoft.Json
-@{
-    string data = JsonConvert.SerializeObject(Model,
-                        new JsonSerializerSettings()
-                        {
-                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                        });
-
-}
-@section scripts{
-    <script src="~/js/knockout-3.4.2.js"></script>
-    <script src="~/js/knockout.mapping-latest.js"></script>
-    <script src="~/js/jqueryvalidate.js"></script>
-    <script src="~/js/jquery-validate.bootstrap-tooltip.js"></script>
-    <script src="~/js/manageNetworkViewModel.js"></script>
-
-    <script type="text/javascript">
-        var manageNetworkViewModel = new ManageNetworkViewModel(@Html.Raw(data));
-        ko.applyBindings(manageNetworkViewModel);
-    </script>
-}
-
 
 <h2>Index</h2>
 
 <p>
-    <a asp-action="Create">Find </a>
+    <a asp-action="Create">Find Birders to follow</a>
 </p>
 
 <div class="alert-success" role="alert">
@@ -52,7 +29,7 @@
     </div>
 </section>
 <!-- /ko -->
- 
+
 <br />
 
 <h3><span data-bind="text: FollowersCount"></span> <i>Birders</i> follow you:</h3>
@@ -71,3 +48,24 @@
 </section>
 <!-- /ko -->
 
+
+@{
+    string data = JsonConvert.SerializeObject(Model,
+                        new JsonSerializerSettings()
+                        {
+                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                        });
+
+}
+@section scripts{
+    <script src="~/js/knockout-3.4.2.js"></script>
+    <script src="~/js/knockout.mapping-latest.js"></script>
+    <script src="~/js/jqueryvalidate.js"></script>
+    <script src="~/js/jquery-validate.bootstrap-tooltip.js"></script>
+    <script src="~/js/manageNetworkViewModel.js"></script>
+
+    <script type="text/javascript">
+        var manageNetworkViewModel = new ManageNetworkViewModel(@Html.Raw(data));
+        ko.applyBindings(manageNetworkViewModel);
+    </script>
+}

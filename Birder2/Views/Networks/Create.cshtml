@@ -2,10 +2,10 @@
 @using Newtonsoft.Json
 @{
     string data = JsonConvert.SerializeObject(Model,
-                        new JsonSerializerSettings()
-                        {
-                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                        });
+            new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
 }
 
 <form asp-action="Create" asp-route-searchCriterion="SearchString" method="get">
@@ -23,7 +23,6 @@
 <div class="alert-success" role="alert">
     <span data-bind="text: StatusMessage" />
 </div>
-
 <br />
 
 <!-- ko foreach: SearchResults -->
@@ -36,12 +35,10 @@
         <div class="media-body">
             <h3 class="media-heading"><span data-bind="text: UserName" /></h3>
             <div class="form-group"><button class="btn btn-danger btn-xs" data-bind="click: $parent.follow">Follow</button></div>
-            @*attr: {'Id': 'Quantity_' + $index()}, value: Quantity"*@
         </div>
     </div>
 </section>
 <!-- /ko -->
-
 
 <div>
     <a asp-action="Index">Back to List</a>
