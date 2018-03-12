@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Birder2.Services
 {
-    public interface IAnalysisRepository
+    public interface ISideBarRepository
     {
         Task<int> BirdCount();
     }

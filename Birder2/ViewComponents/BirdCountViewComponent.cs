@@ -11,16 +11,16 @@ namespace Birder2.ViewComponents
 {
     public class BirdCountViewComponent : ViewComponent
     {
-        private readonly IAnalysisRepository _analysisRepository;
+        private readonly ISideBarRepository _sideBarRepository;
 
-        public BirdCountViewComponent(IAnalysisRepository analysisRepository)
+        public BirdCountViewComponent(ISideBarRepository sideBarRepository)
         {
-            _analysisRepository = analysisRepository;
+            _sideBarRepository = sideBarRepository;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var bir = await _analysisRepository.BirdCount();
+            var bir = await _sideBarRepository.BirdCount();
             return View("Default", bir.ToString());
         }
 

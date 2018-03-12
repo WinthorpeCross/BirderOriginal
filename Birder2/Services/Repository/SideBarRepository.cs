@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 
 namespace Birder2.Services
 {
-    public class AnalysisRepository : IAnalysisRepository
+    public class SideBarRepository : ISideBarRepository
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public AnalysisRepository(ApplicationDbContext dbContext)
+        public SideBarRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }

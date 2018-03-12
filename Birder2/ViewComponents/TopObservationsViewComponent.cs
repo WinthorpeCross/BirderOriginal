@@ -6,16 +6,16 @@ namespace Birder2.ViewComponents
 {
     public class TopObservationsViewComponent : ViewComponent
     {
-        private readonly IAnalysisRepository _analysisRepository;
+        private readonly ISideBarRepository _sideBarRepository;
 
-        public TopObservationsViewComponent(IAnalysisRepository analysisRepository)
+        public TopObservationsViewComponent(ISideBarRepository sideBarRepository)
         {
-            _analysisRepository = analysisRepository;
+            _sideBarRepository = sideBarRepository;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var bir = await _analysisRepository.BirdCount();
+            var bir = await _sideBarRepository.BirdCount();
             return View();
         }
     }
