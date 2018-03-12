@@ -4,10 +4,11 @@ using Birder2.Models;
 using Birder2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Threading.Tasks;
+using Birder2.Extensions;
+using System;
 
 /*
 <script>
@@ -15,11 +16,11 @@ using System.Threading.Tasks;
 </script>
 */
 
-    /*
-     * 1) repository
-     * 2) logging
-     * 3) error handling
-     */
+/*
+ * 1) repository
+ * 2) logging
+ * 3) error handling
+ */
 
 
 
@@ -27,65 +28,59 @@ namespace Birder2.Controllers
 {
     public class NetworksController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context; // <------------- delete
         private readonly IApplicationUserAccessor _userAccessor;
         private readonly ILogger _logger;
+        private readonly IUserRepository _userRepository;
 
-        public NetworksController(ApplicationDbContext context
-                                       ,IApplicationUserAccessor userAccessor
-                                            ,ILogger<Network> logger)
+        public NetworksController(ApplicationDbContext context // <------------- delete
+                                       , IApplicationUserAccessor userAccessor
+                                            ,ILogger<Network> logger
+                                                ,IUserRepository userRepository)
         {
             _context = context;
             _userAccessor = userAccessor;
             _logger = logger;
+            _userRepository = userRepository;
         }
 
         // GET: Networks
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var user = await _userAccessor.GetUser();
-            var loggedinUser = await _context.Users
-                .Include(x => x.Followers)
-                    .ThenInclude(x => x.Follower)
-                .Include(y => y.Following)
-                    .ThenInclude(r => r.ApplicationUser)
-                .Where(x => x.Id == user.Id)
-                .FirstOrDefaultAsync();
+            _logger.LogInformation(LoggingEvents.ListItems, "Network Index called");
+            try
+            {
+                ApplicationUser loggedinUser = await _userRepository.GetUserAndNetworkAsyncByUserName(await _userAccessor.GetUser());
+                NetworkIndexViewModel viewModel = new NetworkIndexViewModel();
 
-            NetworkIndexViewModel viewModel = new NetworkIndexViewModel();
+                viewModel.FollowingList = await _userRepository.GetFollowingList(loggedinUser);
+                viewModel.FollowersList = await _userRepository.GetFollowersList(loggedinUser);
 
-            viewModel.FollowingList =
-                                 from following in loggedinUser.Following
-                                 select new UserViewModel
-                                 {
-                                     UserName = following.ApplicationUser.UserName,
-                                     ProfileImage = following.ApplicationUser.ProfileImage
-                                 };
-
-            viewModel.FollowersList =
-                                from follower in loggedinUser.Followers
-                                select new UserViewModel
-                                {
-                                    UserName = follower.Follower.UserName,
-                                    ProfileImage = follower.Follower.ProfileImage
-                                };
-
-            return View(viewModel);
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                // ToDo: What to log?  What to return?  Generic error page?
+                _logger.LogError(LoggingEvents.GetItemNotFound, ex, "Network Index() error");
+                //_logger.LogError($"failed to return Birds details page: {ex}");//  <--
+                return NotFound();
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> Create(string searchCriterion)
         {
-            var user = await _userAccessor.GetUser();
+            _logger.LogInformation(LoggingEvents.ListItems, "Nework Index called");
+            ApplicationUser loggedinUser = await _userRepository.GetUserAndNetworkAsyncByUserName(await _userAccessor.GetUser());
             FollowUserViewModel followUserViewModel = new FollowUserViewModel();
-
-            if (string.IsNullOrEmpty(searchCriterion))
+            if (String.IsNullOrEmpty(searchCriterion))
             {
                 // ToDo: Suggested Birders to follow...
                 // --> check for users that follow me but i do not follow...
+                // Suggested users method
                 followUserViewModel.SearchResults = from users in _context.Users
-                                                    where(users.UserName != user.UserName)
+                                                    where(users.UserName != loggedinUser.UserName)
                                                     select new UserViewModel
                                                     {
                                                         UserName = users.UserName,
@@ -95,8 +90,9 @@ namespace Birder2.Controllers
             }
             else
             {
+                //users based on search criterion
                 followUserViewModel.SearchResults = from users in _context.Users
-                                                    where(users.UserName.ToUpper().Contains(searchCriterion.ToUpper()) && users.UserName != user.UserName)
+                                                    where(users.UserName.ToUpper().Contains(searchCriterion.ToUpper()) && users.UserName != loggedinUser.UserName)
                                                     select new UserViewModel
                                                     {
                                                         UserName = users.UserName,
@@ -111,58 +107,56 @@ namespace Birder2.Controllers
         [HttpPost]
         public async Task<IActionResult> Follow([FromBody]UserViewModel viewModel)
         {
-            var user = await _userAccessor.GetUser();
-            var loggedinUser = await _context.Users.Include(x => x.Followers)
-                                                        .Include(y => y.Following)
-                                                            .FirstOrDefaultAsync(x => x.Id == user.Id);
-
-            var userToFollow = await _context.Users.Include(x => x.Followers)
-                                                        .Include(y => y.Following)
-                                                            .FirstOrDefaultAsync(x => x.UserName == viewModel.UserName);
-
-            if (loggedinUser == userToFollow)
+            _logger.LogInformation(LoggingEvents.UpdateItem, "Follow action called");
+            try
             {
-                return Json(JsonConvert.SerializeObject("An error occured"));
-                //return BadRequest ???
+                ApplicationUser loggedinUser = await _userRepository.GetUserAndNetworkAsyncByUserName(await _userAccessor.GetUser());
+                ApplicationUser userToFollow = await _userRepository.GetUserAndNetworkAsyncByUserName(viewModel.UserName);
+
+                if (loggedinUser == userToFollow)
+                {
+                    return Json(JsonConvert.SerializeObject("An error occured"));
+                    //return BadRequest ???
+                }
+                else
+                {
+                    _userRepository.Follow(loggedinUser, userToFollow);
+                    return Json(JsonConvert.SerializeObject(viewModel));
+                }
             }
-
-            userToFollow.Followers.Add(new Network
+            catch (Exception ex)
             {
-                Follower = loggedinUser //Follower  <-- Independent
-            });
-
-            _context.SaveChanges();
-
-            return Json(JsonConvert.SerializeObject(viewModel));
+                _logger.LogError(LoggingEvents.GetItemNotFound, ex, "Follow action error");
+                return Json(JsonConvert.SerializeObject("An error occured"));
+            }
         }
 
         [HttpPost]
         public async Task<JsonResult> UnFollow([FromBody]UserViewModel viewModel)
         {
-            var user = await _userAccessor.GetUser();
-            var loggedinUser = await _context.Users.Include(x => x.Followers)
-                                                        .Include(y => y.Following)
-                                                            .FirstOrDefaultAsync(x => x.Id == user.Id);
-
-            var userToUnfollow = await _context.Users.Include(x => x.Followers)
-                                                        .Include(y => y.Following)
-                                                            .FirstOrDefaultAsync(x => x.UserName == viewModel.UserName);
-
-            if (loggedinUser == userToUnfollow)
+            _logger.LogInformation(LoggingEvents.UpdateItem, "Follow action called");
+            try
             {
+                ApplicationUser loggedinUser = await _userRepository.GetUserAndNetworkAsyncByUserName(await _userAccessor.GetUser());
+                ApplicationUser userToUnfollow = await _userRepository.GetUserAndNetworkAsyncByUserName(viewModel.UserName);
+
+                if (loggedinUser == userToUnfollow)
+                {
+                    return Json(JsonConvert.SerializeObject("An error occured"));
+                }
+                else
+                {
+                    _userRepository.UnFollow(loggedinUser, userToUnfollow);
+                    return Json(JsonConvert.SerializeObject(viewModel));
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(LoggingEvents.GetItemNotFound, ex, "Follow action error");
                 return Json(JsonConvert.SerializeObject("An error occured"));
             }
-
-            loggedinUser.Following.Remove(userToUnfollow.Followers.FirstOrDefault());
-
-            _context.SaveChanges();
-
-            return Json(JsonConvert.SerializeObject(viewModel));
         }         
     }
 }
 
-//var applicationDbContext = _context.Network.Include(n => n.ApplicationUser).Include(n => n.Follower);
-//loggedinUser.Following.Add(loggedinUser.Followers.FirstOrDefault());
-//userX.Following.Remove(userZ.Followers.FirstOrDefault());
 
