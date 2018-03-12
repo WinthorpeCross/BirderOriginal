@@ -125,6 +125,7 @@ namespace Birder2.Controllers
                 //roll back in case any cannot be updated?
                 foreach (ObservedSpeciesViewModel observedSpecies in viewModel.ObservedSpecies)
                 {
+                    //ToDo: use AutoMaper here...
                     try
                     {
                         Observation observationToAdd = new Observation();
@@ -168,9 +169,6 @@ namespace Birder2.Controllers
                 //return Json(JsonConvert.SerializeObject(ModelState));
             }
         }
-
-
-
 
         // GET: Observation/Edit/5
         [HttpGet]
@@ -226,6 +224,7 @@ namespace Birder2.Controllers
             
             if (ModelState.IsValid)
             {
+                //ToDo: use AutoMaper here...
                 try
                 {
                     Observation observationEdited = await _observationRepository.GetObservationDetails(id);

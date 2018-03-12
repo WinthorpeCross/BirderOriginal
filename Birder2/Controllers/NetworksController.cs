@@ -15,6 +15,14 @@ using System.Threading.Tasks;
 </script>
 */
 
+    /*
+     * 1) repository
+     * 2) logging
+     * 3) error handling
+     */
+
+
+
 namespace Birder2.Controllers
 {
     public class NetworksController : Controller
