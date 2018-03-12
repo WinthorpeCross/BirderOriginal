@@ -13,6 +13,7 @@ namespace Birder2.Services
         Task<IEnumerable<UserViewModel>> GetFollowersList(ApplicationUser user);
         void Follow(ApplicationUser loggedinUser, ApplicationUser userToFollow);
         void UnFollow(ApplicationUser loggedinUser, ApplicationUser userToUnfollow);
-  
+        Task<IEnumerable<UserViewModel>> GetSuggestedBirdersToFollow(ApplicationUser user);
+        Task<IEnumerable<UserViewModel>> GetSuggestedBirdersToFollow(ApplicationUser user, string searchCriterion);
     }
 }

@@ -5,7 +5,6 @@ using Birder2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System.Linq;
 using System.Threading.Tasks;
 using Birder2.Extensions;
 using System;
@@ -15,14 +14,6 @@ using System;
     document.getElementById("ItemPreview").src = "data:image/png;base64, @UserManager.GetUserAsync(User).Result.UserPhoto";
 </script>
 */
-
-/*
- * 1) repository
- * 2) logging
- * 3) error handling
- */
-
-
 
 namespace Birder2.Controllers
 {
@@ -72,36 +63,30 @@ namespace Birder2.Controllers
         public async Task<IActionResult> Create(string searchCriterion)
         {
             _logger.LogInformation(LoggingEvents.ListItems, "Nework Index called");
-            ApplicationUser loggedinUser = await _userRepository.GetUserAndNetworkAsyncByUserName(await _userAccessor.GetUser());
-            FollowUserViewModel followUserViewModel = new FollowUserViewModel();
-            if (String.IsNullOrEmpty(searchCriterion))
+            try
             {
-                // ToDo: Suggested Birders to follow...
-                // --> check for users that follow me but i do not follow...
-                // Suggested users method
-                followUserViewModel.SearchResults = from users in _context.Users
-                                                    where(users.UserName != loggedinUser.UserName)
-                                                    select new UserViewModel
-                                                    {
-                                                        UserName = users.UserName,
-                                                        ProfileImage = users.ProfileImage
-                                                    };
-                followUserViewModel.SearchCriterion = searchCriterion;
-            }
-            else
-            {
-                //users based on search criterion
-                followUserViewModel.SearchResults = from users in _context.Users
-                                                    where(users.UserName.ToUpper().Contains(searchCriterion.ToUpper()) && users.UserName != loggedinUser.UserName)
-                                                    select new UserViewModel
-                                                    {
-                                                        UserName = users.UserName,
-                                                        ProfileImage = users.ProfileImage
-                                                    };
+                ApplicationUser loggedinUser = await _userRepository.GetUserAndNetworkAsyncByUserName(await _userAccessor.GetUser());
+                FollowUserViewModel followUserViewModel = new FollowUserViewModel();
 
-                followUserViewModel.SearchCriterion = searchCriterion;
+                if (String.IsNullOrEmpty(searchCriterion))
+                {
+                    followUserViewModel.SearchResults = await _userRepository.GetSuggestedBirdersToFollow(loggedinUser);
+                    followUserViewModel.SearchCriterion = searchCriterion;
+                }
+                else
+                {
+                    followUserViewModel.SearchResults = await _userRepository.GetSuggestedBirdersToFollow(loggedinUser, searchCriterion);
+                    followUserViewModel.SearchCriterion = searchCriterion;
+                }
+                return View(followUserViewModel);
             }
-            return View(followUserViewModel);
+            catch (Exception ex)
+            {
+                // ToDo: What to log?  What to return?  Generic error page?
+                _logger.LogError(LoggingEvents.GetItemNotFound, ex, "Network Index() error");
+                //_logger.LogError($"failed to return Birds details page: {ex}");//  <--
+                return NotFound();
+            }
         }
 
         [HttpPost]

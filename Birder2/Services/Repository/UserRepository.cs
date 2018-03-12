@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Birder2.Data;
@@ -38,8 +37,6 @@ namespace Birder2.Services
                              .ThenInclude(r => r.ApplicationUser)
                          .Where(x => x.UserName == userName)
                          .FirstOrDefaultAsync();
-
-
         }
 
         public async Task<IEnumerable<UserViewModel>> GetFollowingList(ApplicationUser user)
@@ -62,6 +59,55 @@ namespace Birder2.Services
                                       ProfileImage = follower.Follower.ProfileImage
                                   };
             return followerList;
+        }
+
+        public async Task<IEnumerable<UserViewModel>> GetSuggestedBirdersToFollow(ApplicationUser user)
+        {
+            var followerList = from follower in user.Followers
+                               select follower.Follower.UserName;
+            var followingList = from following in user.Following
+                                select following.ApplicationUser.UserName;
+
+            IEnumerable<string> followersNotBeingFollowed = followerList.Except(followingList);
+            IEnumerable<UserViewModel> suggestedBirders = new List<UserViewModel>();
+
+            if (followersNotBeingFollowed.Count() != 0)
+            {
+                suggestedBirders = from users in _dbContext.Users
+                           .Where(users => followersNotBeingFollowed.Contains(users.UserName))
+                                       select new UserViewModel
+                                       {
+                                           UserName = users.UserName,
+                                           ProfileImage = users.ProfileImage
+                                       };
+            }
+            else
+            {
+                suggestedBirders = from users in _dbContext.Users
+                                   .Where(users => !followingList.Contains(users.UserName) && users.UserName != user.UserName)
+                                   select new UserViewModel
+                                       {
+                                           UserName = users.UserName,
+                                           ProfileImage = users.ProfileImage
+                                       };
+            }
+            return suggestedBirders;
+        }
+
+        public async Task<IEnumerable<UserViewModel>> GetSuggestedBirdersToFollow(ApplicationUser user, string searchCriterion)
+        {
+            var followingList = from following in user.Following
+                                select following.ApplicationUser.UserName;
+
+            IEnumerable<UserViewModel> suggestedBirders = new List<UserViewModel>();
+            suggestedBirders = from users in _dbContext.Users
+                               where (users.UserName.ToUpper().Contains(searchCriterion.ToUpper()) && !followingList.Contains(users.UserName) && users.UserName != user.UserName) // .Contains(users.UserName) // != user.UserName)
+                               select new UserViewModel
+                               {
+                                   UserName = users.UserName,
+                                   ProfileImage = users.ProfileImage
+                               };
+            return suggestedBirders;
         }
 
 
