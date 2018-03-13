@@ -15,7 +15,7 @@ namespace Birder2.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var bir = await _sideBarRepository.BirdCount();
+            //var bir = await _sideBarRepository.TotalObservationsCount();
             return View();
         }
     }

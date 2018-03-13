@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<Birder2.ViewModels.LifeListViewModel>
-
 @{
     ViewData["Title"] = "ListLife";
 }
@@ -7,6 +6,9 @@
 <h2>Life List</h2>
 
 <h4>You have observed x species in y observations</h4>
+
+@*see 'panels with tabels' for better styling: https://getbootstrap.com/docs/3.3/components/#panels-tables*@
+
 
 <table class="table">
     <thead>
@@ -33,27 +35,28 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Count)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vernacular)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ScientificName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PopSize)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BtoStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ConservationStatus)
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Count)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vernacular)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ScientificName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PopSize)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BtoStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConservationStatus)
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

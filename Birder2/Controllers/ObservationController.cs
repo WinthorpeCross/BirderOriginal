@@ -42,8 +42,6 @@ namespace Birder2.Controllers
             {
                 ShowUserObservationsOnly = showUserObservationsOnly
             };
-            
-
 
             try
             {

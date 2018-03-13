@@ -1,5 +1,8 @@
 ﻿using Birder2.Data;
+using Birder2.Models;
+using Birder2.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Birder2.Services
@@ -12,10 +15,19 @@ namespace Birder2.Services
         {
             _dbContext = dbContext;
         }
-
-        public async Task<int> BirdCount()
+        //ToDo: Craete new method in UserAccessor to return userId, not full user
+        public async Task<int> TotalObservationsCount(ApplicationUser user)
         {
-            return await _dbContext.Birds.CountAsync();
-        }   
+            return await (from observations in _dbContext.Observations
+                            where (observations.ApplicationUserId == user.Id)
+                                select observations).CountAsync();
+        }
+
+        public async Task<int> UniqueSpeciesCount(ApplicationUser user)
+        {
+            return await (from observations in _dbContext.Observations
+                             where(observations.ApplicationUserId == user.Id)
+                                select observations.BirdId).Distinct().CountAsync();
+        }
     }
 }

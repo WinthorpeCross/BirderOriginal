@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Birder2.Models;
 using System.Threading.Tasks;
 
 namespace Birder2.Services
 {
     public interface ISideBarRepository
     {
-        Task<int> BirdCount();
+        Task<int> TotalObservationsCount(ApplicationUser user);
+        Task<int> UniqueSpeciesCount(ApplicationUser user);
     }
 }

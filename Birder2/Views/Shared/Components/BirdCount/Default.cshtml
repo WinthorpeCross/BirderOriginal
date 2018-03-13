@@ -1,11 +1,11 @@
-﻿@model string
+﻿@model Birder2.ViewModels.BirdCountViewModel
 
-<div class="class--aside-block-header">
+@*<div class="class--aside-block-header">
     <h4><b>Unique Birds</b></h4>
-</div>
+</div>*@
 
 <div class="class--aside-block-body">
-    @Model
+    <h2><small>You have spotted </small>@Model.TotalSpecies<small> unique species in</small> @Model.TotalObservations <small> observations</small></h2>
 </div>
 
 

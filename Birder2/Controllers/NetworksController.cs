@@ -19,17 +19,14 @@ namespace Birder2.Controllers
 {
     public class NetworksController : Controller
     {
-        private readonly ApplicationDbContext _context; // <------------- delete
         private readonly IApplicationUserAccessor _userAccessor;
         private readonly ILogger _logger;
         private readonly IUserRepository _userRepository;
 
-        public NetworksController(ApplicationDbContext context // <------------- delete
-                                       , IApplicationUserAccessor userAccessor
-                                            ,ILogger<Network> logger
-                                                ,IUserRepository userRepository)
+        public NetworksController(ApplicationUserAccessor userAccessor
+                                        ,ILogger<Network> logger
+                                            ,IUserRepository userRepository)
         {
-            _context = context;
             _userAccessor = userAccessor;
             _logger = logger;
             _userRepository = userRepository;
