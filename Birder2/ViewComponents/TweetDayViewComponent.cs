@@ -1,12 +1,8 @@
 ﻿using Birder2.Extensions;
-using Birder2.Models;
 using Birder2.Services;
 using Birder2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Birder2.ViewComponents
