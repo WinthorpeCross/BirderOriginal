@@ -1,8 +1,9 @@
-﻿using Birder2.Services;
+﻿using Birder2.Extensions;
+using Birder2.Services;
 using Birder2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
 
 namespace Birder2.ViewComponents
@@ -11,32 +12,38 @@ namespace Birder2.ViewComponents
     {
         private readonly ISideBarRepository _sideBarRepository;
         private readonly IApplicationUserAccessor _userAccessor;
+        private readonly IMachineClockDateTime _systemClock;
         private readonly ILogger _logger;
 
         public TopObservationsViewComponent(ISideBarRepository sideBarRepository,
                                                 IApplicationUserAccessor userAccessor,
-                                                    ILogger<TopObservationsViewComponent> logger)
+                                                    ILogger<TopObservationsViewComponent> logger,
+                                                        IMachineClockDateTime systemClock)
         {
             _sideBarRepository = sideBarRepository;
             _userAccessor = userAccessor;
             _logger = logger;
-        }
-
-        public class TopObservationsViewModel
-        {
-            public IEnumerable<LifeListViewModel> TopObsersations { get; set; }
-            //public IEnumberable<> TopMonthlyObsersations { get; set; }
+            _systemClock = systemClock;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            TopObservationsViewModel tovm = new TopObservationsViewModel()
+            _logger.LogInformation(LoggingEvents.GetItem, "TopObservationsViewComponent");
+            try
             {
-                TopObsersations = await _sideBarRepository.GetLifeList(await _userAccessor.GetUser())
-            };
-             
-            //var bir = await _sideBarRepository.TotalObservationsCount();
-            return View("Default", tovm);
+                TopObservationsComponentViewModel viewModel = new TopObservationsComponentViewModel()
+                {
+                    TopObservations = await _sideBarRepository.GetTopObservations(await _userAccessor.GetUser()),
+                    TopMonthlyObservations = await _sideBarRepository.GetTopObservations(await _userAccessor.GetUser(), _systemClock.Today)
+                };
+                return View("Default", viewModel);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(LoggingEvents.GetItemNotFound, ex, "TopObservationsViewComponent error");
+                TopObservationsComponentViewModel viewModel = new TopObservationsComponentViewModel();
+                return View(viewModel);
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using Birder2.Services;
 using Birder2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace Birder2.ViewComponents
@@ -29,11 +30,20 @@ namespace Birder2.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             _logger.LogInformation(LoggingEvents.GetItem, "TweetDayViewComponent");
-            TweetDayViewModel viewModel = new TweetDayViewModel
+            try
             {
-                TweetOfTheDay = await _sideBarRepository.GetTweetOfTheDayAsync(_systemClock.Today)
-            };
-            return View(viewModel);
+                TweetDayViewModel viewModel = new TweetDayViewModel
+                {
+                    TweetOfTheDay = await _sideBarRepository.GetTweetOfTheDayAsync(_systemClock.Today)
+                };
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(LoggingEvents.GetItemNotFound, ex, "TweetDayViewComponent error");
+                TweetDayViewModel viewModel = new TweetDayViewModel();
+                return View(viewModel);
+            }
         }
     }
 }

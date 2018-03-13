@@ -1,20 +1,17 @@
-﻿@model Birder2.ViewComponents.TopObservationsViewComponent.TopObservationsViewModel
+﻿@model Birder2.ViewModels.TopObservationsComponentViewModel
 
 <div class="class--aside-block-header">
     <h4><b>Your Most Observered Species</b></h4>
 </div>
 
-
-
 <div class="class--aside-block-body-Top5">
     <div>
-        @*<h3>My Top 5 Species</h3>*@
         <ul class="nav nav-pills nav-justified" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="pill" href="#home">All time</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="pill" href="#menu1">This month</a>
+                <a class="nav-link" data-toggle="pill" href="#menu1">Last 30 days</a>
             </li>
         </ul>
     </div>
@@ -25,61 +22,26 @@
         <div id="home" class="tab-pane active">
             <div class="list-groups">
                 <ul class="list-group">
-                    @foreach (var observation in Model.TopObsersations)
+                    @foreach (var observation in Model.TopObservations)
                     {
                         <li class="list-group-item">
                             <span class="badge">@observation.Count </span>
                             @observation.Vernacular
                         </li>
                     }
-
-
-                    @*<li class="list-group-item">
-            <span class="badge">14 </span>
-            Blue tit
-        </li>
-        <li class="list-group-item">
-            <span class="badge">9</span>
-            Golden eagle
-        </li>
-        <li class="list-group-item">
-            <span class="badge">7</span>
-            Chaffinch
-        </li>
-        <li class="list-group-item">
-            <span class="badge">3</span>
-            Bewick's swan
-        </li>
-        <li class="list-group-item">
-            <span class="badge">1</span>
-            Wren
-        </li>*@
                 </ul>
             </div>
         </div>
         <div id="menu1" class="tab-pane fade">
             <div class="list-groups">
                 <ul class="list-group">
-                    <li class="list-group-item">
-                        <span class="badge">14 </span>
-                        Blue tit
-                    </li>
-                    <li class="list-group-item">
-                        <span class="badge">9</span>
-                        Golden eagle
-                    </li>
-                    <li class="list-group-item">
-                        <span class="badge">7</span>
-                        Chaffinch
-                    </li>
-                    <li class="list-group-item">
-                        <span class="badge">3</span>
-                        Bewick's swan
-                    </li>
-                    <li class="list-group-item">
-                        <span class="badge">1</span>
-                        Wren
-                    </li>
+                    @foreach (var observation in Model.TopMonthlyObservations)
+                    {
+                        <li class="list-group-item">
+                            <span class="badge">@observation.Count </span>
+                            @observation.Vernacular
+                        </li>
+                    }
                 </ul>
             </div>
         </div>

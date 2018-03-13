@@ -48,24 +48,31 @@ namespace Birder2.Services
             return tweet;
         }
 
-        public async Task<IQueryable<LifeListViewModel>> GetLifeList(ApplicationUser user)
+        public async Task<IQueryable<TopObservationsViewModel>> GetTopObservations(ApplicationUser user)
         {
             return (from observations in _dbContext.Observations
                  .Include(b => b.Bird)
-                    .ThenInclude(f => f.BritishStatus)
-                 .Include(b => b.Bird)
-                    .ThenInclude(u => u.BirdConserverationStatus)
                  .Where(u => u.ApplicationUser.Id == user.Id)
                     group observations by observations.Bird into species
-                    select new LifeListViewModel
+                    select new TopObservationsViewModel
                     {
                         Vernacular = species.FirstOrDefault().Bird.EnglishName,
-                        ScientificName = species.FirstOrDefault().Bird.Species,
-                        PopSize = species.FirstOrDefault().Bird.PopulationSize,
-                        BtoStatus = species.FirstOrDefault().Bird.BtoStatusInBritain,
-                        ConservationStatus = species.FirstOrDefault().Bird.BirdConserverationStatus.ConservationStatus,
                         Count = species.Count()
                     }).Take(5);
+        }
+
+        public async Task<IQueryable<TopObservationsViewModel>> GetTopObservations(ApplicationUser user, DateTime date)
+        {
+            DateTime endDate = date.AddDays(-30);
+            return (from observations in _dbContext.Observations
+                    .Include(b => b.Bird)
+                        where observations.ApplicationUserId == user.Id && (observations.ObservationDateTime >= endDate && observations.ObservationDateTime <= date)
+                            group observations by observations.Bird into species
+                                select new TopObservationsViewModel
+                                {
+                                    Vernacular = species.FirstOrDefault().Bird.EnglishName,
+                                    Count = species.Count()
+                                }).Take(5);
         }
 
     }

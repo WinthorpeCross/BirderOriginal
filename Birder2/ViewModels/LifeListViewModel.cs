@@ -1,5 +1,4 @@
-﻿
-namespace Birder2.ViewModels
+﻿namespace Birder2.ViewModels
 {
     public class LifeListViewModel
     {

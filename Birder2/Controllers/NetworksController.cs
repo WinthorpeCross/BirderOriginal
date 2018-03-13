@@ -23,7 +23,7 @@ namespace Birder2.Controllers
         private readonly ILogger _logger;
         private readonly IUserRepository _userRepository;
 
-        public NetworksController(ApplicationUserAccessor userAccessor
+        public NetworksController(IApplicationUserAccessor userAccessor
                                         ,ILogger<Network> logger
                                             ,IUserRepository userRepository)
         {
