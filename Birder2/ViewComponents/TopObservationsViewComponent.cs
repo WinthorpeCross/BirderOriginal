@@ -1,6 +1,8 @@
 ﻿using Birder2.Services;
+using Birder2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Birder2.ViewComponents
@@ -22,14 +24,19 @@ namespace Birder2.ViewComponents
 
         public class TopObservationsViewModel
         {
-            //public IEnumberable<> TopObsersations { get; set; }
+            public IEnumerable<LifeListViewModel> TopObsersations { get; set; }
             //public IEnumberable<> TopMonthlyObsersations { get; set; }
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
+            TopObservationsViewModel tovm = new TopObservationsViewModel()
+            {
+                TopObsersations = await _sideBarRepository.GetLifeList(await _userAccessor.GetUser())
+            };
+             
             //var bir = await _sideBarRepository.TotalObservationsCount();
-            return View();
+            return View("Default", tovm);
         }
     }
 }

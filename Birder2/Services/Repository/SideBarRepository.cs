@@ -48,5 +48,25 @@ namespace Birder2.Services
             return tweet;
         }
 
+        public async Task<IQueryable<LifeListViewModel>> GetLifeList(ApplicationUser user)
+        {
+            return (from observations in _dbContext.Observations
+                 .Include(b => b.Bird)
+                    .ThenInclude(f => f.BritishStatus)
+                 .Include(b => b.Bird)
+                    .ThenInclude(u => u.BirdConserverationStatus)
+                 .Where(u => u.ApplicationUser.Id == user.Id)
+                    group observations by observations.Bird into species
+                    select new LifeListViewModel
+                    {
+                        Vernacular = species.FirstOrDefault().Bird.EnglishName,
+                        ScientificName = species.FirstOrDefault().Bird.Species,
+                        PopSize = species.FirstOrDefault().Bird.PopulationSize,
+                        BtoStatus = species.FirstOrDefault().Bird.BtoStatusInBritain,
+                        ConservationStatus = species.FirstOrDefault().Bird.BirdConserverationStatus.ConservationStatus,
+                        Count = species.Count()
+                    }).Take(5);
+        }
+
     }
 }
