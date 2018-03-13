@@ -1,4 +1,7 @@
-﻿using Birder2.Services;
+﻿using Birder2.Extensions;
+using Birder2.Models;
+using Birder2.Services;
+using Birder2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -14,26 +17,27 @@ namespace Birder2.ViewComponents
         private readonly ISideBarRepository _sideBarRepository;
         private readonly IApplicationUserAccessor _userAccessor;
         private readonly ILogger _logger;
+        private readonly IMachineClockDateTime _systemClock;
 
         public TweetDayViewComponent(ISideBarRepository sideBarRepository,
-                                            IApplicationUserAccessor userAccessor,
-                                                ILogger<TweetDayViewComponent> logger)
+                                        IApplicationUserAccessor userAccessor,
+                                            ILogger<TweetDayViewComponent> logger,
+                                                IMachineClockDateTime systemClock)
         {
             _sideBarRepository = sideBarRepository;
             _userAccessor = userAccessor;
             _logger = logger;
-        }
-
-        public class TweetDayViewModel
-        {
-
+            _systemClock = systemClock;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            //var bir = await _analysisRepository.BirdCount();
-            TweetDayViewModel viewModel = new TweetDayViewModel();
-            return View();
+            _logger.LogInformation(LoggingEvents.GetItem, "TweetDayViewComponent");
+            TweetDayViewModel viewModel = new TweetDayViewModel
+            {
+                TweetOfTheDay = await _sideBarRepository.GetTweetOfTheDayAsync(_systemClock.Today)
+            };
+            return View(viewModel);
         }
     }
 }

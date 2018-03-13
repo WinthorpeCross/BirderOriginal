@@ -66,6 +66,6 @@ namespace Birder2.Models
 
         public BritishStatus BritishStatus { get; set; }
 
-        public TweetDay TweetDay { get; set; }
+        public ICollection<TweetDay> TweetDay { get; set; }
     }
 }

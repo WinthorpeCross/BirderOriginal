@@ -2,6 +2,7 @@
 using Birder2.Models;
 using Birder2.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,5 +30,23 @@ namespace Birder2.Services
                              where(observations.ApplicationUserId == user.Id)
                                 select observations.BirdId).Distinct().CountAsync();
         }
+
+        public async Task<TweetDay> GetTweetOfTheDayAsync(DateTime date)
+        {
+            var tweet = await (from td in _dbContext.TweetDays
+                                   .Include(b => b.Bird)
+                                        where (td.DisplayDay == date)
+                                            select td).FirstOrDefaultAsync();
+            if (tweet == null)
+            {
+                date = new DateTime(2018, 03, 12);
+                tweet = await (from td in _dbContext.TweetDays
+                                   .Include(b => b.Bird)
+                                         where (td.DisplayDay == date)
+                                             select td).FirstOrDefaultAsync();
+            }
+            return tweet;
+        }
+
     }
 }
