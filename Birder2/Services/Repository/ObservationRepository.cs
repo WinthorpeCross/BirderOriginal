@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Birder2.Services
 {
+
     public class ObservationRepository : IObservationRepository
     {
         private readonly ApplicationDbContext _dbContext;
@@ -16,6 +17,7 @@ namespace Birder2.Services
         {
             _dbContext = dbContext;
         }
+
 
         public async Task<IQueryable<LifeListViewModel>> GetLifeList(string userId)
         {
@@ -63,15 +65,15 @@ namespace Birder2.Services
             return await observations;
         }
 
-        public async Task<IEnumerable<Observation>> MyNetworkObservationsList(string userId)
+        public IQueryable<Observation> MyNetworkObservationsList(string userId)
         {
-            var loggedinUser = await _dbContext.Users
+            var loggedinUser = _dbContext.Users
                 .Include(x => x.Followers)
                     .ThenInclude(x => x.Follower)
                 .Include(y => y.Following)
                     .ThenInclude(r => r.ApplicationUser)
                 .Where(x => x.Id == userId)
-                .FirstOrDefaultAsync();
+                .FirstOrDefault();
 
             //loggedinUser.Following.Add(loggedinUser.Followers.FirstOrDefault());
             //var f = loggedinUser.Following.ToList();
@@ -96,9 +98,9 @@ namespace Birder2.Services
                     .Include(ot => ot.ObservationTags)
                         .ThenInclude(t => t.Tag)
                     .OrderByDescending(d => d.ObservationDateTime)
-                    .AsNoTracking()
-                    .ToListAsync();
-            return await observations;
+                    .AsNoTracking();
+                    //.ToList();
+            return observations;
         }
 
         public async Task<Observation> GetObservationDetails(int? id)

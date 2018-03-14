@@ -1,4 +1,6 @@
-﻿@model ObservationsIndexViewModel
+﻿@*@model ObservationsIndexViewModel*@
+@*@model PaginatedList<Observation>*@
+@model PagedResult<Observation>
 
 @{
     ViewData["Title"] = "My Observations";
@@ -6,37 +8,38 @@
 
 <h2>Observations [sightings] feed <i>to do: twitter-style pagination</i>:</h2>
 
-<div>
-    <a asp-action="Create">Add Observation</a>
-    @{
-        if (Model.ShowUserObservationsOnly == true)
-        {
-            <a asp-action="Index" asp-route-showUserObservationsOnly="false" class="btn btn-link">View Observations From Your Network</a>
-        }
-        else
-        {
-            <a asp-action="Index" asp-route-showUserObservationsOnly="true" class="btn btn-link">View Only Your Observations</a>
-        } }
-</div>
+@*<div>
+        <a asp-action="Create">Add Observation</a>
+        @{
+            if (Model.ShowUserObservationsOnly == true)
+            {
+                <a asp-action="Index" asp-route-showUserObservationsOnly="false" class="btn btn-link">View Observations From Your Network</a>
+            }
+            else
+            {
+                <a asp-action="Index" asp-route-showUserObservationsOnly="true" class="btn btn-link">View Only Your Observations</a>
+            } }
+    </div>*@
 
 @*<form asp-controller="Observation" asp-action="Index" method="post" class="form-horizontal">
-    <div class="form-group">
-        <div class="col-sm-4">
-            <label class="control-label">Sort By</label>
-            <select name="filter" onchange="this.form.submit()" class="form-control sort-filter-width">
-                <option selected="selected" value="">Choose...</option>
-                <option value="">My Network And Me</option>
-                <option value="MyNetworkOnly">My Network Only</option>
-                <option value="MineOnly">Mine Only</option>
-            </select>
-        </div>
-   </div>*@
+     <div class="form-group">
+         <div class="col-sm-4">
+             <label class="control-label">Sort By</label>
+             <select name="filter" onchange="this.form.submit()" class="form-control sort-filter-width">
+                 <option selected="selected" value="">Choose...</option>
+                 <option value="">My Network And Me</option>
+                 <option value="MyNetworkOnly">My Network Only</option>
+                 <option value="MineOnly">Mine Only</option>
+             </select>
+         </div>
+    </div>*@
 <br />
 
-@foreach (var observation in Model.Observations)
+@foreach (var observation in Model.Results)
 {
     <div class="container">
         @Html.Partial("_Observations", observation)
         @*<hr />*@
     </div>
 }
+

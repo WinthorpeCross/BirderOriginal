@@ -27,9 +27,14 @@ namespace Birder2.Controllers
             _systemClock = systemClock;
         }
 
+
         // GET: Observation
-        public async Task<IActionResult> Index(bool showUserObservationsOnly)
+        public async Task<IActionResult> Index(bool showUserObservationsOnly, int? page)
         {
+            if (page == null)
+            {
+                page = 1;
+            }
             //
             var user = await _userAccessor.GetUser();
             if (user == null)
@@ -43,6 +48,9 @@ namespace Birder2.Controllers
                 ShowUserObservationsOnly = showUserObservationsOnly
             };
 
+            int pageSize = 3;
+            
+
             try
             {
                 if (showUserObservationsOnly == true)
@@ -51,9 +59,11 @@ namespace Birder2.Controllers
                     // set view title
                     return View(viewModel);
                 }
-                viewModel.Observations = await _observationRepository.MyNetworkObservationsList(user.Id);
+                var t = _observationRepository.MyNetworkObservationsList(user.Id);
+                var paged = _observationRepository.MyNetworkObservationsList(user.Id).GetPaged(1, 5);
                 //set view title
-                return View(viewModel);
+                return View(paged);
+                //return View(viewModel);
             }
             catch (Exception ex)
             {
