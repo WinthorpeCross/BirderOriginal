@@ -319,13 +319,5 @@ namespace Birder2.Controllers
 
             return View(model);
         }
-
-        [HttpGet]
-        public async Task<IActionResult> ListYear()
-        {
-            return View();
-        }
     }
 }
-
-

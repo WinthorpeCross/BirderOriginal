@@ -21,6 +21,18 @@ namespace Birder2.Services
         {
             return _userManager.GetUserAsync(_context.HttpContext.User);
         }
+
+        public async Task<string> GetUserId()
+        {
+            var user = await _userManager.GetUserAsync(_context.HttpContext.User);
+            return user.Id;
+        }
+
+        public async Task<string> GetUserName()
+        {
+            var user = await _userManager.GetUserAsync(_context.HttpContext.User);
+            return user.UserName;
+        }
     }
 }
  

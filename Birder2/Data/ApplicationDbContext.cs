@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Birder2.Models;
-using Birder2.ViewModels;
-
 
 namespace Birder2.Data
 {
@@ -25,9 +19,6 @@ namespace Birder2.Data
         public DbSet<ObservationTag> ObservationTags { get; set; }
         public DbSet<TweetDay> TweetDays { get; set; }
 
-        public DbSet<SalesOrder> SalesOrders { get; set; }
-        public DbSet<SalesOrderItem> SalesOrderItems { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -35,8 +26,6 @@ namespace Birder2.Data
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
-            builder.Entity<SalesOrder>().ToTable("SalesOrder");
-
             builder.Entity<Observation>().ToTable("Observation"); 
             builder.Entity<Bird>().ToTable("Bird");
             builder.Entity<ConserverationStatus>().ToTable("ConservationStatus");
@@ -72,7 +61,6 @@ namespace Birder2.Data
                 .WithMany(a => a.Following)
                 .HasForeignKey(l => l.FollowerId);
         }
-
 
         public DbSet<Birder2.Models.Network> Network { get; set; }
     }

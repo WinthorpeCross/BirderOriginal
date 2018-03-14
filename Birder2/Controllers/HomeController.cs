@@ -23,7 +23,7 @@ namespace Birder2.Controllers
             _userAccessor = userAccessor;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index() //async Task<>
         {
             return View();
         }
