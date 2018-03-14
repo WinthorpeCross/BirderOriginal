@@ -19,8 +19,8 @@ namespace Birder2.Controllers
         private readonly IMachineClockDateTime _systemClock;
 
         public ObservationController(IApplicationUserAccessor userAccessor,
-                                     IObservationRepository observationRepository,
-                                     IMachineClockDateTime systemClock)
+                                        IObservationRepository observationRepository,
+                                            IMachineClockDateTime systemClock)
         {
             _userAccessor = userAccessor;
             _observationRepository = observationRepository;
@@ -48,9 +48,11 @@ namespace Birder2.Controllers
                 if (showUserObservationsOnly == true)
                 {
                     viewModel.Observations = await _observationRepository.MyObservationsList(user.Id);
+                    // set view title
                     return View(viewModel);
                 }
                 viewModel.Observations = await _observationRepository.MyNetworkObservationsList(user.Id);
+                //set view title
                 return View(viewModel);
             }
             catch (Exception ex)
@@ -78,13 +80,20 @@ namespace Birder2.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var model = new CreateObservationViewModel()
+            try
             {
-                Observation = new Observation() { ObservationDateTime = _systemClock.Now },
-                MessageToClient = string.Empty,
-                Birds = await _observationRepository.AllBirdsList(),
-            };
-            return View(model);
+                var model = new CreateObservationViewModel()
+                {
+                    Observation = new Observation() { ObservationDateTime = _systemClock.Now },
+                    MessageToClient = string.Empty,
+                    Birds = await _observationRepository.AllBirdsList(),
+                };
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
