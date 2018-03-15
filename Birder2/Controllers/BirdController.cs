@@ -44,7 +44,14 @@ namespace Birder2.Controllers
                 viewModel.AllBirdsDropDownList = await _birdRepository.AllBirdsList();
                 if (options.SelectedBirdId == 0)
                 {
-                    viewModel.BirdsList = await _birdRepository.AllBirdsList();
+                    if (options.ShowAllBirds == false)
+                    {
+                        viewModel.BirdsList = await _birdRepository.AllBirdsList();
+                    }
+                    else
+                    {
+                        viewModel.BirdsList = await _birdRepository.CommonBirdsList();
+                    }
                 }
                 else
                 {

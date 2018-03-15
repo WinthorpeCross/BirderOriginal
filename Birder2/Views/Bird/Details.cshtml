@@ -13,13 +13,9 @@
         @foreach (var photo in Model.BirdPhotos)
         {
             <div class="wrapper--horizontal-stack">
-                @*<div>
-                        <img src="@photo.LargeSquareThumbnailUrl" alt="" />
-                    </div>*@
                 <a href="@photo.WebUrl" target="_blank">
                     <img src="@photo.LargeSquareThumbnailUrl" alt="<<>species name>>" title="@photo.Title">
                 </a>
-                @*<div>@photo.Title</div>  WRAP TEXT*@
             </div>
         }
     </div>
@@ -116,10 +112,10 @@
             @Html.DisplayFor(model => model.Bird.BirdConserverationStatus.ConservationStatus)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Bird.BritishStatus)
+            @Html.DisplayNameFor(model => model.Bird.BtoStatusInBritain)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Bird.BritishStatus.BirderStatusInBritain)
+            @Html.DisplayFor(model => model.Bird.BirderStatus)
         </dd>
     </dl>
 </div>

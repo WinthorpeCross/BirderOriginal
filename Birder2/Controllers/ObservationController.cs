@@ -72,10 +72,10 @@ namespace Birder2.Controllers
         // GET: Observation/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            //if (id == null)
-            //{
-            //    return NotFound();
-            //}
+            if (id == null)
+            {
+                return NotFound();
+            }
             var observation = await _observationRepository.GetObservationDetails(id);
 
             if (observation == null)
@@ -121,11 +121,6 @@ namespace Birder2.Controllers
 
             if (viewModel.ObservedSpecies.Count == 0)
             {
-                //ModelState.AddModelError("ObservredSpeciesCollection", "You must choose at least one species of bird.");
-                //string errors = JsonConvert.SerializeObject(ModelState.Values
-                //                .SelectMany(state => state.Errors)
-                //                .Select(error => error.ErrorMessage));
-
                 viewModel.IsModelStateValid = false;
                 viewModel.MessageToClient = "You must choose at least one observed bird species.";
 
@@ -144,6 +139,7 @@ namespace Birder2.Controllers
                     try
                     {
                         Observation observationToAdd = new Observation();
+                        observationToAdd.Bird = await _observationRepository.GetSelectedBird(observedSpecies.BirdId);
                         observationToAdd.ObservationDateTime = viewModel.Observation.ObservationDateTime;
                         observationToAdd.LocationLatitude = viewModel.Observation.LocationLatitude;
                         observationToAdd.LocationLongitude = viewModel.Observation.LocationLongitude;
@@ -158,7 +154,6 @@ namespace Birder2.Controllers
 
                         observationToAdd.CreationDate = _systemClock.Now;
                         observationToAdd.LastUpdateDate = _systemClock.Now;
-                        observationToAdd.Bird = await _observationRepository.GetSelectedBird(observedSpecies.BirdId);
                         observationToAdd.Quantity = observedSpecies.Quantity;
                         await _observationRepository.AddObservation(observationToAdd);
                     }
@@ -243,6 +238,7 @@ namespace Birder2.Controllers
                 try
                 {
                     Observation observationEdited = await _observationRepository.GetObservationDetails(id);
+                    observationEdited.Bird = await _observationRepository.GetSelectedBird(observation.BirdId);
                     observationEdited.ObservationDateTime = observation.ObservationDateTime;
                     observationEdited.LocationLatitude = observation.LocationLatitude;
                     observationEdited.LocationLongitude = observation.LocationLongitude;
@@ -256,7 +252,7 @@ namespace Birder2.Controllers
                     observationEdited.ApplicationUser = user;
 
                     observationEdited.LastUpdateDate = _systemClock.Now;
-                    observationEdited.Bird = await _observationRepository.GetSelectedBird(observation.BirdId);
+
                     observationEdited.Quantity = observation.Quantity;
                     await _observationRepository.UpdateObservation(observationEdited);
                 }

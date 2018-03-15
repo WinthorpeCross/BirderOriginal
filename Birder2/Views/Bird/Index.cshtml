@@ -6,10 +6,17 @@
     int counter = 0;
 }
 
-<h2>
-    @ViewData["Title"]
-@ViewData["searchType"]
-</h2>
+<div>
+    @{
+        if (Model.ShowAllBirds == true)
+        {
+            <a asp-action="Index" asp-route-ShowAllBirds="false" class="btn btn-link">Common British Birds</a>
+        }
+        else
+        {
+            <a asp-action="Index" asp-route-ShowAllBirds="true" class="btn btn-link">All British Birds</a>
+        } }
+</div>
 
 <div>See in Tabular view</div>
 

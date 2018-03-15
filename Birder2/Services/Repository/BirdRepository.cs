@@ -26,29 +26,19 @@ namespace Birder2.Services
             return await _dbContext.Birds.Where(b => b.BirdId == birdId).ToListAsync();
         }
 
-        public async Task<IEnumerable<Bird>> CommonBirdsList(string searchString)
+        public async Task<IEnumerable<Bird>> CommonBirdsList()
         {
-            if (!String.IsNullOrEmpty(searchString))
-            {
                 return await _dbContext.Birds
-                    .Include(bs => bs.BritishStatus)
-                    .Where(bs => bs.BritishStatus.BirderStatusInBritain == "Common" && bs.EnglishName.ToUpper().Contains(searchString.ToUpper()))
+                    //.Include(bs => bs.BirderStatus)
+                    .Where(b => b.BirderStatus == BirderStatus.Common)
                     .ToListAsync();
-            }
-            else
-            {
-                return await _dbContext.Birds
-                    .Include(bs => bs.BritishStatus)
-                    .Where(bs => bs.BritishStatus.BirderStatusInBritain == "Common")
-                    .ToListAsync();
-            }
         }
 
         public async Task<Bird> GetBirdDetails(int? id)
         {
             return await _dbContext.Birds
                 .Include(bcs => bcs.BirdConserverationStatus)
-                .Include(bs => bs.BritishStatus)
+                //.Include(bs => bs.BirderStatus)
                 .SingleOrDefaultAsync(m => m.BirdId == id);
                      //.Include(o => o.Observations)
                      //.ThenInclude(au => au.ApplicationUser)

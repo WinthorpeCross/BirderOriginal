@@ -58,13 +58,13 @@ namespace Birder2.Models
 
         public int ConserverationStatusId { get; set; }
 
-        public int BritishStatusId { get; set; }
+        //public int BritishStatusId { get; set; }
 
         public ICollection<Observation> Observations { get; set; }
 
         public ConserverationStatus BirdConserverationStatus { get; set; }
 
-        public BritishStatus BritishStatus { get; set; }
+        public BirderStatus BirderStatus { get; set; }
 
         public ICollection<TweetDay> TweetDay { get; set; }
     }

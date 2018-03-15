@@ -8,7 +8,7 @@ namespace Birder2.Services
     {
         Task<IEnumerable<Bird>> AllBirdsList();
         Task<IEnumerable<Bird>> AllBirdsList(int birdId);
-        Task<IEnumerable<Bird>> CommonBirdsList(string searchString);
+        Task<IEnumerable<Bird>> CommonBirdsList();
         Task<Bird> GetBirdDetails(int? id);
     }
 }

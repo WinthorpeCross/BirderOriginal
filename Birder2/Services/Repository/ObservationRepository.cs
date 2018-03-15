@@ -23,7 +23,7 @@ namespace Birder2.Services
         {
             return (from observations in _dbContext.Observations
                  .Include(b => b.Bird)
-                    .ThenInclude(f => f.BritishStatus)
+                    //.ThenInclude(f => f.BritishStatus)
                  .Include(b => b.Bird)
                     .ThenInclude(u => u.BirdConserverationStatus)
                  .Where(u => u.ApplicationUser.Id == userId)
