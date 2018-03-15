@@ -11,13 +11,12 @@ namespace Birder2.Data
         {
             context.Database.EnsureCreated();
 
-
             if (context.Birds.Any())
             {
                 return;
             }
 
-            byte[] birdIcon = File.ReadAllBytes(@"C:\Users\rcros\Desktop\if_099374-twitter-bird3_56010.png"); // artywear_yellow_1046.jpg");
+            //byte[] birdIcon = File.ReadAllBytes(@"C:\Users\rcros\Desktop\if_099374-twitter-bird3_56010.png"); // artywear_yellow_1046.jpg");
 
             var status = new ConserverationStatus[]
             {
