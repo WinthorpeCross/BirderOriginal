@@ -1,15 +1,14 @@
-﻿@*@model ObservationsIndexViewModel*@
-@*@model PaginatedList<Observation>*@
-@model PagedResult<Observation>
+﻿@model ObservationsIndexViewModel
+@*@model PagedResult<ObservationsIndexViewModel>*@
 @using Birder2.ViewComponents
 
 @{
     ViewData["Title"] = "My Observations";
 }
 
-<h2>Observations [sightings] feed <i>to do: twitter-style pagination</i>:</h2>
+<h2>Observations [sightings] feed:</h2>
 
-@*<div>
+<div>
         <a asp-action="Create">Add Observation</a>
         @{
             if (Model.ShowUserObservationsOnly == true)
@@ -20,7 +19,7 @@
             {
                 <a asp-action="Index" asp-route-showUserObservationsOnly="true" class="btn btn-link">View Only Your Observations</a>
             } }
-    </div>*@
+    </div>
 
 @*<form asp-controller="Observation" asp-action="Index" method="post" class="form-horizontal">
      <div class="form-group">
@@ -36,7 +35,7 @@
     </div>*@
 <br />
 
-@foreach (var observation in Model.Results)
+@foreach (var observation in Model.Observations.Results)
 {
     <div class="container">
         @Html.Partial("_Observations", observation)
@@ -46,5 +45,5 @@
 
 <br />
 
-@(await Component.InvokeAsync<PagerViewComponent>(Model))
+@(await Component.InvokeAsync<PagerViewComponent>(Model.Observations))
 @*@await Component.InvokeAsync("TweetDay")*@

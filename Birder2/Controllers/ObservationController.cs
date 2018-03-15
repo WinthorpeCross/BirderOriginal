@@ -8,12 +8,14 @@ using Birder2.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
+using Birder2.Extensions;
 
 namespace Birder2.Controllers
 {
     [Authorize]
     public class ObservationController : Controller
     {
+        private const int pageSize = 5;
         private readonly IApplicationUserAccessor _userAccessor;
         private readonly IObservationRepository _observationRepository;
         private readonly IMachineClockDateTime _systemClock;
@@ -48,22 +50,18 @@ namespace Birder2.Controllers
                 ShowUserObservationsOnly = showUserObservationsOnly
             };
 
-
-            
-
             try
             {
                 if (showUserObservationsOnly == true)
                 {
-                    viewModel.Observations = await _observationRepository.MyObservationsList(user.Id);
+                    viewModel.Observations = await _observationRepository.MyObservationsList(user.Id).GetPaged(page, pageSize);
                     // set view title
                     return View(viewModel);
                 }
-                var t = _observationRepository.MyNetworkObservationsList(user.Id);
-                var paged = _observationRepository.MyNetworkObservationsList(user.Id).GetPaged(page, 5);
+                viewModel.Observations = await _observationRepository.MyNetworkObservationsList(user.Id).GetPaged(page, pageSize);
+                //viewModel.Observations = _observationRepository.MyNetworkObservationsList(user.Id).GetPaged<Observation, ObservationsIndexViewModel>(1, 5);
                 //set view title
-                return View(paged);
-                //return View(viewModel);
+                return View(viewModel);
             }
             catch (Exception ex)
             {

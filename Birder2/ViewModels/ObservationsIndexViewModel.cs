@@ -6,7 +6,7 @@ namespace Birder2.ViewModels
 {
     public class ObservationsIndexViewModel
     {
-        public IQueryable<Observation> Observations;
+        public PagedResult<Observation> Observations;
         public bool ShowUserObservationsOnly;
     }
 }

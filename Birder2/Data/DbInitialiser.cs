@@ -51,7 +51,7 @@ namespace Birder2.Data
                     ,ThumbnailUrl="http://farm3.staticflickr.com/2818/9312384651_76a7b6ff84_s.jpg"},
 
                 new Bird { Class="Aves",Order="Passeriformes",Family="Fringillidae",Genus="Acanthis",Species="Acanthis hornemanni"
-                    ,EnglishName="Artic Redpoll",InternationalName=null,Category="A",PopulationSize="100-1,000 records",BtoStatusInBritain="Winter Visitor"
+                    ,EnglishName="Arctic Redpoll",InternationalName=null,Category="A",PopulationSize="100-1,000 records",BtoStatusInBritain="Winter Visitor"
                     ,ConserverationStatusId=1,BritishStatusId=1
                     ,ThumbnailUrl="http://farm8.staticflickr.com/7263/13667553233_5bd7837a4f_s.jpg"},
 

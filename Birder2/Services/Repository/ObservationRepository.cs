@@ -50,7 +50,7 @@ namespace Birder2.Services
             return await _dbContext.Birds.SingleOrDefaultAsync(m => m.BirdId == id);
         }
 
-        public async Task<IEnumerable<Observation>> MyObservationsList(string userId)
+        public IQueryable<Observation> MyObservationsList(string userId)
         {
             //Change to IQueryable collection - this collection will be refreshed regularly
             var observations = _dbContext.Observations
@@ -60,9 +60,9 @@ namespace Birder2.Services
                     .Include(ot => ot.ObservationTags)
                         .ThenInclude(t => t.Tag)
                     .OrderByDescending(d => d.ObservationDateTime)
-                    .AsNoTracking()
-                    .ToListAsync();
-            return await observations;
+                    .AsNoTracking();
+                    //.ToListAsync();
+            return observations;
         }
 
         public IQueryable<Observation> MyNetworkObservationsList(string userId)
