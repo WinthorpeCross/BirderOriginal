@@ -29,9 +29,9 @@ namespace Birder2.Controllers
 
 
         // GET: Observation
-        public async Task<IActionResult> Index(bool showUserObservationsOnly, int? page)
+        public async Task<IActionResult> Index(bool showUserObservationsOnly, int page)
         {
-            if (page == null)
+            if (page == 0)
             {
                 page = 1;
             }
@@ -48,7 +48,7 @@ namespace Birder2.Controllers
                 ShowUserObservationsOnly = showUserObservationsOnly
             };
 
-            int pageSize = 3;
+
             
 
             try
@@ -60,7 +60,7 @@ namespace Birder2.Controllers
                     return View(viewModel);
                 }
                 var t = _observationRepository.MyNetworkObservationsList(user.Id);
-                var paged = _observationRepository.MyNetworkObservationsList(user.Id).GetPaged(1, 5);
+                var paged = _observationRepository.MyNetworkObservationsList(user.Id).GetPaged(page, 5);
                 //set view title
                 return View(paged);
                 //return View(viewModel);

@@ -1,6 +1,7 @@
 ﻿@*@model ObservationsIndexViewModel*@
 @*@model PaginatedList<Observation>*@
 @model PagedResult<Observation>
+@using Birder2.ViewComponents
 
 @{
     ViewData["Title"] = "My Observations";
@@ -43,3 +44,7 @@
     </div>
 }
 
+<br />
+
+@(await Component.InvokeAsync<PagerViewComponent>(Model))
+@*@await Component.InvokeAsync("TweetDay")*@
