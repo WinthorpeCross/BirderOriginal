@@ -11,23 +11,23 @@
         <div class="col-sm-3">
             <label class="control-label"></label>
             @Html.DropDownListFor(m => m.SelectedBirdId,
-     new SelectList(Model.AllBirdsDropDownList, "BirdId", "EnglishName"),
-         new
-         {
-             @class = "form-control selectpicker showtick",
-             title = "Choose a bird species...",
-             data_live_search = "true",
-             data_show_subtext = "true",
-             onchange = "this.form.submit()"
-         })
+                    new SelectList(Model.AllBirdsDropDownList, "BirdId", "EnglishName"),
+                          new
+                          {
+                              @class = "form-control selectpicker showtick",
+                              title = "Choose a bird species...",
+                              data_live_search = "true",
+                              data_show_subtext = "true",
+                              onchange = "this.form.submit()"
+                          })
         </div>
         <div class="col-sm-3">
             <label class="control-label"></label>
             @{
-            var disabledState = (Model.ShowAllBirds) ? "disabled" : "";
-            <div>
-                <a asp-action="Index" asp-route-ShowAllBirds="true" class="btn btn-default btn-block @disabledState">Full British Birds List</a>
-            </div>
+                var disabledState = (Model.ShowAllBirds) ? "disabled" : "";
+                <div>
+                    <a asp-action="Index" asp-route-ShowAllBirds="true" class="btn btn-default btn-block @disabledState">Full British Birds List</a>
+                </div>
             }
         </div>
         <div class="col-sm-3">
@@ -35,9 +35,9 @@
             @{
                 var disabledState1 = (Model.ShowAllBirds) ? "" : "disabled";
                 if (Model.SelectedBirdId != 0) { disabledState1 = ""; }
-            <div>
-                <a asp-action="Index" asp-route-ShowAllBirds="false" class="btn btn-default btn-block @disabledState1">Common British Birds List</a>
-            </div>
+                <div>
+                    <a asp-action="Index" asp-route-ShowAllBirds="false" class="btn btn-default btn-block @disabledState1">Common British Birds List</a>
+                </div>
             }
         </div>
         <div class="col-sm-3">
@@ -52,12 +52,12 @@
 <br />
 
 <div class="row">
-    @foreach (var item in Model.BirdsList)
+    @foreach (var item in Model.BirdsList.Results)
     {
         if (counter != 0 && counter % 3 == 0)
         {
             @:</div>
-        @:<div class="row">
+            @:<div class="row">
         }
 
         <div class="col-md-4">
@@ -80,4 +80,11 @@
 
         counter++;
     }
+
+</div>
+
+<br />
+
+<div>
+    @(await Component.InvokeAsync<PagerViewComponent>(Model.BirdsList))
 </div>

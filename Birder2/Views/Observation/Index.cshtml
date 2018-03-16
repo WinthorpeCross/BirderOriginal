@@ -1,6 +1,5 @@
 ﻿@model ObservationsIndexViewModel
 @*@model PagedResult<ObservationsIndexViewModel>*@
-@using Birder2.ViewComponents
 
 @{
     ViewData["Title"] = "My Observations";
@@ -21,18 +20,6 @@
             } }
     </div>
 
-@*<form asp-controller="Observation" asp-action="Index" method="post" class="form-horizontal">
-     <div class="form-group">
-         <div class="col-sm-4">
-             <label class="control-label">Sort By</label>
-             <select name="filter" onchange="this.form.submit()" class="form-control sort-filter-width">
-                 <option selected="selected" value="">Choose...</option>
-                 <option value="">My Network And Me</option>
-                 <option value="MyNetworkOnly">My Network Only</option>
-                 <option value="MineOnly">Mine Only</option>
-             </select>
-         </div>
-    </div>*@
 <br />
 
 @foreach (var observation in Model.Observations.Results)
@@ -46,4 +33,3 @@
 <br />
 
 @(await Component.InvokeAsync<PagerViewComponent>(Model.Observations))
-@*@await Component.InvokeAsync("TweetDay")*@

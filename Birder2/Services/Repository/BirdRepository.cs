@@ -1,7 +1,6 @@
 ﻿using Birder2.Data;
 using Birder2.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,32 +15,38 @@ namespace Birder2.Services
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Bird>> AllBirdsList()
+        public IEnumerable<Bird> AllBirdsDropDownList()
         {
-            return await _dbContext.Birds.ToListAsync();
+            return _dbContext.Birds.ToList();
         }
 
-        public async Task<IEnumerable<Bird>> AllBirdsList(int birdId)
+        public IQueryable<Bird> AllBirdsList()
         {
-            return await _dbContext.Birds.Where(b => b.BirdId == birdId).ToListAsync();
+            return _dbContext.Birds
+                     .OrderByDescending(v => v.EnglishName)
+                        .AsNoTracking();
         }
 
-        public async Task<IEnumerable<Bird>> CommonBirdsList()
+        public IQueryable<Bird> AllBirdsList(int birdId)
         {
-                return await _dbContext.Birds
-                    //.Include(bs => bs.BirderStatus)
-                    .Where(b => b.BirderStatus == BirderStatus.Common)
-                    .ToListAsync();
+            return _dbContext.Birds.Where(b => b.BirdId == birdId)
+                        .OrderByDescending(v => v.EnglishName)
+                            .AsNoTracking();
+        }
+
+        public IQueryable<Bird> CommonBirdsList()
+        {
+            return _dbContext.Birds
+                .Where(b => b.BirderStatus == BirderStatus.Common)
+                    .OrderByDescending(v => v.EnglishName)
+                        .AsNoTracking();
         }
 
         public async Task<Bird> GetBirdDetails(int? id)
         {
             return await _dbContext.Birds
-                .Include(bcs => bcs.BirdConserverationStatus)
-                //.Include(bs => bs.BirderStatus)
-                .SingleOrDefaultAsync(m => m.BirdId == id);
-                     //.Include(o => o.Observations)
-                     //.ThenInclude(au => au.ApplicationUser)
+                            .Include(bcs => bcs.BirdConserverationStatus)
+                                .SingleOrDefaultAsync(m => m.BirdId == id);
         }
     }
 }

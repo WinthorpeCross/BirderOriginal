@@ -7,18 +7,12 @@ using Birder2.ViewModels;
 using Microsoft.Extensions.Logging;
 using Birder2.Extensions;
 
-
-/*
- * Tabular all bird data view
- * 
- */
-
 namespace Birder2.Controllers
 {
     [Authorize]
     public class BirdController : Controller
     {
-        private const int pageSize = 12; //multiple of 3 (3 columns per row)
+        private const int pageSize = 12;
         private readonly IBirdRepository _birdRepository;
         private readonly IFlickrService _flickrService;
         private readonly ILogger _logger;
@@ -33,29 +27,33 @@ namespace Birder2.Controllers
         }
 
         // GET: All Bird Species
-        public async Task<IActionResult> Index(SortFilterBirdIndexOptions options)
+        public async Task<IActionResult> Index(SortFilterBirdIndexOptions options, int page)
         {
             _logger.LogInformation(LoggingEvents.ListItems, "Bird Index called");
             try
             {
+                if (page == 0)
+                {
+                    page = 1;
+                }
                 BirdIndexViewModel viewModel = new BirdIndexViewModel();
-                viewModel.AllBirdsDropDownList = await _birdRepository.AllBirdsList();
+                viewModel.AllBirdsDropDownList = _birdRepository.AllBirdsDropDownList();
                 if (options.SelectedBirdId == 0)
                 {
                     if (options.ShowAllBirds == false)
                     {
-                        viewModel.BirdsList = await _birdRepository.CommonBirdsList();
+                        viewModel.BirdsList = await _birdRepository.CommonBirdsList().GetPaged(page, pageSize);
                         viewModel.ShowAllBirds = options.ShowAllBirds;
                     }
                     else
                     {
-                        viewModel.BirdsList = await _birdRepository.AllBirdsList();
+                        viewModel.BirdsList = await _birdRepository.AllBirdsList().GetPaged(page, pageSize);
                         viewModel.ShowAllBirds = options.ShowAllBirds;
                     }
                 }
                 else
                 {
-                    viewModel.BirdsList = await _birdRepository.AllBirdsList(options.SelectedBirdId);
+                    viewModel.BirdsList = await _birdRepository.AllBirdsList(options.SelectedBirdId).GetPaged(page, pageSize);
                     viewModel.SelectedBirdId = options.SelectedBirdId;
                 }
                 return View(viewModel);

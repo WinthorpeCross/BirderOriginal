@@ -6,10 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks; 
 
-
 namespace Birder2.Services
 {
-
     public class ObservationRepository : IObservationRepository
     {
         private readonly ApplicationDbContext _dbContext;
@@ -17,7 +15,6 @@ namespace Birder2.Services
         {
             _dbContext = dbContext;
         }
-
 
         public async Task<IQueryable<LifeListViewModel>> GetLifeList(string userId)
         {
@@ -52,7 +49,6 @@ namespace Birder2.Services
 
         public IQueryable<Observation> MyObservationsList(string userId)
         {
-            //Change to IQueryable collection - this collection will be refreshed regularly
             var observations = _dbContext.Observations
                 .Where(o => o.ApplicationUserId == userId)
                     .Include(au => au.ApplicationUser)
@@ -61,7 +57,6 @@ namespace Birder2.Services
                         .ThenInclude(t => t.Tag)
                     .OrderByDescending(d => d.ObservationDateTime)
                     .AsNoTracking();
-                    //.ToListAsync();
             return observations;
         }
 

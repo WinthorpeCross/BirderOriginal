@@ -1,14 +1,14 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Birder2.Extensions;
 using Birder2.Models;
 using Birder2.Services;
-using Microsoft.AspNetCore.Authorization;
 using Birder2.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
-using Birder2.Extensions;
+using System.Threading.Tasks;
 
 namespace Birder2.Controllers
 {
