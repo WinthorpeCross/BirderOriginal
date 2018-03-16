@@ -8,6 +8,7 @@
         }
     };
 
+
     self.addObservedSpecies = function () {
         var observedSpecies = new ObservedSpeciesViewModel({ Id: 0, BirdId: 0, Quantity: 1 });
         self.ObservedSpecies.push(observedSpecies);
@@ -18,13 +19,17 @@
             self.ObservedSpecies.pop();
     };
 
+    self.disableSubmitButton = ko.observable(false);
+
     self.Total = ko.computed(function () {
         var total = 0;
         total += self.ObservedSpecies().length;
         return total;
     }),
 
+
     self.post = function () {
+        self.disableSubmitButton(true);
         $.ajax({
             url: "/Observation/Post/",
             type: "POST",
