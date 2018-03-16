@@ -45,7 +45,6 @@
                 "content-type": "application/json; charset=utf-8"
             },
             success: function (data) {
-                alert("success");
                 var obj = JSON.parse(data);
                 if (obj.IsModelStateValid === false) {
                     self.MessageToClient(obj.MessageToClient);
@@ -55,7 +54,6 @@
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("error");
                 if (XMLHttpRequest.status === 400) {
                     $('#MessageToClient').text(XMLHttpRequest.responseText);
                 }
