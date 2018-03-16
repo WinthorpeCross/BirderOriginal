@@ -1,11 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Birder2.Extensions;
 using Birder2.Services;
-using Microsoft.AspNetCore.Authorization;
 using Birder2.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Birder2.Extensions;
+using System;
+using System.Threading.Tasks;
 
 namespace Birder2.Controllers
 {
@@ -26,7 +26,7 @@ namespace Birder2.Controllers
             _logger = logger;
         }
 
-        // GET: All Bird Species
+        [HttpGet]
         public async Task<IActionResult> Index(SortFilterBirdIndexOptions options, int page)
         {
             _logger.LogInformation(LoggingEvents.ListItems, "Bird Index called");
@@ -67,7 +67,7 @@ namespace Birder2.Controllers
             }
         }
 
-        // GET: Bird/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             _logger.LogInformation(LoggingEvents.GetItem, "Getting bird {ID}", id);

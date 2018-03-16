@@ -1,11 +1,10 @@
-﻿using System.Diagnostics;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Birder2.Data;
 using Birder2.Models;
-using Microsoft.AspNetCore.Authorization;
-using FlickrNet;
 using Birder2.Services;
-using Birder2.Data;
+using FlickrNet;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace Birder2.Controllers
 {
