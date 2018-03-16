@@ -7,10 +7,6 @@ using Birder2.ViewModels;
 using Microsoft.Extensions.Logging;
 using Birder2.Extensions;
 
-/*
- * Perhaps use IEnumerable - not IQueryable -  for the Birds list because it is likely to be repeatedly searched and filtered?
- * Total size is just 600 rows.
-*/
 
 /*
  * Tabular all bird data view
@@ -22,12 +18,14 @@ namespace Birder2.Controllers
     [Authorize]
     public class BirdController : Controller
     {
+        private const int pageSize = 12; //multiple of 3 (3 columns per row)
         private readonly IBirdRepository _birdRepository;
         private readonly IFlickrService _flickrService;
         private readonly ILogger _logger;
 
-        public BirdController(IBirdRepository birdRepository, IFlickrService flickrService
-                                ,ILogger<BirdController> logger)
+        public BirdController(IBirdRepository birdRepository,
+                                IFlickrService flickrService,
+                                    ILogger<BirdController> logger)
         {
             _birdRepository = birdRepository;
             _flickrService = flickrService;
@@ -46,16 +44,19 @@ namespace Birder2.Controllers
                 {
                     if (options.ShowAllBirds == false)
                     {
-                        viewModel.BirdsList = await _birdRepository.AllBirdsList();
+                        viewModel.BirdsList = await _birdRepository.CommonBirdsList();
+                        viewModel.ShowAllBirds = options.ShowAllBirds;
                     }
                     else
                     {
-                        viewModel.BirdsList = await _birdRepository.CommonBirdsList();
+                        viewModel.BirdsList = await _birdRepository.AllBirdsList();
+                        viewModel.ShowAllBirds = options.ShowAllBirds;
                     }
                 }
                 else
                 {
                     viewModel.BirdsList = await _birdRepository.AllBirdsList(options.SelectedBirdId);
+                    viewModel.SelectedBirdId = options.SelectedBirdId;
                 }
                 return View(viewModel);
             }

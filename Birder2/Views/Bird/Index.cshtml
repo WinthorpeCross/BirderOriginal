@@ -1,4 +1,4 @@
-﻿@model Birder2.ViewModels.BirdIndexViewModel
+﻿@model BirdIndexViewModel
 
 @{
     ViewData["Title"] = "Birds";
@@ -6,34 +6,45 @@
     int counter = 0;
 }
 
-<div>
-    @{
-        if (Model.ShowAllBirds == true)
-        {
-            <a asp-action="Index" asp-route-ShowAllBirds="false" class="btn btn-link">Common British Birds</a>
-        }
-        else
-        {
-            <a asp-action="Index" asp-route-ShowAllBirds="true" class="btn btn-link">All British Birds</a>
-        } }
-</div>
-
-<div>See in Tabular view</div>
-
 <form id="sort-filter-form" class="form-horizontal">
     <div class="form-group">
         <div class="col-sm-3">
-            <label class="control-label">Search/pick species</label>
+            <label class="control-label"></label>
             @Html.DropDownListFor(m => m.SelectedBirdId,
-                      new SelectList(Model.AllBirdsDropDownList, "BirdId", "EnglishName"),
-                          new
-                          {
-                              @class = "form-control selectpicker showtick",
-                              title = "Choose a bird species...",
-                              data_live_search = "true",
-                              data_show_subtext = "true",
-                              onchange = "this.form.submit()"
-                          })
+     new SelectList(Model.AllBirdsDropDownList, "BirdId", "EnglishName"),
+         new
+         {
+             @class = "form-control selectpicker showtick",
+             title = "Choose a bird species...",
+             data_live_search = "true",
+             data_show_subtext = "true",
+             onchange = "this.form.submit()"
+         })
+        </div>
+        <div class="col-sm-3">
+            <label class="control-label"></label>
+            @{
+            var disabledState = (Model.ShowAllBirds) ? "disabled" : "";
+            <div>
+                <a asp-action="Index" asp-route-ShowAllBirds="true" class="btn btn-default btn-block @disabledState">Full British Birds List</a>
+            </div>
+            }
+        </div>
+        <div class="col-sm-3">
+            <label class="control-label"></label>
+            @{
+                var disabledState1 = (Model.ShowAllBirds) ? "" : "disabled";
+                if (Model.SelectedBirdId != 0) { disabledState1 = ""; }
+            <div>
+                <a asp-action="Index" asp-route-ShowAllBirds="false" class="btn btn-default btn-block @disabledState1">Common British Birds List</a>
+            </div>
+            }
+        </div>
+        <div class="col-sm-3">
+            <label class="control-label"></label>
+            <div>
+                <a asp-action="Index" asp-route-ShowAllBirds="true" class="btn btn-default btn-block disabled">Tabular View</a>
+            </div>
         </div>
     </div>
 </form>
