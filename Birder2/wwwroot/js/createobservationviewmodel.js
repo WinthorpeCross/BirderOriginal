@@ -8,7 +8,6 @@
         }
     };
 
-
     self.addObservedSpecies = function () {
         var observedSpecies = new ObservedSpeciesViewModel({ Id: 0, BirdId: 0, Quantity: 1 });
         self.ObservedSpecies.push(observedSpecies);
@@ -30,6 +29,13 @@
 
     self.post = function () {
         self.disableSubmitButton(true);
+        if (self.ObservedSpecies().length < 1) {
+            // ToDo: Implement proper client-side validation of the Observed Species collection
+            alert("You must choose at least one observed bird species");
+            self.MessageToClient("You must choose at least one observed bird species...");
+            self.disableSubmitButton(false);
+            return;
+        }
         $.ajax({
             url: "/Observation/Post/",
             type: "POST",
@@ -39,6 +45,7 @@
                 "content-type": "application/json; charset=utf-8"
             },
             success: function (data) {
+                alert("success");
                 var obj = JSON.parse(data);
                 if (obj.IsModelStateValid === false) {
                     self.MessageToClient(obj.MessageToClient);
