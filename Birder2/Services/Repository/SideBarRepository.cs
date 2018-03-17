@@ -16,20 +16,6 @@ namespace Birder2.Services
         {
             _dbContext = dbContext;
         }
-        //ToDo: Craete new method in UserAccessor to return userId, not full user
-        public async Task<int> TotalObservationsCount(ApplicationUser user)
-        {
-            return await (from observations in _dbContext.Observations
-                            where (observations.ApplicationUserId == user.Id)
-                                select observations).CountAsync();
-        }
-
-        public async Task<int> UniqueSpeciesCount(ApplicationUser user)
-        {
-            return await (from observations in _dbContext.Observations
-                             where(observations.ApplicationUserId == user.Id)
-                                select observations.BirdId).Distinct().CountAsync();
-        }
 
         public async Task<TweetDay> GetTweetOfTheDayAsync(DateTime date)
         {
@@ -48,7 +34,7 @@ namespace Birder2.Services
             return tweet;
         }
 
-        public async Task<IQueryable<TopObservationsViewModel>> GetTopObservations(ApplicationUser user)
+        public IQueryable<TopObservationsViewModel> GetTopObservations(ApplicationUser user)
         {
             return (from observations in _dbContext.Observations
                  .Include(b => b.Bird)
@@ -61,7 +47,7 @@ namespace Birder2.Services
                     }).Take(5);
         }
 
-        public async Task<IQueryable<TopObservationsViewModel>> GetTopObservations(ApplicationUser user, DateTime date)
+        public IQueryable<TopObservationsViewModel> GetTopObservations(ApplicationUser user, DateTime date)
         {
             DateTime endDate = date.AddDays(-30);
             return (from observations in _dbContext.Observations

@@ -1,5 +1,4 @@
-﻿using Birder2.Data;
-using Birder2.Services;
+﻿using Birder2.Services;
 using Birder2.Models;
 using Birder2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -20,8 +19,8 @@ namespace Birder2.Controllers
     public class NetworksController : Controller
     {
         private readonly IApplicationUserAccessor _userAccessor;
-        private readonly ILogger _logger;
         private readonly IUserRepository _userRepository;
+        private readonly ILogger _logger;
 
         public NetworksController(IApplicationUserAccessor userAccessor
                                         ,ILogger<Network> logger

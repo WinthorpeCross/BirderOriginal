@@ -63,5 +63,7 @@ namespace Birder2.Data
         }
 
         public DbSet<Birder2.Models.Network> Network { get; set; }
+
+        public DbSet<Birder2.Models.ApplicationUser> ApplicationUser { get; set; }
     }
 }

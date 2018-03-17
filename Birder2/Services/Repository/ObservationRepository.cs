@@ -50,9 +50,9 @@ namespace Birder2.Services
                           select observations.BirdId).Distinct().CountAsync();
         }
 
+        //ToDo: DRY - This is repeated verbatim in two repositories
         public async Task<IEnumerable<Bird>> AllBirdsList()
         {
-            // ToDo: include Birder category to sort the list by common species
             return await _dbContext.Birds.ToListAsync();
         }
 
@@ -109,9 +109,8 @@ namespace Birder2.Services
                     .Include(b => b.Bird)
                     .Include(ot => ot.ObservationTags)
                         .ThenInclude(t => t.Tag)
-                    .OrderByDescending(d => d.ObservationDateTime)
-                    .AsNoTracking();
-                    //.ToList();
+                            .OrderByDescending(d => d.ObservationDateTime)
+                                .AsNoTracking();
             return observations;
         }
 

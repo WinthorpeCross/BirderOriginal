@@ -8,10 +8,8 @@ namespace Birder2.Services
 {
     public interface ISideBarRepository
     {
-        Task<int> TotalObservationsCount(ApplicationUser user);
-        Task<int> UniqueSpeciesCount(ApplicationUser user);
         Task<TweetDay> GetTweetOfTheDayAsync(DateTime date);
-        Task<IQueryable<TopObservationsViewModel>> GetTopObservations(ApplicationUser user);
-        Task<IQueryable<TopObservationsViewModel>> GetTopObservations(ApplicationUser user, DateTime date);
+        IQueryable<TopObservationsViewModel> GetTopObservations(ApplicationUser user);
+        IQueryable<TopObservationsViewModel> GetTopObservations(ApplicationUser user, DateTime date);
     }
 }

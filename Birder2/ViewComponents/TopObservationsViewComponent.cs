@@ -33,8 +33,8 @@ namespace Birder2.ViewComponents
             {
                 TopObservationsComponentViewModel viewModel = new TopObservationsComponentViewModel()
                 {
-                    TopObservations = await _sideBarRepository.GetTopObservations(await _userAccessor.GetUser()),
-                    TopMonthlyObservations = await _sideBarRepository.GetTopObservations(await _userAccessor.GetUser(), _systemClock.Today)
+                    TopObservations = _sideBarRepository.GetTopObservations(await _userAccessor.GetUser()),
+                    TopMonthlyObservations = _sideBarRepository.GetTopObservations(await _userAccessor.GetUser(), _systemClock.Today)
                 };
                 return View("Default", viewModel);
             }

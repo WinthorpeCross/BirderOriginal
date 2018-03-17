@@ -10,15 +10,15 @@ namespace Birder2.ViewComponents
 {
     public class BirdCountViewComponent : ViewComponent
     {
-        private readonly ISideBarRepository _sideBarRepository;
+        private readonly IObservationRepository _observationRepository;
         private readonly IApplicationUserAccessor _userAccessor;
         private readonly ILogger _logger;
 
-        public BirdCountViewComponent(ISideBarRepository sideBarRepository,
+        public BirdCountViewComponent(IObservationRepository observationRepository,
                                             IApplicationUserAccessor userAccessor,
                                                 ILogger<BirdCountViewComponent> logger)
         {
-            _sideBarRepository = sideBarRepository;
+            _observationRepository = observationRepository;
             _userAccessor = userAccessor;
             _logger = logger;
         }
@@ -30,8 +30,8 @@ namespace Birder2.ViewComponents
             {
                 BirdCountViewModel viewModel = new BirdCountViewModel()
                 {
-                    TotalObservations = await _sideBarRepository.TotalObservationsCount(await _userAccessor.GetUser()),
-                    TotalSpecies = await _sideBarRepository.UniqueSpeciesCount(await _userAccessor.GetUser())
+                    TotalObservations = await _observationRepository.TotalObservationsCount(await _userAccessor.GetUser()),
+                    TotalSpecies = await _observationRepository.UniqueSpeciesCount(await _userAccessor.GetUser())
                 };
                 return View("Default", viewModel);
             }
