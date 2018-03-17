@@ -16,7 +16,7 @@ namespace Birder2.Services
             _dbContext = dbContext;
         }
 
-        public async Task<IQueryable<LifeListViewModel>> GetLifeList(string userId)
+        public IQueryable<LifeListViewModel> GetLifeList(string userId)
         {
             return (from observations in _dbContext.Observations
                  .Include(b => b.Bird)
@@ -47,7 +47,7 @@ namespace Birder2.Services
             return await _dbContext.Birds.SingleOrDefaultAsync(m => m.BirdId == id);
         }
 
-        public IQueryable<Observation> MyObservationsList(string userId)
+        public IQueryable<Observation> GetUsersObservationsList(string userId)
         {
             var observations = _dbContext.Observations
                 .Where(o => o.ApplicationUserId == userId)
@@ -60,18 +60,28 @@ namespace Birder2.Services
             return observations;
         }
 
-        public IQueryable<Observation> MyNetworkObservationsList(string userId)
+        public IQueryable<Observation> GetPublicObservationsList()
+        {
+            var observations = _dbContext.Observations
+                    .Include(au => au.ApplicationUser)
+                    .Include(b => b.Bird)
+                    .Include(ot => ot.ObservationTags)
+                        .ThenInclude(t => t.Tag)
+                    .OrderByDescending(d => d.ObservationDateTime)
+                    .AsNoTracking();
+                    //.Take(100);
+            return observations;
+        }
+
+        public IQueryable<Observation> GetUsersNetworkObservationsList(string userId)
         {
             var loggedinUser = _dbContext.Users
-                .Include(x => x.Followers)
-                    .ThenInclude(x => x.Follower)
+                //.Include(x => x.Followers)
+                //    .ThenInclude(x => x.Follower)
                 .Include(y => y.Following)
                     .ThenInclude(r => r.ApplicationUser)
                 .Where(x => x.Id == userId)
                 .FirstOrDefault();
-
-            //loggedinUser.Following.Add(loggedinUser.Followers.FirstOrDefault());
-            //var f = loggedinUser.Following.ToList();
 
             // PROBLEM WHEN FOLLOWERS = 0 -- cannot append own Id
 
@@ -79,13 +89,6 @@ namespace Birder2.Services
                                select p.ApplicationUser.Id.ToString());
             //Therefore changed to less efficient || in LINQ WHERE
 
-
-            //if (string.IsNullOrEmpty(filter)) // My NeworkAndMe
-            //{
-            //    userNetwork.Append(loggedinUser.Id.ToString());
-            //}
-
-            //Change to IQueryable collection - this collection will be refreshed regularly
             var observations = _dbContext.Observations
                 .Where(o => userNetwork.Contains(o.ApplicationUser.Id) || o.ApplicationUser.Id == loggedinUser.Id)
                     .Include(au => au.ApplicationUser)

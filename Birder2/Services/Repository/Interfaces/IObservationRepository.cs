@@ -10,13 +10,14 @@ namespace Birder2.Services
     {
         Task<IEnumerable<Bird>> AllBirdsList();
         Task<Bird> GetSelectedBird(int id);
-        IQueryable<Observation> MyObservationsList(string userId);
-        IQueryable<Observation> MyNetworkObservationsList(string userId);
+        IQueryable<Observation> GetUsersObservationsList(string userId);
+        IQueryable<Observation> GetUsersNetworkObservationsList(string userId);
+        IQueryable<Observation> GetPublicObservationsList();
         Task<Observation> GetObservationDetails(int? id);
         Task<Observation> AddObservation(Observation observation);
         Task<Observation> UpdateObservation(Observation observation);
         Task<bool> ObservationExists(int id);
         Task<Observation> DeleteObservation(int id);
-        Task<IQueryable<LifeListViewModel>> GetLifeList(string userId);
+        IQueryable<LifeListViewModel> GetLifeList(string userId);
     }
 }

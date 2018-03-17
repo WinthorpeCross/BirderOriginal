@@ -1,24 +1,42 @@
 ﻿@model ObservationsIndexViewModel
 @*@model PagedResult<ObservationsIndexViewModel>*@
-
-@{
-    ViewData["Title"] = "My Observations";
-}
-
+@using Birder2.Controllers
 <h2>Observations [sightings] feed:</h2>
 
-<div>
-        <a asp-action="Create">Add Observation</a>
-        @{
-            if (Model.ShowUserObservationsOnly == true)
-            {
-                <a asp-action="Index" asp-route-showUserObservationsOnly="false" class="btn btn-link">View Observations From Your Network</a>
-            }
-            else
-            {
-                <a asp-action="Index" asp-route-showUserObservationsOnly="true" class="btn btn-link">View Only Your Observations</a>
-            } }
+<form id="sort-filter-form" class="form-horizontal">
+    <div class="form-group">
+        <div class="col-sm-3">
+            <label class="control-label"></label>
+            <div>
+                <a asp-action="Create" class="btn btn-default btn-block">Add Observation</a>
+            </div>
+        </div>
+        <div class="col-sm-3">
+           
+        </div>
+        <div class="col-sm-3">
+            
+        </div>
+        <div class="col-sm-3">
+            <label class="control-label"></label>
+            <select asp-for="Filter" asp-items="Html.GetEnumSelectList<ObservationsFeedFilter>()" class="form-control btn-block" onchange="this.form.submit()"></select>
+        </div>
     </div>
+</form>
+@{
+    ViewData["Title"] = "My Observations";
+    
+
+
+    @*if (Model. == true && Model.Observations.CurrentPage == 1)
+    {
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Welcome to Birder!</h4>
+            <p>Your bird sightings will appear here along with those from your network of Birders. </p>
+            <p>While your feed is empty, we'll show the latest public observations here...</p>
+        </div>
+    }*@
+}
 
 <br />
 

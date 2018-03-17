@@ -12,6 +12,12 @@ using System.Threading.Tasks;
 
 namespace Birder2.Controllers
 {
+    public enum ObservationsFeedFilter
+    {
+        UsersNetwork,
+        Users,
+        Public
+    }
     [Authorize]
     public class ObservationController : Controller
     {
@@ -29,9 +35,7 @@ namespace Birder2.Controllers
             _systemClock = systemClock;
         }
 
-
-        // GET: Observation
-        public async Task<IActionResult> Index(bool showUserObservationsOnly, int page)
+        public async Task<IActionResult> Index(ObservationsFeedFilter filter, int page)
         {
             if (page == 0)
             {
@@ -43,25 +47,54 @@ namespace Birder2.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
+            var userName = await _userAccessor.GetUserName();
             //
-
+            try
+            { 
             ObservationsIndexViewModel viewModel = new ObservationsIndexViewModel()
             {
-                ShowUserObservationsOnly = showUserObservationsOnly
+                Filter = filter
             };
 
-            try
+            switch (filter)
             {
-                if (showUserObservationsOnly == true)
-                {
-                    viewModel.Observations = await _observationRepository.MyObservationsList(user.Id).GetPaged(page, pageSize);
-                    // set view title
-                    return View(viewModel);
-                }
-                viewModel.Observations = await _observationRepository.MyNetworkObservationsList(user.Id).GetPaged(page, pageSize);
+                case ObservationsFeedFilter.Users: //Mine
+                    viewModel.Observations = await _observationRepository.GetUsersObservationsList(user.Id).GetPaged(page, pageSize);
+                    break;
+                case ObservationsFeedFilter.Public: //Public
+                    viewModel.Observations = await _observationRepository.GetPublicObservationsList().GetPaged(page, pageSize);
+                    break;
+                default:
+                    viewModel.Observations = await _observationRepository.GetUsersNetworkObservationsList(user.Id).GetPaged(page, pageSize);
+                    break;
+            }
+
+            if (viewModel.Observations.Results.Count == 0)
+            {
+                viewModel.Observations = await _observationRepository.GetPublicObservationsList().GetPaged(page, pageSize);
+                viewModel.IsEmptyList = true;
+            }
+
+            return View(viewModel);
+
+
+                //adjusting for three options : network, mine, public
+
+                //if (filterState == 1)
+                //{
+                //    viewModel.Observations = await _observationRepository.MyObservationsList(user.Id).GetPaged(page, pageSize);
+                //    // set view title
+                //    return View(viewModel);
+                //}
+                //viewModel.Observations = await _observationRepository.MyNetworkObservationsList(user.Id).GetPaged(page, pageSize);
                 //viewModel.Observations = _observationRepository.MyNetworkObservationsList(user.Id).GetPaged<Observation, ObservationsIndexViewModel>(1, 5);
                 //set view title
-                return View(viewModel);
+
+                // check if observations is == 0
+
+                // get public observations
+                //display message
+
             }
             catch (Exception ex)
             {
@@ -328,7 +361,7 @@ namespace Birder2.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            var model = await _observationRepository.GetLifeList(user.Id);
+            var model = _observationRepository.GetLifeList(user.Id);
 
             return View(model);
         }
