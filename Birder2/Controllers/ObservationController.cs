@@ -10,6 +10,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
+//ToDo: Threading is exspensive.  Refactor to use only when it is necessary.
+
 namespace Birder2.Controllers
 {
     [Authorize]
@@ -360,9 +362,6 @@ namespace Birder2.Controllers
                 TotalSpecies = await _observationRepository.UniqueSpeciesCount(await _userAccessor.GetUser()),
                 LifeList = _observationRepository.GetLifeList(user.Id)
             };
-
-            var model = _observationRepository.GetLifeList(user.Id);
-
             return View(viewModel);
         }
     }
