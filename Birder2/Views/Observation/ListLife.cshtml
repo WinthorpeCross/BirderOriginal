@@ -1,62 +1,64 @@
-﻿@model IEnumerable<Birder2.ViewModels.LifeListViewModel>
+﻿@model LifeListViewModel
+
 @{
     ViewData["Title"] = "Life List";
+    Layout = "~/Views/Shared/_LayoutNoSidebar.cshtml";
 }
 
-<h2>Life List</h2>
+<h2>Your Life List</h2>
 
-<h4>You have observed x species in y observations</h4>
+<h4>You have observed  @Model.TotalSpecies species in @Model.TotalObservations observations:</h4>
 
-@*see 'panels with tabels' for better styling: https://getbootstrap.com/docs/3.3/components/#panels-tables*@
-
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Count)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Vernacular)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ScientificName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PopSize)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BtoStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ConservationStatus)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="panel panel-default">
+    @*<div class="panel-heading">Life List</div>*@
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Count)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Vernacular)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ScientificName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PopSize)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BtoStatus)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ConservationStatus)
-                </td>
+                <th>
+                    Count
+                </th>
+                <th>
+                    Vernacular Name
+                </th>
+                <th>
+                    Scientific Name
+                </th>
+                <th>
+                    Est. population
+                </th>
+                <th>
+                    Status in Britain
+                </th>
+                <th>
+                    Conservation List
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.LifeList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Count)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vernacular)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ScientificName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PopSize)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BtoStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ConservationStatus)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,5 +1,4 @@
-﻿using Birder2.Controllers;
-using Birder2.Models;
+﻿using Birder2.Models;
 
 namespace Birder2.ViewModels
 {

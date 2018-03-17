@@ -12,16 +12,10 @@ using System.Threading.Tasks;
 
 namespace Birder2.Controllers
 {
-    public enum ObservationsFeedFilter
-    {
-        UsersNetwork,
-        Users,
-        Public
-    }
     [Authorize]
     public class ObservationController : Controller
     {
-        private const int pageSize = 5;
+        private const int pageSize = 15;
         private readonly IApplicationUserAccessor _userAccessor;
         private readonly IObservationRepository _observationRepository;
         private readonly IMachineClockDateTime _systemClock;
@@ -360,10 +354,16 @@ namespace Birder2.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
+            LifeListViewModel viewModel = new LifeListViewModel()
+            {
+                TotalObservations = await _observationRepository.TotalObservationsCount(await _userAccessor.GetUser()),
+                TotalSpecies = await _observationRepository.UniqueSpeciesCount(await _userAccessor.GetUser()),
+                LifeList = _observationRepository.GetLifeList(user.Id)
+            };
 
             var model = _observationRepository.GetLifeList(user.Id);
 
-            return View(model);
+            return View(viewModel);
         }
     }
 }

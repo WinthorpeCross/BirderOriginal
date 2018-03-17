@@ -16,7 +16,7 @@ namespace Birder2.Services
             _dbContext = dbContext;
         }
 
-        public IQueryable<LifeListViewModel> GetLifeList(string userId)
+        public IQueryable<SpeciesSummaryViewModel> GetLifeList(string userId)
         {
             return (from observations in _dbContext.Observations
                  .Include(b => b.Bird)
@@ -25,7 +25,7 @@ namespace Birder2.Services
                     .ThenInclude(u => u.BirdConserverationStatus)
                  .Where(u => u.ApplicationUser.Id == userId)
                  group observations by observations.Bird into species
-                 select new LifeListViewModel
+                 select new SpeciesSummaryViewModel
                  {
                      Vernacular = species.FirstOrDefault().Bird.EnglishName,
                      ScientificName = species.FirstOrDefault().Bird.Species,
@@ -34,6 +34,20 @@ namespace Birder2.Services
                      ConservationStatus = species.FirstOrDefault().Bird.BirdConserverationStatus.ConservationStatus,
                      Count = species.Count()
                  });
+        }
+
+        public async Task<int> TotalObservationsCount(ApplicationUser user)
+        {
+            return await (from observations in _dbContext.Observations
+                          where (observations.ApplicationUserId == user.Id)
+                          select observations).CountAsync();
+        }
+
+        public async Task<int> UniqueSpeciesCount(ApplicationUser user)
+        {
+            return await (from observations in _dbContext.Observations
+                          where (observations.ApplicationUserId == user.Id)
+                          select observations.BirdId).Distinct().CountAsync();
         }
 
         public async Task<IEnumerable<Bird>> AllBirdsList()
@@ -108,7 +122,7 @@ namespace Birder2.Services
                 .Include(au => au.ApplicationUser)
                 .Include(ot => ot.ObservationTags)
                     .ThenInclude(t => t.Tag)
-                .SingleOrDefaultAsync(m => m.ObservationId == id);
+                        .SingleOrDefaultAsync(m => m.ObservationId == id);
         }
 
         public async Task<Observation> AddObservation(Observation observation)

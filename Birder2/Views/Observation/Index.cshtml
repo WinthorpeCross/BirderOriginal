@@ -1,53 +1,52 @@
 ﻿@model ObservationsIndexViewModel
 @*@model PagedResult<ObservationsIndexViewModel>*@
-@using Birder2.Controllers
-<h2>Observations [sightings] feed:</h2>
+@using Birder2.ViewModels
 
-<form id="sort-filter-form" class="form-horizontal">
-    <div class="form-group">
-        <div class="col-sm-3">
-            <label class="control-label"></label>
-            <div>
-                <a asp-action="Create" class="btn btn-default btn-block">Add Observation</a>
-            </div>
-        </div>
-        <div class="col-sm-3">
-           
-        </div>
-        <div class="col-sm-3">
-            
-        </div>
-        <div class="col-sm-3">
-            <label class="control-label">filter</label>
-            <select asp-for="Filter" asp-items="Html.GetEnumSelectList<ObservationsFeedFilter>()" class="form-control btn-block" onchange="this.form.submit()"></select>
-        </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Observations Feed</h3>
     </div>
-</form>
+    <div class="panel-body">
+
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <a asp-action="Create" class="btn btn-default btn-success">Add Observation</a>
+                </div>
+                <div class="col-sm-6">
+                    <select asp-for="Filter" asp-items="Html.GetEnumSelectList<ObservationsFeedFilter>()" class="form-control" onchange="this.form.submit()"></select>
+                </div>
+            </div>
+        </form>
+
+        @{ if (Model.IsEmptyList == true && Model.Observations.CurrentPage == 1)
+            {
+
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Welcome to Birder!</h4>
+                <p><b>This is your observations feed.</b>  Your observations, and those from your network of <i>Birders</i>, will show here.  <b>While this feed is empty, we'll show the latest public observations here...</b></p>
+            </div>
+
+            }
+        }
+
+    </div>
+</div>
+
 @{
     ViewData["Title"] = "My Observations";
-    
 
 
-    @*if (Model. == true && Model.Observations.CurrentPage == 1)
+    @foreach (var observation in Model.Observations.Results)
     {
-        <div class="alert alert-success" role="alert">
-            <h4 class="alert-heading">Welcome to Birder!</h4>
-            <p>Your bird sightings will appear here along with those from your network of Birders. </p>
-            <p>While your feed is empty, we'll show the latest public observations here...</p>
+        <div class="container">
+            @Html.Partial("_Observations", observation)
+            @*<hr />*@
         </div>
-    }*@
-}
+    }
+    }
+    <br />
 
-<br />
+    @(await Component.InvokeAsync<PagerViewComponent>(Model.Observations))
 
-@foreach (var observation in Model.Observations.Results)
-{
-    <div class="container">
-        @Html.Partial("_Observations", observation)
-        @*<hr />*@
-    </div>
-}
 
-<br />
-
-@(await Component.InvokeAsync<PagerViewComponent>(Model.Observations))
