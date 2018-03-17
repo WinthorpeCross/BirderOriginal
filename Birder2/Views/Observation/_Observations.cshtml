@@ -20,7 +20,7 @@
                     <h5>Spotted by<b> @Model.ApplicationUser.UserName [link to profile page]</b> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h5>
                 } }
         <div>
-            <a asp-action="Details" asp-route-id="@Model.ObservationId">View</a>
+            <a asp-action="Details" asp-route-id="@Model.ObservationId" class="btn-sm">View</a>
         </div>
         </div>
             </div>
