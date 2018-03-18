@@ -31,6 +31,33 @@ namespace Birder2.Controllers
             _userRepository = userRepository;
         }
 
+        // GET: Networks/Show/Winthorpe
+        public async Task<IActionResult> Show(string userName)
+        {
+            if (userName == null)
+            {
+                return NotFound();
+            }
+
+            ApplicationUser loggedinUser = await _userRepository.GetUserAndNetworkAsyncByUserName(await _userAccessor.GetUser());
+            ApplicationUser userToShow = await _userRepository.GetUserAndNetworkAsyncByUserName(userName);
+
+            /*
+            Is userToShow in loggedinUser's network?
+            */
+
+            var viewModel = 1;
+
+            //var applicationUser = await _.ApplicationUser
+            //    .SingleOrDefaultAsync(m => m.Id == id);
+            //if (applicationUser == null)
+            //{
+            //    return NotFound();
+            //}
+
+            return View(viewModel);
+        }
+
         // GET: Networks
         [HttpGet]
         public async Task<IActionResult> Index()
