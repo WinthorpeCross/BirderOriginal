@@ -4,7 +4,10 @@ using Birder2.Services;
 using FlickrNet;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System.Diagnostics;
+using Microsoft.Extensions.Configuration;
+using Microsoft.WindowsAzure.Storage;
 
 namespace Birder2.Controllers
 {
@@ -15,12 +18,20 @@ namespace Birder2.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IApplicationUserAccessor _userAccessor;
 
-        public HomeController(ApplicationDbContext context, IFlickrService flickrService, IApplicationUserAccessor userAccessor)
+        public HomeController(ApplicationDbContext context,
+                                IFlickrService flickrService,
+                                    IApplicationUserAccessor userAccessor)
         {
             _context = context;
             _flickrService = flickrService;
             _userAccessor = userAccessor;
+            //blobUtility = new HomeController.BlobUtility(_optionsAccessor.Value.StorageAccountNameOption, _optionsAccessor.Value.StorageAccountKeyOption);
         }
+
+        //public BlobUtility(string accountName, string accountKey)
+        //{
+        //    CloudStorageAccount storageAccount = 
+        //}
 
         public IActionResult Index() //async Task<>
         {
