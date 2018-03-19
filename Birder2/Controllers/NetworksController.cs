@@ -89,7 +89,7 @@ namespace Birder2.Controllers
             try
             {
                 ApplicationUser loggedinUser = await _userRepository.GetUserAndNetworkAsyncByUserName(await _userAccessor.GetUser());
-                FollowUserViewModel followUserViewModel = new FollowUserViewModel();
+                var followUserViewModel = new FollowUserViewModel();
 
                 if (String.IsNullOrEmpty(searchCriterion))
                 {

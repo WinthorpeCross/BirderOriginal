@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>aspnet-Birder2-93D4229D-DE28-4026-BE48-156ABE712AEC</UserSecretsId>
+    <StartupObject>Birder2.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -105,9 +106,9 @@
     <PackageReference Include="knockoutjs" Version="3.4.2" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" PrivateAssets="All" />
     <PackageReference Include="WindowsAzure.Storage" Version="9.1.0" />
-    <PackageReference Include="xunit" Version="2.3.1" />
   </ItemGroup>
 
   <ItemGroup>
