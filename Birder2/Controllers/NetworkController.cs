@@ -16,13 +16,13 @@ using System;
 
 namespace Birder2.Controllers
 {
-    public class NetworksController : Controller
+    public class NetworkController : Controller
     {
         private readonly IApplicationUserAccessor _userAccessor;
         private readonly IUserRepository _userRepository;
         private readonly ILogger _logger;
 
-        public NetworksController(IApplicationUserAccessor userAccessor
+        public NetworkController(IApplicationUserAccessor userAccessor
                                         ,ILogger<Network> logger
                                             ,IUserRepository userRepository)
         {

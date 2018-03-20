@@ -7,7 +7,7 @@
             //alert("Follow route");
 
             $.ajax({
-                url: "/Networks/Follow/",
+                url: "/Network/Follow/",
                 type: "POST",
                 data: ko.toJSON(data),
                 headers:
@@ -36,7 +36,7 @@
             //alert("Unfollow route?");
 
             $.ajax({
-                url: "/Networks/UnFollow/",
+                url: "/Network/UnFollow/",
                 type: "POST",
                 data: ko.toJSON(data),
                 headers:

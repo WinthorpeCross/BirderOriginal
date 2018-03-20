@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using System.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.WindowsAzure.Storage;
+using System.Collections.Generic;
 
 namespace Birder2.Controllers
 {
