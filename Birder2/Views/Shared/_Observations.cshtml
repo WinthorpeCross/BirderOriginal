@@ -17,7 +17,7 @@
                 }
                 else
                 {
-                    <h5>Spotted by<b> @Model.ApplicationUser.UserName [link to profile page]</b> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h5>
+                    <h5>Spotted by <a asp-controller="Network" asp-action="Show" asp-route-userName="@Model.ApplicationUser.UserName" class="btn-sm">@Model.ApplicationUser.UserName</a> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h5>
                 } }
         <div>
             <a asp-action="Details" asp-route-id="@Model.ObservationId" class="btn-sm">View</a>

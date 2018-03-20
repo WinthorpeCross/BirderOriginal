@@ -123,5 +123,19 @@ namespace Birder2.Services
             loggedinUser.Following.Remove(userToUnfollow.Followers.FirstOrDefault());
             _dbContext.SaveChanges();
         }
+
+        // ToDo: DRY - this method is repeated verbatim in the observation repository
+        public IQueryable<Observation> GetUsersObservationsList(string userId)
+        {
+            var observations = _dbContext.Observations
+                .Where(o => o.ApplicationUserId == userId)
+                    .Include(au => au.ApplicationUser)
+                    .Include(b => b.Bird)
+                    .Include(ot => ot.ObservationTags)
+                        .ThenInclude(t => t.Tag)
+                    .OrderByDescending(d => d.ObservationDateTime)
+                    .AsNoTracking();
+            return observations;
+        }
     }
 }

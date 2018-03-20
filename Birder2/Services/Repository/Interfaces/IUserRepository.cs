@@ -1,6 +1,7 @@
 ﻿using Birder2.Models;
 using Birder2.ViewModels;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Birder2.Services
@@ -15,5 +16,6 @@ namespace Birder2.Services
         void UnFollow(ApplicationUser loggedinUser, ApplicationUser userToUnfollow);
         Task<IEnumerable<UserViewModel>> GetSuggestedBirdersToFollow(ApplicationUser user);
         Task<IEnumerable<UserViewModel>> GetSuggestedBirdersToFollow(ApplicationUser user, string searchCriterion);
+        IQueryable<Observation> GetUsersObservationsList(string userId);
     }
 }

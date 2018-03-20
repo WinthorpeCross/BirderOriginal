@@ -1,0 +1,41 @@
+﻿@model Birder2.Controllers.NetworkController.UserHomeViewModel
+
+@*<div class="alert-success" role="alert">
+    <span data-bind="text: StatusMessage" />
+</div>
+
+<h3>You are following <span data-bind="text: FollowingCount"></span> <i>Birders</i>:</h3>*@
+
+<section>
+    <div class="media">
+        <div class="media-left media-middle">
+            <img src="~/images/man.png" class="media-object">
+        </div>
+        <div class="media-body">
+            <h3 class="media-heading">@Model.UserName</h3>
+            <div>
+                <div class="form-group"><button class="btn btn-danger btn-xs" @*data-bind="click: $parent.unFollow"*@>Unfollow</button></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<br />
+
+<h4>@Model.UserName's observations</h4>
+
+@{
+    ViewData["Title"] = "My Observations";
+
+
+    @foreach (var observation in Model.Observations.Results)
+    {
+        <div class="container">
+            @Html.Partial("_Observations", observation)
+        </div>
+    }
+}
+<br />
+
+@(await Component.InvokeAsync<PagerViewComponent>(Model.Observations))

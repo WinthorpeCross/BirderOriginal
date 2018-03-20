@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Birder2.Extensions;
 using System;
+using System.Linq;
 
 /*
 <script>
@@ -18,6 +19,7 @@ namespace Birder2.Controllers
 {
     public class NetworkController : Controller
     {
+        private const int pageSize = 10;
         private readonly IApplicationUserAccessor _userAccessor;
         private readonly IUserRepository _userRepository;
         private readonly ILogger _logger;
@@ -31,29 +33,39 @@ namespace Birder2.Controllers
             _userRepository = userRepository;
         }
 
-        // GET: Networks/Show/Winthorpe
-        public async Task<IActionResult> Show(string userName)
+        public class UserHomeViewModel
+        {
+            public string UserName { get; set; }
+            public byte[] ProfileImage { get; set; }
+            public bool IsFollowing { get; set; }
+            public PagedResult<Observation> Observations { get; set; }
+        }
+
+        // GET: Network/Show/Winthorpe
+        public async Task<IActionResult> Show(string userName, int page)
         {
             if (userName == null)
             {
                 return NotFound();
             }
 
-            ApplicationUser loggedinUser = await _userRepository.GetUserAndNetworkAsyncByUserName(await _userAccessor.GetUser());
-            ApplicationUser userToShow = await _userRepository.GetUserAndNetworkAsyncByUserName(userName);
+            if (page == 0)
+            {
+                page = 1;
+            }
 
+            var loggedinUser = await _userRepository.GetUserAndNetworkAsyncByUserName(await _userAccessor.GetUser());
+            var userToShow = await _userRepository.GetUserAndNetworkAsyncByUserName(userName);
+
+            var followingList = loggedinUser.Following.ToList();
+            var viewModel = new UserHomeViewModel();
+            viewModel.UserName = userToShow.UserName;
+            viewModel.Observations = await _userRepository.GetUsersObservationsList(userToShow.Id).GetPaged(page, pageSize);
+            //from following in loggedinUser.Following
+            //                    select following.ApplicationUser.UserName;
             /*
             Is userToShow in loggedinUser's network?
             */
-
-            var viewModel = 1;
-
-            //var applicationUser = await _.ApplicationUser
-            //    .SingleOrDefaultAsync(m => m.Id == id);
-            //if (applicationUser == null)
-            //{
-            //    return NotFound();
-            //}
 
             return View(viewModel);
         }
