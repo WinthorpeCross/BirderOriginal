@@ -137,5 +137,13 @@ namespace Birder2.Services
                     .AsNoTracking();
             return observations;
         }
+
+        // ToDo: DRY - this method is repeated verbatim in the observation repository
+        public async Task<int> UniqueSpeciesCount(ApplicationUser user)
+        {
+            return await (from observations in _dbContext.Observations
+                          where (observations.ApplicationUserId == user.Id)
+                          select observations.BirdId).Distinct().CountAsync();
+        }
     }
 }

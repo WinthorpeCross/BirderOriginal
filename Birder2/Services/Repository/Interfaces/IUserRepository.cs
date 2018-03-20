@@ -17,5 +17,6 @@ namespace Birder2.Services
         Task<IEnumerable<UserViewModel>> GetSuggestedBirdersToFollow(ApplicationUser user);
         Task<IEnumerable<UserViewModel>> GetSuggestedBirdersToFollow(ApplicationUser user, string searchCriterion);
         IQueryable<Observation> GetUsersObservationsList(string userId);
+        Task<int> UniqueSpeciesCount(ApplicationUser user);
     }
 }
