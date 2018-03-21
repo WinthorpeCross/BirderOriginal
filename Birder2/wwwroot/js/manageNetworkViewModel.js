@@ -7,8 +7,6 @@
 
     self.unFollow = function (data, event) {
         if (event.target.innerText === 'Unfollow') {
-            //alert("Unfollow route");
-
             $.ajax({
                 url: "/Network/UnFollow/",
                 type: "POST",
@@ -35,8 +33,6 @@
             });
         }
         else {
-            //alert("Follow route?");
-
             $.ajax({
                 url: "/Network/Follow/",
                 type: "POST",

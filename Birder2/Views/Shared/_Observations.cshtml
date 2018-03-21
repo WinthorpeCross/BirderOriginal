@@ -13,15 +13,15 @@
             @{
                 if (Model.ApplicationUserId == UserManager.GetUserAsync(User).Result.Id)
                 {
-                    <h5>Spotted by <b>You</b> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h5>
+                    <h5>Spotted by <a asp-controller="Network" asp-action="Show" asp-route-userName="@Model.ApplicationUser.UserName">You</a> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h5>
                 }
                 else
                 {
-                    <h5>Spotted by <a asp-controller="Network" asp-action="Show" asp-route-userName="@Model.ApplicationUser.UserName" class="btn-sm">@Model.ApplicationUser.UserName</a> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h5>
+                    <h5>Spotted by <a asp-controller="Network" asp-action="Show" asp-route-userName="@Model.ApplicationUser.UserName">@Model.ApplicationUser.UserName</a> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h5>
                 } }
-        <div>
-            <a asp-action="Details" asp-route-id="@Model.ObservationId" class="btn-sm">View</a>
-        </div>
-        </div>
+            <div>
+                <a asp-action="Details" asp-route-id="@Model.ObservationId" class="btn-sm">View</a>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
