@@ -33,8 +33,6 @@
             })
         }
         else {
-            //alert("Unfollow route?");
-
             $.ajax({
                 url: "/Network/UnFollow/",
                 type: "POST",

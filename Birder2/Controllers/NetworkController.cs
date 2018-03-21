@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Birder2.Extensions;
 using System;
-using System.Linq;
 
 /*
 <script>
@@ -19,7 +18,6 @@ namespace Birder2.Controllers
 {
     public class NetworkController : Controller
     {
-        private const int pageSize = 10;
         private readonly IApplicationUserAccessor _userAccessor;
         private readonly IUserRepository _userRepository;
         private readonly ILogger _logger;
@@ -31,50 +29,6 @@ namespace Birder2.Controllers
             _userAccessor = userAccessor;
             _logger = logger;
             _userRepository = userRepository;
-        }
-
-        public class UserHomeViewModel
-        {
-            public string UserName { get; set; }
-            public byte[] ProfileImage { get; set; }
-            public bool IsFollowing { get; set; }
-            public int UniqueSpeciesCount { get; set; }
-            public PagedResult<Observation> Observations { get; set; }
-        }
-
-        // GET: Network/Show/Winthorpe
-        public async Task<IActionResult> Show(string userName, int page)
-        {
-            if (userName == null)
-            {
-                return NotFound();
-            }
-
-            if (page == 0)
-            {
-                page = 1;
-            }
-
-            var loggedinUser = await _userRepository.GetUserAndNetworkAsyncByUserName(await _userAccessor.GetUser());
-            var userToShow = await _userRepository.GetUserAndNetworkAsyncByUserName(userName);
-
-            var followingList = loggedinUser.Following.ToList();
-            var viewModel = new UserHomeViewModel();
-
-            if (loggedinUser != userToShow)
-            {
-                viewModel.IsFollowing = loggedinUser.Following.Any(cus => cus.ApplicationUser.UserName == userToShow.UserName);
-            }
-            viewModel.UserName = userToShow.UserName;
-            viewModel.UniqueSpeciesCount = await _userRepository.UniqueSpeciesCount(userToShow);
-            viewModel.Observations = await _userRepository.GetUsersObservationsList(userToShow.Id).GetPaged(page, pageSize);
-            //from following in loggedinUser.Following
-            //                    select following.ApplicationUser.UserName;
-            /*
-            Is userToShow in loggedinUser's network?
-            */
-
-            return View(viewModel);
         }
 
         // GET: Networks
