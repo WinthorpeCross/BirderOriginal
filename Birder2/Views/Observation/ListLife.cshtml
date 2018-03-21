@@ -7,7 +7,7 @@
 
 <h2>Your Life List</h2>
 
-<h4>You have observed  @Model.TotalSpecies species in @Model.TotalObservations observations:</h4>
+<h4>You have observed <b>@Model.TotalSpecies</b> species in <b>@Model.TotalObservations</b> observations:</h4>
 
 <div class="panel panel-default">
     @*<div class="panel-heading">Life List</div>*@
@@ -18,21 +18,20 @@
                     Count
                 </th>
                 <th>
-                    Vernacular Name
+                    Vernacular name
                 </th>
                 <th>
-                    Scientific Name
+                    Scientific name
                 </th>
                 <th>
-                    Est. population
+                    Population estimate<sup>1</sup>
                 </th>
                 <th>
-                    Status in Britain
+                    Status in Britain<sup>1</sup>
                 </th>
                 <th>
-                    Conservation List
+                    Conservation List<sup>2</sup>
                 </th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -40,7 +39,7 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Count)
+                        <span class="badge">@Html.DisplayFor(modelItem => item.Count)</span>  
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Vernacular)
@@ -61,4 +60,9 @@
             }
         </tbody>
     </table>
+</div>
+
+<div>
+    <p><sup>1</sup> The British list of 603 species occurring in Britain is kept by the British Ornithologists' Union (BOU).  See <a href="https://www.bto.org/about-birds/birdfacts/british-list" target="_blank"> here</a> for the full data and the explanation.</p>
+    <p><sup>2</sup> Data are from <i>Birds of Conservation Concern 4: the population status of birds in the UK, Channel Islands and Isle of Man.</i>  View a summary <a href="https://www.bto.org/sites/default/files/publications/state-of-uk-birds-2016.pdf" target="_blank"> here</a>.</p>
 </div>
