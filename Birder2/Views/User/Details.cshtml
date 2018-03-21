@@ -11,10 +11,9 @@
             <h3 class="media-heading">@Model.UserName</h3>
             @{ if (Model.UserName != UserManager.GetUserAsync(User).Result.UserName) {
                     var followButtonText = Model.IsFollowing == false ? "Follow" : "Unfollow";
-            <div>
-                @*<div class="form-group"><button class="btn btn-danger btn-xs">@followButtonText</button></div>*@
-                <a asp-action="@followButtonText" asp-route-userName="@Model.UserName" asp-route-currentPage="@Model.Observations.CurrentPage" class="btn btn-danger btn-xs">@followButtonText</a>
-            </div>
+                    <div>
+                        <a asp-action="@followButtonText" asp-route-userName="@Model.UserName" asp-route-currentPage="@Model.Observations.CurrentPage" class="btn btn-danger btn-xs">@followButtonText</a>
+                    </div>
              } }
         </div>
     </div>
@@ -36,3 +35,7 @@
 <br />
 
 @(await Component.InvokeAsync<PagerViewComponent>(Model.Observations))
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

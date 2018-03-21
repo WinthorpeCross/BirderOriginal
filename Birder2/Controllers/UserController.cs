@@ -26,7 +26,6 @@ namespace Birder2.Controllers
             _logger = logger;
         }
 
-        // GET: Network/Show/Winthorpe
         public async Task<IActionResult> Details(string userName, int page)
         {
             if (userName == null)
@@ -61,7 +60,6 @@ namespace Birder2.Controllers
         //ToDo : Add validation
         public async Task<IActionResult> Follow(string userName, int currentPage)
         {
-
             _logger.LogInformation(LoggingEvents.UpdateItem, "Follow action called");
             try
             {
@@ -113,14 +111,5 @@ namespace Birder2.Controllers
                 return RedirectToAction("Details", new { userName = userName, page = currentPage });
             }
         }
-
-
-
-
-
-        //private bool ApplicationUserExists(string id)
-        //{
-        //    return _context.ApplicationUser.Any(e => e.Id == id);
-        //}
     }
 }
