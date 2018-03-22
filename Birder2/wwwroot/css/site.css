@@ -15,7 +15,7 @@
     overflow: hidden;
 }
 
-.container--horizontal-stack {
+.birds--horizontal-stack {
     white-space: nowrap;
     overflow: auto;
     max-width: 100%;
@@ -84,6 +84,13 @@ aside {
 
 .class--aside-block-body-Top5 {
     padding: 16px;
+}
+
+.floating-panel { 
+    position: absolute;
+    top: 120px;
+    left: 25%;
+    z-index: 10; 
 }
 
 .class--map {

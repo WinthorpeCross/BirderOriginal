@@ -1,4 +1,4 @@
-﻿@model Birder2.ViewModels.BirdDetailViewModel
+﻿@model BirdDetailViewModel
 
 @{
     ViewData["Title"] = Model.Bird.EnglishName;
@@ -6,119 +6,159 @@
 
 <h2>@Model.Bird.EnglishName <small><i> @Model.Bird.Species</i></small></h2>
 
-<p><i>Might need a disclaimer here!  Returning images of species like 'woodock' or 'great tit' could return all sorts of things!</i></p>
-
-<div>
-    <div class="container--horizontal-stack">
-        @foreach (var photo in Model.BirdPhotos)
-        {
-            <div class="wrapper--horizontal-stack">
-                <a href="@photo.WebUrl" target="_blank">
-                    <img src="@photo.LargeSquareThumbnailUrl" alt="<<>species name>>" title="@photo.Title">
-                </a>
-            </div>
-        }
+<p><i>Might need a disclaimer here!  Returning images of species like 'woodock' or 'great tit' or 'booby' could return all sorts of things!</i></p>
+<div class="row">
+    <div class="col-sm-4">
     </div>
-    <br />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Bird.Class)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Bird.Class)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Bird.Order)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Bird.Order)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Bird.Family)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Bird.Family)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Bird.Genus)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Bird.Genus)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Bird.Species)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Bird.Species)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Bird.EnglishName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Bird.EnglishName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Bird.InternationalName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Bird.InternationalName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Bird.Category)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Bird.Category)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Bird.PopulationSize)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Bird.PopulationSize)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Bird.BtoStatusInBritain)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Bird.BtoStatusInBritain)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Bird.ThumbnailUrl)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Bird.ThumbnailUrl)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Bird.SongUrl)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Bird.SongUrl)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Bird.CreationDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Bird.CreationDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Bird.LastUpdateDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Bird.LastUpdateDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Bird.BirdConserverationStatus)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Bird.BirdConserverationStatus.ConservationStatus)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Bird.BtoStatusInBritain)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Bird.BirderStatus)
-        </dd>
-    </dl>
+    <div class="col-sm-8">
+        <button class="btn btn-link" type="button" onclick="expand()" style="float: right;">Expand All</button>
+        <button class="btn btn-link" type="button" onclick="collapse()" style="float: right;">Collapse All</button>
+    </div>
 </div>
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse1"><b>Latest photographs from Flickr</b></a>
+            </h4>
+        </div>
+        <div id="collapse1" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div class="birds--horizontal-stack">
+                    @foreach (var photo in Model.BirdPhotos)
+                    {
+                        <div class="wrapper--horizontal-stack">
+                            <a href="@photo.WebUrl" target="_blank">
+                                <img src="@photo.LargeSquareThumbnailUrl" alt="<<>species name>>" title="@photo.Title">
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse2"><b>Scientific classification</b></a>
+            </h4>
+        </div>
+        <div id="collapse2" class="panel-collapse collapse">
+            <div class="panel-body">
+                @{/* TODO: Force same column size with CSS */}
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon">@Html.DisplayNameFor(model => model.Bird.Class):</span>
+                    <span class="form-control" aria-describedby="sizing-addon1">@Html.DisplayFor(model => model.Bird.Class)</span>
+                </div>
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon">@Html.DisplayNameFor(model => model.Bird.Order):</span>
+                    <span class="form-control" aria-describedby="sizing-addon1">@Html.DisplayFor(model => model.Bird.Order)</span>
+                </div>
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon">@Html.DisplayNameFor(model => model.Bird.Family):</span>
+                    <span class="form-control" aria-describedby="sizing-addon1">@Html.DisplayFor(model => model.Bird.Family)</span>
+                </div>
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon">@Html.DisplayNameFor(model => model.Bird.Genus):</span>
+                    <span class="form-control" aria-describedby="sizing-addon1">@Html.DisplayFor(model => model.Bird.Genus)</span>
+                </div>
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon">@Html.DisplayNameFor(model => model.Bird.Species):</span>
+                    <span class="form-control" aria-describedby="sizing-addon1">@Html.DisplayFor(model => model.Bird.Species)</span>
+                </div>
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon">@Html.DisplayNameFor(model => model.Bird.EnglishName):</span>
+                    <span class="form-control" aria-describedby="sizing-addon1">@Html.DisplayFor(model => model.Bird.EnglishName)</span>
+                </div>
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon">@Html.DisplayNameFor(model => model.Bird.InternationalName):</span>
+                    <span class="form-control" aria-describedby="sizing-addon1">@Html.DisplayFor(model => model.Bird.InternationalName)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" @*data-parent="#accordion" *@ href="#collapse3"><b>Status in Britain</b></a>
+            </h4>
+        </div>
+        <div id="collapse3" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon">@Html.DisplayNameFor(model => model.Bird.BtoStatusInBritain):</span>
+                    <span class="form-control" aria-describedby="sizing-addon1">@Html.DisplayFor(model => model.Bird.BtoStatusInBritain)</span>
+                </div>
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon">@Html.DisplayNameFor(model => model.Bird.PopulationSize):</span>
+                    <span class="form-control" aria-describedby="sizing-addon1">@Html.DisplayFor(model => model.Bird.PopulationSize)</span>
+                </div>
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon">@Html.DisplayNameFor(model => model.Bird.BirdConserverationStatus.ConservationStatus):</span>
+                    <span class="form-control" aria-describedby="sizing-addon1">@Html.DisplayFor(model => model.Bird.BirdConserverationStatus.ConservationStatus)</span>
+                </div>
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon">@Html.DisplayNameFor(model => model.Bird.BirdConserverationStatus.Description):</span>
+                    <span class="form-control" aria-describedby="sizing-addon1">@Html.DisplayFor(model => model.Bird.BirdConserverationStatus.Description)</span>
+                </div>
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon">@Html.DisplayNameFor(model => model.Bird.Category):</span>
+                    <span class="form-control" aria-describedby="sizing-addon1">@Html.DisplayFor(model => model.Bird.Category)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse4"><b>Song</b></a>
+            </h4>
+        </div>
+        <div id="collapse4" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="container">
+                    @{ if (!string.IsNullOrEmpty(Model.Bird.SongUrl))
+                        {
+                            <audio controls>
+                                <source src = "@Model.Bird.SongUrl" type = "audio/mpeg" />
+                                Your browser does not support the audio element.
+                            </audio>
+                        }
+                        else
+                        { <p>A bird song is not currently available.</p> }
+                        }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" @*data-parent="#accordion" *@ href="#collapse7"><b>Sightings distribution map</b><i> (coming soon)</i></a>
+            </h4>
+        </div>
+        <div id="collapse7" class="panel-collapse collapse">
+            <div class="panel-body">
+                @{/* TODO: Sightings distribution map */}
+                @*<div id="map" class="class--map"></div>*@
+            </div>
+        </div>
+    </div>
+</div>
+
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+<small class="pull-right">Created: @Model.Bird.CreationDate; last update: @Model.Bird.LastUpdateDate</small>
+
+
+<script>
+    function expand() {
+        $('.panel-collapse').collapse('show');
+    }
+    function collapse() {
+        $('.panel-collapse').collapse('hide');
+    }
+</script>
