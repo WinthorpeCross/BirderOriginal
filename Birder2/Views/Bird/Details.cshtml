@@ -116,7 +116,7 @@
         </div>
         <div id="collapse4" class="panel-collapse collapse">
             <div class="panel-body">
-                <div class="container">
+                <div class="class--bird-song-control">
                     @{ if (!string.IsNullOrEmpty(Model.Bird.SongUrl))
                         {
                             <audio controls>
@@ -125,7 +125,7 @@
                             </audio>
                         }
                         else
-                        { <p>A bird song is not currently available.</p> }
+                        { <p>A bird song recording is not currently available for the @Model.Bird.EnglishName</p> }
                         }
                 </div>
             </div>

@@ -54,6 +54,7 @@
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
+                self.disableSubmitButton(false);
                 if (XMLHttpRequest.status === 400) {
                     $('#MessageToClient').text(XMLHttpRequest.responseText);
                 }

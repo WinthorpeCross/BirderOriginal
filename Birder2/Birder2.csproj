@@ -95,6 +95,8 @@
     <Compile Remove="Data\Migrations\20180304145749_bird changes.Designer.cs" />
     <Compile Remove="Data\Migrations\20180313150638_Nav.cs" />
     <Compile Remove="Data\Migrations\20180313150638_Nav.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180322021318_j.cs" />
+    <Compile Remove="Data\Migrations\20180322021318_j.Designer.cs" />
   </ItemGroup>
 
 

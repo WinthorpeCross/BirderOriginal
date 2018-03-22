@@ -25,103 +25,161 @@
 
 <form id="form">
 
-    <table class="table">
-        <tr>
-            <th class="text-right col-sm-2">Quantity</th>
-            <th class="text-center">Bird species</th>
-            <th div class="text-right">
-                <button class="btn btn-info btn-xs" data-bind="click: addObservedSpecies">Add</button>
-                <button class="btn btn-info btn-xs" data-bind="click: removeObservedSpecies">Remove</button>
-            </th>
-        </tr>
-        <tbody data-bind="foreach: ObservedSpecies">
-            <tr>
-                <td class="form-group col-sm-3"><input name="Quantity" class="form-control input-sm text-right" data-bind="attr: {'Id': 'Quantity_' + $index()}, value: Quantity" /></td>
-                <td colspan="2" class="form-group">
-                    @Html.DropDownListFor(m => m.Observation.BirdId,
-                        new SelectList(Model.Birds, "BirdId", "EnglishName"),
-                            new
-                            {
-                                @name = "BirdId",
-                                @class = "form-control selectpicker showtick",
-                                data_bind = "attr: {'Id': 'BirdId_' + $index()}, selectPicker: {}, value: BirdId",
-                                title = "Choose a bird species...",
-                                data_live_search = "true",
-                                data_show_subtext = "true"
-                            })
-                </td>
-                @*<td class="form-group"></td>*@
-            </tr>
-        </tbody>
-        <tr>
-            <td>&nbsp;</td>
-            <td class="form-group"><span class="form-control text-right">Total species:</span></td>
-            <td class="form-group"><span name="Total" class="form-control text-left" data-bind="text: Total"></span></td>
-            @*<td>&nbsp;</td>*@
-        </tr>
-    </table>
+    <div class="row">
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-8">
+            <button class="btn btn-link" type="button" onclick="expand()" style="float: right;">Expand All</button>
+            <button class="btn btn-link" type="button" onclick="collapse()" style="float: right;">Collapse All</button>
+        </div>
+    </div>
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#collapse1"><b>Add bird species</b></a>
+                </h4>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <table class="table">
+                        <tr>
+                            <th class="text-right col-sm-2">Quantity</th>
+                            <th class="text-center">Bird species</th>
+                            <th div class="text-right">
+                                <button class="btn btn-info btn-xs" data-bind="click: addObservedSpecies">Add</button>
+                                <button class="btn btn-info btn-xs" data-bind="click: removeObservedSpecies">Remove</button>
+                            </th>
+                        </tr>
+                        <tbody data-bind="foreach: ObservedSpecies">
+                            <tr>
+                                <td class="form-group col-sm-3"><input name="Quantity" class="form-control input-sm text-right" data-bind="attr: {'Id': 'Quantity_' + $index()}, value: Quantity" /></td>
+                                <td colspan="2" class="form-group">
+                                    @Html.DropDownListFor(m => m.Observation.BirdId,
+                                         new SelectList(Model.Birds, "BirdId", "EnglishName"),
+                                             new
+                                             {
+                                                 @name = "BirdId",
+                                                 @class = "form-control selectpicker showtick",
+                                                 data_bind = "attr: {'Id': 'BirdId_' + $index()}, selectPicker: {}, value: BirdId",
+                                                 title = "Choose a bird species...",
+                                                 data_live_search = "true",
+                                                 data_show_subtext = "true"
+                                             })
+                                                        </td>
+                                @*<td class="form-group"></td>*@
+                            </tr>
+                        </tbody>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td class="form-group"><span class="form-control text-right">Total species:</span></td>
+                            <td class="form-group"><span name="Total" class="form-control text-left" data-bind="text: Total"></span></td>
+                            @*<td>&nbsp;</td>*@
+                        </tr>
+                    </table>
+                    <div class="form-group">
+                        @{/* TODO: Sort out this fecking date picker */}
+                        @*<input asp-for="Observation.ObservationDateTime" data-bind="datePicker : Observation.ObservationDateTime" class="form-control"/>*@
+                        <label class="control-label" for="Observation.ObservationDateTime">Date:</label>
+                        <input class="form-control" data-bind="datePicker : Observation.ObservationDateTime" type="date" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#collapse2"><b>Add observation notes</b></a>
+                </h4>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="control-label" for="Observation.NoteGeneral">General notes:</label>
+                        <input class="form-control" name="Observation.NoteGeneral" data-bind="value: Observation.NoteGeneral" />
+                    </div>
 
-    <div class="form-group">
-        @*<input asp-for="Observation.ObservationDateTime" data-bind="datePicker : Observation.ObservationDateTime" class="form-control"/>*@
-        <label class="control-label" for="Observation.ObservationDateTime">Date:</label>
-        <input class="form-control" data-bind="datePicker : Observation.ObservationDateTime" type="date"/>
+                    <div class="form-group">
+                        <label class="control-label" for="Observation.NoteHabitat">Habitat notes:</label>
+                        <input class="form-control" name="Observation.NoteHabitat" data-bind="value: Observation.NoteHabitat" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="Observation.NoteWeather">Weather notes:</label>
+                        <input class="form-control" name="Observation.NoteWeather" data-bind="value: Observation.NoteWeather" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="Observation.NoteAppearance">Bird appearance notes:</label>
+                        <input class="form-control" name="Observation.NoteAppearance" data-bind="value: Observation.NoteAppearance" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="Observation.NoteBehaviour">Bird behaviour notes:</label>
+                        <input class="form-control" name="Observation.NoteBehaviour" data-bind="value: Observation.NoteBehaviour" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="Observation.NoteVocalisation">Bird vocalisation notes:</label>
+                        <input class="form-control" name="Observation.NoteVocalisation" data-bind="value: Observation.NoteVocalisation" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#collapse7"><b>Set observation location</b> <i>(use the map control to set the location):</i></a>
+                </h4>
+            </div>
+            <div id="collapse7" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="control-label"></label>
+                        <input class="form-control" id="set" disabled />
+                    </div>
+                    @*<div class="form-group">
+            <input class="form-control" name="Observation.LocationLatitude" data-bind="value: Observation.LocationLatitude" id="latitude" />
+            <input class="form-control" name="Observation.LocationLongitude" data-bind="value: Observation.LocationLongitude" id="longitude" />
+        </div>*@
+
+                    @*<div class="container" id="floating-panel">
+            <input id="address" type="text" value="">
+            <input id="submit" type="button" value="Search">
+        </div>*@
+
+                    <div class="row" id="floating-panel">
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                <input class="form-control" placeholder="Type a placename or postcode" id="address" type="text" value="">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" id="submit">Search</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="map" class="class--map"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label class="control-label" for="Observation.NoteGeneral">General notes:</label>
-        <input class="form-control" name="Observation.NoteGeneral" data-bind="value: Observation.NoteGeneral" />
-    </div>
-
-    <div class="form-group">
-        <label class="control-label" for="Observation.NoteHabitat">Habitat notes:</label>
-        <input class="form-control" name="Observation.NoteHabitat" data-bind="value: Observation.NoteHabitat" />
-    </div>
-
-    <div class="form-group">
-        <label class="control-label" for="Observation.NoteWeather">Weather notes:</label>
-        <input class="form-control" name="Observation.NoteWeather" data-bind="value: Observation.NoteWeather" />
-    </div>
-
-    <div class="form-group">
-        <label class="control-label" for="Observation.NoteAppearance">Bird appearance notes:</label>
-        <input class="form-control" name="Observation.NoteAppearance" data-bind="value: Observation.NoteAppearance" />
-    </div>
-
-    <div class="form-group">
-        <label class="control-label" for="Observation.NoteBehaviour">Bird behaviour notes:</label>
-        <input class="form-control" name="Observation.NoteBehaviour" data-bind="value: Observation.NoteBehaviour" />
-    </div>
-
-    <div class="form-group">
-        <label class="control-label" for="Observation.NoteVocalisation">Bird vocalisation notes:</label>
-        <input class="form-control" name="Observation.NoteVocalisation" data-bind="value: Observation.NoteVocalisation" />
-    </div>
-
-
-    <div class="form-group">
-        <label class="control-label">Observation location (use the map control to set the location):</label>
-        <input class="form-control" id="set" disabled />
-    </div>
-    @*<div class="form-group">
-        <input class="form-control" name="Observation.LocationLatitude" data-bind="value: Observation.LocationLatitude" id="latitude" />
-        <input class="form-control" name="Observation.LocationLongitude" data-bind="value: Observation.LocationLongitude" id="longitude" />
-    </div>*@
-
-    <div class="container" id="floating-panel">
-        <input id="address" type="text" value="">
-        <input id="submit" type="button" value="Search">
-    </div>
-
-    <div id="map" class="class--map">
-    </div>
-
-    <hr />
+    <br />
     <div class="container col-lg-12">
         <p><button class="btn btn-primary btn-block" type="submit" data-bind="disable:disableSubmitButton">Post Observation</button></p>
     </div>
 </form>
 
 <script>
+    function expand() {
+        $('.panel-collapse').collapse('show');
+    }
+    function collapse() {
+        $('.panel-collapse').collapse('hide');
+    }
+
     var markers = [];
 
     function initMap() {

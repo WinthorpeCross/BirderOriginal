@@ -44,10 +44,11 @@ namespace Birder2.Models
         [Display(Name = "BTO Status in Britain")]
         public string BtoStatusInBritain { get; set; }
 
-        [Url]
+        // validation removed - causes faults on Model.Validate if url is empty
+        //[Url]
         public string ThumbnailUrl { get; set; }
 
-        [Url]
+        //[Url]
         public string SongUrl { get; set; }
 
         public DateTime CreationDate { get; set; }

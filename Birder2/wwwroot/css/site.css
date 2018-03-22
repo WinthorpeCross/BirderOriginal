@@ -99,6 +99,10 @@ aside {
     background-color: grey;
 }
 
+.class--bird-song-control {
+    text-align: center;
+    padding: 10px;
+}
 
 /* Carousel */
 .carousel-caption p {
