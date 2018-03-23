@@ -79,16 +79,15 @@
                         </tr>
                     </table>
                     <div class="form-group">
-                        @{/* TODO: Sort out this fucking date picker! */}
+                        @{/* TODO: Sort out this fucking datetime picker! */}
                         <label class="control-label" for="Observation.ObservationDateTime">Date:</label>
-                        @*<input class="form-control" type="text" data-bind="dateTimePicker: Observation.ObservationDateTime" />*@
                         <div class='input-group date' data-bind="dateTimePicker: Observation.ObservationDateTime">
                             <input type='text' class="form-control" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
-                        @*<input type="text" data-bind="dateTimePicker: Observation.ObservationDateTime,format:'dd/mm/yyyy'" />*@
+                        <input class="form-control" type="text" data-bind="dateTimePicker: Observation.ObservationDateTime" />
                         <div>Viewmodel date as text: <span data-bind="text: Observation.ObservationDateTime"></span></div>
                     </div>
                 </div>

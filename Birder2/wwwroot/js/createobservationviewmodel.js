@@ -8,39 +8,40 @@
         }
     };
 
-    ko.bindingHandlers.datepicker = {
-        init: function (element, valueAccessor, allBindingsAccessor) {
-            //initialize datepicker with some optional options
-            var options = allBindingsAccessor().datepickerOptions || {};
-            options['format'] = options['format'] || "dd/mm/yyyy"; //default format
-            $(element).datepicker(options);
+    //ko.bindingHandlers.datepicker = {
+    //    init: function (element, valueAccessor, allBindingsAccessor) {
+    //        //initialize datepicker with some optional options
+    //        var options = allBindingsAccessor().datepickerOptions || {};
+    //        options['format'] = options['format'] || "dd/mm/yyyy"; //default format
+    //        $(element).datepicker(options);
 
-            //when a user changes the date, update the view model
-            ko.utils.registerEventHandler(element, "changeDate", function (event) {
-                var value = valueAccessor();
-                if (ko.isObservable(value)) {
-                    value(event.date);
-                }
-            });
-        },
-        update: function (element, valueAccessor) {
-            //when the view model is updated, update the widget
-            var value = ko.unwrap(valueAccessor());
-            $(element).datepicker("update", new Date(value));
-        }
-    };
+    //        //when a user changes the date, update the view model
+    //        ko.utils.registerEventHandler(element, "changeDate", function (event) {
+    //            var value = valueAccessor();
+    //            if (ko.isObservable(value)) {
+    //                value(event.date);
+    //            }
+    //        });
+    //    },
+    //    update: function (element, valueAccessor) {
+    //        //when the view model is updated, update the widget
+    //        var value = ko.unwrap(valueAccessor());
+    //        $(element).datepicker("update", new Date(value));
+    //    }
+    //};
 
     ko.bindingHandlers.dateTimePicker = {
         init: function (element, valueAccessor, allBindingsAccessor) {
             //initialize datepicker with some optional options
             var options = allBindingsAccessor().dateTimePickerOptions || {};
+            options['format'] = options['format'] || "dddd, MMMM Do YYYY, h: mm: ss a"; //default format
             $(element).datetimepicker(options);
 
             //when a user changes the date, update the view model
             ko.utils.registerEventHandler(element, "dp.change", function (event) {
                 var value = valueAccessor();
                 if (ko.isObservable(value)) {
-                    if (event.date != null && !(event.date instanceof Date)) {
+                    if (event.date !== null && !(event.date instanceof Date)) {
                         value(event.date.toDate());
                     } else {
                         value(event.date);
