@@ -9,12 +9,13 @@
     <script src="~/js/knockout-3.4.2.js"></script>
     <script src="~/js/knockout.mapping-latest.js"></script>
     <script src="~/js/jqueryvalidate.js"></script>
+    @*<script src="~/js/datetimepicker.js"></script>*@
     <script src="~/js/jquery-validate.bootstrap-tooltip.js"></script>
     <script src="~/js/createobservationviewmodel.js"></script>
 
     <script type="text/javascript">
     var createObservationViewModel = new CreateObservationViewModel(@Html.Raw(data));
-        @*createObservationViewModel.Observation.LocationLatitude = @UserManager.GetUserAsync(User).Result.DefaultLocationLatitude*@
+
     ko.applyBindings(createObservationViewModel);
     </script>
 }
@@ -78,10 +79,9 @@
                         </tr>
                     </table>
                     <div class="form-group">
-                        @{/* TODO: Sort out this fecking date picker */}
-                        @*<input asp-for="Observation.ObservationDateTime" data-bind="datePicker : Observation.ObservationDateTime" class="form-control"/>*@
+                        @{/* TODO: Sort out this fucking date picker! */}
                         <label class="control-label" for="Observation.ObservationDateTime">Date:</label>
-                        <input class="form-control" data-bind="datePicker : Observation.ObservationDateTime" type="date" />
+                        <input class="form-control" data-bind="datepicker : Observation.ObservationDateTime"/>
                         <div>Viewmodel date as text: <span data-bind="text: Observation.ObservationDateTime"></span></div>
                     </div>
                 </div>
