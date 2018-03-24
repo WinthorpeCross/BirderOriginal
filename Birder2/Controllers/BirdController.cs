@@ -44,17 +44,20 @@ namespace Birder2.Controllers
                     {
                         viewModel.BirdsList = await _birdRepository.CommonBirdsList().GetPaged(page, pageSize);
                         viewModel.ShowAllBirds = options.ShowAllBirds;
+                        viewModel.ShowInTable = options.ShowInTable;
                     }
                     else
                     {
                         viewModel.BirdsList = await _birdRepository.AllBirdsList().GetPaged(page, pageSize);
                         viewModel.ShowAllBirds = options.ShowAllBirds;
+                        viewModel.ShowInTable = options.ShowInTable;
                     }
                 }
                 else
                 {
                     viewModel.BirdsList = await _birdRepository.AllBirdsList(options.SelectedBirdId).GetPaged(page, pageSize);
                     viewModel.SelectedBirdId = options.SelectedBirdId;
+                    viewModel.ShowInTable = options.ShowInTable;
                 }
                 return View(viewModel);
             }
