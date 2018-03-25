@@ -72,25 +72,6 @@ namespace Birder2.Controllers
             }
 
             return View(viewModel);
-
-
-                //adjusting for three options : network, mine, public
-
-                //if (filterState == 1)
-                //{
-                //    viewModel.Observations = await _observationRepository.MyObservationsList(user.Id).GetPaged(page, pageSize);
-                //    // set view title
-                //    return View(viewModel);
-                //}
-                //viewModel.Observations = await _observationRepository.MyNetworkObservationsList(user.Id).GetPaged(page, pageSize);
-                //viewModel.Observations = _observationRepository.MyNetworkObservationsList(user.Id).GetPaged<Observation, ObservationsIndexViewModel>(1, 5);
-                //set view title
-
-                // check if observations is == 0
-
-                // get public observations
-                //display message
-
             }
             catch (Exception ex)
             {
@@ -121,7 +102,7 @@ namespace Birder2.Controllers
             {
                 var model = new CreateObservationViewModel()
                 {
-                    Observation = new Observation() { ObservationDateTime = _systemClock.Now },
+                    Observation = new Observation(),
                     MessageToClient = string.Empty,
                     Birds = await _observationRepository.AllBirdsList(),
                 };

@@ -55,7 +55,6 @@ namespace Birder2.Controllers
         {
             ViewData["ReturnUrl"] = returnUrl;
 
-            // ANDREW !!!
             if (model.Email.IndexOf('@') > -1)
             {
                 //Validate email format
@@ -90,11 +89,26 @@ namespace Birder2.Controllers
                         ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                         return View(model);
                     }
+                    if (!await _userManager.IsEmailConfirmedAsync(user))
+                    {
+                        ModelState.AddModelError(string.Empty, "You must have a confirmed email to log in.");
+                        return View(model);
+                    }
                     else
                     {
                         userName = user.UserName;
                     }
                 }
+                else
+                {
+                    var user = await _userManager.FindByNameAsync(userName);
+                    if (!await _userManager.IsEmailConfirmedAsync(user))
+                    {
+                        ModelState.AddModelError(string.Empty, "You must have a confirmed email to log in.");
+                        return View(model);
+                    }
+                }
+        
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(userName, model.Password, model.RememberMe, lockoutOnFailure: false);
