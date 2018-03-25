@@ -20,28 +20,17 @@ namespace Birder2.Data
 
             var status = new ConserverationStatus[]
             {
-                new ConserverationStatus{ConservationStatus="Red",Description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now},
-                new ConserverationStatus{ConservationStatus="Amber",Description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now},
-                new ConserverationStatus{ConservationStatus="Green",Description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now},
-                new ConserverationStatus{ConservationStatus="Introduced",Description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now}
+                new ConserverationStatus{ConservationStatus="Red list",Description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now},
+                new ConserverationStatus{ConservationStatus="Amber list",Description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now},
+                new ConserverationStatus{ConservationStatus="Green list",Description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now},
+                new ConserverationStatus{ConservationStatus="Former breeder",Description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now}
             };
             foreach (ConserverationStatus cs in status)
             {
                 context.ConservationStatuses.Add(cs);
             }
             context.SaveChanges();
-            //
-            //var statuses = new BritishStatus[]
-            //{
-            //    new BritishStatus{ BirderStatusInBritain="Common",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now },
-            //       new BritishStatus{ BirderStatusInBritain="Uncommon",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now }
-            //};
-            //foreach (BritishStatus bs in statuses)
-            //{
-            //    context.BritishStatuses.Add(bs);
-            //}
-            //context.SaveChanges();
-            //
+
             var birds = new Bird[]
             {
                 new Bird { Class="Aves",Order="Accipitriformes",Family="Accipitridae",Genus="Accipiter",Species="Accipiter gentilis"
@@ -52,13 +41,13 @@ namespace Birder2.Data
 
                 new Bird { Class="Aves",Order="Passeriformes",Family="Fringillidae",Genus="Acanthis",Species="Acanthis hornemanni"
                     ,EnglishName="Arctic Redpoll",InternationalName=null,Category="A",PopulationSize="100-1,000 records",BtoStatusInBritain="Winter Visitor"
-                    ,ConserverationStatusId=1,BirderStatus=BirderStatus.Common
+                    ,ConserverationStatusId=2,BirderStatus=BirderStatus.Common
                     ,ThumbnailUrl="http://farm8.staticflickr.com/7263/13667553233_5bd7837a4f_s.jpg"
                     ,SongUrl="http://www.xeno-canto.org/sounds/uploaded/OOECIWCSWV/XC322840-LS_52078%20Hoary%20Redpoll%20call%20A.mp3"},
 
                 new Bird { Class="Aves",Order="Charadriiformes",Family="Scolopacidae",Genus="Scolopax",Species="Scolopax rusticola"
                     ,EnglishName="Woodcock",InternationalName="Eurasian Woodcock",Category="A",PopulationSize="10-100,000 pairs",BtoStatusInBritain="Winter Visitor"
-                    ,ConserverationStatusId=1,BirderStatus=BirderStatus.Uncommon
+                    ,ConserverationStatusId=3,BirderStatus=BirderStatus.Uncommon
                     ,ThumbnailUrl="http://farm6.staticflickr.com/5288/5290609250_7ea5df20fc_s.jpg"
                     ,SongUrl="http://www.xeno-canto.org/sounds/uploaded/WIPMNWUHXI/XC394860-Hs_LumandaEst_170526_2304.mp3"},
             };

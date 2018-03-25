@@ -34,11 +34,13 @@
         init: function (element, valueAccessor, allBindingsAccessor) {
             //initialize datepicker with some optional options
             var options = allBindingsAccessor().dateTimePickerOptions || {};
-            options['format'] = options['format'] || "dddd, MMMM Do YYYY, h: mm: ss a"; //default format
+            options['format'] = options['format'] || "dddd, Do MMMM YYYY, HH:mm"; //default format
+            options.ignoreReadonly = true;
             $(element).datetimepicker(options);
 
             //when a user changes the date, update the view model
             ko.utils.registerEventHandler(element, "dp.change", function (event) {
+                ignoreReadonly: true;
                 var value = valueAccessor();
                 if (ko.isObservable(value)) {
                     if (event.date !== null && !(event.date instanceof Date)) {

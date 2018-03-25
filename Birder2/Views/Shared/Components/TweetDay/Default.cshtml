@@ -1,15 +1,27 @@
 ﻿@model Birder2.ViewModels.TweetDayViewModel
 
-<div class="class--aside-block-header">
-    <h4><b>Tweet of the Day</b></h4>
-    <h4> <a asp-controller="Bird" asp-action="Details" asp-route-id="@Model.TweetOfTheDay.Bird.BirdId">@Model.TweetOfTheDay.Bird.EnglishName</a></h4>
-</div>
+@{ if (Model.TweetOfTheDay != null)
+    {
+        <div class="class--aside-block-header">
+            <h4><b>Tweet of the Day</b></h4>
+            <h4> <a asp-controller="Bird" asp-action="Details" asp-route-id="@Model.TweetOfTheDay.Bird.BirdId">@Model.TweetOfTheDay.Bird.EnglishName</a></h4>
+        </div>
 
-<div class="class--aside-block-body">
-    <audio controls>
-        <source src="@Model.TweetOfTheDay.Bird.SongUrl" type="audio/mpeg">
-        @*<source src="http://xeno-canto.org/sounds/uploaded/ZNCDXTUOFL/XC122468-Parus_caeruleus_Poland_Jarek_Matusiak_20130223-014.mp3" type="audio/mpeg">*@
-        Your browser does not support the audio element.
-    </audio>
-</div>
+        <div class="class--aside-block-body">
+            <audio controls>
+                <source src="@Model.TweetOfTheDay.Bird.SongUrl" type="audio/mpeg">
+                @*<source src="http://xeno-canto.org/sounds/uploaded/ZNCDXTUOFL/XC122468-Parus_caeruleus_Poland_Jarek_Matusiak_20130223-014.mp3" type="audio/mpeg">*@
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    }
+    else
+    {
+        <div class="class--aside-block-header">
+            <h4><b>Tweet of the Day</b></h4>
+            <h4> The Tweet of the Day is not available...</h4>
+        </div>
+
+    }
+}
 

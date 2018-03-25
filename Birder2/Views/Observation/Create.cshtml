@@ -14,9 +14,9 @@
     <script src="~/js/createobservationviewmodel.js"></script>
 
     <script type="text/javascript">
-    var createObservationViewModel = new CreateObservationViewModel(@Html.Raw(data));
-
-    ko.applyBindings(createObservationViewModel);
+        var createObservationViewModel = new CreateObservationViewModel(@Html.Raw(data));
+        ko.applyBindings(createObservationViewModel);
+        createObservationViewModel.Observation.ObservationDateTime(new Date(Date.now()));
     </script>
 }
 
@@ -82,12 +82,13 @@
                         @{/* TODO: Sort out this fucking datetime picker! */}
                         <label class="control-label" for="Observation.ObservationDateTime">Date:</label>
                         <div class='input-group date' data-bind="dateTimePicker: Observation.ObservationDateTime">
-                            <input type='text' class="form-control" />
+                            <input type='text' class="form-control" readonly/>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
+                            
                         </div>
-                        <input class="form-control" type="text" data-bind="dateTimePicker: Observation.ObservationDateTime" />
+                        <input class="form-control" type="text" data-bind="dateTimePicker: Observation.ObservationDateTime" readonly/>
                         <div>Viewmodel date as text: <span data-bind="text: Observation.ObservationDateTime"></span></div>
                     </div>
                 </div>

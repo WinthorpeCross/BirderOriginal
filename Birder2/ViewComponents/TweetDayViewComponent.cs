@@ -36,6 +36,10 @@ namespace Birder2.ViewComponents
                 {
                     TweetOfTheDay = await _sideBarRepository.GetTweetOfTheDayAsync(_systemClock.Today)
                 };
+                if(viewModel.TweetOfTheDay == null)
+                {
+                    _logger.LogWarning(LoggingEvents.GetItemNotFound, "Tweet of the Day is returned as NULL");
+                }
                 return View(viewModel);
             }
             catch (Exception ex)
