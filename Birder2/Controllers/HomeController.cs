@@ -9,6 +9,10 @@ using System.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.WindowsAzure.Storage;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace Birder2.Controllers
 {
@@ -16,16 +20,22 @@ namespace Birder2.Controllers
     public class HomeController : Controller
     {
         private readonly IFlickrService _flickrService;
-        private readonly ApplicationDbContext _context;
+        private readonly IUserRepository _userRepository;
         private readonly IApplicationUserAccessor _userAccessor;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IEmailSender _emailSender;
 
-        public HomeController(ApplicationDbContext context,
-                                IFlickrService flickrService,
-                                    IApplicationUserAccessor userAccessor)
+        public HomeController(IUserRepository userRepository,
+                                UserManager<ApplicationUser> userManager,
+                                    IFlickrService flickrService,
+                                        IApplicationUserAccessor userAccessor,
+                                            IEmailSender emailSender)
         {
-            _context = context;
+            _userRepository = userRepository;
+            _userManager = userManager;
             _flickrService = flickrService;
             _userAccessor = userAccessor;
+            _emailSender = emailSender;
             //blobUtility = new HomeController.BlobUtility(_optionsAccessor.Value.StorageAccountNameOption, _optionsAccessor.Value.StorageAccountKeyOption);
         }
 
@@ -50,6 +60,13 @@ namespace Birder2.Controllers
         public IActionResult Contact()
         {
             ViewData["Message"] = "Map example";
+            return View();
+        }
+
+        [AllowAnonymous]
+        public IActionResult Welcome()
+        {
+            //ViewData["Message"] = "Cougar";
             return View();
         }
 

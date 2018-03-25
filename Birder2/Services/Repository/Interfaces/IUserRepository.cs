@@ -8,6 +8,7 @@ namespace Birder2.Services
 {
     public interface IUserRepository
     {
+        Task<ApplicationUser> GetUserByEmail(string email);
         Task<ApplicationUser> GetUserAndNetworkAsyncByUserName(ApplicationUser user);
         Task<ApplicationUser> GetUserAndNetworkAsyncByUserName(string userName);
         Task<IEnumerable<UserViewModel>> GetFollowingList(ApplicationUser user);

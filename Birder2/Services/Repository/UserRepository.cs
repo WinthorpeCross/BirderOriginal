@@ -17,6 +17,11 @@ namespace Birder2.Services
             _dbContext = dbContext;
         }
 
+        public async Task<ApplicationUser> GetUserByEmail(string email)
+        {
+            return await _dbContext.Users.Where(e => e.Email.ToUpper() == email.ToUpper()).FirstOrDefaultAsync();
+        }
+
         public async Task<ApplicationUser> GetUserAndNetworkAsyncByUserName(ApplicationUser user)
         {
             return await _dbContext.Users

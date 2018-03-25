@@ -290,8 +290,8 @@ namespace Birder2.Controllers
                     //await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
                     //return RedirectToLocal(returnUrl);
-                    return RedirectToAction("Index","Manage");
-                    //<a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">
+                    //return RedirectToPage("/ConfirmYourEmail");
+                    return RedirectToAction("Welcome","Home");
                 }
                 AddErrors(result);
             }
