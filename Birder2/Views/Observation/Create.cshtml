@@ -9,7 +9,6 @@
     <script src="~/js/knockout-3.4.2.js"></script>
     <script src="~/js/knockout.mapping-latest.js"></script>
     <script src="~/js/jqueryvalidate.js"></script>
-    @*<script src="~/js/datetimepicker.js"></script>*@
     <script src="~/js/jquery-validate.bootstrap-tooltip.js"></script>
     <script src="~/js/createobservationviewmodel.js"></script>
 
@@ -79,7 +78,6 @@
                         </tr>
                     </table>
                     <div class="form-group">
-                        @{/* TODO: Sort out this fucking datetime picker! */}
                         <label class="control-label" for="Observation.ObservationDateTime">Date:</label>
                         <div class='input-group date' data-bind="dateTimePicker: Observation.ObservationDateTime">
                             <input type='text' class="form-control" readonly/>

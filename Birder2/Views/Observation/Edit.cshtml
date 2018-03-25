@@ -35,8 +35,16 @@
                         <div id="collapse0" class="panel-collapse collapse in">
                             <div class="panel-body">
                                 <div class="form-group">
+                                    @{/* TODO: Sort out this fucking datetime picker! */}
                                     <label asp-for="Observation.ObservationDateTime" class="control-label"></label>
-                                    <input asp-for="Observation.ObservationDateTime" class="form-control" />
+                                    @*<input asp-for="Observation.ObservationDateTime" class="form-control" />*@
+                                    @*@Html.TextBoxFor(model => model.Observation.ObservationDateTime, new { @class = "form-control datetimepicker1" })*@
+                                    <div class='input-group date' id='datetimepicker1'>
+                                        <input asp-for="Observation.ObservationDateTime" type='text' class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
                                     <span asp-validation-for="Observation.ObservationDateTime" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
@@ -48,16 +56,16 @@
                                     <label asp-for="Observation.BirdId" class="control-label"></label>
                                     @*<select asp-for="Observation.BirdId" class="form-control" asp-items="ViewBag.BirdId"></select>*@
                                     @Html.DropDownListFor(m => m.Observation.BirdId,
-                                  new SelectList(Model.Birds, "BirdId", "EnglishName"),
-                                      new
-                                      {
-                                          @name = "BirdId",
-                                          @class = "form-control selectpicker showtick",
-                                                             //data_bind = "attr: {'Id': 'BirdId_' + $index()}, selectPicker: {}, value: BirdId",
-                                                             title = "Choose a bird species...",
-                                          data_live_search = "true",
-                                          data_show_subtext = "true"
-                                      })
+                                                      new SelectList(Model.Birds, "BirdId", "EnglishName"),
+                                                          new
+                                                          {
+                                                              @name = "BirdId",
+                                                              @class = "form-control selectpicker showtick",
+                                                                                 //data_bind = "attr: {'Id': 'BirdId_' + $index()}, selectPicker: {}, value: BirdId",
+                                                                                 title = "Choose a bird species...",
+                                                              data_live_search = "true",
+                                                              data_show_subtext = "true"
+                                                          })
                                     <span asp-validation-for="Observation.BirdId" class="text-danger"></span>
                                 </div>
                             </div>
@@ -171,9 +179,20 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        function f() {
+            $('#datetimepicker1').datetimepicker();
+        }
+    </script>
 }
 
+
+
 <script>
+    function f() {
+        $('#datetimepicker1').datetimepicker();
+    }
     function expand() {
         $('.panel-collapse').collapse('show');
     }
