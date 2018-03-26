@@ -11,7 +11,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-//ToDo: Threading is exspensive.  Refactor to use only when it is necessary.
+//ToDo: Threading is expensive.  Refactor to use only when it is necessary.
 
 namespace Birder2.Controllers
 {

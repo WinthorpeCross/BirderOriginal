@@ -13,12 +13,7 @@ namespace Birder2.Controllers
             //blobUtility = new HomeController.BlobUtility(_optionsAccessor.Value.StorageAccountNameOption, _optionsAccessor.Value.StorageAccountKeyOption);
         }
 
-        //public BlobUtility(string accountName, string accountKey)
-        //{
-        //    CloudStorageAccount storageAccount = 
-        //}
-
-        public IActionResult Index() //async Task<>
+        public IActionResult Index()
         {
             return View();
         }
@@ -26,7 +21,6 @@ namespace Birder2.Controllers
         [AllowAnonymous]
         public IActionResult About()
         {
-            //PhotoCollection photos = _flickrService.GetFlickrPhotoCollection("Cyanistes caeruleus");
             return View();
         }
  
@@ -45,6 +39,7 @@ namespace Birder2.Controllers
 
         public IActionResult Error()
         {
+            //ToDo: Investigate how to use this ErrorViewModel!
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
