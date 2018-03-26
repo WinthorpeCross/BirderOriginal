@@ -103,8 +103,6 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
-    <PackageReference Include="Bootstrap.v3.Datetimepicker" Version="4.17.45" />
-    <PackageReference Include="Bootstrap.v3.Datetimepicker.CSS" Version="4.17.45" />
     <PackageReference Include="FlickrNet" Version="4.0.4-alpha" />
     <PackageReference Include="knockoutjs" Version="3.4.2" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />

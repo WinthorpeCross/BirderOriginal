@@ -11,13 +11,14 @@
 }
 
 <div class="jumbotron hello">
-    <h1><i>Birder.</i><small> The website for birdwatchers.</small></h1>
+    <h1>Birder.<small> The website for birdwatchers.</small></h1>
 </div>
 <div>
     <div class="row">
         <div class="col-lg-4">
             <section>
                 <h2>@ViewData["Title"]</h2>
+                add model validation message for invalid login: check email is confirmed
                 <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
                     @*<hr />*@
                     <div asp-validation-summary="All" class="text-danger"></div>
