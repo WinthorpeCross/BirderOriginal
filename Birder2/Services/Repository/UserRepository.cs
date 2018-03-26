@@ -44,7 +44,7 @@ namespace Birder2.Services
                          .FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<UserViewModel>> GetFollowingList(ApplicationUser user)
+        public IEnumerable<UserViewModel> GetFollowingList(ApplicationUser user)
         {
             var followingList = from following in user.Following
                                     select new UserViewModel
@@ -55,7 +55,7 @@ namespace Birder2.Services
             return followingList;
         }
 
-        public async Task<IEnumerable<UserViewModel>> GetFollowersList(ApplicationUser user)
+        public IEnumerable<UserViewModel> GetFollowersList(ApplicationUser user)
         {
             var followerList = from follower in user.Followers
                                   select new UserViewModel
@@ -66,7 +66,7 @@ namespace Birder2.Services
             return followerList;
         }
 
-        public async Task<IEnumerable<UserViewModel>> GetSuggestedBirdersToFollow(ApplicationUser user)
+        public IEnumerable<UserViewModel> GetSuggestedBirdersToFollow(ApplicationUser user)
         {
             var followerList = from follower in user.Followers
                                select follower.Follower.UserName;
@@ -99,7 +99,7 @@ namespace Birder2.Services
             return suggestedBirders;
         }
 
-        public async Task<IEnumerable<UserViewModel>> GetSuggestedBirdersToFollow(ApplicationUser user, string searchCriterion)
+        public IEnumerable<UserViewModel> GetSuggestedBirdersToFollow(ApplicationUser user, string searchCriterion)
         {
             var followingList = from following in user.Following
                                 select following.ApplicationUser.UserName;

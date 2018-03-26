@@ -41,8 +41,8 @@ namespace Birder2.Controllers
                 ApplicationUser loggedinUser = await _userRepository.GetUserAndNetworkAsyncByUserName(await _userAccessor.GetUser());
                 NetworkIndexViewModel viewModel = new NetworkIndexViewModel();
 
-                viewModel.FollowingList = await _userRepository.GetFollowingList(loggedinUser);
-                viewModel.FollowersList = await _userRepository.GetFollowersList(loggedinUser);
+                viewModel.FollowingList = _userRepository.GetFollowingList(loggedinUser);
+                viewModel.FollowersList = _userRepository.GetFollowersList(loggedinUser);
 
                 return View(viewModel);
             }
@@ -66,12 +66,12 @@ namespace Birder2.Controllers
 
                 if (String.IsNullOrEmpty(searchCriterion))
                 {
-                    followUserViewModel.SearchResults = await _userRepository.GetSuggestedBirdersToFollow(loggedinUser);
+                    followUserViewModel.SearchResults = _userRepository.GetSuggestedBirdersToFollow(loggedinUser);
                     followUserViewModel.SearchCriterion = searchCriterion;
                 }
                 else
                 {
-                    followUserViewModel.SearchResults = await _userRepository.GetSuggestedBirdersToFollow(loggedinUser, searchCriterion);
+                    followUserViewModel.SearchResults = _userRepository.GetSuggestedBirdersToFollow(loggedinUser, searchCriterion);
                     followUserViewModel.SearchCriterion = searchCriterion;
                 }
                 return View(followUserViewModel);

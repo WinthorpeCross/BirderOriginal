@@ -5,6 +5,7 @@ using Birder2.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
@@ -18,17 +19,20 @@ namespace Birder2.Controllers
     public class ObservationController : Controller
     {
         private const int pageSize = 15;
-        private readonly IApplicationUserAccessor _userAccessor;
         private readonly IObservationRepository _observationRepository;
         private readonly IMachineClockDateTime _systemClock;
+        private readonly IApplicationUserAccessor _userAccessor;
+        private readonly ILogger _logger;
 
         public ObservationController(IApplicationUserAccessor userAccessor,
                                         IObservationRepository observationRepository,
-                                            IMachineClockDateTime systemClock)
+                                            IMachineClockDateTime systemClock,
+                                                ILogger<Network> logger)
         {
-            _userAccessor = userAccessor;
             _observationRepository = observationRepository;
+            _userAccessor = userAccessor;
             _systemClock = systemClock;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index(ObservationsFeedFilter filter, int page)
@@ -75,6 +79,7 @@ namespace Birder2.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(LoggingEvents.GetItemNotFound, ex, "Observations Index() error");
                 return BadRequest();
             }
         }
@@ -110,6 +115,7 @@ namespace Birder2.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(LoggingEvents.GetItemNotFound, ex, "Create Observation error");
                 return RedirectToAction(nameof(Index));
             }
         }

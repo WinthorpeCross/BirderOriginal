@@ -20,7 +20,6 @@ namespace Birder2.Services
         {
             return (from observations in _dbContext.Observations
                  .Include(b => b.Bird)
-                    //.ThenInclude(f => f.BritishStatus)
                  .Include(b => b.Bird)
                     .ThenInclude(u => u.BirdConserverationStatus)
                  .Where(u => u.ApplicationUser.Id == userId)
@@ -67,8 +66,8 @@ namespace Birder2.Services
                 .Where(o => o.ApplicationUserId == userId)
                     .Include(au => au.ApplicationUser)
                     .Include(b => b.Bird)
-                    .Include(ot => ot.ObservationTags)
-                        .ThenInclude(t => t.Tag)
+                    //.Include(ot => ot.ObservationTags)
+                    //    .ThenInclude(t => t.Tag)
                     .OrderByDescending(d => d.ObservationDateTime)
                     .AsNoTracking();
             return observations;
@@ -79,8 +78,8 @@ namespace Birder2.Services
             var observations = _dbContext.Observations
                     .Include(au => au.ApplicationUser)
                     .Include(b => b.Bird)
-                    .Include(ot => ot.ObservationTags)
-                        .ThenInclude(t => t.Tag)
+                    //.Include(ot => ot.ObservationTags)
+                    //    .ThenInclude(t => t.Tag)
                     .OrderByDescending(d => d.ObservationDateTime)
                     .AsNoTracking();
                     //.Take(100);
