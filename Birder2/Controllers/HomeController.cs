@@ -1,41 +1,15 @@
-﻿using Birder2.Data;
-using Birder2.Models;
-using Birder2.Services;
-using FlickrNet;
+﻿using Birder2.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using System.Diagnostics;
-using Microsoft.Extensions.Configuration;
-using Microsoft.WindowsAzure.Storage;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using System;
 
 namespace Birder2.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly IFlickrService _flickrService;
-        private readonly IUserRepository _userRepository;
-        private readonly IApplicationUserAccessor _userAccessor;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IEmailSender _emailSender;
-
-        public HomeController(IUserRepository userRepository,
-                                UserManager<ApplicationUser> userManager,
-                                    IFlickrService flickrService,
-                                        IApplicationUserAccessor userAccessor,
-                                            IEmailSender emailSender)
+        public HomeController()
         {
-            _userRepository = userRepository;
-            _userManager = userManager;
-            _flickrService = flickrService;
-            _userAccessor = userAccessor;
-            _emailSender = emailSender;
             //blobUtility = new HomeController.BlobUtility(_optionsAccessor.Value.StorageAccountNameOption, _optionsAccessor.Value.StorageAccountKeyOption);
         }
 
@@ -52,14 +26,14 @@ namespace Birder2.Controllers
         [AllowAnonymous]
         public IActionResult About()
         {
-            PhotoCollection photos = _flickrService.GetFlickrPhotoCollection("Cyanistes caeruleus");
-            return View(photos);
+            //PhotoCollection photos = _flickrService.GetFlickrPhotoCollection("Cyanistes caeruleus");
+            return View();
         }
  
         [AllowAnonymous]
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Map example";
+            //ViewData["Message"] = "Map example";
             return View();
         }
 
