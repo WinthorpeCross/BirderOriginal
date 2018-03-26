@@ -30,7 +30,7 @@ namespace Birder2.Services
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("andrew.cross11@gmail.com", "Joe Smith"),
+                From = new EmailAddress("DoNotReply@Birder.Com", "Birder Website"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message

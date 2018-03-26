@@ -66,7 +66,6 @@ namespace Birder2.Controllers
         [AllowAnonymous]
         public IActionResult Welcome()
         {
-            //ViewData["Message"] = "Cougar";
             return View();
         }
 

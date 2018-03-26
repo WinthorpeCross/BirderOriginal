@@ -30,7 +30,7 @@ namespace Birder2.Services
                          .Include(y => y.Following)
                              .ThenInclude(r => r.ApplicationUser)
                          .Where(x => x.UserName == user.UserName)
-                         .FirstOrDefaultAsync();
+                            .FirstOrDefaultAsync();
         }
 
         public async Task<ApplicationUser> GetUserAndNetworkAsyncByUserName(string userName)

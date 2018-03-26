@@ -8,6 +8,11 @@
     height: 30px;
 }
 
+.jumbotron {
+    background: #dce513;
+    padding: 10px;
+}
+
 /* on the about page*/
 .container--progress {
     overflow: hidden;

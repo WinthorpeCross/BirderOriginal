@@ -3,9 +3,10 @@
     Layout = "~/Views/Shared/_LayoutNoSidebar.cshtml";
 }
 
-<h2>@ViewData["Title"]</h2>
-<div>
+<div class="jumbotron">
+    <h1>Thank you for confirming your email</h1>
     <p>
-        Thank you for confirming your email.
+        You are now ready to go.
     </p>
+    <p><a class="btn btn-primary btn-lg" asp-controller="Account" asp-action="Login" role="button">Login</a></p>
 </div>
