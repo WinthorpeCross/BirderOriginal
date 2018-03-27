@@ -20,6 +20,10 @@ namespace Birder2.Models
 
         public ICollection<ObservationTag> ObservationTags { get; set; }
 
+        /* ToDo: See this webpage for example Tags
+         * https://www.mynewsdesk.com/uk/govia-thameslink-railway/pressreleases/gtr-passengers-ride-uks-first-self-drive-mainline-train-2458340
+         */
+
 
         //public string ApplicationUserId { get; set; }
 

@@ -84,7 +84,6 @@ namespace Birder2.Controllers
             }
         }
 
-        // GET: Observation/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -196,7 +195,6 @@ namespace Birder2.Controllers
             }
         }
 
-        // GET: Observation/Edit/5
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -226,7 +224,6 @@ namespace Birder2.Controllers
             }
         }
 
-        // POST: Observation/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -299,7 +296,6 @@ namespace Birder2.Controllers
             return View(model);
         }
 
-        // GET: Observation/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -317,7 +313,6 @@ namespace Birder2.Controllers
             return View(observation);
         }
 
-        // POST: Observation/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -9,7 +9,7 @@
     <h1>@Model.Bird.EnglishName <small><i> @Model.Bird.Species</i></small></h1>
         if (Model.ApplicationUserId == UserManager.GetUserAsync(User).Result.Id)
         {
-            <h4><b>@Model.Quantity</b> @statusMessageClass spotted by <a asp-controller="User" asp-action="Details" asp-route-userName="@Model.ApplicationUser.UserName">You</a> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h4>
+    <h4><b>@Model.Quantity</b> @statusMessageClass spotted by <a asp-controller="User" asp-action="Details" asp-route-userName="@Model.ApplicationUser.UserName">You</a> on  @Model.ObservationDateTime.ToString("dddd, dd MMMM yyyy, HH:mm")</h4>
         }
         else
         {
