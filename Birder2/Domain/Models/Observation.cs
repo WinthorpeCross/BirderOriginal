@@ -44,7 +44,7 @@ namespace Birder2.Models
 
         [Required]
         [Display(Name = "Date/Time")]
-        //[DisplayFormat(DataFormatString = "{0: dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
+        //[DisplayFormat(DataFormatString = "yyyy-MM-dd hh:mm", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
         public DateTime ObservationDateTime { get; set; }
         public DateTime CreationDate { get; set; }
