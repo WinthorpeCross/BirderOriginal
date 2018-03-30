@@ -1,21 +1,31 @@
 ﻿@model Birder2.ViewModels.EditObservationViewModel
-
+@using Newtonsoft.Json
 @{
-    ViewData["Title"] = "Edit";
+    string data = JsonConvert.SerializeObject(Model,
+        new JsonSerializerSettings()
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        });
 }
 
-<h1>@Model.Observation.Bird.EnglishName <small><i> @Model.Observation.Bird.Species</i></small></h1>
-<h4>Spotted on @Html.DisplayFor(modelItem => Model.Observation.ObservationDateTime)</h4>
-<hr />
+@section Scripts {
+    <script src="~/js/knockout-3.4.2.js"></script>
+    <script src="~/js/knockout.mapping-latest.js"></script>
+    <script src="~/js/jqueryvalidate.js"></script>
+    <script src="~/js/jquery-validate.bootstrap-tooltip.js"></script>
+    <script src="~/js/editObservationViewModel.js"></script>
+    <script type="text/javascript">
+        var editObservationViewModel = new EditObservationViewModel(@Html.Raw(data));
+        ko.applyBindings(editObservationViewModel);
+    </script>
+}
+
+<div data-bind="html: Title()"></div>
+<div data-bind="html: SubTitle()"></div>
+
 <div class="row">
     <div class="col-md-12">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Observation.ObservationId" />
-            <input type="hidden" asp-for="Observation.ApplicationUserId" />
-            <input type="hidden" asp-for="Observation.LocationLatitude" id="latitude" />
-            <input type="hidden" asp-for="Observation.LocationLongitude" id="longitude" />
-
             <div>
                 <div class="row">
                     <div class="col-sm-4">
@@ -25,60 +35,56 @@
                         <button class="btn btn-link" type="button" onclick="collapse()" style="float: right;">Collapse All</button>
                     </div>
                 </div>
-                <div class="panel-group" id="accordion">
+                <di class="panel-group" id="accordion">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" @*data-parent="#accordion" *@ href="#collapse0"><b>General</b></a>
+                                <a data-toggle="collapse" href="#collapse0"><b>General</b></a>
                             </h4>
                         </div>
                         <div id="collapse0" class="panel-collapse collapse in">
                             <div class="panel-body">
                                 <div class="form-group">
-                                    @{/* ToDo: Sort out this fucking datetime picker! */}
-                                    @*<label asp-for="Observation.ObservationDateTime" class="control-label"></label>
-                                    @Html.EditorFor(model => model.Observation.ObservationDateTime, new { htmlAttributes = new { @name = "Observation.ObservationDateTime", @class = "form-control datetimepicker" } })*@
-                                    <div class="col-md-10">
-                                        <div class="input-group" id="datetimepicker">
-                                            @Html.EditorFor(model => model.Observation.ObservationDateTime, new { htmlAttributes = new { @class = "form-control" } })
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                        </div>
-                                        <span asp-validation-for="Observation.ObservationDateTime" class="text-danger"></span>
-                                    </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="Observation.Quantity" class="control-label"></label>
-                                        <input asp-for="Observation.Quantity" class="form-control" />
-                                        <span asp-validation-for="Observation.Quantity" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="Observation.BirdId" class="control-label"></label>
-                                        @Html.DropDownListFor(m => m.Observation.BirdId,
-                      new SelectList(Model.Birds, "BirdId", "EnglishName"),
-                          new
-                          {
-                              @name = "BirdId",
-                              @class = "form-control selectpicker showtick",
-                              title = "Choose a bird species...",
-                              data_live_search = "true",
-                              data_show_subtext = "true"
-                          })
-                                        <span asp-validation-for="Observation.BirdId" class="text-danger"></span>
+                                    <label class="control-label" for="Observation.ObservationDateTime">Date:</label>
+                                    <div class='input-group date' data-bind="dateTimePicker: Observation.ObservationDateTime">
+                                        <input type='text' class="form-control" readonly />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="control-label" for="Observation.Quantity">Quantity:</label>
+                                    <input class="form-control" name="Observation.Quantity" data-bind="value: Observation.Quantity" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="Observation.BirdId">Species:</label>
+                                    @Html.DropDownListFor(m => m.Observation.BirdId,
+                                      new SelectList(Model.Birds, "BirdId", "EnglishName"),
+                                          new
+                                          {
+                                              @name = "BirdId",
+                                              @class = "form-control selectpicker showtick",
+                                              data_bind = "value: Observation.BirdId",
+                                              title = "Choose a bird species...",
+                                              data_live_search = "true",
+                                              data_show_subtext = "true"
+                                          })
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" @*data-parent="#accordion" *@ href="#collapse1"><b>@Html.DisplayNameFor(model => model.Observation.NoteGeneral)</b></a>
+                                <a data-toggle="collapse" href="#collapse1"><b>@Html.DisplayNameFor(model => model.Observation.NoteGeneral)</b></a>
                             </h4>
                         </div>
                         <div id="collapse1" class="panel-collapse collapse">
                             <div class="panel-body">
-                                <input asp-for="Observation.NoteGeneral" class="form-control" />
+                                <input class="form-control" name="Observation.NoteGeneral" data-bind="value: Observation.NoteGeneral" />
                             </div>
                         </div>
                     </div>
@@ -90,7 +96,7 @@
                         </div>
                         <div id="collapse2" class="panel-collapse collapse">
                             <div class="panel-body">
-                                <input asp-for="Observation.NoteHabitat" class="form-control" />
+                                <input class="form-control" name="Observation.NoteHabitat" data-bind="value: Observation.NoteHabitat" />
                             </div>
                         </div>
                     </div>
@@ -102,7 +108,7 @@
                         </div>
                         <div id="collapse3" class="panel-collapse collapse">
                             <div class="panel-body">
-                                <input asp-for="Observation.NoteWeather" class="form-control" />
+                                <input class="form-control" name="Observation.NoteWeather" data-bind="value: Observation.NoteWeather" />
                             </div>
                         </div>
                     </div>
@@ -114,7 +120,7 @@
                         </div>
                         <div id="collapse4" class="panel-collapse collapse">
                             <div class="panel-body">
-                                <input asp-for="Observation.NoteAppearance" class="form-control" />
+                                <input class="form-control" name="Observation.NoteAppearance" data-bind="value: Observation.NoteAppearance" />
                             </div>
                         </div>
                     </div>
@@ -126,7 +132,7 @@
                         </div>
                         <div id="collapse5" class="panel-collapse collapse">
                             <div class="panel-body">
-                                <input asp-for="Observation.NoteBehaviour" class="form-control" />
+                                <input class="form-control" name="Observation.NoteBehaviour" data-bind="value: Observation.NoteBehaviour" />
                             </div>
                         </div>
                     </div>
@@ -138,7 +144,7 @@
                         </div>
                         <div id="collapse6" class="panel-collapse collapse">
                             <div class="panel-body">
-                                <input asp-for="Observation.NoteVocalisation" class="form-control" />
+                                <input class="form-control" name="Observation.NoteVocalisation" data-bind="value: Observation.NoteVocalisation" />
                             </div>
                         </div>
                     </div>
@@ -162,45 +168,18 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
-
-
-            <div class="form-group">
-                <input type="submit" value="Save changes" class="btn btn-default" />
+            <div class="container col-lg-12">
+                <div class="form-group"></div>
+                <p><button class="btn btn-primary btn-block" type="submit" data-bind="disable:disableSubmitButton">Save Changes to Observation</button></p>
                 <a asp-action="Index" class="btn btn-link">   Back to Observations feed</a>
             </div>
-            <small>Observation created: @Model.Observation.CreationDate; last update: @Model.Observation.LastUpdateDate</small>
         </form>
+        <small data-bind="text: RecordDates"></small>
     </div>
 </div>
 
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
 <script>
-        $(document).ready(function ()
-        {
-            $("#datetimepicker").datetimepicker(
-                {
-                    //createObservationViewModel.Observation.ObservationDateTime(new Date(Date.now()));
-                    defaultDate: new Date('@Model.Observation.ObservationDateTime'), // new Date('Model.Observation.ObservationDateTime'),
-                    showTodayButton: true,
-                    format: 'YYYY-MM-DD HH:mm',
-                    showClose: true,
-                    showClear: true,
-                    toolbarPlacement: 'top',
-                    stepping: 15
-                });
-        });
-</script>
-}
-
-
-
-<script>
-
     function expand() {
         $('.panel-collapse').collapse('show');
     }
@@ -211,7 +190,7 @@
     var markers = [];
 
     function initMap() {
-        var myLatlng = new google.maps.LatLng(@Model.Observation.LocationLatitude,@Model.Observation.LocationLongitude);
+        var myLatlng = new google.maps.LatLng(editObservationViewModel.Observation.LocationLatitude(), editObservationViewModel.Observation.LocationLongitude());
         var myOptions = {
             zoom: 13,
             center: myLatlng,
@@ -299,8 +278,10 @@
             markers = [];
         }
         function updateForm() {
-            document.getElementById('latitude').value = markers[0].position.lat();
-            document.getElementById('longitude').value = markers[0].position.lng();
+            editObservationViewModel.Observation.LocationLatitude(markers[0].position.lat());
+            editObservationViewModel.Observation.LocationLongitude(markers[0].position.lng());
+            //document.getElementById('latitude').value = markers[0].position.lat();
+            //document.getElementById('longitude').value = markers[0].position.lng();
         }
     }
 </script>

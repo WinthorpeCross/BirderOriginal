@@ -74,8 +74,6 @@
         }
     };
 
-
-
     self.addObservedSpecies = function () {
         var observedSpecies = new ObservedSpeciesViewModel({ Id: 0, BirdId: 0, Quantity: 1 });
         self.ObservedSpecies.push(observedSpecies);
@@ -201,7 +199,3 @@ $.validator.addMethod("alphaonly",
         return /^[A-Za-z]+$/.test(value);
     }
 );
-
-
-
-
