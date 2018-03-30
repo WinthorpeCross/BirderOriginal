@@ -36,6 +36,7 @@
             var options = allBindingsAccessor().dateTimePickerOptions || {};
             options['format'] = options['format'] || "dddd, Do MMMM YYYY, HH:mm"; //default format
             options.ignoreReadonly = true;
+            options.defaultDate = valueAccessor()();
             $(element).datetimepicker(options);
 
             //when a user changes the date, update the view model

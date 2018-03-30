@@ -12,6 +12,7 @@ namespace Birder2.Models
 
         //public Geography LocationGeoTest { get; set; } ---> Not supported in EF Core 2.0
         public double LocationLatitude { get; set; }
+
         public double LocationLongitude { get; set; }
 
         //[Range(1, 1000, ErrorMessage = "The value must be greater than 0")]
@@ -32,7 +33,6 @@ namespace Birder2.Models
         [Display(Name = "Appearance notes")]
         public string NoteAppearance { get; set; }
         // Take copious notes on the bird's appearance, including the brilliance of plumage, any peculiar markings and any outstanding or unusual features such as missing feathers, leucistic patches or signs of illness. Also record the bird's gender if possible.
-        // Gender
 
         [Display(Name = "Behaviour notes")]
         public string NoteBehaviour { get; set; }

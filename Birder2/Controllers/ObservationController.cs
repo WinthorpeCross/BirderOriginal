@@ -106,7 +106,7 @@ namespace Birder2.Controllers
             {
                 var model = new CreateObservationViewModel()
                 {
-                    Observation = new Observation(),
+                    Observation = new Observation() { ObservationDateTime = _systemClock.Now },
                     MessageToClient = string.Empty,
                     Birds = await _observationRepository.AllBirdsList(),
                 };
@@ -226,6 +226,7 @@ namespace Birder2.Controllers
 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // ToDo: Convert to Knockout setup.  Research overposting attacks.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ObservationId,ObservationDateTime,Quantity,LocationLatitude,LocationLongitude," +
