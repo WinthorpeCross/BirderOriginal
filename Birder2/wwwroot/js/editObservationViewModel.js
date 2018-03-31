@@ -14,8 +14,7 @@
         return ("<h4>Spotted on " + moment(self.Observation.ObservationDateTime()).format('dddd, Do MMMM YYYY, HH:mm') + "</h4>");
     });
 
-    //moment(baseModel.actionDate()).format('LL')
-
+    self.disableSubmitButton = ko.observable(false);
 
     ko.bindingHandlers.selectPicker = {
         init: function (element, valueAccessor, allBindings) {
@@ -67,26 +66,10 @@
         }
     };
 
-
-
-        //self.addObservedSpecies = function () {
-        //    var observedSpecies = new ObservedSpeciesViewModel({ Id: 0, BirdId: 0, Quantity: 1 });
-        //    self.ObservedSpecies.push(observedSpecies);
-        //};
-
-    self.disableSubmitButton = ko.observable(false);
-
         self.post = function () {
             self.disableSubmitButton(true);
-            if (self.ObservedSpecies().length < 1) {
-                // ToDo: Implement proper client-side validation of the Observed Species collection
-                alert("You must choose at least one observed bird species");
-                self.MessageToClient("You must choose at least one observed bird species...");
-                self.disableSubmitButton(false);
-                return;
-            }
             $.ajax({
-                url: "/Observation/Post/",
+                url: "/Observation/Edit/",
                 type: "POST",
                 data: ko.toJSON(self),
                 headers:
@@ -99,7 +82,7 @@
                         self.MessageToClient(obj.MessageToClient);
                     }
                     else {
-                        window.location.replace("./Index/");
+                        window.location.href = '/Observation/Details/' + obj.Observation.ObservationId;
                     }
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -116,53 +99,53 @@
 };
 
 
-//$("#form").validate({
-//    submitHandler: function () {
-//        editObservationViewModel.post();
-//    },
+$("#form").validate({
+    submitHandler: function () {
+        editObservationViewModel.post();
+    },
 
-//    rules: {
-//        //ObservedSpecies: {
-//        //    min: 1
-//        //},
-//        Quantity: {
-//            required: true,
-//            digits: true,
-//            min: 1
-//        },
-//        "Observation.BirdId": {
-//            required: true
-//        },
-//        "Observation.ObservationDateTime": {
-//            date: true
-//        }
-//    },
+    rules: {
+        //ObservedSpecies: {
+        //    min: 1
+        //},
+        Quantity: {
+            required: true,
+            digits: true,
+            min: 1
+        },
+        "Observation.BirdId": {
+            required: true
+        },
+        "Observation.ObservationDateTime": {
+            date: true
+        }
+    },
 
-//    messages: {
-//        "Observation.BirdId": {
-//            required: "You must choose a bird species."//,
-//            //maxlength: "Customer names must be 30 characters or shorter."
-//        },
-//        Quantity: {
-//            required: "Quantity must be digits only",
-//            digitsonly: "k"
-//        }
-//    },
+    messages: {
+        "Observation.BirdId": {
+            required: "You must choose a bird species."//,
+            //maxlength: "Customer names must be 30 characters or shorter."
+        },
+        Quantity: {
+            required: "Quantity must be digits only",
+            digitsonly: "k"
+        }
+    },
 
-//    tooltip_options: {
-//        Quantity: {
-//            placement: 'bottom'
-//        }
-//        //PONumber: {
-//        //    placement: 'right'
-//        //}
-//    }
-//});
+    tooltip_options: {
+        Quantity: {
+            placement: 'bottom'
+        }
+        //PONumber: {
+        //    placement: 'right'
+        //}
+    }
+});
 
 
-//// example of custom validation
-//$.validator.addMethod("alphaonly",
-//    function (value) {
-//        return /^[A-Za-z]+$/.test(value);
-//    }
-//);
+// example of custom validation
+$.validator.addMethod("alphaonly",
+    function (value) {
+        return /^[A-Za-z]+$/.test(value);
+    }
+);

@@ -228,74 +228,157 @@ namespace Birder2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         // ToDo: Convert to Knockout setup.  Research overposting attacks.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ObservationId,ObservationDateTime,Quantity,LocationLatitude,LocationLongitude," +
-                                                                "NoteGeneral,NoteHabitat,NoteWeather,NoteAppearance,NoteBehaviour," +
-                                                                    "NoteVocalisation,BirdId,ApplicationUserId")] Observation observation)
+        //[ValidateAntiForgeryToken]
+        public async Task<JsonResult> Edit([FromBody] EditObservationViewModel viewModel)
         {
             // ToDo: Look into this update method.
 
-            if (id != observation.ObservationId)
-            {
-                return NotFound();
-            }
+            //if (id != viewModel.Observation.ObservationId)
+            //{
+            //    viewModel.IsModelStateValid = false;
+            //    viewModel.MessageToClient = "An error occurred (1).";
+
+            //    //return Json(JsonConvert.SerializeObject(ModelState));
+            //    return Json(JsonConvert.SerializeObject(viewModel));
+            //}
 
             var user = await _userAccessor.GetUser();
-            if (user.Id != observation.ApplicationUserId)
+            if (user.Id != viewModel.Observation.ApplicationUserId)
             {
-                return RedirectToAction("Login", "Account");
+                viewModel.IsModelStateValid = false;
+                viewModel.MessageToClient = "An error occurred (2).";
+
+                //return Json(JsonConvert.SerializeObject(ModelState));
+                return Json(JsonConvert.SerializeObject(viewModel));
             }
-            
+
             if (ModelState.IsValid)
             {
                 //ToDo: use AutoMaper here...
                 try
                 {
-                    Observation observationEdited = await _observationRepository.GetObservationDetails(id);
-                    observationEdited.Bird = await _observationRepository.GetSelectedBird(observation.BirdId);
-                    observationEdited.ObservationDateTime = observation.ObservationDateTime;
-                    observationEdited.LocationLatitude = observation.LocationLatitude;
-                    observationEdited.LocationLongitude = observation.LocationLongitude;
-                    observationEdited.NoteGeneral = observation.NoteGeneral;
-                    observationEdited.NoteHabitat = observation.NoteHabitat;
-                    observationEdited.NoteWeather = observation.NoteWeather;
-                    observationEdited.NoteAppearance = observation.NoteAppearance;
-                    observationEdited.NoteBehaviour = observation.NoteBehaviour;
-                    observationEdited.NoteVocalisation = observation.NoteVocalisation;
+                    Observation observationEdited = await _observationRepository.GetObservationDetails(viewModel.Observation.ObservationId);
+                    observationEdited.Bird = await _observationRepository.GetSelectedBird(viewModel.Observation.BirdId);
+                    observationEdited.ObservationDateTime = viewModel.Observation.ObservationDateTime;
+                    observationEdited.LocationLatitude = viewModel.Observation.LocationLatitude;
+                    observationEdited.LocationLongitude = viewModel.Observation.LocationLongitude;
+                    observationEdited.NoteGeneral = viewModel.Observation.NoteGeneral;
+                    observationEdited.NoteHabitat = viewModel.Observation.NoteHabitat;
+                    observationEdited.NoteWeather = viewModel.Observation.NoteWeather;
+                    observationEdited.NoteAppearance = viewModel.Observation.NoteAppearance;
+                    observationEdited.NoteBehaviour = viewModel.Observation.NoteBehaviour;
+                    observationEdited.NoteVocalisation = viewModel.Observation.NoteVocalisation;
 
                     observationEdited.ApplicationUser = user;
 
                     observationEdited.LastUpdateDate = _systemClock.Now;
 
-                    observationEdited.Quantity = observation.Quantity;
+                    observationEdited.Quantity = viewModel.Observation.Quantity;
                     await _observationRepository.UpdateObservation(observationEdited);
+
+                    viewModel.IsModelStateValid = true;
+                    return Json(JsonConvert.SerializeObject(viewModel));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!await _observationRepository.ObservationExists(observation.ObservationId))
+                    if (!await _observationRepository.ObservationExists(viewModel.Observation.ObservationId))
                     {
-                        return NotFound();
+                        viewModel.IsModelStateValid = false;
+                        viewModel.MessageToClient = "Concurrency error.";
+                        return Json(JsonConvert.SerializeObject(viewModel));
                     }
                     else
                     {
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));  //return to details view?
             }
 
-            var model = new EditObservationViewModel
-            {
-                Birds = await _observationRepository.AllBirdsList(),
-                Observation = await _observationRepository.GetObservationDetails(id)
-            };
+            viewModel.IsModelStateValid = false;
+            viewModel.MessageToClient = "You must choose at least one observed bird species.";
 
-            if (model.Observation == null)
-            {
-                return NotFound();
-            }
-            return View(model);
+            //return Json(JsonConvert.SerializeObject(ModelState));
+            return Json(JsonConvert.SerializeObject(viewModel));
+
+            //var model = new EditObservationViewModel
+            //{
+            //    Birds = await _observationRepository.AllBirdsList(),
+            //    Observation = await _observationRepository.GetObservationDetails(id)
+            //};
+
+            //if (model.Observation == null)
+            //{
+            //    return NotFound();
+            //}
+            //return View(model);
         }
+        //public async Task<IActionResult> Edit(int id, [Bind("ObservationId,ObservationDateTime,Quantity,LocationLatitude,LocationLongitude," +
+        //                                                        "NoteGeneral,NoteHabitat,NoteWeather,NoteAppearance,NoteBehaviour," +
+        //                                                            "NoteVocalisation,BirdId,ApplicationUserId")] Observation observation)
+        //{
+        //    // ToDo: Look into this update method.
+
+        //    if (id != observation.ObservationId)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var user = await _userAccessor.GetUser();
+        //    if (user.Id != observation.ApplicationUserId)
+        //    {
+        //        return RedirectToAction("Login", "Account");
+        //    }
+            
+        //    if (ModelState.IsValid)
+        //    {
+        //        //ToDo: use AutoMaper here...
+        //        try
+        //        {
+        //            Observation observationEdited = await _observationRepository.GetObservationDetails(id);
+        //            observationEdited.Bird = await _observationRepository.GetSelectedBird(observation.BirdId);
+        //            observationEdited.ObservationDateTime = observation.ObservationDateTime;
+        //            observationEdited.LocationLatitude = observation.LocationLatitude;
+        //            observationEdited.LocationLongitude = observation.LocationLongitude;
+        //            observationEdited.NoteGeneral = observation.NoteGeneral;
+        //            observationEdited.NoteHabitat = observation.NoteHabitat;
+        //            observationEdited.NoteWeather = observation.NoteWeather;
+        //            observationEdited.NoteAppearance = observation.NoteAppearance;
+        //            observationEdited.NoteBehaviour = observation.NoteBehaviour;
+        //            observationEdited.NoteVocalisation = observation.NoteVocalisation;
+
+        //            observationEdited.ApplicationUser = user;
+
+        //            observationEdited.LastUpdateDate = _systemClock.Now;
+
+        //            observationEdited.Quantity = observation.Quantity;
+        //            await _observationRepository.UpdateObservation(observationEdited);
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!await _observationRepository.ObservationExists(observation.ObservationId))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));  //return to details view?
+        //    }
+
+        //    var model = new EditObservationViewModel
+        //    {
+        //        Birds = await _observationRepository.AllBirdsList(),
+        //        Observation = await _observationRepository.GetObservationDetails(id)
+        //    };
+
+        //    if (model.Observation == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(model);
+        //}
 
         public async Task<IActionResult> Delete(int? id)
         {

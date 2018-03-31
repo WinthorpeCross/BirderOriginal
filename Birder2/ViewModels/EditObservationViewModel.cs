@@ -7,5 +7,7 @@ namespace Birder2.ViewModels
     {
         public Observation Observation { get; set; }
         public IEnumerable<Bird> Birds { get; set; }
+        public bool IsModelStateValid { get; set; }
+        public string MessageToClient { get; set; }
     }
 }
