@@ -115,7 +115,8 @@ namespace Birder2.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return RedirectToLocal(returnUrl);
+                    //return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "Observation");
                 }
                 if (result.RequiresTwoFactor)
                 {
