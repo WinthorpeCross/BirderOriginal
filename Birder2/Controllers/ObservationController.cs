@@ -228,8 +228,7 @@ namespace Birder2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         // ToDo: Convert to Knockout setup.  Research overposting attacks.
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public async Task<JsonResult> Edit([FromBody] EditObservationViewModel viewModel)
+        public async Task<JsonResult> Edit([FromBody]EditObservationViewModel viewModel)
         {
             // ToDo: Look into this update method.
 

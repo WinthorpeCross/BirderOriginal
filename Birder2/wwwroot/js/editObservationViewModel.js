@@ -68,6 +68,7 @@
 
         self.post = function () {
             self.disableSubmitButton(true);
+            console.log(self);
             $.ajax({
                 url: "/Observation/Edit/",
                 type: "POST",

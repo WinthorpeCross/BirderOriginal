@@ -20,13 +20,16 @@
     </script>
 }
 
-<div data-bind="html: Title()"></div>
+@*<div data-bind="html: Title()"></div>
 <div data-bind="html: SubTitle()"></div>
-<div data-bind="html: MessageToClient"></div>
+<div data-bind="html: MessageToClient"></div>*@
 
 <div class="row">
     <div class="col-md-12">
         <form id="form">
+            <div data-bind="html: Title()"></div>
+            <div data-bind="html: SubTitle()"></div>
+            <div data-bind="html: MessageToClient"></div>
             <div>
                 <div class="row">
                     <div class="col-sm-4">
@@ -165,7 +168,7 @@
                                         <input id="submit" type="button" value="Search">
                                     </div>
                                 </div>
-                                <div id="map" class="class--map"></div>
+                                @*<div id="map" class="class--map"></div>*@
                             </div>
                         </div>
                     </div>
@@ -175,12 +178,13 @@
                 <p><button class="btn btn-primary btn-block" type="submit" data-bind="disable:disableSubmitButton">Save Changes to Observation</button></p>
                 <a asp-action="Index" class="btn btn-link">   Back to Observations feed</a>
             </div>
+
+            <small data-bind="text: RecordDates"></small>
         </form>
-        <small data-bind="text: RecordDates"></small>
     </div>
 </div>
 
-<script>
+@*<script>
     function expand() {
         $('.panel-collapse').collapse('show');
     }
@@ -285,4 +289,4 @@
             //document.getElementById('longitude').value = markers[0].position.lng();
         }
     }
-</script>
+</script>*@
