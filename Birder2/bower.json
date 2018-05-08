@@ -26,9 +26,10 @@
     "knockout": "v3.4.2",
     "jquery-validation": "1.17.0",
     "eonasdan-bootstrap-datetimepicker": "4.17.47",
-    "moment": "2.21.0"
+    "moment": "2.22.1"
   },
   "resolutions": {
-    "eonasdan-bootstrap-datetimepicker": "4.17.47"
+    "eonasdan-bootstrap-datetimepicker": "4.17.47",
+    "moment": "2.22.1"
   }
 }
