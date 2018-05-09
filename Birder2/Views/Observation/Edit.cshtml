@@ -17,6 +17,9 @@
     <script type="text/javascript">
         var editObservationViewModel = new EditObservationViewModel(@Html.Raw(data));
         ko.applyBindings(editObservationViewModel);
+        //potential fix to problem where map is sometimes not loaded...
+        createObservationViewModel.Observation.Observation.LocationLatitude = @Model.Observation.LocationLatitude;
+        createObservationViewModel.Observation.Observation.LocationLongitude = @Model.Observation.LocationLongitude;// .ObservationDateTime(new Date(Date.now()));
     </script>
 }
 
