@@ -10,7 +10,7 @@ namespace Birder2.Models
         public int BirdId { get; set; }
 
         [Required]
-        public string Class { get; set; } //ALL = AVES
+        public string Class { get; set; }
 
         [Required]
         public string Order { get; set; }

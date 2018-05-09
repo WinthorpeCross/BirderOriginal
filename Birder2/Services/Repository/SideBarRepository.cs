@@ -40,6 +40,7 @@ namespace Birder2.Services
                  .Include(b => b.Bird)
                  .Where(u => u.ApplicationUser.Id == user.Id)
                     group observations by observations.Bird into species
+                    orderby species.Count() descending
                     select new TopObservationsViewModel
                     {
                         Vernacular = species.FirstOrDefault().Bird.EnglishName,
