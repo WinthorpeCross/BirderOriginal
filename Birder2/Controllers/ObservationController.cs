@@ -239,6 +239,10 @@ namespace Birder2.Controllers
             //    return Json(JsonConvert.SerializeObject(viewModel));
             //}
 
+            //
+            //Belt and braces:
+            // check if editor is the same as the original.  Only the owner is allowed to edit.
+            //
             var user = await _userAccessor.GetUser();
             if (user.Id != viewModel.Observation.ApplicationUserId)
             {
@@ -332,6 +336,7 @@ namespace Birder2.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //ToDo: Move to separate controller.  With annual list.  Perhaps other related lists - All Users?
         [HttpGet]
         public async Task<IActionResult> ListLife()
         {

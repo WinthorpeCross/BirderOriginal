@@ -19,7 +19,7 @@ namespace Birder2.Services
         public IQueryable<SpeciesSummaryViewModel> GetLifeList(string userId)
         {
             return (from observations in _dbContext.Observations
-                 .Include(b => b.Bird)
+                 //.Include(b => b.Bird)
                  .Include(b => b.Bird)
                     .ThenInclude(u => u.BirdConserverationStatus)
                  .Where(u => u.ApplicationUser.Id == userId)
