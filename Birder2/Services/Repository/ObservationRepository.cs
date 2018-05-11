@@ -53,7 +53,10 @@ namespace Birder2.Services
         //ToDo: DRY - This is repeated verbatim in two repositories
         public async Task<IEnumerable<Bird>> AllBirdsList()
         {
-            return await _dbContext.Birds.ToListAsync();
+            return await _dbContext.Birds
+                .OrderBy(ob => ob.BirderStatus)
+                    .ThenBy(a => a.EnglishName)
+                        .ToListAsync();
         }
 
         public async Task<Bird> GetSelectedBird(int id)

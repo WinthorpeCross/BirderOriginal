@@ -23,7 +23,8 @@ namespace Birder2.Data
                 new ConserverationStatus{ConservationStatus="Red list",Description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now},
                 new ConserverationStatus{ConservationStatus="Amber list",Description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now},
                 new ConserverationStatus{ConservationStatus="Green list",Description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now},
-                new ConserverationStatus{ConservationStatus="Former breeder",Description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now}
+                new ConserverationStatus{ConservationStatus="Former breeder",Description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now},
+                new ConserverationStatus{ConservationStatus="Not assessed",Description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now}
             };
             foreach (ConserverationStatus cs in status)
             {
