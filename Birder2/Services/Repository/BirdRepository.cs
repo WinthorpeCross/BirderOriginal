@@ -27,8 +27,9 @@ namespace Birder2.Services
         {
             return _dbContext.Birds
                 .Include(bcs => bcs.BirdConserverationStatus)
-                     .OrderByDescending(v => v.EnglishName)
-                        .AsNoTracking();
+                     .OrderBy(bs => bs.BirderStatus)
+                        .ThenBy(en => en.EnglishName)
+                            .AsNoTracking();
         }
 
         public IQueryable<Bird> AllBirdsList(int birdId)
@@ -44,7 +45,8 @@ namespace Birder2.Services
             return _dbContext.Birds
                 .Include(bcs => bcs.BirdConserverationStatus)
                     .Where(b => b.BirderStatus == BirderStatus.Common)
-                        .OrderByDescending(v => v.EnglishName)
+                     .OrderBy(bs => bs.BirderStatus)
+                        .ThenBy(en => en.EnglishName)
                             .AsNoTracking();
         }
 
