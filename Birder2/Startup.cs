@@ -61,10 +61,10 @@ namespace Birder2
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
 
-            services.Configure<MvcOptions>(options =>
-            {
-                options.Filters.Add(new RequireHttpsAttribute());
-            });
+            //services.Configure<MvcOptions>(options =>
+            //{
+            //    options.Filters.Add(new RequireHttpsAttribute());
+            //});
 
             services.Configure<AuthMessageSenderOptions>(Configuration);
         }
@@ -81,17 +81,15 @@ namespace Birder2
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-
             }
 
-            var options = new RewriteOptions()
-                .AddRedirectToHttps();
+            //var options = new RewriteOptions()
+            //    .AddRedirectToHttps();
 
-            app.UseRewriter(options);
+            //app.UseRewriter(options);
 
             //app.UseWelcomePage()
 
-            //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseAuthentication();
