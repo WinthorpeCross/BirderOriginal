@@ -11,6 +11,9 @@ using AutoMapper;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
+using System.Text;
+
+using Microsoft.AspNetCore.Http;
 
 namespace Birder2
 {
@@ -100,6 +103,15 @@ namespace Birder2
                     name: "default",
                     template: "{controller=Observation}/{action=Index}/{id?}");
             });
+
+            //app.Run(async context =>
+            //{
+            //    var encoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
+            //    var document = string.Format(Markup.Text, Configuration["SecretName"], Configuration["Section:SecretName"], Configuration.GetSection("Section")["SecretName"]);
+            //    context.Response.ContentLength = encoding.GetByteCount(document);
+            //    context.Response.ContentType = "text/html";
+            //    await context.Response.WriteAsync(document);
+            //});
         }
     }
 }
