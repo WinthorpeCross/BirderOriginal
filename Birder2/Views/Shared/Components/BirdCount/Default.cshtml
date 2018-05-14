@@ -1,11 +1,20 @@
 ﻿@model Birder2.ViewModels.BirdCountViewModel
 
-@*<div class="class--aside-block-header">
-    <h4><b>Unique Birds</b></h4>
-</div>*@
+@{
+    var observationStatus = Model.TotalObservations > 1 ? "observations" : "observation";
 
-<div class="class--aside-block-body">
-    <h2><small>You have spotted </small>@Model.TotalSpecies<small> bird species in</small> @Model.TotalObservations <small> observations</small></h2>
-</div>
+    if (Model.TotalObservations > 0)
+    {
+        <div class="class--aside-block-body">
+            <h2><small>You have spotted </small>@Model.TotalSpecies<small> bird species in</small> @Model.TotalObservations <small> @observationStatus</small></h2>
+        </div>
+    }
+    else
+    {
+        <div class="class--aside-block-body">
+            <h2><small>You have not made any observations yet.</small></h2>
+        </div>
+    }
+}
 
 

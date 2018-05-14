@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 //ToDo: Threading is expensive.  Refactor to use only when it is necessary.
+//ToDo: Rework and services.
 
 namespace Birder2.Controllers
 {
@@ -121,7 +122,6 @@ namespace Birder2.Controllers
 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //public async Task<IActionResult> Create([Bind("ObservationId,ObservationDateTime,Location,Note,BirdId,LocationLatitude,LocationLongitude")] Observation observation)
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public async Task<JsonResult> Post([FromBody]CreateObservationViewModel viewModel)
@@ -224,9 +224,7 @@ namespace Birder2.Controllers
             }
         }
 
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        // ToDo: Convert to Knockout setup.  Research overposting attacks.
+        // ToDo: Research overposting attacks.
         [HttpPost]
         public async Task<JsonResult> Edit([FromBody]EditObservationViewModel viewModel)
         {
@@ -241,6 +239,10 @@ namespace Birder2.Controllers
             //    return Json(JsonConvert.SerializeObject(viewModel));
             //}
 
+            //
+            //Belt and braces:
+            // check if editor is the same as the original.  Only the owner is allowed to edit.
+            //
             var user = await _userAccessor.GetUser();
             if (user.Id != viewModel.Observation.ApplicationUserId)
             {
@@ -298,86 +300,7 @@ namespace Birder2.Controllers
 
             //return Json(JsonConvert.SerializeObject(ModelState));
             return Json(JsonConvert.SerializeObject(viewModel));
-
-            //var model = new EditObservationViewModel
-            //{
-            //    Birds = await _observationRepository.AllBirdsList(),
-            //    Observation = await _observationRepository.GetObservationDetails(id)
-            //};
-
-            //if (model.Observation == null)
-            //{
-            //    return NotFound();
-            //}
-            //return View(model);
         }
-        //public async Task<IActionResult> Edit(int id, [Bind("ObservationId,ObservationDateTime,Quantity,LocationLatitude,LocationLongitude," +
-        //                                                        "NoteGeneral,NoteHabitat,NoteWeather,NoteAppearance,NoteBehaviour," +
-        //                                                            "NoteVocalisation,BirdId,ApplicationUserId")] Observation observation)
-        //{
-        //    // ToDo: Look into this update method.
-
-        //    if (id != observation.ObservationId)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var user = await _userAccessor.GetUser();
-        //    if (user.Id != observation.ApplicationUserId)
-        //    {
-        //        return RedirectToAction("Login", "Account");
-        //    }
-            
-        //    if (ModelState.IsValid)
-        //    {
-        //        //ToDo: use AutoMaper here...
-        //        try
-        //        {
-        //            Observation observationEdited = await _observationRepository.GetObservationDetails(id);
-        //            observationEdited.Bird = await _observationRepository.GetSelectedBird(observation.BirdId);
-        //            observationEdited.ObservationDateTime = observation.ObservationDateTime;
-        //            observationEdited.LocationLatitude = observation.LocationLatitude;
-        //            observationEdited.LocationLongitude = observation.LocationLongitude;
-        //            observationEdited.NoteGeneral = observation.NoteGeneral;
-        //            observationEdited.NoteHabitat = observation.NoteHabitat;
-        //            observationEdited.NoteWeather = observation.NoteWeather;
-        //            observationEdited.NoteAppearance = observation.NoteAppearance;
-        //            observationEdited.NoteBehaviour = observation.NoteBehaviour;
-        //            observationEdited.NoteVocalisation = observation.NoteVocalisation;
-
-        //            observationEdited.ApplicationUser = user;
-
-        //            observationEdited.LastUpdateDate = _systemClock.Now;
-
-        //            observationEdited.Quantity = observation.Quantity;
-        //            await _observationRepository.UpdateObservation(observationEdited);
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!await _observationRepository.ObservationExists(observation.ObservationId))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));  //return to details view?
-        //    }
-
-        //    var model = new EditObservationViewModel
-        //    {
-        //        Birds = await _observationRepository.AllBirdsList(),
-        //        Observation = await _observationRepository.GetObservationDetails(id)
-        //    };
-
-        //    if (model.Observation == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(model);
-        //}
 
         public async Task<IActionResult> Delete(int? id)
         {
@@ -413,6 +336,7 @@ namespace Birder2.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //ToDo: Move to separate controller.  With annual list.  Perhaps other related lists - All Users?
         [HttpGet]
         public async Task<IActionResult> ListLife()
         {

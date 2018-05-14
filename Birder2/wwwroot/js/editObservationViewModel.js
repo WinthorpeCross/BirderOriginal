@@ -161,7 +161,7 @@ function collapse() {
 var markers = [];
 
 function initMap() {
-    var myLatlng = new google.maps.LatLng(editObservationViewModel.Observation.LocationLatitude(), editObservationViewModel.Observation.LocationLongitude());
+    var myLatlng = new google.maps.LatLng(editObservationViewModel.Observation.LocationLatitude(),editObservationViewModel.Observation.LocationLongitude());
     var myOptions = {
         zoom: 13,
         center: myLatlng,

@@ -2,7 +2,7 @@
 {
     public enum BirderStatus
     {
-        Common,
-        Uncommon
+        Common = 0,
+        Uncommon = 1
     }
 }

@@ -19,11 +19,12 @@ namespace Birder2.Services
         public IQueryable<SpeciesSummaryViewModel> GetLifeList(string userId)
         {
             return (from observations in _dbContext.Observations
-                 .Include(b => b.Bird)
+                 //.Include(b => b.Bird)
                  .Include(b => b.Bird)
                     .ThenInclude(u => u.BirdConserverationStatus)
                  .Where(u => u.ApplicationUser.Id == userId)
                  group observations by observations.Bird into species
+                 orderby species.Count() descending
                  select new SpeciesSummaryViewModel
                  {
                      Vernacular = species.FirstOrDefault().Bird.EnglishName,
@@ -52,7 +53,10 @@ namespace Birder2.Services
         //ToDo: DRY - This is repeated verbatim in two repositories
         public async Task<IEnumerable<Bird>> AllBirdsList()
         {
-            return await _dbContext.Birds.ToListAsync();
+            return await _dbContext.Birds
+                .OrderBy(ob => ob.BirderStatus)
+                    .ThenBy(a => a.EnglishName)
+                        .ToListAsync();
         }
 
         public async Task<Bird> GetSelectedBird(int id)

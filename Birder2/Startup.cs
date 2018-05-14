@@ -9,6 +9,8 @@ using Birder2.Models;
 using Birder2.Services;
 using AutoMapper;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace Birder2
 {
@@ -59,6 +61,11 @@ namespace Birder2
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
 
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
+
             services.Configure<AuthMessageSenderOptions>(Configuration);
         }
 
@@ -75,6 +82,11 @@ namespace Birder2
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            var options = new RewriteOptions()
+                .AddRedirectToHttps();
+
+            app.UseRewriter(options);
 
             //app.UseWelcomePage()
 

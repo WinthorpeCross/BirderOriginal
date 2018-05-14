@@ -40,6 +40,7 @@ namespace Birder2.Services
                  .Include(b => b.Bird)
                  .Where(u => u.ApplicationUser.Id == user.Id)
                     group observations by observations.Bird into species
+                    orderby species.Count() descending
                     select new TopObservationsViewModel
                     {
                         Vernacular = species.FirstOrDefault().Bird.EnglishName,
@@ -49,16 +50,17 @@ namespace Birder2.Services
 
         public IQueryable<TopObservationsViewModel> GetTopObservations(ApplicationUser user, DateTime date)
         {
-            DateTime endDate = date.AddDays(-30);
+            DateTime startDate = date.AddDays(-30);
             return (from observations in _dbContext.Observations
-                    .Include(b => b.Bird)
-                        where observations.ApplicationUserId == user.Id && (observations.ObservationDateTime >= endDate && observations.ObservationDateTime <= date)
-                            group observations by observations.Bird into species
-                                select new TopObservationsViewModel
-                                {
-                                    Vernacular = species.FirstOrDefault().Bird.EnglishName,
-                                    Count = species.Count()
-                                }).Take(5);
+                    .Include(b => b.Bird)                                                                     
+                        where (observations.ApplicationUserId == user.Id && (observations.ObservationDateTime >= startDate))
+                                group observations by observations.Bird into species
+                                orderby species.Count() descending
+                                    select new TopObservationsViewModel
+                                    {
+                                        Vernacular = species.FirstOrDefault().Bird.EnglishName,
+                                        Count = species.Count()
+                                    }).Take(5);
         }
 
     }
