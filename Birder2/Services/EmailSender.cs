@@ -7,13 +7,11 @@ namespace Birder2.Services
 {
     public class EmailSender : IEmailSender
     {
-        //public AuthMessageSenderOptions Options { get; } //Development only, set via Secret Manager
         private readonly IConfiguration _configuration = null;
 
-        public EmailSender(IConfiguration configuration) //IOptions<AuthMessageSenderOptions> optionsAccessor)
+        public EmailSender(IConfiguration configuration)
         {
             _configuration = configuration;
-            //Options = optionsAccessor.Value;
         }
 
         public Task SendEmailAsync(string email, string subject, string message)
