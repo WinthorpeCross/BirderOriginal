@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
@@ -9,12 +10,14 @@ namespace Birder2.Services
     // For more details see https://go.microsoft.com/fwlink/?LinkID=532713
     public class EmailSender : IEmailSender
     {
+        private readonly IConfiguration _configuration = null;
         //public Task SendEmailAsync(string email, string subject, string message)
         //{
         //    return Task.CompletedTask;
         //}
-        public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor)
+        public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor, IConfiguration configuration)
         {
+            _configuration = configuration;
             Options = optionsAccessor.Value;
         }
 
@@ -22,7 +25,7 @@ namespace Birder2.Services
 
         public Task SendEmailAsync(string email, string subject, string message)
         {
-            return Execute(Options.SendGridKey, subject, message, email);
+            return Execute(_configuration["BirderSendGrid"], subject, message, email);
         }
 
         public Task Execute(string apiKey, string subject, string message, string email)
