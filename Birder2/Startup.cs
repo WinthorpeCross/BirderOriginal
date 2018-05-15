@@ -81,10 +81,13 @@ namespace Birder2
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            var options = new RewriteOptions()
-                .AddRedirectToHttps();
+            if (env.IsProduction())
+            {
+                var options = new RewriteOptions()
+                    .AddRedirectToHttps();
 
-            app.UseRewriter(options);
+                app.UseRewriter(options);
+            }
 
             //app.UseWelcomePage()
 

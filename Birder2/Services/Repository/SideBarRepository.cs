@@ -25,11 +25,9 @@ namespace Birder2.Services
                                             select td).FirstOrDefaultAsync();
             if (tweet == null)
             {
-                date = new DateTime(2018, 03, 12);
                 tweet = await (from td in _dbContext.TweetDays
                                    .Include(b => b.Bird)
-                                         where (td.DisplayDay == date)
-                                             select td).FirstOrDefaultAsync();
+                                        select td).FirstOrDefaultAsync();
             }
             return tweet;
         }
