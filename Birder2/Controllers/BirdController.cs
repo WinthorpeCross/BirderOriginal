@@ -60,6 +60,7 @@ namespace Birder2.Controllers
                     viewModel.SelectedBirdId = options.SelectedBirdId;
                     viewModel.ListFormat = options.ListFormat;
                 }
+                //viewModel.PageSizeList = options.PageSizeList;
                 return View(viewModel);
             }
             catch (Exception ex)

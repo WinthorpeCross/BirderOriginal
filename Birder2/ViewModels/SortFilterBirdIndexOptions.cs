@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Birder2.ViewModels
 {
@@ -8,6 +9,16 @@ namespace Birder2.ViewModels
         public BirdIndexStatusFilter BirdStatusFilter { get; set; }
         public BirdIndexListFormat ListFormat { get; set; }
         public int page { get; set; }
+        //public int SelectPageListSize { get; set; } = 12;
+        private IEnumerable<int> _pageSizeList;
+        public IEnumerable<int> PageSizeList
+        {
+            get
+            {
+                return _pageSizeList ?? (_pageSizeList = new List<int> { 12, 24, 36 });
+            }
+            private set { }
+        }
     }
 
     public enum BirdIndexStatusFilter
