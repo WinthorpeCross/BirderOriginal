@@ -6,11 +6,11 @@ namespace Birder2.ViewModels
     public class BirdIndexViewModel
     {
         public BirdIndexStatusFilter BirdStatusFilter { get; set; }
-        public BirdIndexListFormat ListFormat { get; set; }
+        public BirdIndexListFormatFilter ListFormat { get; set; }
         public int SelectedBirdId { get; set; }
         public PagedResult<Bird> BirdsList { get; set; }
         public IEnumerable<Bird> AllBirdsDropDownList { get; set; }
-        //public int SelectPageListSize { get; set; } = 12;
+        public int SelectedPageListSize { get; set; } = 12;
         private IEnumerable<int> _pageSizeList;
         public IEnumerable<int> PageSizeList
         {

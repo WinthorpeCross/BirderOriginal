@@ -42,25 +42,24 @@ namespace Birder2.Controllers
                 {
                     if (options.BirdStatusFilter == BirdIndexStatusFilter.Common)
                     {
-                        viewModel.BirdsList = await _birdRepository.CommonBirdsList().GetPaged(options.page, pageSize);
-                        viewModel.BirdStatusFilter = options.BirdStatusFilter;
+                        viewModel.BirdsList = await _birdRepository.CommonBirdsList().GetPaged(options.page, options.SelectedPageListSize);
+                        //viewModel.BirdStatusFilter = options.BirdStatusFilter;
                         viewModel.ListFormat = options.ListFormat;
                     }
                     else
                     {
-                        viewModel.BirdsList = await _birdRepository.AllBirdsList().GetPaged(options.page, pageSize);
-                        viewModel.BirdStatusFilter = options.BirdStatusFilter;
-                        //viewModel.ShowAllBirds = true;  //options.ShowAllBirds;
+                        viewModel.BirdsList = await _birdRepository.AllBirdsList().GetPaged(options.page, options.SelectedPageListSize);
+                        //viewModel.BirdStatusFilter = options.BirdStatusFilter;
                         viewModel.ListFormat = options.ListFormat;
                     }
                 }
                 else
                 {
-                    viewModel.BirdsList = await _birdRepository.AllBirdsList(options.SelectedBirdId).GetPaged(options.page, pageSize);
+                    viewModel.BirdsList = await _birdRepository.AllBirdsList(options.SelectedBirdId).GetPaged(options.page, options.SelectedPageListSize);
                     viewModel.SelectedBirdId = options.SelectedBirdId;
                     viewModel.ListFormat = options.ListFormat;
                 }
-                //viewModel.PageSizeList = options.PageSizeList;
+                //viewModel.SelectedPageListSize = options.SelectedPageListSize;
                 return View(viewModel);
             }
             catch (Exception ex)
