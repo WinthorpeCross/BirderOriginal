@@ -16,8 +16,8 @@
                            @class = "form-control selectpicker showtick",
                            title = "Choose a bird species...",
                            data_live_search = "true",
-                           data_show_subtext = "true"
-                           //onchange = "this.form.submit()"
+                           data_show_subtext = "true",
+                           onchange = "this.form.submit()"
                        })
         </div>
         <div class="col-lg-3">
@@ -179,6 +179,7 @@
                     <tr>
                         <td>
                             <b>@Html.DisplayFor(modelItem => item.EnglishName)</b>
+                            @*<a asp-action="Details" asp-route-id="@item.BirdId">@Html.DisplayFor(modelItem => item.EnglishName)</a>*@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Species)
@@ -208,7 +209,7 @@
                             @Html.DisplayFor(modelItem => item.BirdConserverationStatus.ConservationStatus)
                         </td>
                         <td>
-                            <a asp-action="Details" asp-route-id="@item.BirdId">Details</a>
+                            <a asp-action="Details" asp-route-id="@item.BirdId" class="btn btn-info btn-success">Details</a>
                         </td>
                     </tr>
                     }
