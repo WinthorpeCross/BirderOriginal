@@ -9,14 +9,12 @@ using Birder2.Models;
 using Birder2.Services;
 using AutoMapper;
 using Newtonsoft.Json;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Rewrite;
 
 namespace Birder2
 {
-    public class Startup
+    public class StartupDevelopment
     {
-        public Startup(IConfiguration configuration)
+        public StartupDevelopment(IConfiguration configuration)
         {
             Configuration = configuration;
         }
@@ -61,33 +59,33 @@ namespace Birder2
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
 
-            services.Configure<MvcOptions>(options =>
-            {
-                options.Filters.Add(new RequireHttpsAttribute());
-            });
+            //services.Configure<MvcOptions>(options =>
+            //{
+            //    options.Filters.Add(new RequireHttpsAttribute());
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
+            //if (env.IsDevelopment())
+            //{
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+            //}
+            //else
+            //{
+            //    app.UseExceptionHandler("/Home/Error");
+            //}
 
-            if (env.IsProduction())
-            {
-                var options = new RewriteOptions()
-                    .AddRedirectToHttps();
+            //if (env.IsProduction())
+            //{
+            //    var options = new RewriteOptions()
+            //        .AddRedirectToHttps();
 
-                app.UseRewriter(options);
-            }
+            //    app.UseRewriter(options);
+            //}
 
             //app.UseWelcomePage()
 

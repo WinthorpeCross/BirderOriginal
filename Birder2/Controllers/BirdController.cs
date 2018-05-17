@@ -27,38 +27,39 @@ namespace Birder2.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(SortFilterBirdIndexOptions options, int page)
+        public async Task<IActionResult> Index(SortFilterBirdIndexOptions options)
         {
             _logger.LogInformation(LoggingEvents.ListItems, "Bird Index called");
             try
             {
-                if (page == 0)
+                if (options.page == 0)
                 {
-                    page = 1;
+                    options.page = 1;
                 }
                 BirdIndexViewModel viewModel = new BirdIndexViewModel();
                 viewModel.AllBirdsDropDownList = _birdRepository.AllBirdsDropDownList();
                 if (options.SelectedBirdId == 0)
                 {
-                    if (options.ShowAllBirds == false)
+                    if (options.BirdStatusFilter == BirdIndexStatusFilter.Common)
                     {
-                        viewModel.BirdsList = await _birdRepository.CommonBirdsList().GetPaged(page, pageSize);
-                        viewModel.ShowAllBirds = options.ShowAllBirds;
-                        viewModel.ShowInTable = options.ShowInTable;
+                        viewModel.BirdsList = await _birdRepository.CommonBirdsList().GetPaged(options.page, options.SelectedPageListSize);
+                        //viewModel.BirdStatusFilter = options.BirdStatusFilter;
+                        viewModel.ListFormat = options.ListFormat;
                     }
                     else
                     {
-                        viewModel.BirdsList = await _birdRepository.AllBirdsList().GetPaged(page, pageSize);
-                        viewModel.ShowAllBirds = options.ShowAllBirds;
-                        viewModel.ShowInTable = options.ShowInTable;
+                        viewModel.BirdsList = await _birdRepository.AllBirdsList().GetPaged(options.page, options.SelectedPageListSize);
+                        //viewModel.BirdStatusFilter = options.BirdStatusFilter;
+                        viewModel.ListFormat = options.ListFormat;
                     }
                 }
                 else
                 {
-                    viewModel.BirdsList = await _birdRepository.AllBirdsList(options.SelectedBirdId).GetPaged(page, pageSize);
+                    viewModel.BirdsList = await _birdRepository.AllBirdsList(options.SelectedBirdId).GetPaged(options.page, options.SelectedPageListSize);
                     viewModel.SelectedBirdId = options.SelectedBirdId;
-                    viewModel.ShowInTable = options.ShowInTable;
+                    viewModel.ListFormat = options.ListFormat;
                 }
+                //viewModel.SelectedPageListSize = options.SelectedPageListSize;
                 return View(viewModel);
             }
             catch (Exception ex)

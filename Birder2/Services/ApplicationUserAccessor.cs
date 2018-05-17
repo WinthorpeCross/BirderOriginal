@@ -1,8 +1,6 @@
 ﻿using Birder2.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace Birder2.Services

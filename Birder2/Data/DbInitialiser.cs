@@ -16,8 +16,6 @@ namespace Birder2.Data
                 return;
             }
 
-            //byte[] birdIcon = File.ReadAllBytes(@"C:\Users\rcros\Desktop\if_099374-twitter-bird3_56010.png"); // artywear_yellow_1046.jpg");
-
             var status = new ConserverationStatus[]
             {
                 new ConserverationStatus{ConservationStatus="Red list",Description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.",CreationDate=DateTime.Now,LastUpdateDate=DateTime.Now},
