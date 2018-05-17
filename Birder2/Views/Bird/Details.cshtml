@@ -120,13 +120,13 @@
                     @{ if (!string.IsNullOrEmpty(Model.Bird.SongUrl))
                         {
                             <audio controls>
-                                <source src = "@Model.Bird.SongUrl" type = "audio/mpeg" />
+                                <source src="@Model.Bird.SongUrl" type="audio/mpeg" />
                                 Your browser does not support the audio element.
                             </audio>
                         }
                         else
                         { <p>A bird song recording is not currently available for the @Model.Bird.EnglishName</p> }
-                        }
+                    }
                 </div>
             </div>
         </div>
@@ -142,6 +142,19 @@
             <div class="panel-body">
                 @{/* TODO: Sightings distribution map */}
                 @*<div id="map" class="class--map"></div>*@
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" @*data-parent="#accordion" *@ href="#collapse8"><b>Latest sightings</b><i> (coming soon)</i></a>
+            </h4>
+        </div>
+        <div id="collapse8" class="panel-collapse collapse">
+            <div class="panel-body">
+                @{/* TODO: Latest sightings list */}
+
             </div>
         </div>
     </div>
