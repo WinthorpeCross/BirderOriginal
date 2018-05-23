@@ -11,6 +11,7 @@ using AutoMapper;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
+using Microsoft.AspNetCore.Http;
 
 namespace Birder2
 {
@@ -26,7 +27,14 @@ namespace Birder2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.Configure<StorageAccountOptions>(Configuration.GetSection("StorageAccount"));
+            //services.Configure<StorageAccountOptions>(Configuration.GetSection("BlobService"));
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    // This lambda determines whether user consent for non-essential cookies 
+            //    // is needed for a given request.
+            //    options.CheckConsentNeeded = context => true;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -92,6 +100,9 @@ namespace Birder2
             //app.UseWelcomePage()
 
             app.UseStaticFiles();
+
+
+            app.UseCookiePolicy();
 
             app.UseAuthentication();
 
