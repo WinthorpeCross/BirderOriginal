@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Birder2.ViewModels;
+using Microsoft.Extensions.Configuration;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
@@ -11,7 +12,7 @@ namespace Birder2.Services
 {
     public interface IImageStorageService
     {
-        Task<string> StoreImage(string filename, byte[] image);
+        Task<string> StoreProfileImage(string filename, byte[] image, string containerName);
     }
 
     public class ImageStorageService : IImageStorageService
@@ -23,13 +24,14 @@ namespace Birder2.Services
             _config = config;
         }
 
-        public async Task<string> StoreImage(string filename, byte[] image)
+        //ToDo: Move storage creditials to Azure Key Store...
+        public async Task<string> StoreProfileImage(string filename, byte[] image, string containerName)
         {
             var filenameonly = Path.GetFileName(filename);
 
-            var url = string.Concat(_config["BlobStorage:StorageUrl"], filenameonly);
-            var creds = new StorageCredentials(_config["BlobStorage:Account"], _config["BlobStorage:Key"]);
-            var blob = new CloudBlockBlob(new Uri(url), creds);
+            var url = string.Concat(_config["BlobStorage:StorageUrl"], containerName, "/", filenameonly);
+            var creditials = new StorageCredentials(_config["BlobStorage:Account"], _config["BlobStorage:Key"]);
+            var blob = new CloudBlockBlob(new Uri(url), creditials);
 
             if (!(await blob.ExistsAsync()))
             {

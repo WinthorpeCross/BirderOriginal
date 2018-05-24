@@ -16,12 +16,7 @@ namespace Birder2.Services
         }
     }
 }
-    //replaces this:
-    //using (var memoryStream = new MemoryStream())
-    //{
-    //    await model.UserPhoto.CopyToAsync(memoryStream);
-    //    user.UserPhoto = memoryStream.ToArray();
-    //}
+
 
 
 

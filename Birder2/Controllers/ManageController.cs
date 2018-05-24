@@ -130,21 +130,19 @@ namespace Birder2.Controllers
                 }
             }
 
-            //Photo....
-            //var userPhoto = user.UserPhoto;
             if (model.ProfileImage != null)
             {
-                user.ProfileImage = await _stream.GetByteArray(model.ProfileImage);
+                //ToDo: Try / Catch...
+                string filepath = string.Concat(user.UserName, Path.GetExtension(model.ProfileImage.FileName.ToString()));
+                var imageArray = await _stream.GetByteArray(model.ProfileImage);
+                var imageUpload = _imageService.StoreProfileImage(filepath, imageArray, "test");
+
+                imageUpload.Wait();
+                if (imageUpload.IsCompletedSuccessfully == true)
+                {
+                    user.ProfileImage = imageUpload.Result;
+                }
             }
-            //var user1 = await UserManagerExtensions.SetUserPhoto(_userManager, user.UserPhoto);
-
-            //***************************************
-            //****Test
-            //var bits = await _stream.GetByteArray(user.);
-            string filepath = string.Concat(user.UserName, Path.GetExtension(model.ProfileImage.FileName.ToString()));
-            var op = _imageService.StoreImage(filepath, user.ProfileImage);
-
-            //***************************************
 
             await _userManager.UpdateAsync(user);
 
