@@ -12,6 +12,8 @@ using Birder2.Models;
 using Birder2.ViewModels;
 using Birder2.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace Birder2.Controllers
 {
@@ -25,23 +27,29 @@ namespace Birder2.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
+        private readonly IImageStorageService _imageService;
+        private IConfiguration _config;
 
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
 
         public ManageController(
-          UserManager<ApplicationUser> userManager,
-          SignInManager<ApplicationUser> signInManager,
-          IEmailSender emailSender,
-          ILogger<ManageController> logger,
-          UrlEncoder urlEncoder,
-          IStream stream)
+                              UserManager<ApplicationUser> userManager,
+                                SignInManager<ApplicationUser> signInManager,
+                                    IEmailSender emailSender,
+                                        ILogger<ManageController> logger,
+                                            UrlEncoder urlEncoder,
+                                                IConfiguration config,
+                                                    IImageStorageService imageService,
+                                                        IStream stream)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
             _urlEncoder = urlEncoder;
+            _config = config;
+            _imageService = imageService;
             _stream = stream;
         }
 
@@ -129,6 +137,15 @@ namespace Birder2.Controllers
                 user.ProfileImage = await _stream.GetByteArray(model.ProfileImage);
             }
             //var user1 = await UserManagerExtensions.SetUserPhoto(_userManager, user.UserPhoto);
+
+            //***************************************
+            //****Test
+            //var bits = await _stream.GetByteArray(user.);
+            string filepath = string.Concat(user.UserName, Path.GetExtension(model.ProfileImage.FileName.ToString()));
+            var op = _imageService.StoreImage(filepath, user.ProfileImage);
+
+            //***************************************
+
             await _userManager.UpdateAsync(user);
 
             StatusMessage = "Your profile has been updated";
