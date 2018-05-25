@@ -133,14 +133,21 @@ namespace Birder2.Controllers
             if (model.ProfileImage != null)
             {
                 //ToDo: Try / Catch...
-                string filepath = string.Concat(user.UserName, Path.GetExtension(model.ProfileImage.FileName.ToString()));
-                var imageArray = await _stream.GetByteArray(model.ProfileImage);
-                var imageUpload = _imageService.StoreProfileImage(filepath, imageArray, "test");
-
-                imageUpload.Wait();
-                if (imageUpload.IsCompletedSuccessfully == true)
+                try
                 {
-                    user.ProfileImage = imageUpload.Result;
+                    string filepath = string.Concat(user.UserName, Path.GetExtension(model.ProfileImage.FileName.ToString()));
+                    var imageArray = await _stream.GetByteArray(model.ProfileImage);
+                    var imageUpload = _imageService.StoreProfileImage(filepath, imageArray, "test");
+
+                    imageUpload.Wait();
+                    if (imageUpload.IsCompletedSuccessfully == true)
+                    {
+                        user.ProfileImage = imageUpload.Result;
+                    }
+                }
+                catch
+                {
+                    throw new ApplicationException($"Unexpected error occurred processing the profile photo for user with ID '{user.Id}'.");
                 }
             }
 
@@ -149,15 +156,6 @@ namespace Birder2.Controllers
             StatusMessage = "Your profile has been updated";
             return RedirectToAction(nameof(Index));
         }
-        //user.UserPhoto = _stream.GetPic(model.UserPhoto); //memoryStream.ToArray();
-
-        //public static class UserManagerExtensions
-        //{
-        //    public static async Task<ApplicationUser> SetUserPhoto(TUser user, string phoneNumber)
-        //    { }
-        //}
-
-
 
 
         [HttpPost]

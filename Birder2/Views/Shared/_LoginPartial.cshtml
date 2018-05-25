@@ -11,7 +11,8 @@
         <li>
            @* see 'overflowing content' section: https://getbootstrap.com/docs/3.3/components/#navbar  *@
             <a asp-area="" asp-controller="Manage" asp-action="Index" class="navbar-brand hidden-sm">
-                <img src="~/images/man.png" style="width:75%" />
+                <img src="@UserManager.GetUserAsync(User).Result.ProfileImage" style="width:100%" />
+                @*<img src="~/images/man.png" style="width:75%" />*@
                 @*<span>@UserManager.GetUserName(User)</span>*@
             </a>
         </li>

@@ -12,7 +12,6 @@ namespace Birder2.Services
             using (var memoryStream = new MemoryStream())
             {
                 await file.CopyToAsync(memoryStream);
-                //memoryStream.ToArray();
 
                 using (MagickImage image = new MagickImage(memoryStream.ToArray()))
                 {
@@ -23,17 +22,21 @@ namespace Birder2.Services
                     image.Resize(size);
 
                     image.Write(memoryStream);
-
-                    //image.Write(SampleFiles.OutputDirectory + "Snakeware.100x100.png");
                 }
                 return memoryStream.ToArray();
             }
         }
-
     }
 }
 
 
-
+//public async Task<byte[]> GetByteArray(IFormFile file)
+//{
+//    using (var memoryStream = new MemoryStream())
+//    {
+//        await file.CopyToAsync(memoryStream);
+//        return memoryStream.ToArray();
+//    }
+//}
 
 
