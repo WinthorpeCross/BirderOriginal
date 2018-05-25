@@ -50,15 +50,22 @@ namespace Birder2
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
-                options.User.RequireUniqueEmail = true;
                 options.SignIn.RequireConfirmedEmail = true;
+                options.User.RequireUniqueEmail = true;
+                // Password settings: require any eight letters or numbers
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 2;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
             services.AddAutoMapper();
 
-            // Add application services.
+            // Add application service s.
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddSingleton<IMachineClockDateTime, MachineClockDateTime>();
 
