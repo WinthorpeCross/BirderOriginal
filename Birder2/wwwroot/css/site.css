@@ -4,6 +4,7 @@
 .navbar-nav > li > a.profile-image {
     padding-top: 10px;
     padding-bottom: 10px;
+
 }
 
 .navbar-top {
@@ -69,18 +70,18 @@
 }
 
 @media (max-width: 767px) {
-.navbar-top .navbar-nav .open .dropdown-menu > li > a {
-    color: #ffffff;
-}
+    .navbar-top .navbar-nav .open .dropdown-menu > li > a {
+        color: #ffffff;
+    }
 
-.navbar-top .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-top .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #ecf0f1;
-}
+    .navbar-top .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-top .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #ecf0f1;
+    }
 
-.navbar-top .navbar-nav .open .dropdown-menu > .active > a, .navbar-top .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-top .navbar-nav .open .dropdown-menu > .active > a:focus {
-    color: #ecf0f1;
-    background-color: #3174b0;
-}
+    .navbar-top .navbar-nav .open .dropdown-menu > .active > a, .navbar-top .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-top .navbar-nav .open .dropdown-menu > .active > a:focus {
+        color: #ecf0f1;
+        background-color: #3174b0;
+    }
 }
 /*.profile-img {
     margin-top: -5px;
