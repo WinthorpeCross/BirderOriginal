@@ -24,13 +24,11 @@ namespace Birder2.Services
             _config = config;
         }
 
-        //ToDo: Move storage creditials to Azure Key Store...
         public async Task<string> StoreProfileImage(string filename, byte[] image, string containerName)
         {
             var filenameonly = Path.GetFileName(filename);
-
             var url = string.Concat(_config["BlobStorage:StorageUrl"], containerName, "/", filenameonly);
-            var creditials = new StorageCredentials(_config["BlobStorage:Account"], _config["BlobStorage:Key"]);
+            var creditials = new StorageCredentials(_config["BlobStorage:Account"], _config["BlobStorageKey"]);
             var blob = new CloudBlockBlob(new Uri(url), creditials);
 
             //ToDo: This is for profile pictures only...
