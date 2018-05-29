@@ -21,7 +21,7 @@ namespace Birder2.Services
             
             using (MagickImage image = new MagickImage(resizeArray))
             {
-                MagickGeometry size = new MagickGeometry(30, 30);
+                MagickGeometry size = new MagickGeometry(64, 64);
 
                 size.IgnoreAspectRatio = true;
 
