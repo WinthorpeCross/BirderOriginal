@@ -1,7 +1,7 @@
 ﻿/*
  * Navbar
  */
-.navbar-nav > li > a.profile-image {
+/*.navbar-nav > li > a.profile-image {
     padding-top: 10px;
     padding-bottom: 10px;
 
@@ -82,15 +82,15 @@
         color: #ecf0f1;
         background-color: #3174b0;
     }
-}
+}*/
 .profile-img {
     margin-top: -5px;
     margin-right: 5px;
     float: left;
-    background: url('../images/if_099374-twitter-bird3_56010.png') 50% 50% no-repeat;
+    /*background: url('../images/if_099374-twitter-bird3_56010.png') 50% 50% no-repeat;
     background-size: auto 100%; /* Interchange this value depending on prefering width vs. height  */
-width: 30px;
-height: 30px;
+    width: 30px;
+    height: 30px;
 }
 
 
