@@ -29,8 +29,7 @@
 <section>
     <div class="media">
         <div class="media-left media-middle">
-            <img src="~/images/man.png" class="media-object">
-            @*<img src="@Model.Bird.ThumbnailUrl" class="media-object">*@
+            <img data-bind="attr:{src: ProfileImage}" class="media-object" />
         </div>
         <div class="media-body">
             <h3 class="media-heading"><span data-bind="text: UserName" /></h3>

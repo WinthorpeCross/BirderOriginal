@@ -10,8 +10,8 @@ namespace Birder2.Models
 
         public double DefaultLocationLongitude { get; set; }
 
-        [Display(Name = "Profile Image")]
-        public byte[] ProfileImage { get; set; }
+        [Display(Name = "Upload new profile image")]
+        public string ProfileImage { get; set; }
 
         public ICollection<Observation> Observations { get; set; }
 

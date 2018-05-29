@@ -276,8 +276,8 @@ namespace Birder2.Controllers
                     UserName = model.UserName,
                     Email = model.Email,
                     DefaultLocationLatitude = 54.972237,
-                    DefaultLocationLongitude = -2.4608560000000352 
-                    //Haltwhistle, Northumberland https://en.wikipedia.org/wiki/Haltwhistle
+                    DefaultLocationLongitude = -2.4608560000000352,
+                    ProfileImage = "https://birderstorage.blob.core.windows.net/profile/default.png"
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

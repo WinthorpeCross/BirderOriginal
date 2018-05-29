@@ -12,6 +12,8 @@ using Birder2.Models;
 using Birder2.ViewModels;
 using Birder2.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace Birder2.Controllers
 {
@@ -19,29 +21,35 @@ namespace Birder2.Controllers
     [Route("[controller]/[action]")]
     public class ManageController : Controller
     {
-        private readonly IStream _stream;
+        private readonly IStreamService _stream;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
+        private readonly IImageStorageService _imageService;
+        private IConfiguration _config;
 
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
 
         public ManageController(
-          UserManager<ApplicationUser> userManager,
-          SignInManager<ApplicationUser> signInManager,
-          IEmailSender emailSender,
-          ILogger<ManageController> logger,
-          UrlEncoder urlEncoder,
-          IStream stream)
+                              UserManager<ApplicationUser> userManager,
+                                SignInManager<ApplicationUser> signInManager,
+                                    IEmailSender emailSender,
+                                        ILogger<ManageController> logger,
+                                            UrlEncoder urlEncoder,
+                                                IConfiguration config,
+                                                    IImageStorageService imageService,
+                                                        IStreamService stream)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
             _urlEncoder = urlEncoder;
+            _config = config;
+            _imageService = imageService;
             _stream = stream;
         }
 
@@ -122,27 +130,33 @@ namespace Birder2.Controllers
                 }
             }
 
-            //Photo....
-            //var userPhoto = user.UserPhoto;
             if (model.ProfileImage != null)
             {
-                user.ProfileImage = await _stream.GetByteArray(model.ProfileImage);
+                //ToDo: Try / Catch...
+                try
+                {
+                    string filepath = string.Concat(user.UserName, Path.GetExtension(model.ProfileImage.FileName.ToString()));
+                    var imageArray = await _stream.GetByteArray(model.ProfileImage);
+                    imageArray = _stream.ResizePhoto(imageArray);
+                    var imageUpload = _imageService.StoreProfileImage(filepath, imageArray, "profile");
+
+                    imageUpload.Wait();
+                    if (imageUpload.IsCompletedSuccessfully == true)
+                    {
+                        user.ProfileImage = imageUpload.Result;
+                    }
+                }
+                catch
+                {
+                    throw new ApplicationException($"Unexpected error occurred processing the profile photo for user with ID '{user.Id}'.");
+                }
             }
-            //var user1 = await UserManagerExtensions.SetUserPhoto(_userManager, user.UserPhoto);
+
             await _userManager.UpdateAsync(user);
 
             StatusMessage = "Your profile has been updated";
             return RedirectToAction(nameof(Index));
         }
-        //user.UserPhoto = _stream.GetPic(model.UserPhoto); //memoryStream.ToArray();
-
-        //public static class UserManagerExtensions
-        //{
-        //    public static async Task<ApplicationUser> SetUserPhoto(TUser user, string phoneNumber)
-        //    { }
-        //}
-
-
 
 
         [HttpPost]

@@ -49,6 +49,7 @@ namespace Birder2.Controllers
                 viewModel.IsFollowing = loggedinUser.Following.Any(cus => cus.ApplicationUser.UserName == userToShow.UserName);
             }
             viewModel.UserName = userToShow.UserName;
+            viewModel.ProfileImage = userToShow.ProfileImage;
             viewModel.UniqueSpeciesCount = await _userRepository.UniqueSpeciesCount(userToShow);
             viewModel.Observations = await _userRepository.GetUsersObservationsList(userToShow.Id).GetPaged(page, pageSize);
 

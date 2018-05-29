@@ -11,6 +11,8 @@ using AutoMapper;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Birder2
 {
@@ -26,22 +28,44 @@ namespace Birder2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.Configure<StorageAccountOptions>(Configuration.GetSection("StorageAccount"));
+            //services.Configure<StorageAccountOptions>(Configuration.GetSection("BlobService"));
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies 
+                // is needed for a given request.
+                //options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie();
+                //.AddCookie(options =>
+                //{
+                //    ...
+                //});
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
-                options.User.RequireUniqueEmail = true;
                 options.SignIn.RequireConfirmedEmail = true;
+                options.User.RequireUniqueEmail = true;
+                // Password settings: require any eight letters or numbers
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 2;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
             services.AddAutoMapper();
 
-            // Add application services.
+            // Add application service s.
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddSingleton<IMachineClockDateTime, MachineClockDateTime>();
 
@@ -53,8 +77,10 @@ namespace Birder2
             services.AddScoped<IUserRepository, UserRepository>();
 
             //ToDo: Work out what type of service these should be - Singletons?
-            services.AddTransient<IStream, StreamService>();
+            services.AddTransient<IStreamService, StreamService>();
             services.AddTransient<IFlickrService, FlickrService>();
+
+            services.AddTransient<IImageStorageService, ImageStorageService>();
 
             services.AddMvc().AddJsonOptions
                 (options => {
@@ -92,6 +118,8 @@ namespace Birder2
             //app.UseWelcomePage()
 
             app.UseStaticFiles();
+
+            app.UseCookiePolicy();
 
             app.UseAuthentication();
 

@@ -1,6 +1,8 @@
 ﻿using Birder2.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System.Diagnostics;
 
 namespace Birder2.Controllers
@@ -8,9 +10,18 @@ namespace Birder2.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        public HomeController()
+        private readonly IConfiguration _config;
+
+        public HomeController(IConfiguration config)
         {
+            _config = config;
             //blobUtility = new HomeController.BlobUtility(_optionsAccessor.Value.StorageAccountNameOption, _optionsAccessor.Value.StorageAccountKeyOption);
+        }
+
+        [AllowAnonymous]
+        public IActionResult Contact()
+        {
+            return View();
         }
 
         public IActionResult Index()
@@ -24,12 +35,7 @@ namespace Birder2.Controllers
             return View();
         }
  
-        [AllowAnonymous]
-        public IActionResult Contact()
-        {
-            //ViewData["Message"] = "Map example";
-            return View();
-        }
+
 
         [AllowAnonymous]
         public IActionResult Welcome()

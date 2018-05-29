@@ -1,28 +1,47 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ImageMagick;
+using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Threading.Tasks;
 
 namespace Birder2.Services
 {
-    public class StreamService : IStream
+    public class StreamService : IStreamService
     {
         public async Task<byte[]> GetByteArray(IFormFile file)
         {
-            using (var ms = new MemoryStream())
+            using (var memoryStream = new MemoryStream())
             {
-                await file.CopyToAsync(ms);
-                return ms.ToArray();
+                await file.CopyToAsync(memoryStream);
+                return memoryStream.ToArray();
             }
+        }
+
+        public byte[] ResizePhoto(byte[] resizeArray)
+        {
+            using (MagickImage image = new MagickImage(resizeArray))
+            {
+                MagickGeometry size = new MagickGeometry(64, 64);
+
+                size.IgnoreAspectRatio = true;
+
+                image.Resize(size);
+                //image.Write(@"C:\Users\rcros\Desktop\NewSize.png");
+                var x = image.ToByteArray();
+                return x;
+            }
+            //return ;
         }
     }
 }
-    //replaces this:
-    //using (var memoryStream = new MemoryStream())
-    //{
-    //    await model.UserPhoto.CopyToAsync(memoryStream);
-    //    user.UserPhoto = memoryStream.ToArray();
-    //}
 
 
+//public async Task<byte[]> GetByteArray(IFormFile file)
+//{
+//    using (var memoryStream = new MemoryStream())
+//    {
+//        await file.CopyToAsync(memoryStream);
+//        return memoryStream.ToArray();
+//    }
+//}
 
 
