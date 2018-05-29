@@ -15,7 +15,6 @@ namespace Birder2.Controllers
         public HomeController(IConfiguration config)
         {
             _config = config;
-            //blobUtility = new HomeController.BlobUtility(_optionsAccessor.Value.StorageAccountNameOption, _optionsAccessor.Value.StorageAccountKeyOption);
         }
 
         [AllowAnonymous]

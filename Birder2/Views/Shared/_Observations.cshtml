@@ -5,8 +5,9 @@
 <section>
     <div class="media">
         <div class="media-left media-middle">
-            @*<img src="~/images/if_099374-twitter-bird3_56010.png" class="media-object" style="width:60px">*@
-            <img src="@Model.Bird.ThumbnailUrl" class="media-object">
+            <a href="Observation/Details/@Model.ObservationId">
+                <img src="@Model.Bird.ThumbnailUrl" class="media-object img-rounded" />
+            </a>
         </div>
         <div class="media-body">
             <h3 class="media-heading">@Model.Bird.EnglishName <small><i> @Model.Bird.Species</i></small></h3>
@@ -20,7 +21,7 @@
             <h5>Spotted by <a asp-controller="User" asp-action="Details" asp-route-userName="@Model.ApplicationUser.UserName">@Model.ApplicationUser.UserName</a> on @Model.ObservationDateTime.ToString("dddd, dd MMMM yyyy, HH:mm")</h5>
                 } }
             <div>
-                <a asp-controller="Observation" asp-action="Details" asp-route-id="@Model.ObservationId" class="btn-sm">View</a>
+                <a asp-controller="Observation" asp-action="Details" asp-route-id="@Model.ObservationId" class="btn-link">View details</a> 
             </div>
         </div>
     </div>

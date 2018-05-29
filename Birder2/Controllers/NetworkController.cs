@@ -1,18 +1,12 @@
-﻿using Birder2.Services;
+﻿using Birder2.Extensions;
 using Birder2.Models;
+using Birder2.Services;
 using Birder2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System.Threading.Tasks;
-using Birder2.Extensions;
 using System;
-
-/*
-<script>
-    document.getElementById("ItemPreview").src = "data:image/png;base64, @UserManager.GetUserAsync(User).Result.UserPhoto";
-</script>
-*/
+using System.Threading.Tasks;
 
 namespace Birder2.Controllers
 {

@@ -60,7 +60,7 @@
                                                 new
                                                 {
                                                     @name = "BirdId",
-                                                    @class = "form-control selectpicker showtick",
+                                                    @class = "form-control selectpicker show-tick",
                                                     data_bind = "attr: {'Id': 'BirdId_' + $index()}, selectPicker: {}, value: BirdId",
                                                     title = "Choose a bird species...",
                                                     data_live_search = "true",
@@ -134,24 +134,15 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#collapse3"><b>Set observation location</b> <i>(use the map control to set the location):</i></a>
+                    <a data-toggle="collapse" href="#collapse3"><b>Set observation location</b></a>
                 </h4>
             </div>
-            <div id="collapse3" class="panel-collapse collapse">
+            <div id="collapse3" class="panel-collapse collapse in">
                 <div class="panel-body">
                     <div class="form-group">
-                        <label class="control-label"></label>
-                        <input class="form-control" id="set" disabled />
-                    </div>
-                    @*<div class="form-group">
-                        <input class="form-control" name="Observation.LocationLatitude" data-bind="value: Observation.LocationLatitude" id="latitude" />
-                        <input class="form-control" name="Observation.LocationLongitude" data-bind="value: Observation.LocationLongitude" id="longitude" />
-                    </div>*@
+                        <p>Click the map to move the marker.  Or use the search box. 'Use current location' is in dev...</p>
 
-                    @*<div class="container" id="floating-panel">
-                        <input id="address" type="text" value="">
-                        <input id="submit" type="button" value="Search">
-                    </div>*@
+                    </div>
 
                     <div class="row" id="floating-panel">
                         <div class="col-lg-6">
@@ -163,7 +154,8 @@
                             </div>
                         </div>
                     </div>
-
+                    <label class="control-label"></label>
+                    <input class="form-control" id="set" disabled />
                     <div id="map" class="class--map"></div>
                 </div>
             </div>
@@ -177,8 +169,8 @@
             <div id="collapse4" class="panel-collapse collapse">
                 <div class="panel-body">
                     <p>
-                        This functionality is in development will enable you to organise your observations with tags.  For example, group your
-                        holiday observations with a 'ScottishHighlandsTrip2018' tag or a bird category like 'BirdsOfPrey' tag.
+                        This functionality is in development.  It will enable you to organise your observations into groups of related observations with tags.  For example, group your
+                        holiday observations with a 'ScottishHighlandsTrip2018' tag or a bird category like 'BirdsOfPrey' tag or a nature reserve.
                     </p>
                 </div>
             </div>
@@ -192,7 +184,7 @@
             <div id="collapse5" class="panel-collapse collapse">
                 <div class="panel-body">
                     <p>
-                        This functionality will enable you to upload your bird photos.
+                        This functionality will enable you to upload your bird photos.  This functionality will in place by early June.
                     </p>
                 </div>
             </div>

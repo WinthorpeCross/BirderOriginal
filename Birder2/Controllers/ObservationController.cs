@@ -12,7 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 //ToDo: Threading is expensive.  Refactor to use only when it is necessary.
-//ToDo: Rework and services.
+//ToDo: Refactor and write more services!
 
 namespace Birder2.Controllers
 {
