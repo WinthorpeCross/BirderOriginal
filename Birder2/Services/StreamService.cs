@@ -26,7 +26,7 @@ namespace Birder2.Services
                 size.IgnoreAspectRatio = true;
 
                 image.Resize(size);
-                image.Write(@"C:\Users\rcros\Desktop\NewSize.png");
+                //image.Write(@"C:\Users\rcros\Desktop\NewSize.png");
                 var x = image.ToByteArray();
                 return x;
             }

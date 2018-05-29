@@ -17,7 +17,8 @@
 <section>
     <div class="media">
         <div class="media-left media-middle">
-            <img src="~/images/man.png" class="media-object">
+            <img data-bind="attr:{src: ProfileImage}" class="media-object" />
+            @*<img src="~/images/man.png" class="media-object">*@
             @*<img src="@Model.Bird.ThumbnailUrl" class="media-object">  ~/images/man.png *@
         </div>
         <div class="media-body">
@@ -38,7 +39,8 @@
 <section>
     <div class="media">
         <div class="media-left media-middle">
-            <img src="~/images/man.png" class="media-object">
+            <img data-bind="attr:{src: ProfileImage}" class="media-object" />
+            @*<img src="~/images/man.png" class="media-object">*@
             @*<img src="@Model.Bird.ThumbnailUrl" class="media-object">*@
         </div>
         <div class="media-body">

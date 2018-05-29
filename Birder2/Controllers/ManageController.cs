@@ -138,8 +138,7 @@ namespace Birder2.Controllers
                     string filepath = string.Concat(user.UserName, Path.GetExtension(model.ProfileImage.FileName.ToString()));
                     var imageArray = await _stream.GetByteArray(model.ProfileImage);
                     imageArray = _stream.ResizePhoto(imageArray);
-                    var imageUpload = _imageService.StoreProfileImage(filepath, imageArray, "test");
-                    //var x = _stream.ResizePhoto(imageArray);
+                    var imageUpload = _imageService.StoreProfileImage(filepath, imageArray, "profile");
 
                     imageUpload.Wait();
                     if (imageUpload.IsCompletedSuccessfully == true)
