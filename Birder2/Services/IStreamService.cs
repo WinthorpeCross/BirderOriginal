@@ -3,8 +3,9 @@ using System.Threading.Tasks;
 
 namespace Birder2.Services
 {
-    public interface IStream
+    public interface IStreamService
     {
+        byte[] ResizePhoto(byte[] resizeArray);
         Task<byte[]> GetByteArray(IFormFile file);
     }
 }

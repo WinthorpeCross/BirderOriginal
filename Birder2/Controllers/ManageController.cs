@@ -21,7 +21,7 @@ namespace Birder2.Controllers
     [Route("[controller]/[action]")]
     public class ManageController : Controller
     {
-        private readonly IStream _stream;
+        private readonly IStreamService _stream;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
@@ -41,7 +41,7 @@ namespace Birder2.Controllers
                                             UrlEncoder urlEncoder,
                                                 IConfiguration config,
                                                     IImageStorageService imageService,
-                                                        IStream stream)
+                                                        IStreamService stream)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -137,7 +137,9 @@ namespace Birder2.Controllers
                 {
                     string filepath = string.Concat(user.UserName, Path.GetExtension(model.ProfileImage.FileName.ToString()));
                     var imageArray = await _stream.GetByteArray(model.ProfileImage);
+                    imageArray = _stream.ResizePhoto(imageArray);
                     var imageUpload = _imageService.StoreProfileImage(filepath, imageArray, "test");
+                    //var x = _stream.ResizePhoto(imageArray);
 
                     imageUpload.Wait();
                     if (imageUpload.IsCompletedSuccessfully == true)

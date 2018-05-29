@@ -33,10 +33,10 @@ namespace Birder2.Services
             var creditials = new StorageCredentials(_config["BlobStorage:Account"], _config["BlobStorage:Key"]);
             var blob = new CloudBlockBlob(new Uri(url), creditials);
 
-            if (!(await blob.ExistsAsync()))
-            {
+            //if (!(await blob.ExistsAsync()))
+            //{
                 await blob.UploadFromByteArrayAsync(image, 0, image.Length);
-            }
+            //}
 
             return url;
         }
