@@ -134,13 +134,9 @@
 
 <small>Observation created: @Model.CreationDate; last update: @Model.LastUpdateDate</small>
 
+<script src="~/js/accordionHandler.js"></script>
+
 <script>
-    function expand() {
-        $('.panel-collapse').collapse('show');
-    }
-    function collapse() {
-        $('.panel-collapse').collapse('hide');
-    }
 
     function initMap() {
         var observationLocation = { lat: @Model.LocationLatitude, lng: @Model.LocationLongitude };

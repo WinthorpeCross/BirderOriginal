@@ -86,7 +86,7 @@
                             </span>
                         </div>
                         @*<input class="form-control" type="text" data-bind="dateTimePicker: Observation.ObservationDateTime" readonly />
-                        <div>Viewmodel date as text: <span data-bind="text: Observation.ObservationDateTime"></span></div>*@
+                            <div>Viewmodel date as text: <span data-bind="text: Observation.ObservationDateTime"></span></div>*@
                     </div>
                 </div>
             </div>
@@ -197,14 +197,9 @@
     </div>
 </form>
 
-<script>
-    function expand() {
-        $('.panel-collapse').collapse('show');
-    }
-    function collapse() {
-        $('.panel-collapse').collapse('hide');
-    }
+<script src="~/js/accordionHandler.js"></script>
 
+<script>
     var markers = [];
 
     function initMap() {

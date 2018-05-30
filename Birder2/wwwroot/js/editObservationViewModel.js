@@ -151,13 +151,6 @@ $.validator.addMethod("alphaonly",
     }
 );
 
-function expand() {
-    $('.panel-collapse').collapse('show');
-}
-function collapse() {
-    $('.panel-collapse').collapse('hide');
-}
-
 var markers = [];
 
 function initMap() {
