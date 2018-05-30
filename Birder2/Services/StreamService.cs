@@ -18,23 +18,24 @@ namespace Birder2.Services
 
         // ToDo: Add parameters for the image size.  With overloads.
         // ToDo: Accept and return MemoryStream
-        public byte[] ResizePhoto(byte[] resizeArray)
+
+        public byte[] ResizePhoto(byte[] resizeArray, int width, int height)
         {
             using (MagickImage image = new MagickImage(resizeArray))
             {
-                MagickGeometry size = new MagickGeometry(64, 64);
+                MagickGeometry size = new MagickGeometry(width, height);
 
                 size.IgnoreAspectRatio = true;
 
                 image.Resize(size);
                 //image.Write(@"C:\Users\rcros\Desktop\NewSize.png");
-                var x = image.ToByteArray();
-                return x;
+                resizeArray = image.ToByteArray();
             }
-            //return ;
+            return resizeArray;
         }
     }
 }
+
 
 
 //public async Task<byte[]> GetByteArray(IFormFile file)

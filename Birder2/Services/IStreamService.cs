@@ -5,7 +5,7 @@ namespace Birder2.Services
 {
     public interface IStreamService
     {
-        byte[] ResizePhoto(byte[] resizeArray);
+        byte[] ResizePhoto(byte[] resizeArray, int width, int height);
         Task<byte[]> GetByteArray(IFormFile file);
     }
 }
