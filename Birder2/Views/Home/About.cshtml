@@ -11,16 +11,25 @@
             <h4>noun, informal</h4>
             <h4>A birdwatcher</h4>
             <hr />
-            <h4>Keep a record of your bird sightings with Birder:</h4>
+            <h4>Log your bird sightings with Birder:</h4>
             <ul>
                 <li>Organise your observations into categories with descriptive 'tags' <i>(coming up soon)</i></li>
-                <li>Upload photographs of the birds you spotted <i>(coming up soon)</i></li>
+                <li>Upload photographs of the birds you have caught on camera <i>(coming up soon)</i></li>
             </ul>
 
             <br />
-            <h4>Build a network of like-minded bird lovers:</h4>
+            <h4>Build a network of like-minded bird lovers and share what you have seen:</h4>
             <ul>
                 <li>View and comment on observations from users you follow <i>(coming up soon)</i></li>
+            </ul>
+
+            <br />
+            <h4>Analyse and measure your observations:</h4>
+            <ul>
+                <li>View your 'Life List' on the birds you have identified</li>
+                <li>Earn 'badges' and increase your experience rating with 'Achievements' <i>(coming up soon)</i></li>
+                <li>See a distribution map of your observations <i>(coming up soon)</i></li>
+                <li>See dynamic graphs of what you have seen and when <i>(coming up soon)</i></li>
             </ul>
 
             <br />
@@ -30,30 +39,30 @@
             </ul>
 
             @*@{
-                    var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-                    if (loginProviders.Count == 0)
-                    {
-                        <div>
-                            <p>
-                                There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                                for details on setting up this ASP.NET application to support logging in via external services.
-                            </p>
-                        </div>
-                    }
-                    else
-                    {
-                        <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-                            <div>
-                                <p>
-                                    @foreach (var provider in loginProviders)
-                                    {
-                                        <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.Name</button>
-                                    }
-                                </p>
-                            </div>
-                        </form>
-                    }
-                }*@
+            var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            if (loginProviders.Count == 0)
+            {
+                <div>
+                    <p>
+                        There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                        for details on setting up this ASP.NET application to support logging in via external services.
+                    </p>
+                </div>
+            }
+            else
+            {
+                <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+                    <div>
+                        <p>
+                            @foreach (var provider in loginProviders)
+                            {
+                                <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.Name</button>
+                            }
+                        </p>
+                    </div>
+                </form>
+            }
+        }*@
         </section>
     </div>
 </div>

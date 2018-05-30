@@ -1,17 +1,22 @@
 ﻿using FlickrNet;
+using Microsoft.Extensions.Configuration;
 
 namespace Birder2.Services
 {
     public class FlickrService : IFlickrService
     {
-        private static string myFlickrApiKey = "7700051a31f80a964a5d0037ad5ed564";
-        private static string myFlickrSecret = "59f50feafa488bad";
+        private readonly IConfiguration _config;
+
+        public FlickrService(IConfiguration config)
+        {
+            _config = config;
+        }
 
         public PhotoCollection GetFlickrPhotoCollection(string queryString)
         {
             // ToDo: Make asynchronous, if possible...
             // ToDo: Implement disposable to use the using statement...
-            Flickr flickr = new Flickr(myFlickrApiKey, myFlickrSecret);
+            Flickr flickr = new Flickr(_config["FlickrApiKey"],_config["FlickrSecret"]);
             {
                 var options = new PhotoSearchOptions {
                         Text = queryString,

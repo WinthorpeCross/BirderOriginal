@@ -12,7 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 //ToDo: Threading is expensive.  Refactor to use only when it is necessary.
-//ToDo: Rework and services.
+//ToDo: Refactor and write more services!
 
 namespace Birder2.Controllers
 {
@@ -240,8 +240,8 @@ namespace Birder2.Controllers
             //}
 
             //
-            //Belt and braces:
-            // check if editor is the same as the original.  Only the owner is allowed to edit.
+            // ToDo: Belt and braces:
+            // check if editor is the same as the original.  Only the owner is allowed to edit their own observations.
             //
             var user = await _userAccessor.GetUser();
             if (user.Id != viewModel.Observation.ApplicationUserId)
@@ -337,6 +337,7 @@ namespace Birder2.Controllers
         }
 
         //ToDo: Move to separate controller.  With annual list.  Perhaps other related lists - All Users?
+        //ToDo: Don't bother with the repo pattern.  Just use the IQueryable directly with EF Core
         [HttpGet]
         public async Task<IActionResult> ListLife()
         {

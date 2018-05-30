@@ -16,6 +16,8 @@ namespace Birder2.Services
             }
         }
 
+        // ToDo: Add parameters for the image size.  With overloads.
+        // ToDo: Accept and return MemoryStream
         public byte[] ResizePhoto(byte[] resizeArray)
         {
             using (MagickImage image = new MagickImage(resizeArray))
