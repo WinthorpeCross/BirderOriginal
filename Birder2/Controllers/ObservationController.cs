@@ -177,6 +177,9 @@ namespace Birder2.Controllers
                         if(addObservation.IsCompletedSuccessfully == true)
                         {
                             // --- upload images service
+                            // (1) convert to byte[]
+                            // (2) resize
+                            // (3) upload to Blob storage
                         };
                     }
                     catch
