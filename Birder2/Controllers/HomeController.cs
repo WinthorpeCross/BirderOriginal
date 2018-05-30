@@ -34,8 +34,6 @@ namespace Birder2.Controllers
             return View();
         }
  
-
-
         [AllowAnonymous]
         public IActionResult Welcome()
         {
@@ -44,7 +42,7 @@ namespace Birder2.Controllers
 
         public IActionResult Error()
         {
-            //ToDo: Investigate how to use this ErrorViewModel!
+            //ToDo: 
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }

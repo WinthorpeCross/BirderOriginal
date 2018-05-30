@@ -240,8 +240,8 @@ namespace Birder2.Controllers
             //}
 
             //
-            //Belt and braces:
-            // check if editor is the same as the original.  Only the owner is allowed to edit.
+            // ToDo: Belt and braces:
+            // check if editor is the same as the original.  Only the owner is allowed to edit their own observations.
             //
             var user = await _userAccessor.GetUser();
             if (user.Id != viewModel.Observation.ApplicationUserId)
