@@ -6,7 +6,7 @@ namespace Birder2.Models
 {
     public class Observation
     {
-        //male/female/juvenile?
+        //ToDo: male/female/juvenile? Or is it too much?
         [Key]
         public int ObservationId { get; set; }
 

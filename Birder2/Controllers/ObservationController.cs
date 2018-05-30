@@ -150,9 +150,9 @@ namespace Birder2.Controllers
                 //roll back in case any cannot be updated?
                 foreach (ObservedSpeciesViewModel observedSpecies in viewModel.ObservedSpecies)
                 {
-                    //ToDo: use AutoMaper here...
                     try
                     {
+                        //ToDo: use AutoMaper here...
                         Observation observationToAdd = new Observation();
                         observationToAdd.Bird = await _observationRepository.GetSelectedBird(observedSpecies.BirdId);
                         observationToAdd.ObservationDateTime = viewModel.Observation.ObservationDateTime;
@@ -170,7 +170,14 @@ namespace Birder2.Controllers
                         observationToAdd.CreationDate = _systemClock.Now;
                         observationToAdd.LastUpdateDate = _systemClock.Now;
                         observationToAdd.Quantity = observedSpecies.Quantity;
-                        await _observationRepository.AddObservation(observationToAdd);
+
+                        var addObservation = _observationRepository.AddObservation(observationToAdd);
+                        addObservation.Wait();
+                        
+                        if(addObservation.IsCompletedSuccessfully == true)
+                        {
+                            // --- upload images service
+                        };
                     }
                     catch
                     {
@@ -185,8 +192,8 @@ namespace Birder2.Controllers
             else
             {
                 string errors = JsonConvert.SerializeObject(ModelState.Values
-                                .SelectMany(state => state.Errors)
-                               .Select(error => error.ErrorMessage));
+                                           .SelectMany(state => state.Errors)
+                                           .Select(error => error.ErrorMessage));
 
                 viewModel.IsModelStateValid = false;
                 viewModel.MessageToClient = errors;
