@@ -55,10 +55,11 @@ namespace Birder2.Models
         [Display(Name = "Observed species")]
         public int BirdId { get; set; }
         public string ApplicationUserId { get; set; }
+        
 
         public Bird Bird { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public ICollection<ObservationTag> ObservationTags { get; set; }
+        public ICollection<Photograph> Photographs { get; set; }
     }
 }
-

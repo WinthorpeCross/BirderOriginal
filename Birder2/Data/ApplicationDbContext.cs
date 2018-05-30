@@ -14,10 +14,10 @@ namespace Birder2.Data
         public DbSet<Observation> Observations { get; set; }
         public DbSet<Bird> Birds { get; set; }
         public DbSet<ConserverationStatus> ConservationStatuses { get; set; }
-        //public DbSet<BritishStatus> BritishStatuses { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<ObservationTag> ObservationTags { get; set; }
         public DbSet<TweetDay> TweetDays { get; set; }
+        public DbSet<Photograph> Photographs { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -33,6 +33,7 @@ namespace Birder2.Data
             builder.Entity<Tag>().ToTable("Tag");
             builder.Entity<ObservationTag>().ToTable("ObservationTag");
             builder.Entity<TweetDay>().ToTable("TweetDay");
+            builder.Entity<Photograph>().ToTable("Photograph");
 
             builder.Entity<ObservationTag>()
                     .HasKey(ot => new { ot.TagId, ot.ObervationId });

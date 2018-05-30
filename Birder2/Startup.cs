@@ -76,7 +76,7 @@ namespace Birder2
             services.AddScoped<ISideBarRepository, SideBarRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
-            //ToDo: Work out what type of service these should be - Singletons?
+            //ToDo: Work out what type of service these should really be - Singletons?
             services.AddTransient<IStreamService, StreamService>();
             services.AddTransient<IFlickrService, FlickrService>();
 
