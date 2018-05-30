@@ -337,6 +337,7 @@ namespace Birder2.Controllers
         }
 
         //ToDo: Move to separate controller.  With annual list.  Perhaps other related lists - All Users?
+        //ToDo: Don't bother with the repo pattern.  Just use the IQueryable directly with EF Core
         [HttpGet]
         public async Task<IActionResult> ListLife()
         {

@@ -31,7 +31,7 @@ namespace Birder2.Services
             var creditials = new StorageCredentials(_config["BlobStorage:Account"], _config["BlobStorageKey"]);
             var blob = new CloudBlockBlob(new Uri(url), creditials);
 
-            //ToDo: This is for profile pictures only...
+            //ToDo: This is for profile pictures only...  Just replace existing image
             //if (!(await blob.ExistsAsync()))
             //{
                 await blob.UploadFromByteArrayAsync(image, 0, image.Length);
