@@ -9,12 +9,16 @@
         </div>
         <div class="media-body">
             <h3 class="media-heading">@Model.UserName</h3>
-            @{ if (Model.UserName != UserManager.GetUserAsync(User).Result.UserName) {
+            @{ if (Model.UserName != UserManager.GetUserAsync(User).Result.UserName)
+                {
                     var followButtonText = Model.IsFollowing == false ? "Follow" : "Unfollow";
                     <div>
                         <a asp-action="@followButtonText" asp-route-userName="@Model.UserName" asp-route-currentPage="@Model.Observations.CurrentPage" class="btn btn-danger btn-xs">@followButtonText</a>
                     </div>
-             } }
+
+                    <p>@Model.UserName's <a asp-controller="Observation" asp-action="ListLife"> Life List</a></p>
+
+                } }
         </div>
     </div>
 </section>

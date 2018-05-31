@@ -28,7 +28,8 @@ namespace Birder2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.Configure<StorageAccountOptions>(Configuration.GetSection("BlobService"));
+            //services.Configure<AzureStorageConfig>(Configuration.GetSection("BlobStorageKey"));
+            
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies 
