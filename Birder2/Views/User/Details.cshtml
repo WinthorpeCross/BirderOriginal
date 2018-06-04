@@ -16,9 +16,10 @@
                         <a asp-action="@followButtonText" asp-route-userName="@Model.UserName" asp-route-currentPage="@Model.Observations.CurrentPage" class="btn btn-danger btn-xs">@followButtonText</a>
                     </div>
 
-                    <p>@Model.UserName's <a asp-controller="Observation" asp-action="ListLife"> Life List</a></p>
+                    @*<h5>Model.UserName's <a asp-controller="Observation" asp-action="ListLife"> Life List</a></h5>*@
 
                 } }
+
         </div>
     </div>
 </section>

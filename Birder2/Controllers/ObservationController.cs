@@ -52,17 +52,17 @@ namespace Birder2.Controllers
             //
             try
             { 
-            ObservationsIndexViewModel viewModel = new ObservationsIndexViewModel()
+            var viewModel = new ObservationsIndexViewModel()
             {
                 Filter = filter
             };
 
             switch (filter)
             {
-                case ObservationsFeedFilter.Users: //Mine
+                case ObservationsFeedFilter.Users: // Only Users
                     viewModel.Observations = await _observationRepository.GetUsersObservationsList(user.Id).GetPaged(page, pageSize);
                     break;
-                case ObservationsFeedFilter.Public: //Public
+                case ObservationsFeedFilter.Public: // Public
                     viewModel.Observations = await _observationRepository.GetPublicObservationsList().GetPaged(page, pageSize);
                     break;
                 default:
@@ -351,17 +351,20 @@ namespace Birder2.Controllers
         [HttpGet]
         public async Task<IActionResult> ListLife()
         {
+            // ToDo: Refactor so one can get another user's Life List
             var user = await _userAccessor.GetUser();
             if (user == null)
             {
                 return RedirectToAction("Login", "Account");
             }
-            LifeListViewModel viewModel = new LifeListViewModel()
+
+            var viewModel = new LifeListViewModel()
             {
-                TotalObservations = await _observationRepository.TotalObservationsCount(await _userAccessor.GetUser()),
-                TotalSpecies = await _observationRepository.UniqueSpeciesCount(await _userAccessor.GetUser()),
+                TotalObservations = await _observationRepository.TotalObservationsCount(user),
+                TotalSpecies = await _observationRepository.UniqueSpeciesCount(user),
                 LifeList = _observationRepository.GetLifeList(user.Id)
             };
+
             return View(viewModel);
         }
     }
