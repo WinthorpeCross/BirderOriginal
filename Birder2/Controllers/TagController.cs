@@ -10,6 +10,10 @@ using Birder2.Models;
 
 namespace Birder2.Controllers
 {
+    public class TagViewModel
+    {
+        public List<Tag> Tags { get; set; }
+    }
     public class TagController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,7 +26,9 @@ namespace Birder2.Controllers
         // GET: Tag
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tags.ToListAsync());
+            var t = new TagViewModel();
+            t.Tags = _context.Tags.ToList();
+            return View(t);
         }
 
         // GET: Tag/Details/5

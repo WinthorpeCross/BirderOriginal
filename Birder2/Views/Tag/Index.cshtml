@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Birder2.Models.Tag>
+﻿@model Birder2.Controllers.TagViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -6,30 +6,57 @@
 
 <h2>Index</h2>
 
+
+<form>
+    <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control col-sm-12" value="" data-role="tagsinput" id="tags">
+        </div>
+    </div>
+</form>
+
+<p>..............................</p>
+
+<form>
+    @Html.TextBoxFor(model => model.Tags, "Name", new { @class = "form-control", data_role = "tagsinput", itemValue = "Name" })
+
+    
+</form>
+<script>
+    //$(document).ready(function () {
+    //    $('input').tagsinput({
+    //        itemValue: 'Name'
+    //    });
+    //});
+
+</script>
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+@*<table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.TagId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.TagId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.TagId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.TagId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.TagId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.TagId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
-</table>
+</table>*@
