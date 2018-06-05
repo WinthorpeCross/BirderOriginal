@@ -10,8 +10,8 @@ namespace Birder2.ViewComponents
 {
     public class BirdCountViewComponent : ViewComponent
     {
-        private readonly IApplicationUserAccessor _userAccessor;
         private readonly ILogger _logger;
+        private readonly IApplicationUserAccessor _userAccessor;
         private readonly IObservationsAnalysisService _observationsAnalysisService;
 
         public BirdCountViewComponent(IApplicationUserAccessor userAccessor,

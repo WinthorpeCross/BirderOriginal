@@ -19,7 +19,6 @@ namespace Birder2.Services
         public IQueryable<SpeciesSummaryViewModel> GetLifeList(string userId)
         {
             return (from observations in _dbContext.Observations
-                 //.Include(b => b.Bird)
                  .Include(b => b.Bird)
                     .ThenInclude(u => u.BirdConserverationStatus)
                  .Where(u => u.ApplicationUser.Id == userId)
@@ -50,7 +49,7 @@ namespace Birder2.Services
         //                  select observations.BirdId).Distinct().CountAsync();
         //}
 
-        //ToDo: DRY - This is repeated verbatim in two repositories
+        //ToDo: DRY - This is repeated verbatim in two repositories - create a 'service'
         public async Task<IEnumerable<Bird>> AllBirdsList()
         {
             return await _dbContext.Birds
