@@ -13,7 +13,7 @@ namespace Birder2.Models
         [StringLength(50, ErrorMessage = "First name cannot be longer than 50 characters.")]
         public string Name { get; set; }
 
-        public string Description { get; set; }
+        //public string Description { get; set; }
 
         public ICollection<ObservationTag> ObservationTags { get; set; }
 
