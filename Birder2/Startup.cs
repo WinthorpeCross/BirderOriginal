@@ -76,6 +76,7 @@ namespace Birder2
             services.AddScoped<IObservationRepository, ObservationRepository>();
             services.AddScoped<ISideBarRepository, SideBarRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IObservationsAnalysisService, ObservationsAnalysisService>();
 
             //ToDo: Work out what type of service these should really be - Singletons?
             services.AddTransient<IStreamService, StreamService>();
@@ -87,6 +88,8 @@ namespace Birder2
                 (options => {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
+
+            services.AddMemoryCache();
 
             //services.Configure<MvcOptions>(options =>
             //{

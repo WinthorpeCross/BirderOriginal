@@ -24,13 +24,16 @@ namespace Birder2.Controllers
         private readonly IMachineClockDateTime _systemClock;
         private readonly IApplicationUserAccessor _userAccessor;
         private readonly ILogger _logger;
+        private readonly IObservationsAnalysisService _observationsAnalysisService;
 
-        public ObservationController(IApplicationUserAccessor userAccessor,
-                                        IObservationRepository observationRepository,
-                                            IMachineClockDateTime systemClock,
-                                                ILogger<Network> logger)
+        public ObservationController(IObservationsAnalysisService observationsAnalysisService, 
+                                        IApplicationUserAccessor userAccessor,
+                                            IObservationRepository observationRepository,
+                                                IMachineClockDateTime systemClock,
+                                                    ILogger<Network> logger)
         {
             _observationRepository = observationRepository;
+            _observationsAnalysisService = observationsAnalysisService;
             _userAccessor = userAccessor;
             _systemClock = systemClock;
             _logger = logger;
@@ -360,8 +363,9 @@ namespace Birder2.Controllers
 
             var viewModel = new LifeListViewModel()
             {
-                TotalObservations = await _observationRepository.TotalObservationsCount(user),
-                TotalSpecies = await _observationRepository.UniqueSpeciesCount(user),
+                //TotalObservations = await _observationRepository.TotalObservationsCount(user),
+                //TotalSpecies = await _observationRepository.UniqueSpeciesCount(user),
+                ObservationsAnalysisDto = await _observationsAnalysisService.GetObservationAnalysis(user),
                 LifeList = _observationRepository.GetLifeList(user.Id)
             };
 

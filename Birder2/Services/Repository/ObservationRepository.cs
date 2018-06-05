@@ -36,19 +36,19 @@ namespace Birder2.Services
                  });
         }
 
-        public async Task<int> TotalObservationsCount(ApplicationUser user)
-        {
-            return await (from observations in _dbContext.Observations
-                          where (observations.ApplicationUserId == user.Id)
-                          select observations).CountAsync();
-        }
+        //public async Task<int> TotalObservationsCount(ApplicationUser user)
+        //{
+        //    return await (from observations in _dbContext.Observations
+        //                  where (observations.ApplicationUserId == user.Id)
+        //                  select observations).CountAsync();
+        //}
 
-        public async Task<int> UniqueSpeciesCount(ApplicationUser user)
-        {
-            return await (from observations in _dbContext.Observations
-                          where (observations.ApplicationUserId == user.Id)
-                          select observations.BirdId).Distinct().CountAsync();
-        }
+        //public async Task<int> UniqueSpeciesCount(ApplicationUser user)
+        //{
+        //    return await (from observations in _dbContext.Observations
+        //                  where (observations.ApplicationUserId == user.Id)
+        //                  select observations.BirdId).Distinct().CountAsync();
+        //}
 
         //ToDo: DRY - This is repeated verbatim in two repositories
         public async Task<IEnumerable<Bird>> AllBirdsList()

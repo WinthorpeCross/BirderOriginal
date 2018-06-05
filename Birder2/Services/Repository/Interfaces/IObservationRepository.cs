@@ -19,7 +19,7 @@ namespace Birder2.Services
         Task<bool> ObservationExists(int id);
         Task<Observation> DeleteObservation(int id);
         IQueryable<SpeciesSummaryViewModel> GetLifeList(string userId);
-        Task<int> TotalObservationsCount(ApplicationUser user);
-        Task<int> UniqueSpeciesCount(ApplicationUser user);
+        //Task<int> TotalObservationsCount(ApplicationUser user);
+        //Task<int> UniqueSpeciesCount(ApplicationUser user);
     }
 }

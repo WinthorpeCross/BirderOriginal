@@ -1,6 +1,6 @@
 ﻿namespace Birder2.ViewModels
 {
-    public class BirdCountViewModel
+    public class ObservationsAnalysisDto
     {
         public int TotalObservations { get; set; }
         public int TotalSpecies { get; set; }
