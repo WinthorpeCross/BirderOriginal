@@ -1,5 +1,4 @@
 ﻿using Birder2.Models;
-using Birder2.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,7 +17,7 @@ namespace Birder2.Services
         Task<Observation> UpdateObservation(Observation observation);
         Task<bool> ObservationExists(int id);
         Task<Observation> DeleteObservation(int id);
-        IQueryable<SpeciesSummaryViewModel> GetLifeList(string userId);
+        //IQueryable<SpeciesSummaryViewModel> GetLifeList(string userId);
         //Task<int> TotalObservationsCount(ApplicationUser user);
         //Task<int> UniqueSpeciesCount(ApplicationUser user);
     }
