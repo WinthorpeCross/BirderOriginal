@@ -33,15 +33,14 @@ namespace Birder2.Controllers
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
 
-        public ManageController(
-                              UserManager<ApplicationUser> userManager,
-                                SignInManager<ApplicationUser> signInManager,
-                                    IEmailSender emailSender,
-                                        ILogger<ManageController> logger,
-                                            UrlEncoder urlEncoder,
-                                                IConfiguration config,
-                                                    IImageStorageService imageService,
-                                                        IStreamService stream)
+        public ManageController(UserManager<ApplicationUser> userManager,
+                                    SignInManager<ApplicationUser> signInManager,
+                                        IEmailSender emailSender,
+                                            ILogger<ManageController> logger,
+                                                UrlEncoder urlEncoder,
+                                                    IConfiguration config,
+                                                        IImageStorageService imageService,
+                                                            IStreamService stream)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -72,7 +71,7 @@ namespace Birder2.Controllers
                 PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,
                 StatusMessage = StatusMessage
-        };
+            };
 
             return View(model);
         }

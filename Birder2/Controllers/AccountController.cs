@@ -263,6 +263,7 @@ namespace Birder2.Controllers
             return View();
         }
 
+        //ToDo: Implement 'Remote Validation' of username...
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
