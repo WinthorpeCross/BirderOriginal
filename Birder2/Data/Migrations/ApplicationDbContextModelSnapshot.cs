@@ -237,17 +237,11 @@ namespace Birder2.Data.Migrations
                     b.Property<int>("TagId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ApplicationUserId");
-
-                    b.Property<string>("Description");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50);
 
                     b.HasKey("TagId");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Tag");
                 });
@@ -432,13 +426,6 @@ namespace Birder2.Data.Migrations
                         .WithMany("Photographs")
                         .HasForeignKey("ObservationId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Birder2.Models.Tag", b =>
-                {
-                    b.HasOne("Birder2.Models.ApplicationUser")
-                        .WithMany("Tags")
-                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("Birder2.Models.TweetDay", b =>

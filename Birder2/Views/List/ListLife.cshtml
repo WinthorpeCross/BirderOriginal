@@ -1,0 +1,79 @@
+﻿@model LifeListViewModel
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Life List";
+    Layout = "~/Views/Shared/_LayoutNoSidebar.cshtml";
+}
+@{ if (Model.UserName != UserManager.GetUserAsync(User).Result.UserName)
+    {
+        <h2>@Model.UserName's Life List</h2>
+
+        <h4>@Model.UserName has observed <b>@Model.TotalSpecies</b> species in <b>@Model.TotalObservations</b> observations:</h4>
+    }
+    else
+    {
+        <h2>Your Life List</h2>
+
+        <h4>You have observed <b>@Model.TotalSpecies</b> species in <b>@Model.TotalObservations</b> observations:</h4>
+
+    } }
+
+<div class="panel panel-default">
+    @*<div class="panel-heading">Life List</div>*@
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Count
+                </th>
+                <th>
+                    Vernacular name
+                </th>
+                <th>
+                    Scientific name
+                </th>
+                <th>
+                    Population estimate<sup>1</sup>
+                </th>
+                <th>
+                    Status in Britain<sup>1</sup>
+                </th>
+                <th>
+                    Conservation List<sup>2</sup>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.LifeList)
+            {
+                <tr>
+                    <td>
+                        <span class="badge">@Html.DisplayFor(modelItem => item.Count)</span>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vernacular)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ScientificName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PopSize)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BtoStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ConservationStatus)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <p><sup>1</sup> The British list of 616 species occurring in Britain is kept by the British Ornithologists' Union (BOU).  See <a href="https://www.bto.org/about-birds/birdfacts/british-list" target="_blank"> here</a> for the full data and the explanation.</p>
+    <p><sup>2</sup> Data are from <i>Birds of Conservation Concern 4: the population status of birds in the UK, Channel Islands and Isle of Man.</i>  View a summary <a href="https://www.bto.org/sites/default/files/publications/state-of-uk-birds-2016.pdf" target="_blank"> here</a>.</p>
+</div>

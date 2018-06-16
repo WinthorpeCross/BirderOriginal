@@ -15,7 +15,7 @@ namespace Birder2.Models
 
         public ICollection<Observation> Observations { get; set; }
 
-        public ICollection<Tag> Tags { get; set; }
+        //public ICollection<Tag> Tags { get; set; }
 
         public ICollection<Network> Following { get; set; }
 

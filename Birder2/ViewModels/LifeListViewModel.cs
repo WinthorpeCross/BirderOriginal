@@ -1,10 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace Birder2.ViewModels
 {
     public class LifeListViewModel
     {
-        public IQueryable<SpeciesSummaryViewModel> LifeList { get; set; }
+        public string UserName { get; set; }
+        public IEnumerable<SpeciesSummaryViewModel> LifeList { get; set; }
         public int TotalObservations { get; set; }
         public int TotalSpecies { get; set; }
     }

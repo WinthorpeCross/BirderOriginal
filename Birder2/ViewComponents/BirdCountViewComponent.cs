@@ -10,17 +10,17 @@ namespace Birder2.ViewComponents
 {
     public class BirdCountViewComponent : ViewComponent
     {
-        private readonly IObservationRepository _observationRepository;
-        private readonly IApplicationUserAccessor _userAccessor;
         private readonly ILogger _logger;
+        private readonly IApplicationUserAccessor _userAccessor;
+        private readonly IObservationsAnalysisService _observationsAnalysisService;
 
-        public BirdCountViewComponent(IObservationRepository observationRepository,
-                                            IApplicationUserAccessor userAccessor,
-                                                ILogger<BirdCountViewComponent> logger)
+        public BirdCountViewComponent(IApplicationUserAccessor userAccessor,
+                                        IObservationsAnalysisService observationsAnalysisService,
+                                            ILogger<BirdCountViewComponent> logger)
         {
-            _observationRepository = observationRepository;
-            _userAccessor = userAccessor;
             _logger = logger;
+            _userAccessor = userAccessor;
+            _observationsAnalysisService = observationsAnalysisService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
@@ -28,17 +28,20 @@ namespace Birder2.ViewComponents
             _logger.LogInformation(LoggingEvents.GetItem, "BirdCountViewComponent");
             try
             {
-                BirdCountViewModel viewModel = new BirdCountViewModel()
-                {
-                    TotalObservations = await _observationRepository.TotalObservationsCount(await _userAccessor.GetUser()),
-                    TotalSpecies = await _observationRepository.UniqueSpeciesCount(await _userAccessor.GetUser())
-                };
+                var user = await _userAccessor.GetUser();
+                ObservationsAnalysisDto viewModel = await _observationsAnalysisService.GetObservationAnalysis(user);
+                
+                //BirdCountViewModel viewModel = new BirdCountViewModel()
+                //{
+                //    TotalObservations = await _observationRepository.TotalObservationsCount(await _userAccessor.GetUser()),
+                //    TotalSpecies = await _observationRepository.UniqueSpeciesCount(await _userAccessor.GetUser())
+                //};
                 return View("Default", viewModel);
             }
             catch (Exception ex)
             {
                 _logger.LogError(LoggingEvents.GetItemNotFound, ex, "BirdCountViewComponent error");
-                BirdCountViewModel viewModel = new BirdCountViewModel();
+                ObservationsAnalysisDto viewModel = new ObservationsAnalysisDto();
                 return View("Default", viewModel);
             }
         }

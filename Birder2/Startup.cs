@@ -28,7 +28,8 @@ namespace Birder2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.Configure<StorageAccountOptions>(Configuration.GetSection("BlobService"));
+            //services.Configure<AzureStorageConfig>(Configuration.GetSection("BlobStorageKey"));
+            
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies 
@@ -75,6 +76,8 @@ namespace Birder2
             services.AddScoped<IObservationRepository, ObservationRepository>();
             services.AddScoped<ISideBarRepository, SideBarRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IObservationsAnalysisService, ObservationsAnalysisService>();
+            services.AddScoped<ILIstService, ListService>();
 
             //ToDo: Work out what type of service these should really be - Singletons?
             services.AddTransient<IStreamService, StreamService>();
@@ -86,6 +89,8 @@ namespace Birder2
                 (options => {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
+
+            services.AddMemoryCache();
 
             //services.Configure<MvcOptions>(options =>
             //{

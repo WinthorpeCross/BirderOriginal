@@ -8,6 +8,7 @@
         }
     };
 
+
     ko.bindingHandlers.dateTimePicker = {
         init: function (element, valueAccessor, allBindingsAccessor) {
             //initialize datepicker with some optional options
@@ -177,3 +178,4 @@ $.validator.addMethod("alphaonly",
         return /^[A-Za-z]+$/.test(value);
     }
 );
+

@@ -24,13 +24,16 @@ namespace Birder2.Controllers
         private readonly IMachineClockDateTime _systemClock;
         private readonly IApplicationUserAccessor _userAccessor;
         private readonly ILogger _logger;
+        private readonly IObservationsAnalysisService _observationsAnalysisService;
 
-        public ObservationController(IApplicationUserAccessor userAccessor,
-                                        IObservationRepository observationRepository,
-                                            IMachineClockDateTime systemClock,
-                                                ILogger<Network> logger)
+        public ObservationController(IObservationsAnalysisService observationsAnalysisService, 
+                                        IApplicationUserAccessor userAccessor,
+                                            IObservationRepository observationRepository,
+                                                IMachineClockDateTime systemClock,
+                                                    ILogger<Network> logger)
         {
             _observationRepository = observationRepository;
+            _observationsAnalysisService = observationsAnalysisService;
             _userAccessor = userAccessor;
             _systemClock = systemClock;
             _logger = logger;
@@ -52,17 +55,17 @@ namespace Birder2.Controllers
             //
             try
             { 
-            ObservationsIndexViewModel viewModel = new ObservationsIndexViewModel()
+            var viewModel = new ObservationsIndexViewModel()
             {
                 Filter = filter
             };
 
             switch (filter)
             {
-                case ObservationsFeedFilter.Users: //Mine
+                case ObservationsFeedFilter.Users: // Only Users
                     viewModel.Observations = await _observationRepository.GetUsersObservationsList(user.Id).GetPaged(page, pageSize);
                     break;
-                case ObservationsFeedFilter.Public: //Public
+                case ObservationsFeedFilter.Public: // Public
                     viewModel.Observations = await _observationRepository.GetPublicObservationsList().GetPaged(page, pageSize);
                     break;
                 default:
@@ -150,9 +153,9 @@ namespace Birder2.Controllers
                 //roll back in case any cannot be updated?
                 foreach (ObservedSpeciesViewModel observedSpecies in viewModel.ObservedSpecies)
                 {
-                    //ToDo: use AutoMaper here...
                     try
                     {
+                        //ToDo: use AutoMaper here...
                         Observation observationToAdd = new Observation();
                         observationToAdd.Bird = await _observationRepository.GetSelectedBird(observedSpecies.BirdId);
                         observationToAdd.ObservationDateTime = viewModel.Observation.ObservationDateTime;
@@ -170,7 +173,17 @@ namespace Birder2.Controllers
                         observationToAdd.CreationDate = _systemClock.Now;
                         observationToAdd.LastUpdateDate = _systemClock.Now;
                         observationToAdd.Quantity = observedSpecies.Quantity;
-                        await _observationRepository.AddObservation(observationToAdd);
+
+                        var addObservation = _observationRepository.AddObservation(observationToAdd);
+                        addObservation.Wait();
+                        
+                        if(addObservation.IsCompletedSuccessfully == true)
+                        {
+                            // --- upload images service
+                            // (1) convert to byte[]
+                            // (2) resize
+                            // (3) upload to Blob storage
+                        };
                     }
                     catch
                     {
@@ -185,8 +198,8 @@ namespace Birder2.Controllers
             else
             {
                 string errors = JsonConvert.SerializeObject(ModelState.Values
-                                .SelectMany(state => state.Errors)
-                               .Select(error => error.ErrorMessage));
+                                           .SelectMany(state => state.Errors)
+                                           .Select(error => error.ErrorMessage));
 
                 viewModel.IsModelStateValid = false;
                 viewModel.MessageToClient = errors;
@@ -338,21 +351,25 @@ namespace Birder2.Controllers
 
         //ToDo: Move to separate controller.  With annual list.  Perhaps other related lists - All Users?
         //ToDo: Don't bother with the repo pattern.  Just use the IQueryable directly with EF Core
-        [HttpGet]
-        public async Task<IActionResult> ListLife()
-        {
-            var user = await _userAccessor.GetUser();
-            if (user == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-            LifeListViewModel viewModel = new LifeListViewModel()
-            {
-                TotalObservations = await _observationRepository.TotalObservationsCount(await _userAccessor.GetUser()),
-                TotalSpecies = await _observationRepository.UniqueSpeciesCount(await _userAccessor.GetUser()),
-                LifeList = _observationRepository.GetLifeList(user.Id)
-            };
-            return View(viewModel);
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> ListLife()
+        //{
+        //    // ToDo: Refactor so one can get another user's Life List
+        //    var user = await _userAccessor.GetUser();
+        //    if (user == null)
+        //    {
+        //        return RedirectToAction("Login", "Account");
+        //    }
+
+        //    var viewModel = new LifeListViewModel()
+        //    {
+        //        //TotalObservations = await _observationRepository.TotalObservationsCount(user),
+        //        //TotalSpecies = await _observationRepository.UniqueSpeciesCount(user),
+        //        ObservationsAnalysisDto = await _observationsAnalysisService.GetObservationAnalysis(user),
+        //        LifeList = _observationRepository.GetLifeList(user.Id)
+        //    };
+
+        //    return View(viewModel);
+        //}
     }
 }

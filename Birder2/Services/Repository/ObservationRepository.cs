@@ -16,41 +16,40 @@ namespace Birder2.Services
             _dbContext = dbContext;
         }
 
-        public IQueryable<SpeciesSummaryViewModel> GetLifeList(string userId)
-        {
-            return (from observations in _dbContext.Observations
-                 //.Include(b => b.Bird)
-                 .Include(b => b.Bird)
-                    .ThenInclude(u => u.BirdConserverationStatus)
-                 .Where(u => u.ApplicationUser.Id == userId)
-                 group observations by observations.Bird into species
-                 orderby species.Count() descending
-                 select new SpeciesSummaryViewModel
-                 {
-                     Vernacular = species.FirstOrDefault().Bird.EnglishName,
-                     ScientificName = species.FirstOrDefault().Bird.Species,
-                     PopSize = species.FirstOrDefault().Bird.PopulationSize,
-                     BtoStatus = species.FirstOrDefault().Bird.BtoStatusInBritain,
-                     ConservationStatus = species.FirstOrDefault().Bird.BirdConserverationStatus.ConservationStatus,
-                     Count = species.Count()
-                 });
-        }
+        //public IQueryable<SpeciesSummaryViewModel> GetLifeList(string userId)
+        //{
+        //    return (from observations in _dbContext.Observations
+        //         .Include(b => b.Bird)
+        //            .ThenInclude(u => u.BirdConserverationStatus)
+        //         .Where(u => u.ApplicationUser.Id == userId)
+        //            group observations by observations.Bird into species
+        //            orderby species.Count() descending
+        //            select new SpeciesSummaryViewModel
+        //            {
+        //                Vernacular = species.FirstOrDefault().Bird.EnglishName,
+        //                ScientificName = species.FirstOrDefault().Bird.Species,
+        //                PopSize = species.FirstOrDefault().Bird.PopulationSize,
+        //                BtoStatus = species.FirstOrDefault().Bird.BtoStatusInBritain,
+        //                ConservationStatus = species.FirstOrDefault().Bird.BirdConserverationStatus.ConservationStatus,
+        //                Count = species.Count()
+        //            });
+        //}
 
-        public async Task<int> TotalObservationsCount(ApplicationUser user)
-        {
-            return await (from observations in _dbContext.Observations
-                          where (observations.ApplicationUserId == user.Id)
-                          select observations).CountAsync();
-        }
+        //public async Task<int> TotalObservationsCount(ApplicationUser user)
+        //{
+        //    return await (from observations in _dbContext.Observations
+        //                  where (observations.ApplicationUserId == user.Id)
+        //                  select observations).CountAsync();
+        //}
 
-        public async Task<int> UniqueSpeciesCount(ApplicationUser user)
-        {
-            return await (from observations in _dbContext.Observations
-                          where (observations.ApplicationUserId == user.Id)
-                          select observations.BirdId).Distinct().CountAsync();
-        }
+        //public async Task<int> UniqueSpeciesCount(ApplicationUser user)
+        //{
+        //    return await (from observations in _dbContext.Observations
+        //                  where (observations.ApplicationUserId == user.Id)
+        //                  select observations.BirdId).Distinct().CountAsync();
+        //}
 
-        //ToDo: DRY - This is repeated verbatim in two repositories
+        //ToDo: DRY - This is repeated verbatim in two repositories - create a 'service'
         public async Task<IEnumerable<Bird>> AllBirdsList()
         {
             return await _dbContext.Birds

@@ -1,5 +1,6 @@
 ﻿using Birder2.ViewModels;
 using Microsoft.Extensions.Configuration;
+using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace Birder2.Services
 {
@@ -39,12 +41,49 @@ namespace Birder2.Services
             return url;
         }
 
+        //public static async Task<bool> UploadFileToStorage(Stream fileStream, string fileName, AzureStorageConfig _storageConfig)
+        public async Task<bool> UploadFileToStorage(Stream fileStream, string fileName)
+        {
+            // Create storagecredentials object by reading the values from the configuration (appsettings.json)
+            StorageCredentials storageCredentials = new StorageCredentials(_config["BlobStorage:Account"], _config["BlobStorageKey"]);
+
+            // Create cloudstorage account by passing the storagecredentials
+            CloudStorageAccount storageAccount = new CloudStorageAccount(storageCredentials, true);
+
+            // Create the blob client.
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+            // Get reference to the blob container by passing the name by reading the value from the configuration (appsettings.json)
+            CloudBlobContainer container = blobClient.GetContainerReference("test");
+
+            // Get the reference to the block blob from the container
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
+
+            // Upload the file
+            await blockBlob.UploadFromStreamAsync(fileStream);
+
+            return await Task.FromResult(true);
+        }
+
 
         public async Task<string> StoreObservationImage(string filename, byte[] image, string containerName)
         {
             /*
              * Create container if it does not exist
              */
+
+            //CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
+
+            //// Create a container called 'quickstartblobs' and append a GUID value to it to make the name unique. 
+            //var cloudBlobContainer = cloudBlobClient.GetContainerReference("quickstartblobs" + Guid.NewGuid().ToString());
+            //await cloudBlobContainer.CreateAsync();
+
+
+            //var blobClient = blob.CreateCloudBlobClient();
+            //var blobContainer = blobClient.GetContainerReference(blobContainerName);
+            //await blobContainer.CreateIfNotExistsAsync();
+
+
 
             var filenameonly = Path.GetFileName(filename);
             var url = string.Concat(_config["BlobStorage:StorageUrl"], containerName, "/", filenameonly);

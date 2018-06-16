@@ -49,6 +49,8 @@ namespace Birder2
             services.AddScoped<IObservationRepository, ObservationRepository>();
             services.AddScoped<ISideBarRepository, SideBarRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IObservationsAnalysisService, ObservationsAnalysisService>();
+            services.AddScoped<ILIstService, ListService>();
 
             //ToDo: Work out what type of service these should be - Singletons?
             services.AddTransient<IStreamService, StreamService>();
