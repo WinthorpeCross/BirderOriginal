@@ -34,7 +34,7 @@ namespace Birder2
             {
                 // This lambda determines whether user consent for non-essential cookies 
                 // is needed for a given request.
-                //options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
@@ -88,7 +88,8 @@ namespace Birder2
             services.AddMvc().AddJsonOptions
                 (options => {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                });
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddMemoryCache();
 
@@ -117,13 +118,15 @@ namespace Birder2
                 var options = new RewriteOptions()
                     .AddRedirectToHttps();
 
+                app.UseHsts();
+
                 app.UseRewriter(options);
             }
 
             //app.UseWelcomePage()
 
             app.UseStaticFiles();
-
+            app.UseHttpsRedirection();
             app.UseCookiePolicy();
 
             app.UseAuthentication();

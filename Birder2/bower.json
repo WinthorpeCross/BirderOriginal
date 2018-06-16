@@ -22,12 +22,10 @@
     "tests"
   ],
   "dependencies": {
-    "knockout-sortable": "v1.1.0",
-    "knockout": "v3.4.2",
-    "jquery-validation": "1.17.0",
+    "jQuery": "3.3.1",
     "eonasdan-bootstrap-datetimepicker": "4.17.47",
-    "moment": "2.22.2",
-    "jQuery": "3.3.1"
+    "jquery-validation": "1.17.0",
+    "knockout": "v3.4.2"
   },
   "resolutions": {
     "eonasdan-bootstrap-datetimepicker": "4.17.47",
