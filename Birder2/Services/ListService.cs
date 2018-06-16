@@ -20,22 +20,22 @@ namespace Birder2.Services
             _dbContext = dbContext;
         }
 
-        public LifeListViewModel GetLifeList(string userId)
+        public LifeListViewModel GetLifeList(string userName)
         {
             LifeListViewModel viewModel = new LifeListViewModel();
-
+            viewModel.UserName = userName;
             viewModel.TotalObservations = (from observations in _dbContext.Observations
-                                               where (observations.ApplicationUserId == userId)
+                                               where (observations.ApplicationUser.UserName == userName)
                                                 select observations).Count();
 
             viewModel.TotalSpecies = (from observations in _dbContext.Observations
-                                           where (observations.ApplicationUserId == userId)
+                                           where (observations.ApplicationUser.UserName == userName)
                                            select observations.BirdId).Distinct().Count();
 
             viewModel.LifeList = (from observations in _dbContext.Observations
                  .Include(b => b.Bird)
                     .ThenInclude(u => u.BirdConserverationStatus)
-                 .Where(u => u.ApplicationUser.Id == userId)
+                 .Where(u => u.ApplicationUser.UserName == userName)
                     group observations by observations.Bird into species
                     orderby species.Count() descending
                     select new SpeciesSummaryViewModel

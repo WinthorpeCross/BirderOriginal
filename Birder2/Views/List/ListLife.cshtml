@@ -1,13 +1,24 @@
 ﻿@model LifeListViewModel
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Life List";
     Layout = "~/Views/Shared/_LayoutNoSidebar.cshtml";
 }
+@{ if (Model.UserName != UserManager.GetUserAsync(User).Result.UserName)
+    {
+        <h2>@Model.UserName's Life List</h2>
 
-<h2>Your Life List</h2>
+        <h4>@Model.UserName has observed <b>@Model.TotalSpecies</b> species in <b>@Model.TotalObservations</b> observations:</h4>
+    }
+    else
+    {
+        <h2>Your Life List</h2>
 
-<h4>You have observed <b>@Model.TotalSpecies</b> species in <b>@Model.TotalObservations</b> observations:</h4>
+        <h4>You have observed <b>@Model.TotalSpecies</b> species in <b>@Model.TotalObservations</b> observations:</h4>
+
+    } }
 
 <div class="panel panel-default">
     @*<div class="panel-heading">Life List</div>*@
@@ -39,7 +50,7 @@
             {
                 <tr>
                     <td>
-                        <span class="badge">@Html.DisplayFor(modelItem => item.Count)</span>  
+                        <span class="badge">@Html.DisplayFor(modelItem => item.Count)</span>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Vernacular)

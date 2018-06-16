@@ -28,7 +28,7 @@ namespace Birder2.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ListLife(string userId)
+        public async Task<IActionResult> ListLife(string userName)
         {
             // ToDo: Refactor so one can get another user's Life List
             var user = await _userAccessor.GetUser();
@@ -36,8 +36,12 @@ namespace Birder2.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
+            if(string.IsNullOrEmpty(userName))
+            {
+                userName = user.UserName;
+            }
 
-            var viewModel = _listService.GetLifeList(user.Id);
+            var viewModel = _listService.GetLifeList(userName);
             //{
             //    ObservationsAnalysisDto = await _observationsAnalysisService.GetObservationAnalysis(user),
             //    LifeList = _listService.GetLifeList(user.Id)

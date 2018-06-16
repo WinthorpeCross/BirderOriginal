@@ -16,7 +16,7 @@
                         <a asp-action="@followButtonText" asp-route-userName="@Model.UserName" asp-route-currentPage="@Model.Observations.CurrentPage" class="btn btn-danger btn-xs">@followButtonText</a>
                     </div>
 
-                    @*<h5>Model.UserName's <a asp-controller="Observation" asp-action="ListLife"> Life List</a></h5>*@
+                    <h5>View @Model.UserName's <a asp-controller="List" asp-action="ListLife" asp-route-userName="@Model.UserName"> Life List</a></h5>
 
                 } }
 
