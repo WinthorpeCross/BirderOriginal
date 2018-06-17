@@ -14,15 +14,16 @@
             @{
                 if (Model.ApplicationUserId == UserManager.GetUserAsync(User).Result.Id)
                 {
-            <h5>Spotted by <a asp-controller="User" asp-action="Details" asp-route-userName="@Model.ApplicationUser.UserName">You</a> on @Model.ObservationDateTime.ToString("dddd, dd MMMM yyyy, HH:mm")</h5>
+                    <h5>Spotted by <a asp-controller="User" asp-action="Details" asp-route-userName="@Model.ApplicationUser.UserName">You</a> on @Model.ObservationDateTime.ToString("dddd, dd MMMM yyyy, HH:mm")</h5>
                 }
                 else
                 {
-            <h5>Spotted by <a asp-controller="User" asp-action="Details" asp-route-userName="@Model.ApplicationUser.UserName">@Model.ApplicationUser.UserName</a> on @Model.ObservationDateTime.ToString("dddd, dd MMMM yyyy, HH:mm")</h5>
+                    <h5>Spotted by <a asp-controller="User" asp-action="Details" asp-route-userName="@Model.ApplicationUser.UserName">@Model.ApplicationUser.UserName</a> on @Model.ObservationDateTime.ToString("dddd, dd MMMM yyyy, HH:mm")</h5>
                 } }
-            <div>
-                <a asp-controller="Observation" asp-action="Details" asp-route-id="@Model.ObservationId" class="btn-link">View details</a> 
-            </div>
+                <div>
+                    <a asp-controller="Observation" asp-action="Details" asp-route-id="@Model.ObservationId" class="btn-link">View details</a> |
+                    <a asp-controller="" asp-action=""> Attach photographs </a>
+                </div>
         </div>
     </div>
 </section>
