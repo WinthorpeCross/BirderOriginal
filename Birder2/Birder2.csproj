@@ -104,6 +104,7 @@
     <PackageReference Include="AutoMapper" Version="7.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="4.0.0" />
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
+    <PackageReference Include="dropzone" Version="4.2.0" />
     <PackageReference Include="FlickrNet" Version="4.0.4-alpha" />
     <PackageReference Include="knockoutjs" Version="3.4.2" />
     <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="7.4.6" />

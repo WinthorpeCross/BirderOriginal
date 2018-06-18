@@ -26,7 +26,7 @@ namespace Birder2.Controllers
         private readonly ILogger _logger;
         private readonly IObservationsAnalysisService _observationsAnalysisService;
 
-        public ObservationController(IObservationsAnalysisService observationsAnalysisService, 
+        public ObservationController(IObservationsAnalysisService observationsAnalysisService,
                                         IApplicationUserAccessor userAccessor,
                                             IObservationRepository observationRepository,
                                                 IMachineClockDateTime systemClock,
@@ -37,6 +37,20 @@ namespace Birder2.Controllers
             _userAccessor = userAccessor;
             _systemClock = systemClock;
             _logger = logger;
+        }
+
+        public class ObservationImageMaintenanceDto
+        {
+            public int ObservationId { get; set; }
+        }
+
+        public IActionResult Images(int id)
+        {
+            //Check if Observation exists?
+            //Get Observation
+            var viewModel = new ObservationImageMaintenanceDto();
+            viewModel.ObservationId = id;
+            return View(viewModel);
         }
 
         public async Task<IActionResult> Index(ObservationsFeedFilter filter, int page)
