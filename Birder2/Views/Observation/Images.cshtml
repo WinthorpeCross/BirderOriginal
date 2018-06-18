@@ -158,11 +158,15 @@
         fetchImageLinks()
     }, 5000)
 
+    function myParamName() {
+        return "files";
+    }
     /* Dropzone */
     // "imageUpload" is the camelized version of the HTML element's ID
     Dropzone.options.imageUpload = {
         paramName: "files", // The name that will be used to transfer the file
-        //uploadMultiple: true,
+        uploadMultiple: true,
+        //paramName: myParamName,
         dictDefaultMessage: "Drop files here or Click to Upload",
         addRemoveLinks: true, // Allows for cancellation of file upload and remove thumbnail
         init: function() {
