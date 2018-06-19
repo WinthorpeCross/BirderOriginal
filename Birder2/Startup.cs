@@ -37,12 +37,7 @@ namespace Birder2
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.Configure<ApiBehaviorOptions>(options =>
-            {
-                //options.SuppressConsumesConstraintForFormFileParameters = true;
-                //options.SuppressInferBindingSourcesForParameters = true;
-                //options.SuppressModelStateInvalidFilter = true;
-            });
+
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
@@ -96,6 +91,13 @@ namespace Birder2
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressConsumesConstraintForFormFileParameters = true;
+                options.SuppressInferBindingSourcesForParameters = true;
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
             services.AddMemoryCache();
 
             //services.AddHttpsRedirection(options =>
@@ -138,7 +140,8 @@ namespace Birder2
             //app.UseWelcomePage()
 
             app.UseStaticFiles();
-            app.UseDefaultFiles();
+
+
             app.UseHttpsRedirection();
             app.UseCookiePolicy();
 

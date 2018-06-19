@@ -9,6 +9,7 @@ using Birder2.Models;
 using Birder2.Services;
 using AutoMapper;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Birder2
 {
@@ -61,10 +62,12 @@ namespace Birder2
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
 
-            //services.Configure<MvcOptions>(options =>
-            //{
-            //    options.Filters.Add(new RequireHttpsAttribute());
-            //});
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressConsumesConstraintForFormFileParameters = true;
+                options.SuppressInferBindingSourcesForParameters = true;
+                options.SuppressModelStateInvalidFilter = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,7 +93,7 @@ namespace Birder2
             //}
 
             //app.UseWelcomePage()
-
+            //app.UseDefaultFiles();
             app.UseStaticFiles();
 
             app.UseAuthentication();
