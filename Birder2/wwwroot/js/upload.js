@@ -1,12 +1,29 @@
 ﻿
-
-//init gallery for later use
 var gallery;
 
+
+document.onload = fetchImageLinks(model);
+
+/* Dropzone */
+Dropzone.options.imageUpload = { // "imageUpload" is the camelized version of the HTML element's ID
+    paramName: ("files"), // The name that will be used to transfer the file.  Must be the same as the api parameter
+    dictDefaultMessage: "Drop photographs here or Click to Upload",
+    addRemoveLinks: true, // Allows for cancellation of file upload and remove thumbnail
+    init: function () {
+        myDropzone = this;
+        myDropzone.on("success", function (file, response) {
+            myDropzone.removeFile(file); //presumably removes the file from the dropzone area
+            fetchImageLinks(response);
+        });
+    }
+};
+
 // Grab links for images from backend api
-function fetchImageLinks() {
+function fetchImageLinks(data) {
     // Fetch images
-    $.get("/api/Images/thumbnails", function (fetchedImageLinks) {
+    //alert(data);
+    //app.get('/myservice/:CustomerId', myservice.queryByCustomer);
+    $.get("/api/Images/thumbnails?containerName=" + data, function (fetchedImageLinks) {
         console.log(fetchedImageLinks)
 
         // Check if anything is in there
@@ -52,28 +69,8 @@ function fetchImageLinks() {
 }
 
 // Start first interval
-fetchImageLinks()
+//fetchImageLinks()
 
-setInterval(function () {
-    fetchImageLinks()
-}, 5000)
-
-function myParamName() {
-    return "files";
-}
-/* Dropzone */
-// "imageUpload" is the camelized version of the HTML element's ID
-Dropzone.options.imageUpload = {
-    paramName: ("files"), // The name that will be used to transfer the file
-    dictDefaultMessage: "Drop files here or Click to Upload",
-    addRemoveLinks: true, // Allows for cancellation of file upload and remove thumbnail
-    init: function () {
-        myDropzone = this;
-        myDropzone.on("success", function (file, response) {
-            //formData.append('ObservationId', 555);
-            console.log(formData);
-            console.log("Success");
-            myDropzone.removeFile(file);
-        });
-    }
-};
+//setInterval(function () {
+//    fetchImageLinks()
+//}, 5000)

@@ -32,7 +32,7 @@ namespace Birder2.Controllers
         //[Route("api/[controller]/upload/{files}")]
         [HttpPost("[action]")]
         //[HttpPost(Name = "[action]")]
-        public async Task<IActionResult> Upload([FromForm]ICollection<IFormFile> files, int ObservationId)
+        public async Task<IActionResult> Upload([FromForm]ICollection<IFormFile> files, int observationId)
         {
             bool isUploaded = false;
 
@@ -59,7 +59,7 @@ namespace Birder2.Controllers
                         {
                             using (Stream stream = formFile.OpenReadStream())
                             {
-                                isUploaded = await StorageHelper.UploadFileToStorage(stream, formFile.FileName); //, storageConfig);
+                                isUploaded = await StorageHelper.UploadFileToStorage(stream, observationId.ToString(), formFile.FileName); //, storageConfig);
                             }
                         }
                     }
@@ -73,10 +73,10 @@ namespace Birder2.Controllers
                 {
                     if ("test" != string.Empty)
 
-                        return new AcceptedAtActionResult("GetThumbNails", "Images", null, null);
+                        return new AcceptedAtActionResult("GetThumbNails", "Images", null , observationId.ToString());
 
                     else
-
+                    
                         return new AcceptedResult();
                 }
                 else
@@ -92,7 +92,8 @@ namespace Birder2.Controllers
         // GET /api/images/thumbnails
         [HttpGet("thumbnails")]
         //[HttpGet]
-        public async Task<IActionResult> GetThumbNails()
+        //[HttpGet("{containerName}", Name = "thumbnails")]
+        public async Task<IActionResult> GetThumbNails(string containerName)
         {
 
             try
@@ -105,7 +106,7 @@ namespace Birder2.Controllers
 
                 //    return BadRequest("Please provide a name for your image container in the azure blob storage");
 
-                List<string> thumbnailUrls = await StorageHelper.GetThumbNailUrls(); //(storageConfig);
+                List<string> thumbnailUrls = await StorageHelper.GetThumbNailUrls(containerName); //(storageConfig);
 
                 return new ObjectResult(thumbnailUrls);
 

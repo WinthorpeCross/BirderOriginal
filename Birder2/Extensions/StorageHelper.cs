@@ -15,7 +15,7 @@ namespace ImageResizeWebApp.Helpers
     {
         public const string _key = "qGjmjy0UrKirJSlGHBjPhEtjCrvCsGvPJxr5ac1bFp6PqSx4IMeKMl+qhjE4kB4qTR0oGI/OYYG8Js5e92LCWw==";
         public const string _account = "birderstorage";
-        public const string _container = "test";
+        //public const string _container = "test";
 
         public static bool IsImage(IFormFile file)
         {
@@ -29,7 +29,7 @@ namespace ImageResizeWebApp.Helpers
             return formats.Any(item => file.FileName.EndsWith(item, StringComparison.OrdinalIgnoreCase));
         }
 
-        public static async Task<bool> UploadFileToStorage(Stream fileStream, string fileName)//, AzureStorageConfig _storageConfig)
+        public static async Task<bool> UploadFileToStorage(Stream fileStream, string containerName, string fileName)//, AzureStorageConfig _storageConfig)
         {
             // Create storagecredentials object by reading the values from the configuration (appsettings.json)
             StorageCredentials storageCredentials = new StorageCredentials(_account, _key); //(_storageConfig.AccountName, _storageConfig.AccountKey);
@@ -41,7 +41,19 @@ namespace ImageResizeWebApp.Helpers
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
 
             // Get reference to the blob container by passing the name by reading the value from the configuration (appsettings.json)
-            CloudBlobContainer container = blobClient.GetContainerReference(_container); // (_storageConfig.ImageContainer);
+            CloudBlobContainer container = blobClient.GetContainerReference(containerName); // (_storageConfig.ImageContainer);
+                                                                                            //container.ExistsAsync(containerName);
+
+            await container.CreateIfNotExistsAsync();
+
+            //ToDo: Only want to do this if the container was created!
+            BlobContainerPermissions permissions = new BlobContainerPermissions
+            {
+                PublicAccess = BlobContainerPublicAccessType.Blob
+            };
+            await container.SetPermissionsAsync(permissions);
+
+            await container.CreateIfNotExistsAsync();
 
             // Get the reference to the block blob from the container
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
@@ -52,7 +64,7 @@ namespace ImageResizeWebApp.Helpers
             return await Task.FromResult(true);
         }
 
-        public static async Task<List<string>> GetThumbNailUrls() //(AzureStorageConfig _storageConfig)
+        public static async Task<List<string>> GetThumbNailUrls(string containerName) //(AzureStorageConfig _storageConfig)
         {
             List<string> thumbnailUrls = new List<string>();
 
@@ -66,7 +78,7 @@ namespace ImageResizeWebApp.Helpers
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
 
             // Get reference to the container
-            CloudBlobContainer container = blobClient.GetContainerReference(_container);
+            CloudBlobContainer container = blobClient.GetContainerReference(containerName);
 
             BlobContinuationToken continuationToken = null;
 
