@@ -42,6 +42,9 @@ namespace Birder2.Models
         public string NoteVocalisation { get; set; }
         // If the bird sang or made other sounds during your observation, use mnemonics or descriptions of how it sounded. Also note non-vocal sounds such as wing noises or drumming.
 
+        public bool HasPhotos { get; set; }
+
+
         [Required]
         [Display(Name = "Date/Time")]
         //[DisplayFormat(DataFormatString = "yyyy-MM-dd hh:mm", ApplyFormatInEditMode = true)]
@@ -60,6 +63,6 @@ namespace Birder2.Models
         public Bird Bird { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public ICollection<ObservationTag> ObservationTags { get; set; }
-        public ICollection<Photograph> Photographs { get; set; }
+        //public ICollection<Photograph> Photographs { get; set; }
     }
 }

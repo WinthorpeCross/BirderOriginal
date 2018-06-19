@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Birder2.Controllers
 {
     [Route("api/[controller]")]
-    //[ApiController]
+    //[ApiController] 
     public class ImagesController : ControllerBase
     {
         private readonly IConfiguration _config;
@@ -32,7 +32,7 @@ namespace Birder2.Controllers
         //[Route("api/[controller]/upload/{files}")]
         [HttpPost("[action]")]
         //[HttpPost(Name = "[action]")]
-        public async Task<IActionResult> Upload([FromForm]ICollection<IFormFile> files)
+        public async Task<IActionResult> Upload([FromForm]ICollection<IFormFile> files, int ObservationId)
         {
             bool isUploaded = false;
 
