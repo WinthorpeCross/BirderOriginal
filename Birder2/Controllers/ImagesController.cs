@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Birder2.Services;
 using ImageResizeWebApp.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,14 @@ namespace Birder2.Controllers
     //[ApiController] 
     public class ImagesController : ControllerBase
     {
+        //private readonly IApplicationUserAccessor _userAccessor;
+        private readonly IImageApiHelperService _imageApiHelperService;
         private readonly IConfiguration _config;
 
-        public ImagesController(IConfiguration config)
+        public ImagesController(IConfiguration config, IImageApiHelperService imageApiHelperService)
         {
+            //_userAccessor = userAccessor;
+            _imageApiHelperService = imageApiHelperService;
             _config = config;
         }
 
@@ -71,13 +76,14 @@ namespace Birder2.Controllers
 
                 if (isUploaded)
                 {
-                    if ("test" != string.Empty)
+                    _imageApiHelperService.UpdateImagesAttachedValue(observationId, true);
+                    //if ("test" != string.Empty)
 
-                        return new AcceptedAtActionResult("GetThumbNails", "Images", null , observationId.ToString());
+                    return new AcceptedAtActionResult("GetThumbNails", "Images", null , observationId.ToString());
 
-                    else
+                    //else
                     
-                        return new AcceptedResult();
+                    //    return new AcceptedResult();
                 }
                 else
 
@@ -93,8 +99,14 @@ namespace Birder2.Controllers
         [HttpGet("thumbnails")]
         //[HttpGet]
         //[HttpGet("{containerName}", Name = "thumbnails")]
-        public async Task<IActionResult> GetThumbNails(string containerName)
+        public async Task<IActionResult> GetThumbNails(int observationId)
         {
+            //var user = await _userAccessor.GetUser();
+            var areImagesAvailable = _imageApiHelperService.AreImagesAttachedAsync(observationId);
+            if (areImagesAvailable != true)
+            {
+                return Accepted("Observation status indicates images not available");
+            }
 
             try
             {
@@ -106,7 +118,12 @@ namespace Birder2.Controllers
 
                 //    return BadRequest("Please provide a name for your image container in the azure blob storage");
 
-                List<string> thumbnailUrls = await StorageHelper.GetThumbNailUrls(containerName); //(storageConfig);
+                List<string> thumbnailUrls = await StorageHelper.GetThumbNailUrls(observationId.ToString()); //(storageConfig);
+
+                if(thumbnailUrls.Count == 0)
+                {
+                    _imageApiHelperService.UpdateImagesAttachedValue(observationId, false);
+                }
 
                 return new ObjectResult(thumbnailUrls);
 

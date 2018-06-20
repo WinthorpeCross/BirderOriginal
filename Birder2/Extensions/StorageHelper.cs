@@ -42,18 +42,26 @@ namespace ImageResizeWebApp.Helpers
 
             // Get reference to the blob container by passing the name by reading the value from the configuration (appsettings.json)
             CloudBlobContainer container = blobClient.GetContainerReference(containerName); // (_storageConfig.ImageContainer);
-                                                                                            //container.ExistsAsync(containerName);
 
-            await container.CreateIfNotExistsAsync();
+            var containerExists = container.ExistsAsync();
 
-            //ToDo: Only want to do this if the container was created!
-            BlobContainerPermissions permissions = new BlobContainerPermissions
+            containerExists.Wait();
+
+            if (containerExists.Result != true)
             {
-                PublicAccess = BlobContainerPublicAccessType.Blob
-            };
-            await container.SetPermissionsAsync(permissions);
 
-            await container.CreateIfNotExistsAsync();
+                await container.CreateIfNotExistsAsync();
+
+                //ToDo: Only want to do this if the container was created!
+                BlobContainerPermissions permissions = new BlobContainerPermissions
+                {
+                    PublicAccess = BlobContainerPublicAccessType.Blob
+                };
+                await container.SetPermissionsAsync(permissions);
+
+            }
+
+
 
             // Get the reference to the block blob from the container
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);

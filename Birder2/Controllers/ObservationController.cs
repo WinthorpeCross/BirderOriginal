@@ -39,17 +39,13 @@ namespace Birder2.Controllers
             _logger = logger;
         }
 
-        public class ObservationImageMaintenanceDto
-        {
-            public int ObservationId { get; set; }
-        }
-
-        public IActionResult Images(int id)
+        public async Task<IActionResult> Images(int id)
         {
             //Check if Observation exists?
-            //Get Observation
-            var viewModel = new ObservationImageMaintenanceDto();
-            viewModel.ObservationId = id;
+            //Dto
+            var viewModel = await _observationRepository.GetObservationDetails(id);
+            //var viewModel = new ObservationImageMaintenanceDto();
+            
             return View(viewModel);
         }
 

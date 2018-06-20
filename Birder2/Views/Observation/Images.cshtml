@@ -1,4 +1,4 @@
-﻿@model Birder2.Controllers.ObservationController.ObservationImageMaintenanceDto
+﻿@model Birder2.Models.Observation
 @{
     ViewData["Title"] = "Images";
     Layout = "~/Views/Shared/_LayoutNoSidebar.cshtml";
@@ -26,7 +26,9 @@
                     Drop photographs here or click to upload.
                 </span>
             </div>
-            <input asp-for="ObservationId" class="form-control" hidden />
+            <div>
+                <input asp-for="ObservationId" class="form-control" type="hidden" />
+            </div>
         </form>
     </div>
 
@@ -50,12 +52,12 @@
 @section Scripts {
     @*<scipt src="~/js/upload.js"></scipt>*@
 
-<script>
+    <script>
 
 var gallery;
 
 
-document.onload = fetchImageLinks('@Model.ObservationId.ToString()');
+    document.onload = fetchImageLinks(@Model.ObservationId);
 
 /* Dropzone */
 Dropzone.options.imageUpload = { // "imageUpload" is the camelized version of the HTML element's ID
@@ -76,7 +78,7 @@ function fetchImageLinks(data) {
     // Fetch images
     //alert(data);
     //app.get('/myservice/:CustomerId', myservice.queryByCustomer);
-    $.get("/api/Images/thumbnails?containerName=" + data, function (fetchedImageLinks) {
+    $.get("/api/Images/thumbnails?observationId=" + data, function (fetchedImageLinks) {
         console.log(fetchedImageLinks)
 
         // Check if anything is in there
@@ -120,8 +122,8 @@ function fetchImageLinks(data) {
         }
     });
     }
-</script>
-    }
+    </script>
+}
 
 
 
