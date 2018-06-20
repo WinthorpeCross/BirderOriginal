@@ -26,6 +26,49 @@ namespace Birder2.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Index(SortFilterBirdIndexOptions options, int page)
+        {
+            _logger.LogInformation(LoggingEvents.ListItems, "Bird Index called");
+            try
+            {
+                if (page == 0)
+                {
+                    page = 1;
+                }
+                BirdIndexViewModel viewModel = new BirdIndexViewModel();
+                viewModel.AllBirdsDropDownList = _birdRepository.AllBirdsDropDownList();
+                if (options.SelectedBirdId == 0)
+                {
+                    if (options.ShowAllBirds == false)
+                    {
+                        viewModel.BirdsList = await _birdRepository.CommonBirdsList().GetPaged(page, pageSize);
+                        viewModel.ShowAllBirds = options.ShowAllBirds;
+                        viewModel.ShowInTable = options.ShowInTable;
+                    }
+                    else
+                    {
+                        viewModel.BirdsList = await _birdRepository.AllBirdsList().GetPaged(page, pageSize);
+                        viewModel.ShowAllBirds = options.ShowAllBirds;
+                        viewModel.ShowInTable = options.ShowInTable;
+                    }
+                }
+                else
+                {
+                    viewModel.BirdsList = await _birdRepository.AllBirdsList(options.SelectedBirdId).GetPaged(page, pageSize);
+                    viewModel.SelectedBirdId = options.SelectedBirdId;
+                    viewModel.ShowInTable = options.ShowInTable;
+                }
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                // What to log?
+                _logger.LogError(LoggingEvents.GetItemNotFound, ex, "Index({birdId}) error", options.SelectedBirdId);
+                //_logger.LogError($"failed to return Birds details page: {ex}");//  <--
+                return NotFound();
+            }
+        }
         /*
         [HttpGet]
         public async Task<IActionResult> Index(SortFilterBirdIndexOptions options)
