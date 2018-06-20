@@ -26,6 +26,7 @@ namespace Birder2.Controllers
             _logger = logger;
         }
 
+        /*
         [HttpGet]
         public async Task<IActionResult> Index(SortFilterBirdIndexOptions options)
         {
@@ -70,6 +71,7 @@ namespace Birder2.Controllers
                 return NotFound();
             }
         }
+        */
 
         [HttpGet]
         public async Task<IActionResult> Details(int? id)
