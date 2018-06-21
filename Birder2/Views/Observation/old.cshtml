@@ -1,0 +1,120 @@
+﻿@model Birder2.Models.Observation
+@{
+    ViewData["Title"] = "Images";
+    Layout = "~/Views/Shared/_LayoutNoSidebar.cshtml";
+}
+
+<div class="box header">
+    <h1><span class="fa fa-user-circle-o"></span> <span id="page-title">Add or remove photographs to your observation</span></h1>
+</div>
+
+<div class="box content">
+    <hr>
+    <h2>Upload photos</h2>
+    <div>
+        <form action="/api/images/upload"
+              class="dropzone needsclick dz-clickable"
+              id="image-upload"
+              method="post"
+              enctype="multipart/form-data">
+            <div class="dz-message needsclick">
+                <span class="note needsclick">
+                    Drop photographs here or click to upload.
+                </span>
+            </div>
+            <div>
+                <input asp-for="ObservationId" class="form-control" type="hidden" />
+            </div>
+        </form>
+    </div>
+
+    <h2>Generated Thumbnails</h2>
+    <!-- <p><span id="gallery-note">Gallery refreshes from storage container image links every 5 seconds.</span></p> -->
+    <div id="stored-images"></div>
+    <!-- The Gallery as inline carousel, can be positioned anywhere on the page -->
+    <div id="blueimp-gallery-carousel" class="blueimp-gallery blueimp-gallery-carousel">
+        <div class="slides"></div>
+        <h3 class="title"></h3>
+        <a class="prev">‹</a>
+        <a class="next">›</a>
+        <a class="play-pause"></a>
+        <ol class="indicator"></ol>
+    </div>
+</div>
+
+
+@section Scripts {
+    @*<scipt src="~/js/upload.js"></scipt>*@
+
+    <script>
+
+var gallery;
+
+
+    document.onload = fetchImageLinks(@Model.ObservationId);
+
+/* Dropzone */
+Dropzone.options.imageUpload = { // "imageUpload" is the camelized version of the HTML element's ID
+    paramName: ("files"), // The name that will be used to transfer the file.  Must be the same as the api parameter
+    dictDefaultMessage: "Drop photographs here or Click to Upload",
+    addRemoveLinks: true, // Allows for cancellation of file upload and remove thumbnail
+    init: function () {
+        myDropzone = this;
+        myDropzone.on("success", function (file, response) {
+            myDropzone.removeFile(file); //presumably removes the file from the dropzone area
+            fetchImageLinks(response);
+        });
+    }
+};
+
+// Grab links for images from backend api
+        function fetchImageLinks(data) {
+            // Fetch images
+            $.get("/api/Images/thumbnails?observationId=" + data, function (fetchedImageLinks) {
+                console.log(fetchedImageLinks)
+
+                // Check if anything is in there
+                if (_.isEmpty(fetchedImageLinks)) {
+                    console.log('empty fetched')
+                    // do nothing
+                } else {
+                    // Check if we have a gallery initialized
+                    if (_.isEmpty(gallery)) {
+                        // initialize gallery
+                        gallery = blueimp.Gallery(
+                            fetchedImageLinks, // gallery links array
+                            {
+                                container: '#blueimp-gallery-carousel',
+                                carousel: true
+                            } // gallery options
+                        );
+                    } else {
+                        // check if images are equal to array
+                        console.log('currently in gallery:')
+                        console.log(gallery.list)
+                        var imageLinksEqual = _.isEqual(_.sortBy(gallery.list.map(s => s.split("?")[0])), _.sortBy(fetchedImageLinks.map(s => s.split("?")[0])))
+                        if (imageLinksEqual) {
+                            console.log('images arr are equal')
+                            // do nothing
+                        } else {
+                            console.log('images arr are not equal')
+
+                            // update gallery with new image urls. Only compare actual url without SAS token query string
+                            var newImageLinks = _.difference(fetchedImageLinks.map(s => s.split("?")[0]), gallery.list.map(s => s.split("?")[0]))
+
+                            console.log('differene is: ')
+                            console.log(newImageLinks)
+                            // Only add new images
+                            gallery.add(newImageLinks);
+
+                            // Force image load
+                            gallery.next();
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+}
+
+

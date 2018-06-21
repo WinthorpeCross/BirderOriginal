@@ -18,7 +18,8 @@
     background: #F0F8FF;
     margin: 25px;
     border-radius: 5px;
-    max-width: 400px;
+    /*max-width: 400px;*/
+
 }
 
 .dropzone .dz-message {

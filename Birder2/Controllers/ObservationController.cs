@@ -42,8 +42,12 @@ namespace Birder2.Controllers
         public async Task<IActionResult> Images(int id)
         {
             //Check if Observation exists?
-            //Dto
-            var viewModel = await _observationRepository.GetObservationDetails(id);
+            var observation = await _observationRepository.GetObservationDetails(id);
+            var viewModel = new ManageImagesDto()
+            {
+                ObservationId = observation.ObservationId
+            };
+            //var viewModel = await _observationRepository.GetObservationDetails(id);
             //var viewModel = new ObservationImageMaintenanceDto();
             
             return View(viewModel);
@@ -64,32 +68,32 @@ namespace Birder2.Controllers
             var userName = await _userAccessor.GetUserName();
             //
             try
-            { 
-            var viewModel = new ObservationsIndexViewModel()
             {
-                Filter = filter
-            };
+                var viewModel = new ObservationsIndexViewModel()
+                {
+                    Filter = filter
+                };
 
-            switch (filter)
-            {
-                case ObservationsFeedFilter.Users: // Only Users
-                    viewModel.Observations = await _observationRepository.GetUsersObservationsList(user.Id).GetPaged(page, pageSize);
-                    break;
-                case ObservationsFeedFilter.Public: // Public
+                switch (filter)
+                {
+                    case ObservationsFeedFilter.Users: // Only Users
+                        viewModel.Observations = await _observationRepository.GetUsersObservationsList(user.Id).GetPaged(page, pageSize);
+                        break;
+                    case ObservationsFeedFilter.Public: // Public
+                        viewModel.Observations = await _observationRepository.GetPublicObservationsList().GetPaged(page, pageSize);
+                        break;
+                    default:
+                        viewModel.Observations = await _observationRepository.GetUsersNetworkObservationsList(user.Id).GetPaged(page, pageSize);
+                        break;
+                }
+
+                if (viewModel.Observations.Results.Count == 0)
+                {
                     viewModel.Observations = await _observationRepository.GetPublicObservationsList().GetPaged(page, pageSize);
-                    break;
-                default:
-                    viewModel.Observations = await _observationRepository.GetUsersNetworkObservationsList(user.Id).GetPaged(page, pageSize);
-                    break;
-            }
+                    viewModel.IsEmptyList = true;
+                }
 
-            if (viewModel.Observations.Results.Count == 0)
-            {
-                viewModel.Observations = await _observationRepository.GetPublicObservationsList().GetPaged(page, pageSize);
-                viewModel.IsEmptyList = true;
-            }
-
-            return View(viewModel);
+                return View(viewModel);
             }
             catch (Exception ex)
             {

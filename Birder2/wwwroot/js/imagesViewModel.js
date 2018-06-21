@@ -1,29 +1,15 @@
-﻿
-var gallery;
-
-
-document.onload = fetchImageLinks(model);
-
-/* Dropzone */
-Dropzone.options.imageUpload = { // "imageUpload" is the camelized version of the HTML element's ID
-    paramName: ("files"), // The name that will be used to transfer the file.  Must be the same as the api parameter
-    dictDefaultMessage: "Drop photographs here or Click to Upload",
-    addRemoveLinks: true, // Allows for cancellation of file upload and remove thumbnail
-    init: function () {
-        myDropzone = this;
-        myDropzone.on("success", function (file, response) {
-            myDropzone.removeFile(file); //presumably removes the file from the dropzone area
-            fetchImageLinks(response);
-        });
-    }
+﻿ImagesViewModel = function (data) {
+    var self = this;
+    ko.mapping.fromJS(data, {}, self);
 };
+
+
+var gallery;
 
 // Grab links for images from backend api
 function fetchImageLinks(data) {
     // Fetch images
-    //alert(data);
-    //app.get('/myservice/:CustomerId', myservice.queryByCustomer);
-    $.get("/api/Images/thumbnails?containerName=" + data, function (fetchedImageLinks) {
+    $.get("/api/Images/thumbnails?observationId=" + data, function (fetchedImageLinks) {
         console.log(fetchedImageLinks)
 
         // Check if anything is in there
@@ -67,10 +53,3 @@ function fetchImageLinks(data) {
         }
     });
 }
-
-// Start first interval
-//fetchImageLinks()
-
-//setInterval(function () {
-//    fetchImageLinks()
-//}, 5000)
