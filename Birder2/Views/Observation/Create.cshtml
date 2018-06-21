@@ -1,20 +1,8 @@
 ﻿@model Birder2.ViewModels.CreateObservationViewModel
-@using Microsoft.AspNetCore.Identity
-@inject UserManager<ApplicationUser> UserManager
 @using Newtonsoft.Json
 @{
+    ViewData["Title"] = "Add Observation";
     string data = JsonConvert.SerializeObject(Model);
-}
-@section scripts{
-    <script src="~/js/jqueryvalidate.js"></script>
-    <script src="~/js/jquery-validate.bootstrap-tooltip.js"></script>
-    <script src="~/js/createobservationviewmodel.js"></script>
-    <script type="text/javascript">
-        var createObservationViewModel = new CreateObservationViewModel(@Html.Raw(data));
-        var x = @UserManager.GetUserAsync(User).Result.DefaultLocationLatitude;
-        var y = @UserManager.GetUserAsync(User).Result.DefaultLocationLongitude;
-        ko.applyBindings(createObservationViewModel);
-    </script>
 }
 
 <h2>Create an observation</h2>
@@ -65,14 +53,12 @@
                                                     data_show_subtext = "true"
                                                 })
                                 </td>
-                                @*<td class="form-group"></td>*@
                             </tr>
                         </tbody>
                         <tr>
                             <td>&nbsp;</td>
                             <td class="form-group"><span class="form-control text-right">Total species:</span></td>
                             <td class="form-group"><span name="Total" class="form-control text-left" data-bind="text: Total"></span></td>
-                            @*<td>&nbsp;</td>*@
                         </tr>
                     </table>
                     <div class="form-group">
@@ -83,8 +69,6 @@
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
-                        @*<input class="form-control" type="text" data-bind="dateTimePicker: Observation.ObservationDateTime" readonly />
-                            <div>Viewmodel date as text: <span data-bind="text: Observation.ObservationDateTime"></span></div>*@
                     </div>
                 </div>
             </div>
@@ -139,9 +123,7 @@
                 <div class="panel-body">
                     <div class="form-group">
                         <p>Click the map to move the marker.  Or use the search box. 'Use current location' is in dev...</p>
-
                     </div>
-
                     <div class="row" id="floating-panel">
                         <div class="col-lg-6">
                             <div class="input-group">
@@ -173,131 +155,21 @@
                 </div>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#collapse5"><b>Add photo(s)</b> <i>(coming up soon)</i></a>
-                </h4>
-            </div>
-            <div id="collapse5" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <p>
-                        This functionality will enable you to upload your bird photos.  This functionality will in place by early June.
-                    </p>
-                </div>
-            </div>
-        </div>
     </div>
-
     <br />
     <div class="container col-lg-12">
         <p><button class="btn btn-primary btn-block" type="submit" data-bind="disable:disableSubmitButton">Post Observation</button></p>
     </div>
 </form>
 
-<script src="~/js/accordionHandler.js"></script>
+@section scripts{
+    <script src="~/js/jqueryvalidate.js"></script>
+    <script src="~/js/jquery-validate.bootstrap-tooltip.js"></script>
+    <script src="~/js/createobservationviewmodel.js"></script>
+    <script src="~/js/accordionHandler.js"></script>
+    <script type="text/javascript">
+        var createObservationViewModel = new CreateObservationViewModel(@Html.Raw(data));
+        ko.applyBindings(createObservationViewModel);
+    </script>
+}
 
-<script>
-    var markers = [];
-
-    window.onload = 
-
-        function initMap() {
-        @*var x = @UserManager.GetUserAsync(User).Result.DefaultLocationLatitude;
-        var y = @UserManager.GetUserAsync(User).Result.DefaultLocationLongitude;
-        alert(x)
-        alert(y)*@
-        //var myLatlng = new google.maps.LatLng(@UserManager.GetUserAsync(User).Result.DefaultLocationLatitude,@UserManager.GetUserAsync(User).Result.DefaultLocationLongitude);
-        var myLatlng = new google.maps.LatLng(x,y);
-        var myOptions = {
-            zoom: 13,
-            center: myLatlng,
-        }
-
-        var map = new google.maps.Map(document.getElementById("map"), myOptions);
-        var geocoder = new google.maps.Geocoder();
-
-        //google.maps.event.addListenerOnce(map, 'idle', addMarker(myLatlng));
-        google.maps.event.addListenerOnce(map, 'idle', function (event) {
-            geocoder.geocode({
-                'latLng': myLatlng
-            }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[0]) {
-                        //alert(results[0].formatted_address);
-                        document.getElementById('set').value = results[0].formatted_address
-                        addMarker(results[0].geometry.location);
-                    }
-                }
-            });
-        });
-
-        document.getElementById('submit').addEventListener('click', function (event) {
-            var address = document.getElementById('address').value;
-            geocoder.geocode({
-                'address': address
-            }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[0]) {
-                        //alert(results[0].formatted_address);
-                        document.getElementById('set').value = results[0].formatted_address
-                        addMarker(results[0].geometry.location);
-                    }
-                }
-            });
-        });
-
-        google.maps.event.addListener(map, 'click', function (event) {
-            geocoder.geocode({
-                'latLng': event.latLng
-            }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[0]) {
-                        //alert(results[0].formatted_address);
-                        document.getElementById('set').value = results[0].formatted_address
-                        addMarker(event.latLng);
-                    }
-                }
-            });
-        });
-
-        function addMarker(location) {
-            var marker = new google.maps.Marker({
-                position: location,
-                map: map,
-            });
-
-            map.panTo(location);
-            deleteMarkers();
-            markers.push(marker);
-            updateForm();
-        }
-
-        // Sets the map on all markers in the array.
-        function setMapOnAll(map) {
-            for (var i = 0; i < markers.length; i++) {
-                markers[i].setMap(map);
-            }
-        }
-
-        // Removes the markers from the map, but keeps them in the array.
-        function clearMarkers() {
-            setMapOnAll(null);
-        }
-
-        // Shows any markers currently in the array.
-        function showMarkers() {
-            setMapOnAll(map);
-        }
-
-        // Deletes all markers in the array by removing references to them.
-        function deleteMarkers() {
-            clearMarkers();
-            markers = [];
-        }
-        function updateForm() {
-            createObservationViewModel.Observation.LocationLatitude(markers[0].position.lat());
-            createObservationViewModel.Observation.LocationLongitude(markers[0].position.lng());
-        }
-    }
-</script>

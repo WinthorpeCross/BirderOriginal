@@ -122,11 +122,14 @@ namespace Birder2.Controllers
         {
             try
             {
+                var user = await _userAccessor.GetUser();
                 var model = new CreateObservationViewModel()
                 {
                     Observation = new Observation() { ObservationDateTime = _systemClock.Now },
                     MessageToClient = string.Empty,
                     Birds = await _observationRepository.AllBirdsList(),
+                    DefaultLatitude = user.DefaultLocationLatitude,
+                    DefaultLongitude = user.DefaultLocationLongitude
                 };
                 return View(model);
             }

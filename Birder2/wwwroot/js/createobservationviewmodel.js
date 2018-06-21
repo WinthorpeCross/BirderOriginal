@@ -179,3 +179,101 @@ $.validator.addMethod("alphaonly",
     }
 );
 
+//Google Maps API
+
+var markers = [];
+
+window.onload = function initMap() {
+                                  //LatLng({lat: -34, lng: 151}); (use this if problem with extra space in co-ondonates arises)
+    var myLatlng = new google.maps.LatLng(createObservationViewModel.DefaultLatitude(),createObservationViewModel.DefaultLongitude());
+    var myOptions = {
+        zoom: 10,
+        center: myLatlng,
+    }
+
+    var map = new google.maps.Map(document.getElementById("map"), myOptions);
+    var geocoder = new google.maps.Geocoder();
+
+    //google.maps.event.addListenerOnce(map, 'idle', addMarker(myLatlng));
+    google.maps.event.addListenerOnce(map, 'idle', function (event) {
+        geocoder.geocode({
+            'latLng': myLatlng
+        }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[0]) {
+                    //alert(results[0].formatted_address);
+                    document.getElementById('set').value = results[0].formatted_address
+                    addMarker(results[0].geometry.location);
+                }
+            }
+        });
+    });
+
+    document.getElementById('submit').addEventListener('click', function (event) {
+        var address = document.getElementById('address').value;
+        geocoder.geocode({
+            'address': address
+        }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[0]) {
+                    //alert(results[0].formatted_address);
+                    document.getElementById('set').value = results[0].formatted_address
+                    addMarker(results[0].geometry.location);
+                }
+            }
+        });
+    });
+
+    google.maps.event.addListener(map, 'click', function (event) {
+        geocoder.geocode({
+            'latLng': event.latLng
+        }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[0]) {
+                    //alert(results[0].formatted_address);
+                    document.getElementById('set').value = results[0].formatted_address
+                    addMarker(event.latLng);
+                }
+            }
+        });
+    });
+
+    function addMarker(location) {
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map,
+        });
+
+        map.panTo(location);
+        deleteMarkers();
+        markers.push(marker);
+        updateForm();
+    }
+
+    // Sets the map on all markers in the array.
+    function setMapOnAll(map) {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(map);
+        }
+    }
+
+    // Removes the markers from the map, but keeps them in the array.
+    function clearMarkers() {
+        setMapOnAll(null);
+    }
+
+    // Shows any markers currently in the array.
+    function showMarkers() {
+        setMapOnAll(map);
+    }
+
+    // Deletes all markers in the array by removing references to them.
+    function deleteMarkers() {
+        clearMarkers();
+        markers = [];
+    }
+    function updateForm() {
+        createObservationViewModel.Observation.LocationLatitude(markers[0].position.lat());
+        createObservationViewModel.Observation.LocationLongitude(markers[0].position.lng());
+    }
+}
