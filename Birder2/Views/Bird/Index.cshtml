@@ -24,13 +24,13 @@
         <div class="col-lg-3">
             <label class="control-label">Filter common/all species:</label>
             <div>
-                <select asp-for="BirdStatusFilter" asp-items="Html.GetEnumSelectList<BirdIndexStatusFilter>()" class="form-control"></select>
+                <select asp-for="BirdStatusFilter" asp-items="Html.GetEnumSelectList<BirdIndexStatusFilter>()" class="form-control selectpicker show-tick"></select>
             </div>
         </div>
         <div class="col-lg-2">
             <label class="control-label">Results format:</label>
             <div>
-                <select asp-for="ListFormat" asp-items="Html.GetEnumSelectList<BirdIndexListFormatFilter>()" class="form-control"></select>
+                <select asp-for="ListFormat" asp-items="Html.GetEnumSelectList<BirdIndexListFormatFilter>()" class="form-control selectpicker show-tick"></select>
             </div>
         </div>
         <div class="col-lg-2">
@@ -39,7 +39,7 @@
                 @Html.DropDownListFor(m => m.SelectedPageListSize, new SelectList(Model.PageSizeList),
                                       new
                                       {
-                                          @class = "form-control"
+                                          @class = "form-control selectpicker show-tick"
                                           //onchange = "this.form.submit()"
                                       })
             </div>

@@ -26,13 +26,13 @@
             <div class="panel-body">
                 <div class="birds--horizontal-stack">
                     @foreach (var photo in Model.BirdPhotos)
-                    {
+                     {
                         <div class="wrapper--horizontal-stack">
-                            <a href="@photo.WebUrl" target="_blank">
-                                <img src="@photo.LargeSquareThumbnailUrl" alt="<<>species name>>" title="@photo.Title">
+                            <a href="@photo.WebUrl" target="_blank" class="thumbnail">
+                                <img src="@photo.LargeSquareThumbnailUrl" alt="<<species name>>" title="@photo.Title">
                             </a>
                         </div>
-                    }
+                     }
                 </div>
             </div>
         </div>

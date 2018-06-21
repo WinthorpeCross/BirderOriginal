@@ -13,7 +13,7 @@
                     <a asp-action="Create" class="btn btn-default btn-success">Add Observation</a>
                 </div>
                 <div class="col-sm-6">
-                    <select asp-for="Filter" asp-items="Html.GetEnumSelectList<ObservationsFeedFilter>()" class="form-control" onchange="this.form.submit()"></select>
+                    <select asp-for="Filter" asp-items="Html.GetEnumSelectList<ObservationsFeedFilter>()" class="form-control selectpicker show-tick" onchange="this.form.submit()"></select>
                 </div>
             </div>
         </form>
