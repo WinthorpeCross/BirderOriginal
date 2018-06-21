@@ -11,6 +11,8 @@
     <script src="~/js/createobservationviewmodel.js"></script>
     <script type="text/javascript">
         var createObservationViewModel = new CreateObservationViewModel(@Html.Raw(data));
+        var x = @UserManager.GetUserAsync(User).Result.DefaultLocationLatitude;
+        var y = @UserManager.GetUserAsync(User).Result.DefaultLocationLongitude;
         ko.applyBindings(createObservationViewModel);
     </script>
 }
@@ -198,8 +200,15 @@
 <script>
     var markers = [];
 
-    function initMap() {
-        var myLatlng = new google.maps.LatLng(@UserManager.GetUserAsync(User).Result.DefaultLocationLatitude,@UserManager.GetUserAsync(User).Result.DefaultLocationLongitude);
+    window.onload = 
+
+        function initMap() {
+        @*var x = @UserManager.GetUserAsync(User).Result.DefaultLocationLatitude;
+        var y = @UserManager.GetUserAsync(User).Result.DefaultLocationLongitude;
+        alert(x)
+        alert(y)*@
+        //var myLatlng = new google.maps.LatLng(@UserManager.GetUserAsync(User).Result.DefaultLocationLatitude,@UserManager.GetUserAsync(User).Result.DefaultLocationLongitude);
+        var myLatlng = new google.maps.LatLng(x,y);
         var myOptions = {
             zoom: 13,
             center: myLatlng,
