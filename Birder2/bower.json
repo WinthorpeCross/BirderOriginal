@@ -22,10 +22,7 @@
     "tests"
   ],
   "dependencies": {
-    "jQuery": "3.3.1",
-    "eonasdan-bootstrap-datetimepicker": "4.17.47",
-    "jquery-validation": "1.17.0",
-    "knockout": "v3.4.2"
+    "jQuery": "3.3.1"
   },
   "resolutions": {
     "eonasdan-bootstrap-datetimepicker": "4.17.47",
