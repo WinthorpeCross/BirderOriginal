@@ -114,9 +114,13 @@
 
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPB7z8GZKZ2p8k0LKjzgtTNH3t9KKfcV4&callback=initMap"></script>
 
+        <!--Knockout & Knockout-mapping dependencies -->
+        <script src="https://ajax.aspnetcdn.com/ajax/knockout/knockout-3.4.2.js"
+                asp-fallback-src="~/js/knockout-3.4.2.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.js"
+                asp-fallback-src="~/js/knockout.mapping-latest.js"></script>
 
         <!--Bootstrap-select dependencies -->
-        <!-- Latest compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
 
         <!--Moment.js dependencies -->
@@ -133,6 +137,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/dropzone.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.25.2/js/blueimp-gallery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+
+
 
 
         @RenderSection("Scripts", required: false)

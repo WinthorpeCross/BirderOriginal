@@ -6,12 +6,9 @@
     string data = JsonConvert.SerializeObject(Model);
 }
 @section scripts{
-    <script src="~/js/knockout-3.4.2.js"></script>
-    <script src="~/js/knockout.mapping-latest.js"></script>
     <script src="~/js/jqueryvalidate.js"></script>
     <script src="~/js/jquery-validate.bootstrap-tooltip.js"></script>
     <script src="~/js/createobservationviewmodel.js"></script>
-
     <script type="text/javascript">
         var createObservationViewModel = new CreateObservationViewModel(@Html.Raw(data));
         ko.applyBindings(createObservationViewModel);
