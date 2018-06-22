@@ -173,8 +173,6 @@
                 <p><button class="btn btn-primary btn-block" type="submit" data-bind="disable:disableSubmitButton">Save Changes to Observation</button></p>
                 <a asp-action="Index" class="btn btn-link">   Back to Observations feed</a>
             </div>
-
-
         </form>
         <small data-bind="text: RecordDates"></small>
     </div>
@@ -276,11 +274,10 @@
             clearMarkers();
             markers = [];
         }
+
         function updateForm() {
             editObservationViewModel.Observation.LocationLatitude(markers[0].position.lat());
             editObservationViewModel.Observation.LocationLongitude(markers[0].position.lng());
-            //document.getElementById('latitude').value = markers[0].position.lat();
-            //document.getElementById('longitude').value = markers[0].position.lng();
         }
     };
 </script>

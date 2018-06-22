@@ -1,13 +1,35 @@
 ﻿@model Birder2.Models.Observation
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
+@using Newtonsoft.Json
+@{
+    string data = JsonConvert.SerializeObject(Model,
+        new JsonSerializerSettings()
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        });
+}
+
+@section scripts{
+    <script src="~/js/jqueryvalidate.js"></script>
+    <script src="~/js/jquery-validate.bootstrap-tooltip.js"></script>
+    <script src="~/js/observationDetailsViewModel.js"></script>
+    <script src="~/js/accordionHandler.js"></script>
+    <script type="text/javascript">
+        var observationDetailsViewModel = new ObservationDetailsViewModel(@Html.Raw(data));
+        ko.applyBindings(observationDetailsViewModel);
+    </script>
+}
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Observation Details";
+
 
     var statusMessageClass = Model.Quantity > 1 ? "were" : "was";
 
-    <h1>@Model.Bird.EnglishName <small><i> @Model.Bird.Species</i></small></h1>
+    <div data-bind="html: Title()"></div>
+    <div data-bind="html: SubTitle()"></div>
+
 
     if (Model.ApplicationUserId == UserManager.GetUserAsync(User).Result.Id)
     {
@@ -18,15 +40,9 @@
         <h4><b>@Model.Quantity</b> @statusMessageClass spotted by <a asp-controller="User" asp-action="Details" asp-route-userName="@Model.ApplicationUser.UserName">@Model.ApplicationUser.UserName</a> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h4>
     };
 
-    if (Model.ApplicationUserId == UserManager.GetUserAsync(User).Result.Id)
-    { 
-        <p> Find out more about the <a asp-controller="Bird" asp-action="Details" asp-route-id="@Model.Bird.BirdId">@Model.Bird.EnglishName</a> and the details of your other sightings of this species.</p> 
-    }
-    else
-    {
-        <p> Find out more about the <a asp-controller="Bird" asp-action="Details" asp-route-id="@Model.Bird.BirdId">@Model.Bird.EnglishName</a> and the details of your sightings of this species.</p> 
-    }
-    }
+    <p> Find out more about the <a asp-controller="Bird" asp-action="Details" asp-route-id="@Model.Bird.BirdId">@Model.Bird.EnglishName</a> and the details of other sightings of this species.</p>
+}
+
 
 
 <div>
@@ -42,75 +58,45 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" @*data-parent="#accordion" *@ href="#collapse1"><b>@Html.DisplayNameFor(model => model.NoteGeneral)</b></a>
+                    <a data-toggle="collapse" @*data-parent="#accordion" *@ href="#collapse1"><b>Photographs</b></a>
                 </h4>
             </div>
             <div id="collapse1" class="panel-collapse collapse in">
                 <div class="panel-body">
-                    @Html.DisplayFor(model => model.NoteGeneral)
+
+
                 </div>
             </div>
         </div>
+
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" @*data-parent="#accordion" *@ href="#collapse2"><b>@Html.DisplayNameFor(model => model.NoteHabitat)</b></a>
-                </h4>
-            </div>
-            <div id="collapse2" class="panel-collapse collapse">
-                <div class="panel-body">
-                    @Html.DisplayFor(model => model.NoteHabitat)
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" @*data-parent="#accordion" *@ href="#collapse3"><b>@Html.DisplayNameFor(model => model.NoteWeather)</b></a>
-                </h4>
-            </div>
-            <div id="collapse3" class="panel-collapse collapse">
-                <div class="panel-body">
-                    @Html.DisplayFor(model => model.NoteWeather)
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" @*data-parent="#accordion" *@ href="#collapse4"><b>@Html.DisplayNameFor(model => model.NoteAppearance)</b></a>
-                </h4>
-            </div>
-            <div id="collapse4" class="panel-collapse collapse">
-                <div class="panel-body">
-                    @Html.DisplayFor(model => model.NoteAppearance)
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" @*data-parent="#accordion" *@ href="#collapse5"><b>@Html.DisplayNameFor(model => model.NoteBehaviour)</b></a>
+                    <a data-toggle="collapse" @*data-parent="#accordion" *@ href="#collapse5"><b>Notes</b></a>
                 </h4>
             </div>
             <div id="collapse5" class="panel-collapse collapse">
                 <div class="panel-body">
-                    @Html.DisplayFor(model => model.NoteBehaviour)
+                    <label asp-for="NoteGeneral"></label>
+                    <input asp-for="NoteGeneral" class="form-control" data-bind="text: NoteGeneral" disabled />
+                    <br />
+                    <label asp-for="NoteHabitat"></label>
+                    <input asp-for="NoteHabitat" class="form-control" data-bind="text: NoteHabitat" disabled />
+                    <br />
+                    <label asp-for="NoteWeather"></label>
+                    <input asp-for="NoteWeather" class="form-control" data-bind="text: NoteWeather" disabled />
+                    <br />
+                    <label asp-for="NoteAppearance"></label>
+                    <input asp-for="NoteAppearance" class="form-control" data-bind="text: NoteAppearance" disabled />
+                    <br />
+                    <label asp-for="NoteVocalisation"></label>
+                    <input asp-for="NoteVocalisation" class="form-control" data-bind="text: NoteVocalisation" disabled />
+                    <small data-bind="text: RecordDates"></small>
                 </div>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" @*data-parent="#accordion" *@ href="#collapse6"><b>@Html.DisplayNameFor(model => model.NoteVocalisation)</b></a>
-                </h4>
-            </div>
-            <div id="collapse6" class="panel-collapse collapse">
-                <div class="panel-body">
-                    @Html.DisplayFor(model => model.NoteVocalisation)
-                </div>
-            </div>
-        </div>
+
+
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
@@ -132,57 +118,9 @@
     <a asp-action="Index" class="btn btn-link">Back to List</a>
 </div>
 
-<small>Observation created: @Model.CreationDate; last update: @Model.LastUpdateDate</small>
+<small data-bind="text: RecordDates"></small>
 
-<script src="~/js/accordionHandler.js"></script>
 
-<script>
+@*<small>Observation created: @Model.CreationDate; last update: @Model.LastUpdateDate</small>*@
 
-    function initMap() {
-        var observationLocation = { lat: @Model.LocationLatitude, lng: @Model.LocationLongitude };
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 7,
-            center: observationLocation
-        });
 
-        var contentString = '<div id="content">' +
-            '<div id="siteNotice">' +
-            '</div>' +
-            '<h4 id="firstHeading" class="firstHeading">@Model.Bird.EnglishName</h4>' +
-            '<div id="bodyContent">' +
-            '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>' +
-            '</div>' +
-            '</div>';
-
-        var infowindow = new google.maps.InfoWindow({
-            content: contentString
-        });
-
-        var marker = new google.maps.Marker({
-            position: observationLocation,
-            map: map,
-        });
-        marker.addListener('click', function () {
-            infowindow.open(map, marker);
-        });
-
-    }
-
-      function showError(error) {
-          switch (error.code) {
-              case error.PERMISSION_DENIED:
-                  x.innerHTML = "User denied the request for Geolocation."
-                  break;
-              case error.POSITION_UNAVAILABLE:
-                  x.innerHTML = "Location information is unavailable."
-                  break;
-              case error.TIMEOUT:
-                  x.innerHTML = "The request to get user location timed out."
-                  break;
-              case error.UNKNOWN_ERROR:
-                  x.innerHTML = "An unknown error occurred."
-                  break;
-          }
-    }
-
-</script>
