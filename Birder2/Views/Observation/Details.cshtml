@@ -28,7 +28,7 @@
     var statusMessageClass = Model.Quantity > 1 ? "were" : "was";
 
     <div data-bind="html: Title()"></div>
-    <div data-bind="html: SubTitle()"></div>
+    @*<div data-bind="html: SubTitle()"></div>*@
 
 
     if (Model.ApplicationUserId == UserManager.GetUserAsync(User).Result.Id)
