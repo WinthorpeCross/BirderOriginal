@@ -101,11 +101,11 @@ namespace Birder2
 
             services.AddMemoryCache();
 
-            //services.AddHttpsRedirection(options =>
-            //{
-            //    options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
-            //    options.HttpsPort = 5001;
-            //});
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+                options.HttpsPort = 5001;
+            });
 
             // I think the below is redundant in .NET Core 2.1
             //services.Configure<MvcOptions>(options =>
@@ -138,10 +138,7 @@ namespace Birder2
                 app.UseRewriter(options);
             }
 
-            //app.UseWelcomePage()
-
             app.UseStaticFiles();
-
 
             app.UseHttpsRedirection();
             app.UseCookiePolicy();

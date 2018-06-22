@@ -166,7 +166,6 @@ namespace Birder2.Controllers
             //loop here to set the bird for earch observation?
             if (ModelState.IsValid)
             {
-
                 //roll back in case any cannot be updated?
                 foreach (ObservedSpeciesViewModel observedSpecies in viewModel.ObservedSpecies)
                 {
@@ -339,14 +338,24 @@ namespace Birder2.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return NotFound(); //ToDo: Need to return an alternative here!
+            }
+
+            var user = await _userAccessor.GetUser();
+            if (user == null)
+            {
+                return NotFound(); //ToDo: Need to return an alternative here!
             }
 
             var observation = await _observationRepository.GetObservationDetails(id);
-
             if (observation == null)
             {
-                return NotFound();
+                return NotFound(); //ToDo: Need to return an alternative here!
+            }
+
+            if (observation.ApplicationUserId != user.Id)
+            {
+                return NotFound(); //ToDo: Need to return an alternative here!
             }
 
             return View(observation);
@@ -368,28 +377,5 @@ namespace Birder2.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-        //ToDo: Move to separate controller.  With annual list.  Perhaps other related lists - All Users?
-        //ToDo: Don't bother with the repo pattern.  Just use the IQueryable directly with EF Core
-        //[HttpGet]
-        //public async Task<IActionResult> ListLife()
-        //{
-        //    // ToDo: Refactor so one can get another user's Life List
-        //    var user = await _userAccessor.GetUser();
-        //    if (user == null)
-        //    {
-        //        return RedirectToAction("Login", "Account");
-        //    }
-
-        //    var viewModel = new LifeListViewModel()
-        //    {
-        //        //TotalObservations = await _observationRepository.TotalObservationsCount(user),
-        //        //TotalSpecies = await _observationRepository.UniqueSpeciesCount(user),
-        //        ObservationsAnalysisDto = await _observationsAnalysisService.GetObservationAnalysis(user),
-        //        LifeList = _observationRepository.GetLifeList(user.Id)
-        //    };
-
-        //    return View(viewModel);
-        //}
     }
 }
