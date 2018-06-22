@@ -5,8 +5,8 @@
     <div class="panel-heading">
         <h3 class="panel-title">Your Observations Feed</h3>
     </div>
-    <div class="panel-body">
 
+    <div class="panel-body">
         <form class="form-horizontal">
             <div class="form-group">
                 <div class="col-sm-6">
@@ -33,19 +33,18 @@
 </div>
 
 @{
-    ViewData["Title"] = "My Observations";
-
-
     @foreach (var observation in Model.Observations.Results)
     {
         <div class="container">
             @Html.Partial("_Observations", observation)
-            @*<hr />*@
         </div>
     }
-    }
-    <br />
+}
 
-    @(await Component.InvokeAsync<PagerViewComponent>(Model.Observations))
+<br />
 
+@(await Component.InvokeAsync<PagerViewComponent>(Model.Observations))
 
+@{
+    ViewData["Title"] = "Your Observations Feed";
+}

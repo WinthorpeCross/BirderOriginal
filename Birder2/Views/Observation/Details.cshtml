@@ -2,42 +2,20 @@
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
 @using Newtonsoft.Json
-@{
-    string data = JsonConvert.SerializeObject(Model,
-        new JsonSerializerSettings()
-        {
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-        });
-}
-
-@section scripts{
-    <script src="~/js/jqueryvalidate.js"></script>
-    <script src="~/js/jquery-validate.bootstrap-tooltip.js"></script>
-    <script src="~/js/observationDetailsViewModel.js"></script>
-    <script src="~/js/accordionHandler.js"></script>
-    <script type="text/javascript">
-        var observationDetailsViewModel = new ObservationDetailsViewModel(@Html.Raw(data));
-        ko.applyBindings(observationDetailsViewModel);
-    </script>
-}
 
 @{
-    ViewData["Title"] = "Observation Details";
-
-
-    var statusMessageClass = Model.Quantity > 1 ? "were" : "was";
+    var conjugatedVerb = Model.Quantity > 1 ? "were" : "was";
 
     <div data-bind="html: Title()"></div>
     @*<div data-bind="html: SubTitle()"></div>*@
 
-
     if (Model.ApplicationUserId == UserManager.GetUserAsync(User).Result.Id)
     {
-        <h4><b>@Model.Quantity</b> @statusMessageClass spotted by <a asp-controller="User" asp-action="Details" asp-route-userName="@Model.ApplicationUser.UserName">You</a> on  @Model.ObservationDateTime.ToString("dddd, dd MMMM yyyy, HH:mm")</h4>
+        <h4><b>@Model.Quantity</b> @conjugatedVerb spotted by <a asp-controller="User" asp-action="Details" asp-route-userName="@Model.ApplicationUser.UserName">You</a> on  @Model.ObservationDateTime.ToString("dddd, dd MMMM yyyy, HH:mm")</h4>
     }
     else
     {
-        <h4><b>@Model.Quantity</b> @statusMessageClass spotted by <a asp-controller="User" asp-action="Details" asp-route-userName="@Model.ApplicationUser.UserName">@Model.ApplicationUser.UserName</a> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h4>
+        <h4><b>@Model.Quantity</b> @conjugatedVerb spotted by <a asp-controller="User" asp-action="Details" asp-route-userName="@Model.ApplicationUser.UserName">@Model.ApplicationUser.UserName</a> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h4>
     };
 
     <p> Find out more about the <a asp-controller="Bird" asp-action="Details" asp-route-id="@Model.Bird.BirdId">@Model.Bird.EnglishName</a> and the details of other sightings of this species.</p>
@@ -63,6 +41,7 @@
             <div id="collapse1" class="panel-collapse collapse in">
                 <div class="panel-body">
 
+                    <p></p>
 
                 </div>
             </div>
@@ -110,15 +89,43 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ObservationId" class="btn btn-link">Edit</a>
-    <a asp-action="Delete" asp-route-id="@Model.ObservationId" class="btn btn-link">Delete</a>
-    <a asp-action="Index" class="btn btn-link">Back to List</a>
-</div>
+
+@{
+    if (Model.ApplicationUserId == UserManager.GetUserAsync(User).Result.Id)
+    {
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.ObservationId" class="btn btn-link">Edit</a>
+            <a asp-action="Delete" asp-route-id="@Model.ObservationId" class="btn btn-link">Delete</a>
+            <a asp-action="Index" class="btn btn-link">Back to List</a>
+        </div>
+    }
+    else
+    {
+        <div>
+            <a asp-action="Index" class="btn btn-link">Back to List</a>
+        </div>
+    };
+}
+
 
 <small data-bind="text: RecordDates"></small>
 
+@{
+    ViewData["Title"] = "Observation Details";
+    string data = JsonConvert.SerializeObject(Model,
+            new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+}
 
-@*<small>Observation created: @Model.CreationDate; last update: @Model.LastUpdateDate</small>*@
-
-
+@section scripts{
+    <script src="~/js/jqueryvalidate.js"></script>
+    <script src="~/js/jquery-validate.bootstrap-tooltip.js"></script>
+    <script src="~/js/observationDetailsViewModel.js"></script>
+    <script src="~/js/accordionHandler.js"></script>
+    <script type="text/javascript">
+        var observationDetailsViewModel = new ObservationDetailsViewModel(@Html.Raw(data));
+        ko.applyBindings(observationDetailsViewModel);
+    </script>
+}

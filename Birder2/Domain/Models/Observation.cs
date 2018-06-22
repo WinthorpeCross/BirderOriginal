@@ -44,22 +44,19 @@ namespace Birder2.Models
 
         public bool HasPhotos { get; set; }
 
+        public PrivacyLevel SelectedPrivacyLevel { get; set; }
 
         [Required]
         [Display(Name = "Date/Time")]
-        //[DisplayFormat(DataFormatString = "yyyy-MM-dd hh:mm", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
         public DateTime ObservationDateTime { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime LastUpdateDate { get; set; }
 
-        //public PrivacyLevel {get;set;} ENUM
-
         [Display(Name = "Observed species")]
         public int BirdId { get; set; }
         public string ApplicationUserId { get; set; }
         
-
         public Bird Bird { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public ICollection<ObservationTag> ObservationTags { get; set; }

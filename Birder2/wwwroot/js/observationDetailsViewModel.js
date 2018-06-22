@@ -11,10 +11,9 @@
     });
 
     self.SubTitle = ko.pureComputed(function () {
-        var verb = self.Quantity > 1 ? "were" : "was";
+        var conjugatedVerb = self.Quantity > 1 ? "were" : "was";
         return ("<h4><b>" + self.Quantity() + "</b> " + verb + " spotted by <a asp-controller='User' asp-action='Details'>You</a> on " + moment(self.ObservationDateTime()).format('dddd, Do MMMM YYYY, HH:mm') + "</h4>");
     });
-
 };
 
 window.onload = function initMap() {

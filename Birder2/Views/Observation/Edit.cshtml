@@ -1,12 +1,5 @@
 ﻿@model Birder2.ViewModels.EditObservationViewModel
 @using Newtonsoft.Json
-@{
-    string data = JsonConvert.SerializeObject(Model,
-        new JsonSerializerSettings()
-        {
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-        });
-}
 
 <div data-bind="html: Title()"></div>
 <div data-bind="html: SubTitle()"></div>
@@ -48,7 +41,7 @@
                                     @*<input class="form-control" name="Observation.Quantity" data-bind="value: Observation.Quantity" />*@
                                 </div>
                                 <div class="form-group">
-                                <label asp-for="Observation.BirdId"></label>
+                                    <label asp-for="Observation.BirdId"></label>
                                     @Html.DropDownListFor(m => m.Observation.BirdId,
                                       new SelectList(Model.Birds, "BirdId", "EnglishName"),
                                           new
@@ -120,6 +113,15 @@
         <small data-bind="text: RecordDates"></small>
     </div>
 </div>
+
+@{
+    ViewData["Title"] = "Edit Observation";
+    string data = JsonConvert.SerializeObject(Model,
+        new JsonSerializerSettings()
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        });
+}
 
 
 @section Scripts {

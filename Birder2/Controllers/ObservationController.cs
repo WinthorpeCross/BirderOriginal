@@ -194,13 +194,15 @@ namespace Birder2.Controllers
                         var addObservation = _observationRepository.AddObservation(observationToAdd);
                         addObservation.Wait();
                         
-                        if(addObservation.IsCompletedSuccessfully == true)
-                        {
+                        //if(addObservation.IsCompletedSuccessfully == true)
+                        //{
                             // --- upload images service
                             // (1) convert to byte[]
                             // (2) resize
                             // (3) upload to Blob storage
-                        };
+
+                            //addObservationTags
+                        //};
                     }
                     catch
                     {
@@ -221,7 +223,6 @@ namespace Birder2.Controllers
                 viewModel.IsModelStateValid = false;
                 viewModel.MessageToClient = errors;
                 return Json(JsonConvert.SerializeObject(viewModel));
-                //return Json(JsonConvert.SerializeObject(ModelState));
             }
         }
 
@@ -232,6 +233,8 @@ namespace Birder2.Controllers
             {
                 return NotFound();
             }
+
+            //ToDo: this action should be accessible ONLY to the observation's owner...
 
             try
             {
@@ -270,7 +273,7 @@ namespace Birder2.Controllers
             //}
 
             //
-            // ToDo: Belt and braces:
+            //ToDo: this action should be accessible ONLY to the observation's owner...
             // check if editor is the same as the original.  Only the owner is allowed to edit their own observations.
             //
             var user = await _userAccessor.GetUser();
