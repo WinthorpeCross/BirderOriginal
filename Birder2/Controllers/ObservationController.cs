@@ -358,7 +358,16 @@ namespace Birder2.Controllers
                 return NotFound(); //ToDo: Need to return an alternative here!
             }
 
-            return View(observation);
+            var viewModel = new DeleteObservationDto()
+            {
+                ObservationId = observation.ObservationId,
+                ObservationDateTime = observation.ObservationDateTime,
+                Quantity = observation.Quantity,
+                HasPhotos = observation.HasPhotos,
+                ObservedBird = observation.Bird
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost, ActionName("Delete")]
@@ -367,7 +376,12 @@ namespace Birder2.Controllers
         {
             try
             {
-                await _observationRepository.DeleteObservation(id);
+                var deleteObservation = _observationRepository.DeleteObservation(id);
+                deleteObservation.Wait();
+                if (deleteObservation.IsCompletedSuccessfully == true)
+                {
+                    // ToDo: Remove photographs from Blob storage.  Delete entire container.
+                }
             }
             catch
             {

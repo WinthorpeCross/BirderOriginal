@@ -1,4 +1,4 @@
-﻿@model Birder2.Models.Observation
+﻿@model DeleteObservationDto
 
 @{
     ViewData["Title"] = "Delete";
@@ -7,12 +7,21 @@
 @{
     ViewData["Title"] = "Details";
 
-    var statusMessageClass = Model.Quantity > 1 ? "were" : "was";
-    <h1>@Model.Bird.EnglishName <small><i> @Model.Bird.Species</i></small></h1>
-    <h4><b>@Model.Quantity</b> @statusMessageClass spotted on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h4>
+    var singularOrPlural = Model.Quantity > 1 ? "birds" : "bird";
+    <h1>@Model.ObservedBird.EnglishName <small><i>@Model.ObservedBird.Species</i></small></h1>
+    <h4>You spotted <b>@Model.Quantity</b> @singularOrPlural on @Model.ObservationDateTime.ToString("dddd, dd MMMM yyyy HH:mm")</h4>
 }
 
+
+
 <h3>Are you sure you want to delete your observation?</h3>
+
+@{
+    if (Model.HasPhotos == true)
+    {
+        <h5>Your uploaded photographs will also be removed if you choose to delete your observation.</h5>
+    }
+}
 <div>
     <hr />
 
@@ -21,5 +30,5 @@
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index" class="btn btn-link">Back to List</a>
     </form>
-    <small>Observation created: @Model.CreationDate; last update: @Model.LastUpdateDate</small>
+
 </div>

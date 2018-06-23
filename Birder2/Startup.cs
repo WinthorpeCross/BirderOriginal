@@ -106,12 +106,6 @@ namespace Birder2
             //    options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
             //    options.HttpsPort = 5001;
             //});
-
-            // I think the below is redundant in .NET Core 2.1
-            //services.Configure<MvcOptions>(options =>
-            //{
-            //    options.Filters.Add(new RequireHttpsAttribute());
-            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
