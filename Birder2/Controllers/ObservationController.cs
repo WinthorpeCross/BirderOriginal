@@ -174,7 +174,10 @@ namespace Birder2.Controllers
                         //ToDo: use AutoMaper here...
                         Observation observationToAdd = new Observation();
                         observationToAdd.Bird = await _observationRepository.GetSelectedBird(observedSpecies.BirdId);
-                        observationToAdd.ObservationDateTime = viewModel.Observation.ObservationDateTime;
+                        observationToAdd.ObservationDateTime = viewModel.Observation.ObservationDateTime.AddSeconds(01).AddMilliseconds(456);
+
+                        //observationToAdd.ObservationDateTime = observationToAdd.ObservationDateTime.AddSeconds(01).AddMilliseconds(456);
+                        //observationToAdd.ObservationDateTime = observationToAdd.ObservationDateTime.AddMilliseconds(456);
                         observationToAdd.LocationLatitude = viewModel.Observation.LocationLatitude;
                         observationToAdd.LocationLongitude = viewModel.Observation.LocationLongitude;
                         observationToAdd.NoteGeneral = viewModel.Observation.NoteGeneral;
@@ -292,7 +295,7 @@ namespace Birder2.Controllers
                 {
                     Observation observationEdited = await _observationRepository.GetObservationDetails(viewModel.Observation.ObservationId);
                     observationEdited.Bird = await _observationRepository.GetSelectedBird(viewModel.Observation.BirdId);
-                    observationEdited.ObservationDateTime = viewModel.Observation.ObservationDateTime;
+                    observationEdited.ObservationDateTime = viewModel.Observation.ObservationDateTime.AddSeconds(01).AddMilliseconds(456);
                     observationEdited.LocationLatitude = viewModel.Observation.LocationLatitude;
                     observationEdited.LocationLongitude = viewModel.Observation.LocationLongitude;
                     observationEdited.NoteGeneral = viewModel.Observation.NoteGeneral;
