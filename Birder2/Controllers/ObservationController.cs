@@ -175,9 +175,6 @@ namespace Birder2.Controllers
                         Observation observationToAdd = new Observation();
                         observationToAdd.Bird = await _observationRepository.GetSelectedBird(observedSpecies.BirdId);
                         observationToAdd.ObservationDateTime = viewModel.Observation.ObservationDateTime.AddSeconds(01).AddMilliseconds(456);
-
-                        //observationToAdd.ObservationDateTime = observationToAdd.ObservationDateTime.AddSeconds(01).AddMilliseconds(456);
-                        //observationToAdd.ObservationDateTime = observationToAdd.ObservationDateTime.AddMilliseconds(456);
                         observationToAdd.LocationLatitude = viewModel.Observation.LocationLatitude;
                         observationToAdd.LocationLongitude = viewModel.Observation.LocationLongitude;
                         observationToAdd.NoteGeneral = viewModel.Observation.NoteGeneral;
