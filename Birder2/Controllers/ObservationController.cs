@@ -123,6 +123,11 @@ namespace Birder2.Controllers
             try
             {
                 var user = await _userAccessor.GetUser();
+                if (user == null)
+                {
+                    return NotFound(); //ToDo: Need to return an alternative here!
+                }
+
                 var model = new CreateObservationViewModel()
                 {
                     Observation = new Observation() { ObservationDateTime = _systemClock.Now },
@@ -135,7 +140,7 @@ namespace Birder2.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(LoggingEvents.GetItemNotFound, ex, "Create Observation error");
+                _logger.LogError(LoggingEvents.GetItemNotFound, ex, "Create observation error");
                 return RedirectToAction(nameof(Index));
             }
         }
