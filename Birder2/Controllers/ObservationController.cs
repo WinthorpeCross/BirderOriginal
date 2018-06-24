@@ -233,20 +233,31 @@ namespace Birder2.Controllers
                 return NotFound();
             }
 
-            //ToDo: this action should be accessible ONLY to the observation's owner...
+            var user = await _userAccessor.GetUser();
+            if (user == null)
+            {
+                return NotFound(); //ToDo: Need to return an alternative here!
+            }
+
+            var observation = await _observationRepository.GetObservationDetails(id);
+            if (observation == null)
+            {
+                return NotFound(); //ToDo: Need to return an alternative here!
+            }
+
+            if (observation.ApplicationUserId != user.Id)
+            {
+                return NotFound(); //ToDo: Need to return an alternative here!
+            }
 
             try
             {
                 var model = new EditObservationViewModel
                 {
                     Birds = await _observationRepository.AllBirdsList(),
-                    Observation = await _observationRepository.GetObservationDetails(id)
+                    Observation = observation
                 };
 
-                if (model.Observation == null)
-                {
-                    return NotFound();
-                }
                 return View(model);
             }
             catch
