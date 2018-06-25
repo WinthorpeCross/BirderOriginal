@@ -12,7 +12,14 @@
   {
     "outputFileName": "wwwroot/js/site.min.js",
     "inputFiles": [
-      "wwwroot/js/site.js"
+      "wwwroot/js/site.js",
+      "wwwroot/js/createMultipleObservationsViewModel.js",
+      "wwwroot/js/createSingleObservationViewModel.js",
+      "wwwroot/js/dropzoneConfiguration.js",
+      "wwwroot/js/editObservationViewModel.js",
+      "wwwroot/js/imagesViewModel.js",
+      "wwwroot/js/manageNetworkViewModel.js",
+      "wwwroot/js/observationDetailsViewModel.js"
     ],
     // Optionally specify minification options
     "minify": {
