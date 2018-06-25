@@ -124,10 +124,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas - obsolete\Identity\Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Update="Views\Observation\CreateSingle.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
