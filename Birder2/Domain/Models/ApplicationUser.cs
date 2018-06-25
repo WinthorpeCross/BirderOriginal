@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
@@ -12,6 +13,8 @@ namespace Birder2.Models
 
         [Display(Name = "Upload new profile image")]
         public string ProfileImage { get; set; }
+
+        public DateTime RegistrationDate { get; set; }
 
         public ICollection<Observation> Observations { get; set; }
 

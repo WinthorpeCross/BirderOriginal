@@ -19,18 +19,20 @@ namespace Birder2.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IMachineClockDateTime _systemClock;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
 
-        public AccountController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender,
-            ILogger<AccountController> logger)
+        public AccountController(UserManager<ApplicationUser> userManager,
+                                    SignInManager<ApplicationUser> signInManager,
+                                        IMachineClockDateTime systemClock,
+                                            ILogger<AccountController> logger,
+                                                IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _systemClock = systemClock;
             _logger = logger;
         }
 
@@ -278,8 +280,10 @@ namespace Birder2.Controllers
                     Email = model.Email,
                     DefaultLocationLatitude = 54.972237,
                     DefaultLocationLongitude = -2.4608560000000352,
-                    ProfileImage = "https://birderstorage.blob.core.windows.net/profile/default.png"
+                    ProfileImage = "https://birderstorage.blob.core.windows.net/profile/default.png",
+                    RegistrationDate = _systemClock.Now
                 };
+
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
