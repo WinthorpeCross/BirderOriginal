@@ -14,7 +14,7 @@ namespace Birder2.ViewModels
 
         public Observation Observation { get; set; }
         public IEnumerable<Bird> Birds { get; set; }
-        public List<ObservedSpeciesViewModel> ObservedSpecies { get; set; } //ToDo: why did I use a List<T> here?
+        public List<ObservedSpeciesViewModel> ObservedSpecies { get; set; }
         public bool IsModelStateValid { get; set; }
         public string MessageToClient { get; set; }
         public double DefaultLatitude { get; set; }

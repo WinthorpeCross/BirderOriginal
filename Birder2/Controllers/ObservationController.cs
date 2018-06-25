@@ -100,21 +100,6 @@ namespace Birder2.Controllers
             }
         }
 
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var observation = await _observationRepository.GetObservationDetails(id);
-
-            if (observation == null)
-            {
-                return NotFound();
-            }
-            return View(observation);
-        }
-
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -147,6 +132,109 @@ namespace Birder2.Controllers
                 _logger.LogError(LoggingEvents.GetItemNotFound, ex, "Create observation error");
                 return RedirectToAction(nameof(Index));
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CreateSingle()
+        {
+            try
+            {
+                var user = await _userAccessor.GetUser();
+                if (user == null)
+                {
+                    return NotFound(); //ToDo: Need to return an alternative here!
+                }
+
+                var birdsList = await _observationRepository.AllBirdsList();
+                if (birdsList == null)
+                {
+                    return NotFound(); //ToDo: Need to return an alternative here!
+                }
+
+                var viewModel = new CreateSingleObservationViewModel()
+                {
+                    Observation = new Observation() { ObservationDateTime = _systemClock.Now, Quantity = 1 },
+                    MessageToClient = string.Empty,
+                    Birds = birdsList,
+                    DefaultLatitude = user.DefaultLocationLatitude,
+                    DefaultLongitude = user.DefaultLocationLongitude
+                };
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(LoggingEvents.GetItemNotFound, ex, "Create single observation error");
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<JsonResult> CreateSingle([FromBody]CreateSingleObservationViewModel viewModel)
+        {
+            var user = await _userAccessor.GetUser();
+            if (user == null)
+            {
+                return Json(JsonConvert.SerializeObject(viewModel));
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //ToDo: use AutoMaper here...
+                    Observation observationToAdd = new Observation();
+                    observationToAdd.Bird = await _observationRepository.GetSelectedBird(viewModel.Observation.BirdId);
+                    observationToAdd.ObservationDateTime = viewModel.Observation.ObservationDateTime.AddSeconds(01).AddMilliseconds(456);
+                    observationToAdd.LocationLatitude = viewModel.Observation.LocationLatitude;
+                    observationToAdd.LocationLongitude = viewModel.Observation.LocationLongitude;
+                    observationToAdd.NoteGeneral = viewModel.Observation.NoteGeneral;
+                    observationToAdd.NoteHabitat = viewModel.Observation.NoteHabitat;
+                    observationToAdd.NoteWeather = viewModel.Observation.NoteWeather;
+                    observationToAdd.NoteAppearance = viewModel.Observation.NoteAppearance;
+                    observationToAdd.NoteBehaviour = viewModel.Observation.NoteBehaviour;
+                    observationToAdd.NoteVocalisation = viewModel.Observation.NoteVocalisation;
+
+                    observationToAdd.ApplicationUser = user;
+
+                    observationToAdd.CreationDate = _systemClock.Now;
+                    observationToAdd.LastUpdateDate = _systemClock.Now;
+                    observationToAdd.Quantity = viewModel.Observation.Quantity;
+
+                    var addObservation = _observationRepository.AddObservation(observationToAdd);
+                    addObservation.Wait();
+
+                    //if(addObservation.IsCompletedSuccessfully == true)
+                    //{
+                    // --- upload images service
+                    // (1) convert to byte[]
+                    // (2) resize
+                    // (3) upload to Blob storage
+
+                    //addObservationTags
+                    //};
+                }
+                catch
+                {
+                    return Json(JsonConvert.SerializeObject(viewModel));
+                    //return Json(new { newLocation = "/Sales/Index/" });
+                }
+
+
+                viewModel.IsModelStateValid = true;
+                return Json(JsonConvert.SerializeObject(viewModel));
+            }
+            else
+            {
+                string errors = JsonConvert.SerializeObject(ModelState.Values
+                                           .SelectMany(state => state.Errors)
+                                           .Select(error => error.ErrorMessage));
+
+                viewModel.IsModelStateValid = false;
+                viewModel.MessageToClient = errors;
+                return Json(JsonConvert.SerializeObject(viewModel));
+            }
+
         }
 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -274,6 +362,22 @@ namespace Birder2.Controllers
                 //ToDo: Logging / return user to create view, like below?
                 return NotFound("could not edit the observation");
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var observation = await _observationRepository.GetObservationDetails(id);
+
+            if (observation == null)
+            {
+                return NotFound();
+            }
+            return View(observation);
         }
 
         // ToDo: Research overposting attacks.

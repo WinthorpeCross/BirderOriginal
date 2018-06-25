@@ -10,7 +10,22 @@
         <form class="form-horizontal">
             <div class="form-group">
                 <div class="col-sm-6">
-                    <a asp-action="Create" class="btn btn-default btn-success">Add Observation</a>
+                    @*<a asp-action="CreateSingle" class="btn btn-default btn-success">Add Observation</a>*@
+                    <!-- Split button -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-success">Add Observation</button>
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a asp-action="CreateSingle">Create single bird observation</a></li>
+                            <li><a asp-action="Create">Create multiple birds observation</a></li>
+                            @*<li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>*@
+                        </ul>
+                    </div>
                 </div>
                 <div class="col-sm-6">
                     <select asp-for="Filter" asp-items="Html.GetEnumSelectList<ObservationsFeedFilter>()" class="form-control selectpicker show-tick" onchange="this.form.submit()"></select>
