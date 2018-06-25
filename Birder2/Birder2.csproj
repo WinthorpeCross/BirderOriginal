@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <UserSecretsId>aspnet-Birder2-93D4229D-DE28-4026-BE48-156ABE712AEC</UserSecretsId>
     <ApplicationIcon>wwwroot\favicon.ico</ApplicationIcon>
-    <FileVersion>1.1.2.0</FileVersion>
+    <FileVersion>1.1.3.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
