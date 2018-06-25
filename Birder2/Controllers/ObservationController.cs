@@ -128,15 +128,21 @@ namespace Birder2.Controllers
                     return NotFound(); //ToDo: Need to return an alternative here!
                 }
 
-                var model = new CreateObservationViewModel()
+                var birdsList = await _observationRepository.AllBirdsList();
+                if (birdsList == null)
+                {
+                    return NotFound(); //ToDo: Need to return an alternative here!
+                }
+
+                var viewModel = new CreateObservationViewModel()
                 {
                     Observation = new Observation() { ObservationDateTime = _systemClock.Now },
                     MessageToClient = string.Empty,
-                    Birds = await _observationRepository.AllBirdsList(),
+                    Birds = birdsList,
                     DefaultLatitude = user.DefaultLocationLatitude,
                     DefaultLongitude = user.DefaultLocationLongitude
                 };
-                return View(model);
+                return View(viewModel);
             }
             catch (Exception ex)
             {
