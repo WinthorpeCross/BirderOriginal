@@ -52,7 +52,6 @@ namespace ImageResizeWebApp.Helpers
 
                 await container.CreateIfNotExistsAsync();
 
-                //ToDo: Only want to do this if the container was created!
                 BlobContainerPermissions permissions = new BlobContainerPermissions
                 {
                     PublicAccess = BlobContainerPublicAccessType.Blob
@@ -60,8 +59,6 @@ namespace ImageResizeWebApp.Helpers
                 await container.SetPermissionsAsync(permissions);
 
             }
-
-
 
             // Get the reference to the block blob from the container
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);

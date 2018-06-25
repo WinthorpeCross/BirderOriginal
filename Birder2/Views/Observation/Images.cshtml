@@ -1,10 +1,5 @@
 ﻿@model ManageImagesDto
 @using Newtonsoft.Json
-@{
-    ViewData["Title"] = "Images";
-    Layout = "~/Views/Shared/_LayoutNoSidebar.cshtml";
-    string data = JsonConvert.SerializeObject(Model);
-}
 
 <div class="box header">
     <h1><span class="fa fa-user-circle-o"></span> <span id="page-title">Add or remove photographs to your observation</span></h1>
@@ -44,10 +39,15 @@
     </div>
 </div>
 
+@{
+    ViewData["Title"] = "Images";
+    Layout = "~/Views/Shared/_LayoutNoSidebar.cshtml";
+    string data = JsonConvert.SerializeObject(Model);
+}
 
 @section Scripts {
-    @*<script src="~/js/knockout-3.4.2.js"></script>*@
-    <script src="~/js/knockout.mapping-latest.js"></script>
+    @*<script src="~/js/knockout-3.4.2.js"></script>
+    <script src="~/js/knockout.mapping-latest.js"></script>*@
     <script src="~/js/jqueryvalidate.js"></script>
     <script src="~/js/jquery-validate.bootstrap-tooltip.js"></script>
     <script src="~/js/imagesViewModel.js"></script>
@@ -59,4 +59,4 @@
     </script>
 
     <script src="~/js/dropzoneConfiguration.js"></script>
-    }
+}

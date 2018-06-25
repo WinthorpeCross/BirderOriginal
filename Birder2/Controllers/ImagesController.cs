@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using Birder2.Services;
+﻿using Birder2.Services;
 using ImageResizeWebApp.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Birder2.Controllers
 {
@@ -18,19 +18,13 @@ namespace Birder2.Controllers
         private readonly IImageApiHelperService _imageApiHelperService;
         private readonly IConfiguration _config;
 
-        public ImagesController(IConfiguration config, IImageApiHelperService imageApiHelperService)
+        public ImagesController(IImageApiHelperService imageApiHelperService,
+                                    IConfiguration config)
         {
             //_userAccessor = userAccessor;
             _imageApiHelperService = imageApiHelperService;
             _config = config;
         }
-
-        //private readonly AzureStorageConfig storageConfig = null;
-
-        //public ImagesController(IOptions<AzureStorageConfig> config)
-        //{
-        //    storageConfig = config.Value;
-        //}
 
         // POST /api/images/upload
         //[Route("Post/{solution}/{answer}")]
@@ -43,7 +37,6 @@ namespace Birder2.Controllers
 
             try
             {
-
                 if (files.Count == 0)
 
                     return BadRequest("No files received from the upload");
@@ -52,9 +45,9 @@ namespace Birder2.Controllers
 
                     return BadRequest("sorry, can't retrieve your azure storage details from appsettings.js, make sure that you add azure storage details there");
 
-                //if (storageConfig.ImageContainer == string.Empty)
+                if (observationId == 0)
 
-                //    return BadRequest("Please provide a name for your image container in the azure blob storage");
+                    return BadRequest("No observationId is supplied");
 
                 foreach (var formFile in files)
                 {
