@@ -30,7 +30,7 @@
                 <div class="panel-body">
                     <table class="table">
                         <tr>
-                            <th class="text-right col-sm-2">Quantity</th>
+                            <th class="text-right col-sm-2">Individuals</th>
                             <th class="text-center">Bird species</th>
                             <th div class="text-right">
                                 <button class="btn btn-info btn-xs" data-bind="click: addObservedSpecies">Add</button>
@@ -81,35 +81,20 @@
             </div>
             <div id="collapse2" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <div class="form-group">
-                        <label class="control-label" for="Observation.NoteGeneral">General notes:</label>
-                        <input class="form-control" name="Observation.NoteGeneral" data-bind="value: Observation.NoteGeneral" />
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label" for="Observation.NoteHabitat">Habitat notes:</label>
-                        <input class="form-control" name="Observation.NoteHabitat" data-bind="value: Observation.NoteHabitat" />
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label" for="Observation.NoteWeather">Weather notes:</label>
-                        <input class="form-control" name="Observation.NoteWeather" data-bind="value: Observation.NoteWeather" />
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label" for="Observation.NoteAppearance">Bird appearance notes:</label>
-                        <input class="form-control" name="Observation.NoteAppearance" data-bind="value: Observation.NoteAppearance" />
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label" for="Observation.NoteBehaviour">Bird behaviour notes:</label>
-                        <input class="form-control" name="Observation.NoteBehaviour" data-bind="value: Observation.NoteBehaviour" />
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label" for="Observation.NoteVocalisation">Bird vocalisation notes:</label>
-                        <input class="form-control" name="Observation.NoteVocalisation" data-bind="value: Observation.NoteVocalisation" />
-                    </div>
+                    <label asp-for="Observation.NoteGeneral"></label>
+                    <input asp-for="Observation.NoteGeneral" class="form-control" data-bind="text: Observation.NoteGeneral" />
+                    <br />
+                    <label asp-for="Observation.NoteHabitat"></label>
+                    <input asp-for="Observation.NoteHabitat" class="form-control" data-bind="text: Observation.NoteHabitat" />
+                    <br />
+                    <label asp-for="Observation.NoteWeather"></label>
+                    <input asp-for="Observation.NoteWeather" class="form-control" data-bind="text: Observation.NoteWeather" />
+                    <br />
+                    <label asp-for="Observation.NoteAppearance"></label>
+                    <input asp-for="Observation.NoteAppearance" class="form-control" data-bind="text: Observation.NoteAppearance" />
+                    <br />
+                    <label asp-for="Observation.NoteVocalisation"></label>
+                    <input asp-for="Observation.NoteVocalisation" class="form-control" data-bind="text: Observation.NoteVocalisation" />
                 </div>
             </div>
         </div>
@@ -165,11 +150,10 @@
 @section scripts{
     <script src="~/js/jqueryvalidate.js"></script>
     <script src="~/js/jquery-validate.bootstrap-tooltip.js"></script>
-    <script src="~/js/createobservationviewmodel.js"></script>
+    <script src="~/js/createObservationViewModel.js"></script>
     <script src="~/js/accordionHandler.js"></script>
     <script type="text/javascript">
         var createObservationViewModel = new CreateObservationViewModel(@Html.Raw(data));
         ko.applyBindings(createObservationViewModel);
     </script>
 }
-

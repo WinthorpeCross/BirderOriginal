@@ -8,7 +8,6 @@
         }
     };
 
-
     ko.bindingHandlers.dateTimePicker = {
         init: function (element, valueAccessor, allBindingsAccessor) {
             //initialize datepicker with some optional options
@@ -71,7 +70,6 @@
         return total;
     }),
 
-
     self.post = function () {
         self.disableSubmitButton(true);
         if (self.ObservedSpecies().length < 1) {
@@ -127,7 +125,6 @@ ObservedSpeciesViewModel = function (data) {
     ko.mapping.fromJS(data, observedSpeciesMapping, self);  
 };
 
-
 $("#form").validate({
     submitHandler: function () {
         createObservationViewModel.post();
@@ -171,7 +168,6 @@ $("#form").validate({
     }
 });
 
-
 // example of custom validation
 $.validator.addMethod("alphaonly",
     function (value) {
@@ -183,13 +179,12 @@ $.validator.addMethod("alphaonly",
 
 var markers = [];
 
-window.onload = function initMap() {
-                                  //LatLng({lat: -34, lng: 151}); (use this if problem with extra space in co-ondonates arises)
+window.onload = function initMap() {                             
     var myLatlng = new google.maps.LatLng(createObservationViewModel.DefaultLatitude(),createObservationViewModel.DefaultLongitude());
     var myOptions = {
         zoom: 10,
         center: myLatlng,
-    }
+    } //LatLng({lat: -34, lng: 151}); (use this if problem with extra space in co-ondonates arises)
 
     var map = new google.maps.Map(document.getElementById("map"), myOptions);
     var geocoder = new google.maps.Geocoder();

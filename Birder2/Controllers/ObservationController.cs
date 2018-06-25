@@ -47,8 +47,6 @@ namespace Birder2.Controllers
             {
                 ObservationId = observation.ObservationId
             };
-            //var viewModel = await _observationRepository.GetObservationDetails(id);
-            //var viewModel = new ObservationImageMaintenanceDto();
             
             return View(viewModel);
         }
@@ -394,7 +392,7 @@ namespace Birder2.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
             try
             {

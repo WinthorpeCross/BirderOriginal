@@ -12,7 +12,7 @@
         <div class="media-body">
             <h3 class="media-heading">@Model.Bird.EnglishName <small><i> @Model.Bird.Species</i></small></h3>
             @{
-                var singularOrPlural = Model.Quantity > 1 ? "birds" : "bird";
+                var singularOrPlural = Model.Quantity > 1 ? "individuals" : "individual";
                 if (Model.ApplicationUserId == UserManager.GetUserAsync(User).Result.Id)
                 {
                     <h5><a asp-controller="User" asp-action="Details" asp-route-userName="@Model.ApplicationUser.UserName">You</a> spotted @Model.Quantity @singularOrPlural on @Model.ObservationDateTime.ToString("dddd, dd MMMM yyyy, HH:mm")</h5>

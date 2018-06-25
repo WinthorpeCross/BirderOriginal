@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Delete Observation";
 
-    var singularOrPlural = Model.Quantity > 1 ? "birds" : "bird";
+    var singularOrPlural = Model.Quantity > 1 ? "individuals" : "individual";
     <h1>@Model.ObservedBird.EnglishName <small><i>@Model.ObservedBird.Species</i></small></h1>
     <h4>You spotted <b>@Model.Quantity</b> @singularOrPlural on @Model.ObservationDateTime.ToString("dddd, dd MMMM yyyy HH:mm")</h4>
 }

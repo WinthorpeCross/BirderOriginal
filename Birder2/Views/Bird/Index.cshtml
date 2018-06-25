@@ -9,7 +9,7 @@
 <form id="sort-filter-form" class="form-horizontal">
     <div class="form-group">
         <div class="col-sm-4">
-            <label class="control-label">Search or choose species</label>
+            <label class="control-label">Search or choose species:</label>
             @Html.DropDownListFor(m => m.SelectedBirdId,
                  new SelectList(Model.AllBirdsDropDownList, "BirdId", "EnglishName"),
                        new
