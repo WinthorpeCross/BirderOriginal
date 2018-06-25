@@ -1,4 +1,4 @@
-﻿@model Birder2.ViewModels.ObservationsAnalysisDto
+﻿@model ObservationsAnalysisDto
 
 @{
     var observationStatus = Model.TotalObservations > 1 ? "observations" : "observation";
@@ -12,7 +12,7 @@
     else
     {
         <div class="class--aside-block-body">
-            <h2><small>You have not made any observations yet.</small></h2>
+            <h2><small>You have not made any observations yet</small></h2>
         </div>
     }
 }
