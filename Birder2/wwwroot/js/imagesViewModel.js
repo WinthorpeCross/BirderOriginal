@@ -3,13 +3,11 @@
     ko.mapping.fromJS(data, {}, self);
 };
 
-
 var gallery;
 
 // Grab links for images from backend api
 function fetchImageLinks(data) {
-    // Fetch images
-    $.get("/api/Images/thumbnails?observationId=" + data, function (fetchedImageLinks) {
+    $.get("/api/ImagesApi/thumbnails?observationId=" + data, function (fetchedImageLinks) {
         console.log(fetchedImageLinks)
 
         // Check if anything is in there

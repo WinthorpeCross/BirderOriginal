@@ -12,13 +12,13 @@ namespace Birder2.Controllers
 {
     [Route("api/[controller]")]
     //[ApiController] 
-    public class ImagesController : ControllerBase
+    public class ImagesApiController : ControllerBase
     {
         //private readonly IApplicationUserAccessor _userAccessor;
         private readonly IImageApiHelperService _imageApiHelperService;
         private readonly IConfiguration _config;
 
-        public ImagesController(IImageApiHelperService imageApiHelperService,
+        public ImagesApiController(IImageApiHelperService imageApiHelperService,
                                     IConfiguration config)
         {
             //_userAccessor = userAccessor;
