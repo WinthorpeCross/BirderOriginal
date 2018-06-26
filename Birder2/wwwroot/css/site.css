@@ -6,9 +6,11 @@
 
 .blueimp-gallery {
     margin: 25px;
-    height: 200px;
-    max-width: 400px;
+    height: 150px;
+    max-width: 300px;
     padding-bottom: 150px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 
