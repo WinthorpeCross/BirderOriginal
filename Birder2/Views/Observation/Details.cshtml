@@ -42,8 +42,8 @@
                 <div class="panel-body">
 
                     @*<div class="box header">
-                        <h1><span class="fa fa-user-circle-o"></span> <span id="page-title">Add or remove photographs to your observation</span></h1>
-                    </div>*@
+                            <h1><span class="fa fa-user-circle-o"></span> <span id="page-title">Add or remove photographs to your observation</span></h1>
+                        </div>*@
 
                     <div class="box content">
                         @*<h2>Generated Thumbnails</h2>*@
@@ -59,6 +59,7 @@
                             <ol class="indicator"></ol>
                         </div>
                     </div>
+                    <small>Open the Edit Observation page to upload photographs</small>
                 </div>
             </div>
         </div>
@@ -66,10 +67,41 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" @*data-parent="#accordion" *@ href="#collapse5"><b>Notes</b></a>
+                    <a data-toggle="collapse" @*data-parent="#accordion" *@ href="#collapse2"><b>Upload photographs</b></a>
                 </h4>
             </div>
-            <div id="collapse5" class="panel-collapse collapse">
+            <div id="collapse2" class="panel-collapse collapse">
+                <div class="panel-body">
+
+                    <h2>Upload photos</h2>
+                    <div>
+                        <form action="/api/imagesapi/upload"
+                              class="dropzone needsclick dz-clickable"
+                              id="image-upload"
+                              method="post"
+                              enctype="multipart/form-data">
+                            <div class="dz-message needsclick">
+                                <span class="note needsclick">
+                                    Drop photographs here or Click here to upload...
+                                </span>
+                            </div>
+                            <div>
+                                <input asp-for="ObservationId" class="form-control" data-bind="text: ObservationId" type="hidden" />
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" @*data-parent="#accordion" *@ href="#collapse3"><b>Notes</b></a>
+                </h4>
+            </div>
+            <div id="collapse3" class="panel-collapse collapse">
                 <div class="panel-body">
                     <label asp-for="NoteGeneral"></label>
                     <input asp-for="NoteGeneral" class="form-control" data-bind="text: NoteGeneral" disabled />
@@ -92,10 +124,10 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" @*data-parent="#accordion" *@ href="#collapse7"><b>Location</b></a>
+                    <a data-toggle="collapse" @*data-parent="#accordion" *@ href="#collapse4"><b>Location</b></a>
                 </h4>
             </div>
-            <div id="collapse7" class="panel-collapse collapse in">
+            <div id="collapse4" class="panel-collapse collapse in">
                 <div class="panel-body">
                     <div id="map" class="class--map"></div>
                 </div>
@@ -139,6 +171,7 @@
     <script src="~/js/jquery-validate.bootstrap-tooltip.js"></script>
     <script src="~/js/observationDetailsViewModel.js"></script>
     <script src="~/js/accordionHandler.js"></script>
+    <script src="~/js/dropzoneConfiguration.js"></script>
     <script type="text/javascript">
         var observationDetailsViewModel = new ObservationDetailsViewModel(@Html.Raw(data));
         ko.applyBindings(observationDetailsViewModel);
