@@ -40,13 +40,7 @@
             </div>
             <div id="collapse1" class="panel-collapse collapse in">
                 <div class="panel-body">
-
-                    @*<div class="box header">
-                            <h1><span class="fa fa-user-circle-o"></span> <span id="page-title">Add or remove photographs to your observation</span></h1>
-                        </div>*@
-
                     <div class="box content">
-                        @*<h2>Generated Thumbnails</h2>*@
                         <!-- <p><span id="gallery-note">Gallery refreshes from storage container image links every 5 seconds.</span></p> -->
                         <div id="stored-images"></div>
                         <!-- The Gallery as inline carousel, can be positioned anywhere on the page -->
@@ -59,7 +53,6 @@
                             <ol class="indicator"></ol>
                         </div>
                     </div>
-                    <small>Open the Edit Observation page to upload photographs</small>
                 </div>
             </div>
         </div>
@@ -160,10 +153,10 @@
 @{
     ViewData["Title"] = "Observation Details";
     string data = JsonConvert.SerializeObject(Model,
-            new JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            });
+        new JsonSerializerSettings()
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        });
 }
 
 @section scripts{
