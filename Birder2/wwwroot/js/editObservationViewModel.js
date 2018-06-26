@@ -11,7 +11,8 @@
     });
 
     self.SubTitle = ko.pureComputed(function () {
-        return ("<h4>Spotted on " + moment(self.Observation.ObservationDateTime()).format('dddd, Do MMMM YYYY, HH:mm') + "</h4>");
+        var singularOrPlural = self.Quantity > 1 ? "individuals" : "individual";
+        return ("<h4>You spotted <b>" + self.Observation.Quantity() + "</b> " + singularOrPlural + " on " + moment(self.Observation.ObservationDateTime()).format('dddd, Do MMMM YYYY, HH:mm') + "</h4>");
     });
 
     self.disableSubmitButton = ko.observable(false);

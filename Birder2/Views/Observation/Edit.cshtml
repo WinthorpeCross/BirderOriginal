@@ -1,4 +1,4 @@
-﻿@model Birder2.ViewModels.EditObservationViewModel
+﻿@model EditObservationViewModel
 @using Newtonsoft.Json
 
 <div data-bind="html: Title()"></div>
@@ -8,108 +8,105 @@
 <div class="row">
     <div class="col-md-12">
         <form id="form">
-            <div>
-                <div class="row">
-                    <div class="col-sm-4">
-                    </div>
-                    <div class="col-sm-8">
-                        <button class="btn btn-link" type="button" onclick="expand()" style="float: right;">Expand All</button>
-                        <button class="btn btn-link" type="button" onclick="collapse()" style="float: right;">Collapse All</button>
-                    </div>
+            <div class="row">
+                <div class="col-sm-4">
                 </div>
-                <div class="panel-group" id="accordion">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#collapse0"><b>General</b></a>
-                            </h4>
-                        </div>
-                        <div id="collapse0" class="panel-collapse collapse in">
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label asp-for="Observation.ObservationDateTime"></label>
-                                    <div class='input-group date' data-bind="dateTimePicker: Observation.ObservationDateTime">
-                                        <input type='text' class="form-control" readonly />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label asp-for="Observation.Quantity"></label>
-                                            <input asp-for="Observation.Quantity" class="form-control" data-bind="value: Observation.Quantity" />
-                                            @*<input class="form-control" name="Observation.Quantity" data-bind="value: Observation.Quantity" />*@
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <div class="form-group">
-                                            <label asp-for="Observation.BirdId"></label>
-                                            @Html.DropDownListFor(m => m.Observation.BirdId,
-                                                new SelectList(Model.Birds, "BirdId", "EnglishName"),
-                                                    new
-                                                    {
-                                                        @name = "BirdId",
-                                                        @class = "form-control selectpicker show-tick",
-                                                        data_bind = "value: Observation.BirdId",
-                                                        title = "Choose a bird species...",
-                                                        data_live_search = "true",
-                                                        data_show_subtext = "true"
-                                                    })
-                                        </div>
-                                    </div>
+                <div class="col-sm-8">
+                    <button class="btn btn-link" type="button" onclick="expand()" style="float: right;">Expand All</button>
+                    <button class="btn btn-link" type="button" onclick="collapse()" style="float: right;">Collapse All</button>
+                </div>
+            </div>
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse0"><b>General</b></a>
+                        </h4>
+                    </div>
+                    <div id="collapse0" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label asp-for="Observation.ObservationDateTime"></label>
+                                <div class='input-group date' data-bind="dateTimePicker: Observation.ObservationDateTime">
+                                    <input type='text' class="form-control" readonly />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#collapse1"><b>Notes</b></a>
-                            </h4>
-                        </div>
-                        <div id="collapse1" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <label asp-for="Observation.NoteGeneral"></label>
-                                <input asp-for="Observation.NoteGeneral" class="form-control" data-bind="text: Observation.NoteGeneral" />
-                                <br />
-                                <label asp-for="Observation.NoteHabitat"></label>
-                                <input asp-for="Observation.NoteHabitat" class="form-control" data-bind="text: Observation.NoteHabitat" />
-                                <br />
-                                <label asp-for="Observation.NoteWeather"></label>
-                                <input asp-for="Observation.NoteWeather" class="form-control" data-bind="text: Observation.NoteWeather" />
-                                <br />
-                                <label asp-for="Observation.NoteAppearance"></label>
-                                <input asp-for="Observation.NoteAppearance" class="form-control" data-bind="text: Observation.NoteAppearance" />
-                                <br />
-                                <label asp-for="Observation.NoteVocalisation"></label>
-                                <input asp-for="Observation.NoteVocalisation" class="form-control" data-bind="text: Observation.NoteVocalisation" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" @*data-parent="#accordion" *@ href="#collapse7"><b>Location</b></a>
-                            </h4>
-                        </div>
-                        <div id="collapse7" class="panel-collapse collapse in">
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <input class="form-control" id="set" disabled />
-                                    <div class="container" id="floating-panel">
-                                        <input id="address" type="text" value="">
-                                        <input id="submit" type="button" value="Search">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label asp-for="Observation.Quantity"></label>
+                                        <input asp-for="Observation.Quantity" class="form-control" data-bind="value: Observation.Quantity" />
+                                        @*<input class="form-control" name="Observation.Quantity" data-bind="value: Observation.Quantity" />*@
                                     </div>
                                 </div>
-                                <div id="map" class="class--map"></div>
+                                <div class="col-sm-9">
+                                    <div class="form-group">
+                                        <label asp-for="Observation.BirdId"></label>
+                                        @Html.DropDownListFor(m => m.Observation.BirdId,
+                                            new SelectList(Model.Birds, "BirdId", "EnglishName"),
+                                                new
+                                                {
+                                                    @name = "BirdId",
+                                                    @class = "form-control selectpicker show-tick",
+                                                    data_bind = "value: Observation.BirdId",
+                                                    title = "Choose a bird species...",
+                                                    data_live_search = "true",
+                                                    data_show_subtext = "true"
+                                                })
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse1"><b>Notes</b></a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <label asp-for="Observation.NoteGeneral"></label>
+                            <input asp-for="Observation.NoteGeneral" class="form-control" data-bind="text: Observation.NoteGeneral" />
+                            <br />
+                            <label asp-for="Observation.NoteHabitat"></label>
+                            <input asp-for="Observation.NoteHabitat" class="form-control" data-bind="text: Observation.NoteHabitat" />
+                            <br />
+                            <label asp-for="Observation.NoteWeather"></label>
+                            <input asp-for="Observation.NoteWeather" class="form-control" data-bind="text: Observation.NoteWeather" />
+                            <br />
+                            <label asp-for="Observation.NoteAppearance"></label>
+                            <input asp-for="Observation.NoteAppearance" class="form-control" data-bind="text: Observation.NoteAppearance" />
+                            <br />
+                            <label asp-for="Observation.NoteVocalisation"></label>
+                            <input asp-for="Observation.NoteVocalisation" class="form-control" data-bind="text: Observation.NoteVocalisation" />
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" @*data-parent="#accordion" *@ href="#collapse7"><b>Location</b></a>
+                        </h4>
+                    </div>
+                    <div id="collapse7" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <input class="form-control" id="set" disabled />
+                                <div class="container" id="floating-panel">
+                                    <input id="address" type="text" value="">
+                                    <input id="submit" type="button" value="Search">
+                                </div>
+                            </div>
+                            <div id="map" class="class--map"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="container col-lg-12">
                 <div class="form-group"></div>
                 <p><button class="btn btn-primary btn-block" type="submit" data-bind="disable:disableSubmitButton">Save Changes to Observation</button></p>

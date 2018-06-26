@@ -3,37 +3,33 @@
     ko.mapping.fromJS(data, {}, self);
 
     self.RecordDates = ko.pureComputed(function () {
-        return "Observation created: " + moment(self.CreationDate()).format('DD/MM/YYYY HH:mm') + "; last update: " + moment(self.LastUpdateDate()).format('DD/MM/YYYY HH:mm');
+        return "Observation created: " + moment(self.SelectedObservation.CreationDate()).format('DD/MM/YYYY HH:mm') + "; last update: " + moment(self.SelectedObservation.LastUpdateDate()).format('DD/MM/YYYY HH:mm');
     });
 
     self.Title = ko.pureComputed(function () {
-        return ("<h1>" + self.Bird.EnglishName() + "<small><i> " + self.Bird.Species() + "</i></small></h1>");
+        return ("<h1>" + self.SelectedObservation.Bird.EnglishName() + "<small><i> " + self.SelectedObservation.Bird.Species() + "</i></small></h1>");
     });
 
     self.SubTitle = ko.pureComputed(function () {
-        var conjugatedVerb = self.Quantity > 1 ? "were" : "was";
-        return ("<h4><b>" + self.Quantity() + "</b> " + verb + " spotted by <a asp-controller='User' asp-action='Details'>You</a> on " + moment(self.ObservationDateTime()).format('dddd, Do MMMM YYYY, HH:mm') + "</h4>");
+        var conjugatedVerb = self.SelectedObservation.Quantity > 1 ? "were" : "was";
+        return ("<h4><b>" + self.SelectedObservation.Quantity() + "</b> " + conjugatedVerb + " spotted by <a asp-controller='User' asp-action='Details'>You</a> on " + moment(self.SelectedObservation.ObservationDateTime()).format('dddd, Do MMMM YYYY, HH:mm') + "</h4>");
     });
-
-    function x() {
-
-    }
 };
 
 
 window.onload = function initPage() {
 
-    //Collapse photographs panel if no photos are available
-    //alert(observationDetailsViewModel.HasPhotos());
-    if (observationDetailsViewModel.HasPhotos() == false)
-        $('#collapse1').collapse('hide');
-
     //
-    fetchImageLinks(observationDetailsViewModel.ObservationId());
+    fetchImageLinks(observationDetailsViewModel.SelectedObservation.ObservationId());
+
+    //Collapse photographs panel if no photos are available
+    if (observationDetailsViewModel.SelectedObservation.HasPhotos() === false) {
+        $('#collapse1').collapse('hide');
+    }
 
     // init Map
     var observationLocation = {
-        lat: observationDetailsViewModel.LocationLatitude(), lng: observationDetailsViewModel.LocationLongitude()
+        lat: observationDetailsViewModel.SelectedObservation.LocationLatitude(), lng: observationDetailsViewModel.SelectedObservation.LocationLongitude()
     };
 
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -56,29 +52,29 @@ window.onload = function initPage() {
 
     var marker = new google.maps.Marker({
         position: observationLocation,
-        map: map,
+        map: map
     });
     marker.addListener('click', function () {
         infowindow.open(map, marker);
     });
-}
+};
 
 function showError(error) {
     switch (error.code) {
         case error.PERMISSION_DENIED:
-            x.innerHTML = "User denied the request for Geolocation."
+            x.innerHTML = "User denied the request for Geolocation.";
             break;
         case error.POSITION_UNAVAILABLE:
-            x.innerHTML = "Location information is unavailable."
+            x.innerHTML = "Location information is unavailable.";
             break;
         case error.TIMEOUT:
-            x.innerHTML = "The request to get user location timed out."
+            x.innerHTML = "The request to get user location timed out.";
             break;
         case error.UNKNOWN_ERROR:
-            x.innerHTML = "An unknown error occurred."
+            x.innerHTML = "An unknown error occurred.";
             break;
     }
-}
+};
 
 var gallery;
 
@@ -89,7 +85,7 @@ function fetchImageLinks(data) {
 
         // Check if anything is in there
         if (_.isEmpty(fetchedImageLinks)) {
-            console.log('empty fetched')
+            //console.log('empty fetched')
             // do nothing
         } else {
             // Check if we have a gallery initialized
@@ -104,20 +100,20 @@ function fetchImageLinks(data) {
                 );
             } else {
                 // check if images are equal to array
-                console.log('currently in gallery:')
-                console.log(gallery.list)
+                //console.log('currently in gallery:')
+                //console.log(gallery.list)
                 var imageLinksEqual = _.isEqual(_.sortBy(gallery.list.map(s => s.split("?")[0])), _.sortBy(fetchedImageLinks.map(s => s.split("?")[0])))
                 if (imageLinksEqual) {
-                    console.log('images arr are equal')
+                    //console.log('images arr are equal')
                     // do nothing
                 } else {
-                    console.log('images arr are not equal')
+                    //console.log('images arr are not equal')
 
                     // update gallery with new image urls. Only compare actual url without SAS token query string
                     var newImageLinks = _.difference(fetchedImageLinks.map(s => s.split("?")[0]), gallery.list.map(s => s.split("?")[0]))
 
-                    console.log('differene is: ')
-                    console.log(newImageLinks)
+                    //console.log('differene is: ')
+                    //console.log(newImageLinks)
                     // Only add new images
                     gallery.add(newImageLinks);
 
@@ -127,4 +123,4 @@ function fetchImageLinks(data) {
             }
         }
     });
-}
+};

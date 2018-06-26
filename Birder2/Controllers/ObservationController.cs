@@ -371,13 +371,31 @@ namespace Birder2.Controllers
             {
                 return NotFound();
             }
+
+            var user = await _userAccessor.GetUser();
+
+            if (user == null)
+            {
+                return NotFound(); //ToDo: Need to return an alternative here!
+            }
+
             var observation = await _observationRepository.GetObservationDetails(id);
 
             if (observation == null)
             {
                 return NotFound();
             }
-            return View(observation);
+
+            var viewModel = new ObservationDetailsDto();
+            viewModel.SelectedObservation = observation;
+
+            if (observation.ApplicationUserId == user.Id)
+            {
+                viewModel.IsObservationOwner = true;
+               
+            }
+
+            return View(viewModel);
         }
 
         // ToDo: Research overposting attacks.

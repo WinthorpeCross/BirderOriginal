@@ -1,24 +1,22 @@
-﻿@model Observation
-@using Microsoft.AspNetCore.Identity
-@inject UserManager<ApplicationUser> UserManager
+﻿@model ObservationDetailsDto
 @using Newtonsoft.Json
 
 @{
-    var conjugatedVerb = Model.Quantity > 1 ? "were" : "was";
-
+    var singularOrPlural = Model.SelectedObservation.Quantity > 1 ? "individuals" : "individual";
+    
     <div data-bind="html: Title()"></div>
     @*<div data-bind="html: SubTitle()"></div>*@
 
-    if (Model.ApplicationUserId == UserManager.GetUserAsync(User).Result.Id)
+    if (Model.IsObservationOwner == true)
     {
-        <h4><b>@Model.Quantity</b> @conjugatedVerb spotted by <a asp-controller="User" asp-action="Details" asp-route-userName="@Model.ApplicationUser.UserName">You</a> on  @Model.ObservationDateTime.ToString("dddd, dd MMMM yyyy, HH:mm")</h4>
+        <h4><a asp-controller="User" asp-action="Details" asp-route-userName="@Model.SelectedObservation.ApplicationUser.UserName">You</a> spotted <b>@Model.SelectedObservation.Quantity</b> @singularOrPlural on @Model.SelectedObservation.ObservationDateTime.ToString("dddd, dd MMMM yyyy, HH:mm")</h4>
     }
     else
     {
-        <h4><b>@Model.Quantity</b> @conjugatedVerb spotted by <a asp-controller="User" asp-action="Details" asp-route-userName="@Model.ApplicationUser.UserName">@Model.ApplicationUser.UserName</a> on @Html.DisplayFor(modelItem => Model.ObservationDateTime)</h4>
+        <h4><a asp-controller="User" asp-action="Details" asp-route-userName="@Model.SelectedObservation.ApplicationUser.UserName">@Model.SelectedObservation.ApplicationUser.UserName</a> spotted <b>@Model.SelectedObservation.Quantity</b> @singularOrPlural on @Html.DisplayFor(modelItem => Model.SelectedObservation.ObservationDateTime)</h4>
     };
 
-    <p> Find out more about the <a asp-controller="Bird" asp-action="Details" asp-route-id="@Model.Bird.BirdId">@Model.Bird.EnglishName</a> and the details of other sightings of this species.</p>
+    <p>Find out more about the <a asp-controller="Bird" asp-action="Details" asp-route-id="@Model.SelectedObservation.Bird.BirdId">@Model.SelectedObservation.Bird.EnglishName</a> and the details of other sightings of this species.</p>
 }
 
 
@@ -78,7 +76,7 @@
                                 </span>
                             </div>
                             <div>
-                                <input asp-for="ObservationId" class="form-control" data-bind="text: ObservationId" type="hidden" />
+                                <input asp-for="SelectedObservation.ObservationId" class="form-control" data-bind="text: SelectedObservation.ObservationId" type="hidden" />
                             </div>
                         </form>
                     </div>
@@ -94,20 +92,20 @@
             </div>
             <div id="collapse3" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <label asp-for="NoteGeneral"></label>
-                    <input asp-for="NoteGeneral" class="form-control" data-bind="text: NoteGeneral" disabled />
+                    <label asp-for="SelectedObservation.NoteGeneral"></label>
+                    <input asp-for="SelectedObservation.NoteGeneral" class="form-control" data-bind="text: SelectedObservation.NoteGeneral" disabled />
                     <br />
-                    <label asp-for="NoteHabitat"></label>
-                    <input asp-for="NoteHabitat" class="form-control" data-bind="text: NoteHabitat" disabled />
+                    <label asp-for="SelectedObservation.NoteHabitat"></label>
+                    <input asp-for="SelectedObservation.NoteHabitat" class="form-control" data-bind="text: SelectedObservation.NoteHabitat" disabled />
                     <br />
-                    <label asp-for="NoteWeather"></label>
-                    <input asp-for="NoteWeather" class="form-control" data-bind="text: NoteWeather" disabled />
+                    <label asp-for="SelectedObservation.NoteWeather"></label>
+                    <input asp-for="SelectedObservation.NoteWeather" class="form-control" data-bind="text: SelectedObservation.NoteWeather" disabled />
                     <br />
-                    <label asp-for="NoteAppearance"></label>
-                    <input asp-for="NoteAppearance" class="form-control" data-bind="text: NoteAppearance" disabled />
+                    <label asp-for="SelectedObservation.NoteAppearance"></label>
+                    <input asp-for="SelectedObservation.NoteAppearance" class="form-control" data-bind="text: SelectedObservation.NoteAppearance" disabled />
                     <br />
-                    <label asp-for="NoteVocalisation"></label>
-                    <input asp-for="NoteVocalisation" class="form-control" data-bind="text: NoteVocalisation" disabled />
+                    <label asp-for="SelectedObservation.NoteVocalisation"></label>
+                    <input asp-for="SelectedObservation.NoteVocalisation" class="form-control" data-bind="text: SelectedObservation.NoteVocalisation" disabled />
                 </div>
             </div>
         </div>
@@ -129,11 +127,11 @@
 
 
 @{
-    if (Model.ApplicationUserId == UserManager.GetUserAsync(User).Result.Id)
+    if (Model.IsObservationOwner == true)
     {
         <div>
-            <a asp-action="Edit" asp-route-id="@Model.ObservationId" class="btn btn-link">Edit</a>
-            <a asp-action="Delete" asp-route-id="@Model.ObservationId" class="btn btn-link">Delete</a>
+            <a asp-action="Edit" asp-route-id="@Model.SelectedObservation.ObservationId" class="btn btn-link">Edit</a>
+            <a asp-action="Delete" asp-route-id="@Model.SelectedObservation.ObservationId" class="btn btn-link">Delete</a>
             <a asp-action="Index" class="btn btn-link">Back to Observations feed</a>
         </div>
     }
