@@ -90,8 +90,6 @@ namespace Birder2.Controllers
 
         // GET /api/images/thumbnails
         [HttpGet("thumbnails")]
-        //[HttpGet]
-        //[HttpGet("{containerName}", Name = "thumbnails")]
         public async Task<IActionResult> GetThumbNails(int observationId)
         {
             //var user = await _userAccessor.GetUser();
@@ -107,11 +105,11 @@ namespace Birder2.Controllers
 
                 //    return BadRequest("sorry, can't retrieve your azure storage details from appsettings.js, make sure that you add azure storage details there");
 
-                //if ("test" == string.Empty)
+                if (observationId == 0)
 
-                //    return BadRequest("Please provide a name for your image container in the azure blob storage");
+                    return BadRequest("No observationId is supplied");
 
-                List<string> thumbnailUrls = await StorageHelper.GetThumbNailUrls(observationId.ToString()); //(storageConfig);
+                List<string> thumbnailUrls = await StorageHelper.GetThumbNailUrls(observationId.ToString());
 
                 if(thumbnailUrls.Count == 0)
                 {
