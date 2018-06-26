@@ -129,7 +129,8 @@ namespace Birder2.Controllers
         }
     }
 }
-    /*
+
+/*
         // GET: api/Images
         [HttpGet]
         public IEnumerable<string> Get()
