@@ -108,7 +108,7 @@
     <PackageReference Include="dropzone" Version="4.2.0" />
     <PackageReference Include="FlickrNet" Version="4.0.4-alpha" />
     <PackageReference Include="knockoutjs" Version="3.4.2" />
-    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="7.4.6" />
+    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="7.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.1" />
     <PackageReference Include="Microsoft.Azure.KeyVault" Version="2.4.0-preview" />
     <PackageReference Include="Microsoft.Azure.KeyVault.Core" Version="2.0.4" />
