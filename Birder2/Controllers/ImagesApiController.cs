@@ -1,5 +1,4 @@
-﻿
-using Birder2.Services;
+﻿using Birder2.Services;
 using ImageResizeWebApp.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,14 +14,12 @@ namespace Birder2.Controllers
     //[ApiController] 
     public class ImagesApiController : ControllerBase
     {
-        //private readonly IApplicationUserAccessor _userAccessor;
         private readonly IImageApiHelperService _imageApiHelperService;
         private readonly IConfiguration _config;
 
         public ImagesApiController(IImageApiHelperService imageApiHelperService,
                                     IConfiguration config)
         {
-            //_userAccessor = userAccessor;
             _imageApiHelperService = imageApiHelperService;
             _config = config;
         }
@@ -93,7 +90,6 @@ namespace Birder2.Controllers
         [HttpGet("thumbnails")]
         public async Task<IActionResult> GetThumbNails(int observationId)
         {
-            //var user = await _userAccessor.GetUser();
             var areImagesAvailable = _imageApiHelperService.AreImagesAttachedAsync(observationId);
             if (areImagesAvailable != true)
             {
