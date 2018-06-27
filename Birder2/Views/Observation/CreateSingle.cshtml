@@ -9,7 +9,7 @@
 
 <p id="MessageToClient" data-bind="text: MessageToClient"></p>
 
-<form id="form">
+@*<form id="form">*@
 
     <div class="row">
         <div class="col-sm-4">
@@ -175,10 +175,11 @@
         </div>
     </div>
     <br />
-    <div class="container col-lg-12">
-        <p><button class="btn btn-primary btn-block" type="submit" data-bind="disable:disableSubmitButton">Post Observation</button></p>
-    </div>
-</form>
+    <form id="form">
+        <div class="container col-lg-12">
+            <p><button class="btn btn-primary btn-block" type="submit" data-bind="disable:disableSubmitButton">Post Observation</button></p>
+        </div>
+    </form>
 
 @section scripts{
     <script src="~/js/jqueryvalidate.js"></script>

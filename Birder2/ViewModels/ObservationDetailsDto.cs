@@ -6,5 +6,6 @@ namespace Birder2.ViewModels
     {
         public Observation SelectedObservation { get; set; }
         public bool IsObservationOwner { get; set; }
+        public int ObservationId { get; set; }
     }
 }

@@ -1,9 +1,9 @@
-﻿@model ObservationDetailsDto
-@using Newtonsoft.Json
+﻿@using Newtonsoft.Json
+@model ObservationDetailsDto
 
 @{
     var singularOrPlural = Model.SelectedObservation.Quantity > 1 ? "individuals" : "individual";
-    
+
     <div data-bind="html: Title()"></div>
     @*<div data-bind="html: SubTitle()"></div>*@
 
@@ -76,7 +76,7 @@
                                 </span>
                             </div>
                             <div>
-                                <input asp-for="SelectedObservation.ObservationId" class="form-control" data-bind="text: SelectedObservation.ObservationId" type="hidden" />
+                                <input asp-for="ObservationId" class="form-control" data-bind="value: ObservationId" type="hidden" />
                             </div>
                         </form>
                     </div>
@@ -159,8 +159,8 @@
     <script src="~/js/jqueryvalidate.js"></script>
     <script src="~/js/jquery-validate.bootstrap-tooltip.js"></script>
     <script src="~/js/observationDetailsViewModel.js"></script>
-    <script src="~/js/accordionHandler.js"></script>
     <script src="~/js/dropzoneConfiguration.js"></script>
+    <script src="~/js/accordionHandler.js"></script>
     <script type="text/javascript">
         var observationDetailsViewModel = new ObservationDetailsViewModel(@Html.Raw(data));
         ko.applyBindings(observationDetailsViewModel);

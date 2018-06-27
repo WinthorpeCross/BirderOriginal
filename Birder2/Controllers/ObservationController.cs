@@ -352,7 +352,8 @@ namespace Birder2.Controllers
                 var model = new EditObservationViewModel
                 {
                     Birds = await _observationRepository.AllBirdsList(),
-                    Observation = observation
+                    Observation = observation,
+                    ObservationId = observation.ObservationId
                 };
 
                 return View(model);
@@ -388,6 +389,7 @@ namespace Birder2.Controllers
 
             var viewModel = new ObservationDetailsDto();
             viewModel.SelectedObservation = observation;
+            viewModel.ObservationId = observation.ObservationId;
 
             if (observation.ApplicationUserId == user.Id)
             {
