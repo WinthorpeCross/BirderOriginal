@@ -39,17 +39,16 @@ namespace Birder2.Controllers
             _logger = logger;
         }
 
-        public async Task<IActionResult> Images(int id)
-        {
-            //Check if Observation exists?
-            var observation = await _observationRepository.GetObservationDetails(id);
-            var viewModel = new ManageImagesDto()
-            {
-                ObservationId = observation.ObservationId
-            };
+        //public async Task<IActionResult> Images(int id)
+        //{
+        //    var observation = await _observationRepository.GetObservationDetails(id);
+        //    var viewModel = new ManageImagesDto()
+        //    {
+        //        ObservationId = observation.ObservationId
+        //    };
             
-            return View(viewModel);
-        }
+        //    return View(viewModel);
+        //}
 
         public async Task<IActionResult> Index(ObservationsFeedFilter filter, int page)
         {
