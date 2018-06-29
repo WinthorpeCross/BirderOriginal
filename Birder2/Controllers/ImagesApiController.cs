@@ -25,10 +25,7 @@ namespace Birder2.Controllers
         }
 
         // POST /api/images/upload
-        //[Route("Post/{solution}/{answer}")]
-        //[Route("api/[controller]/upload/{files}")]
         [HttpPost("[action]")]
-        //[HttpPost(Name = "[action]")]
         public async Task<IActionResult> Upload([FromForm]ICollection<IFormFile> files, int observationId)
         {
             bool isUploaded = false;
@@ -55,7 +52,7 @@ namespace Birder2.Controllers
                         {
                             using (Stream stream = formFile.OpenReadStream())
                             {
-                                isUploaded = await StorageHelper.UploadFileToStorage(stream, observationId.ToString(), formFile.FileName); //, storageConfig);
+                                isUploaded = await StorageHelper.UploadFileToStorage(stream, observationId.ToString(), formFile.FileName, _config["BlobStorageKey"]);
                             }
                         }
                     }
@@ -106,7 +103,7 @@ namespace Birder2.Controllers
 
                     return BadRequest("No observationId is supplied");
 
-                List<string> thumbnailUrls = await StorageHelper.GetThumbNailUrls(observationId.ToString());
+                List<string> thumbnailUrls = await StorageHelper.GetThumbNailUrls(observationId.ToString(), _config["BlobStorageKey"]);
 
                 if(thumbnailUrls.Count == 0)
                 {
