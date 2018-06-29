@@ -52,7 +52,7 @@ namespace Birder2.Controllers
                         {
                             using (Stream stream = formFile.OpenReadStream())
                             {
-                                isUploaded = await StorageHelper.UploadFileToStorage(stream, observationId.ToString(), formFile.FileName, _config["BlobStorageKey"]);
+                                isUploaded = await StorageHelper.UploadFileToStorage(stream, observationId.ToString(), formFile.FileName, _config["BlobStorageKey"], _config["BlobStorage:Account"]);
                             }
                         }
                     }
@@ -103,7 +103,7 @@ namespace Birder2.Controllers
 
                     return BadRequest("No observationId is supplied");
 
-                List<string> thumbnailUrls = await StorageHelper.GetThumbNailUrls(observationId.ToString(), _config["BlobStorageKey"]);
+                List<string> thumbnailUrls = await StorageHelper.GetThumbNailUrls(observationId.ToString(), _config["BlobStorageKey"], _config["BlobStorage:Account"]);
 
                 if(thumbnailUrls.Count == 0)
                 {

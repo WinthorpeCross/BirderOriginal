@@ -13,8 +13,6 @@ namespace ImageResizeWebApp.Helpers
 {
     public static class StorageHelper
     {
-        public const string _account = "birderstorage";
-
         public static bool IsImage(IFormFile file)
         {
             if (file.ContentType.Contains("image"))
@@ -27,10 +25,10 @@ namespace ImageResizeWebApp.Helpers
             return formats.Any(item => file.FileName.EndsWith(item, StringComparison.OrdinalIgnoreCase));
         }
 
-        public static async Task<bool> UploadFileToStorage(Stream fileStream, string containerName, string fileName, string key)//, AzureStorageConfig _storageConfig)
+        public static async Task<bool> UploadFileToStorage(Stream fileStream, string containerName, string fileName, string key, string account)//, AzureStorageConfig _storageConfig)
         {
             // Create storagecredentials object by reading the values from the configuration (appsettings.json)
-            StorageCredentials storageCredentials = new StorageCredentials(_account, key); //(_storageConfig.AccountName, _storageConfig.AccountKey);
+            StorageCredentials storageCredentials = new StorageCredentials(account, key); //(_storageConfig.AccountName, _storageConfig.AccountKey);
 
             // Create cloudstorage account by passing the storagecredentials
             CloudStorageAccount storageAccount = new CloudStorageAccount(storageCredentials, true);
@@ -67,12 +65,12 @@ namespace ImageResizeWebApp.Helpers
             return await Task.FromResult(true);
         }
 
-        public static async Task<List<string>> GetThumbNailUrls(string containerName, string key) //(AzureStorageConfig _storageConfig)
+        public static async Task<List<string>> GetThumbNailUrls(string containerName, string key, string account) //(AzureStorageConfig _storageConfig)
         {
             List<string> thumbnailUrls = new List<string>();
 
             // Create storagecredentials object by reading the values from the configuration (appsettings.json)
-            StorageCredentials storageCredentials = new StorageCredentials(_account, key);
+            StorageCredentials storageCredentials = new StorageCredentials(account, key);
 
             // Create cloudstorage account by passing the storagecredentials
             CloudStorageAccount storageAccount = new CloudStorageAccount(storageCredentials, true);
