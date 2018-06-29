@@ -39,31 +39,19 @@ namespace Birder2.Controllers
             _logger = logger;
         }
 
-        //public async Task<IActionResult> Images(int id)
-        //{
-        //    var observation = await _observationRepository.GetObservationDetails(id);
-        //    var viewModel = new ManageImagesDto()
-        //    {
-        //        ObservationId = observation.ObservationId
-        //    };
-            
-        //    return View(viewModel);
-        //}
-
         public async Task<IActionResult> Index(ObservationsFeedFilter filter, int page)
         {
             if (page == 0)
             {
                 page = 1;
             }
-            //
+
             var user = await _userAccessor.GetUser();
             if (user == null)
             {
                 return RedirectToAction("Login", "Account");
             }
-            var userName = await _userAccessor.GetUserName();
-            //
+
             try
             {
                 var viewModel = new ObservationsIndexViewModel()
@@ -205,11 +193,6 @@ namespace Birder2.Controllers
 
                     //if(addObservation.IsCompletedSuccessfully == true)
                     //{
-                    // --- upload images service
-                    // (1) convert to byte[]
-                    // (2) resize
-                    // (3) upload to Blob storage
-
                     //addObservationTags
                     //};
                 }
@@ -218,7 +201,6 @@ namespace Birder2.Controllers
                     return Json(JsonConvert.SerializeObject(viewModel));
                     //return Json(new { newLocation = "/Sales/Index/" });
                 }
-
 
                 viewModel.IsModelStateValid = true;
                 return Json(JsonConvert.SerializeObject(viewModel));
@@ -246,7 +228,6 @@ namespace Birder2.Controllers
             if (user == null)
             {
                 return Json(JsonConvert.SerializeObject(viewModel));
-
                 //return Json(new { newLocation = "/Sales/Index/" });
             }
 
@@ -291,11 +272,6 @@ namespace Birder2.Controllers
                         
                         //if(addObservation.IsCompletedSuccessfully == true)
                         //{
-                            // --- upload images service
-                            // (1) convert to byte[]
-                            // (2) resize
-                            // (3) upload to Blob storage
-
                             //addObservationTags
                         //};
                     }
@@ -419,6 +395,7 @@ namespace Birder2.Controllers
             // check if editor is the same as the original.  Only the owner is allowed to edit their own observations.
             //
             var user = await _userAccessor.GetUser();
+
             if (user.Id != viewModel.Observation.ApplicationUserId)
             {
                 viewModel.IsModelStateValid = false;
@@ -444,12 +421,12 @@ namespace Birder2.Controllers
                     observationEdited.NoteAppearance = viewModel.Observation.NoteAppearance;
                     observationEdited.NoteBehaviour = viewModel.Observation.NoteBehaviour;
                     observationEdited.NoteVocalisation = viewModel.Observation.NoteVocalisation;
+                    observationEdited.Quantity = viewModel.Observation.Quantity;
 
                     observationEdited.ApplicationUser = user;
 
                     observationEdited.LastUpdateDate = _systemClock.Now;
 
-                    observationEdited.Quantity = viewModel.Observation.Quantity;
                     await _observationRepository.UpdateObservation(observationEdited);
 
                     viewModel.IsModelStateValid = true;
