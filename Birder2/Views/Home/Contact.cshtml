@@ -3,10 +3,16 @@
     Layout = "~/Views/Shared/_LayoutNoSidebar.cshtml";
 }
 
-<div>
-    <section>
-        <h2>Birder</h2>
-        <p>Add form for sending feedback and suggestion to the developer...</p>
-    </section>
-</div>
+@section Scripts {
+<script src="~/ClientApp/dist/runtime.js"></script>
+<script src="~/ClientApp/dist/polyfills.js"></script>
+<script src="~/ClientApp/dist/styles.js"></script>
+<script src="~/ClientApp/dist/vendor.js"></script>
+<script src="~/ClientApp/dist/main.js"></script>
+
+}
+
+
+<h2>Birder</h2>
+<app-root></app-root>
 
