@@ -9,9 +9,9 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace ImageResizeWebApp.Helpers
+namespace Birder2.Extensions
 {
-    public static class StorageHelper
+    public static class StorageExtension
     {
         public static bool IsImage(IFormFile file)
         {
