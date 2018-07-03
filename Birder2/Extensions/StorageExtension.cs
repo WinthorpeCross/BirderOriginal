@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 namespace Birder2.Extensions
 {
     public static class StorageExtension
