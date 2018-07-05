@@ -44,15 +44,14 @@ namespace Birder2.Extensions
 
             if (containerExists.Result != true)
             {
-
                 await container.CreateIfNotExistsAsync();
 
                 BlobContainerPermissions permissions = new BlobContainerPermissions
                 {
                     PublicAccess = BlobContainerPublicAccessType.Blob
                 };
-                await container.SetPermissionsAsync(permissions);
 
+                await container.SetPermissionsAsync(permissions);
             }
 
             // Get the reference to the block blob from the container
