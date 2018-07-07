@@ -48,13 +48,11 @@ namespace Birder2.Controllers
                     if (options.BirdStatusFilter == BirdIndexStatusFilter.Common)
                     {
                         viewModel.BirdsList = await _birdRepository.CommonBirdsList().GetPaged(options.page, options.SelectedPageListSize);
-                        //viewModel.BirdStatusFilter = options.BirdStatusFilter;
                         viewModel.ListFormat = options.ListFormat;
                     }
                     else
                     {
                         viewModel.BirdsList = await _birdRepository.AllBirdsList().GetPaged(options.page, options.SelectedPageListSize);
-                        //viewModel.BirdStatusFilter = options.BirdStatusFilter;
                         viewModel.ListFormat = options.ListFormat;
                     }
                 }
@@ -95,10 +93,8 @@ namespace Birder2.Controllers
                     _logger.LogWarning(LoggingEvents.GetItemNotFound, "Details({ID}) BIRD NOT FOUND", id);
                     return NotFound();
                 }
-                else
-                {
-                    return View(model);
-                }
+
+                return View(model);
             }
             catch (Exception ex)
             {
