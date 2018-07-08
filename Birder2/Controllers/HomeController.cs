@@ -8,7 +8,6 @@ using System.Diagnostics;
 
 namespace Birder2.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         private readonly IConfiguration _config;
@@ -53,11 +52,5 @@ namespace Birder2.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-        //public IActionResult Error()
-        //{
-        //    //ToDo: 
-        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        //}
     }
 }

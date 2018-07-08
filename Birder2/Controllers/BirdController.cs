@@ -81,20 +81,19 @@ namespace Birder2.Controllers
                 return NotFound();
             }
 
-            var model = new BirdDetailViewModel();
-
             try
             {
-                model.Bird = await _birdRepository.GetBirdDetails(id);
-                model.BirdPhotos = _flickrService.GetFlickrPhotoCollection(model.Bird.Species);
+                var ViewModel = new BirdDetailViewModel();
+                ViewModel.Bird = await _birdRepository.GetBirdDetails(id);
+                ViewModel.BirdPhotos = _flickrService.GetFlickrPhotoCollection(ViewModel.Bird.Species);
 
-                if (model.Bird == null)
+                if (ViewModel.Bird == null)
                 {
                     _logger.LogWarning(LoggingEvents.GetItemNotFound, "Details({ID}) BIRD NOT FOUND", id);
                     return NotFound();
                 }
 
-                return View(model);
+                return View(ViewModel);
             }
             catch (Exception ex)
             {
