@@ -33,9 +33,9 @@ namespace Birder2.Controllers
 
             try
             {
-                if (options.page == 0)
+                if (options.Page == 0)
                 {
-                    options.page = 1;
+                    options.Page = 1;
                 }
 
                 BirdIndexViewModel viewModel = new BirdIndexViewModel()
@@ -47,18 +47,18 @@ namespace Birder2.Controllers
                 {
                     if (options.BirdStatusFilter == BirdIndexStatusFilter.Common)
                     {
-                        viewModel.BirdsList = await _birdRepository.CommonBirdsList().GetPaged(options.page, options.SelectedPageListSize);
+                        viewModel.BirdsList = await _birdRepository.CommonBirdsList().GetPaged(options.Page, options.SelectedPageListSize);
                         viewModel.ListFormat = options.ListFormat;
                     }
                     else
                     {
-                        viewModel.BirdsList = await _birdRepository.AllBirdsList().GetPaged(options.page, options.SelectedPageListSize);
+                        viewModel.BirdsList = await _birdRepository.AllBirdsList().GetPaged(options.Page, options.SelectedPageListSize);
                         viewModel.ListFormat = options.ListFormat;
                     }
                 }
                 else
                 {
-                    viewModel.BirdsList = await _birdRepository.AllBirdsList(options.SelectedBirdId).GetPaged(options.page, options.SelectedPageListSize);
+                    viewModel.BirdsList = await _birdRepository.AllBirdsList(options.SelectedBirdId).GetPaged(options.Page, options.SelectedPageListSize);
                     viewModel.SelectedBirdId = options.SelectedBirdId;
                     viewModel.ListFormat = options.ListFormat;
                 }

@@ -14,7 +14,7 @@ namespace Birder2.ViewModels
         public int SelectedBirdId { get; set; }
         public BirdIndexStatusFilter BirdStatusFilter { get; set; }
         public BirdIndexListFormatFilter ListFormat { get; set; }
-        public int page { get; set; }
+        public int Page { get; set; }
         public int SelectedPageListSize { get; set; } = 12;
         private IEnumerable<int> _pageSizeList;
         public IEnumerable<int> PageSizeList
