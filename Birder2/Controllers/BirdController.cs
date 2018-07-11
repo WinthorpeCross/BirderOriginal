@@ -38,10 +38,8 @@ namespace Birder2.Controllers
                     options.Page = 1;
                 }
 
-                BirdIndexViewModel viewModel = new BirdIndexViewModel()
-                {
-                    AllBirdsDropDownList = _birdRepository.AllBirdsDropDownList()
-                };
+                var viewModel = new BirdIndexViewModel();
+                viewModel.AllBirdsDropDownList = _birdRepository.AllBirdsDropDownList();
 
                 if (options.SelectedBirdId == 0)
                 {
