@@ -35,10 +35,6 @@ namespace Birder2.Controllers
             {
                 options.Page = 1;
             }
-            if (options.SelectedBirdId == 0)
-            {
-                options.SelectedBirdId = 0;
-            }
 
             if (!ModelState.IsValid)
             {
@@ -46,13 +42,18 @@ namespace Birder2.Controllers
                 _logger.LogInformation(LoggingEvents.GetItem, "ModelState error with form values: " + errorMessages);
                 return BadRequest("ModelState error with form values: " + errorMessages);
             }
+
             try
             { 
                 var viewModel = new BirdIndexViewModel();
                 viewModel.AllBirdsDropDownList = _birdRepository.AllBirdsDropDownList();
 
-                if (options.SelectedBirdId == 0)
+                if (options.SelectedBirdId != 0)
                 {
+                    return RedirectToAction("Details", new { id = options.SelectedBirdId });
+                }
+                else
+                { 
                     if (options.BirdStatusFilter == BirdIndexStatusFilter.Common)
                     {
                         viewModel.BirdsList = await _birdRepository.CommonBirdsList().GetPaged(options.Page, options.SelectedPageListSize);
@@ -64,12 +65,7 @@ namespace Birder2.Controllers
                         viewModel.ListFormat = options.ListFormat;
                     }
                 }
-                else
-                {
-                    viewModel.BirdsList = await _birdRepository.AllBirdsList(options.SelectedBirdId).GetPaged(options.Page, options.SelectedPageListSize);
-                    viewModel.SelectedBirdId = options.SelectedBirdId;
-                    viewModel.ListFormat = options.ListFormat;
-                }
+
                 return View(viewModel);
             }
             catch (Exception ex)

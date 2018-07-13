@@ -25,7 +25,7 @@ namespace Birder2.Services
             var defaultOption = new Bird()
             {
                 BirdId = 0,
-                EnglishName = "Show All Birds"
+                EnglishName = "Choose a bird species..."
             };
             birds.Insert(0, defaultOption);
 
