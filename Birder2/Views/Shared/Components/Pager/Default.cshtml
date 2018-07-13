@@ -9,7 +9,11 @@
             continue;
         }
 
-        urlTemplate += "&" + key + "=" + request.Query[key];
+        //urlTemplate += "&" + key + "=" + request.Query[key];
+        foreach (var keyValue in request.Query[key])
+        {
+            urlTemplate += "&" + key + "=" + keyValue;
+        }
     }
 
     var startIndex = Math.Max(Model.CurrentPage - 5, 1);

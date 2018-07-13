@@ -31,13 +31,23 @@ namespace Birder2.Controllers
         {
             _logger.LogInformation(LoggingEvents.ListItems, "Bird Index called");
 
-            try
+            if (options.Page == 0)
             {
-                if (options.Page == 0)
-                {
-                    options.Page = 1;
-                }
+                options.Page = 1;
+            }
+            if (options.SelectedBirdId == 0)
+            {
+                options.SelectedBirdId = 0;
+            }
 
+            if (!ModelState.IsValid)
+            {
+                var errorMessages = ModelStateErrorsExtensions.GetModelStateErrorMessages(ModelState);
+                _logger.LogInformation(LoggingEvents.GetItem, "ModelState error with form values: " + errorMessages);
+                return BadRequest("ModelState error with form values: " + errorMessages);
+            }
+            try
+            { 
                 var viewModel = new BirdIndexViewModel();
                 viewModel.AllBirdsDropDownList = _birdRepository.AllBirdsDropDownList();
 
