@@ -20,20 +20,20 @@ namespace Birder2.Controllers
     public class ObservationController : Controller
     {
         private const int pageSize = 15;
-        private readonly IObservationRepository _observationRepository;
-        private readonly IMachineClockDateTime _systemClock;
-        private readonly IApplicationUserAccessor _userAccessor;
-        private readonly ILogger _logger;
         private readonly IObservationsAnalysisService _observationsAnalysisService;
+        private readonly IObservationRepository _observationRepository;
+        private readonly IApplicationUserAccessor _userAccessor;
+        private readonly IMachineClockDateTime _systemClock;
+        private readonly ILogger _logger;
 
         public ObservationController(IObservationsAnalysisService observationsAnalysisService,
-                                        IApplicationUserAccessor userAccessor,
-                                            IObservationRepository observationRepository,
+                                        IObservationRepository observationRepository,
+                                            IApplicationUserAccessor userAccessor,
                                                 IMachineClockDateTime systemClock,
                                                     ILogger<Network> logger)
         {
-            _observationRepository = observationRepository;
             _observationsAnalysisService = observationsAnalysisService;
+            _observationRepository = observationRepository;
             _userAccessor = userAccessor;
             _systemClock = systemClock;
             _logger = logger;
@@ -44,6 +44,13 @@ namespace Birder2.Controllers
             if (page == 0)
             {
                 page = 1;
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var errorMessages = ModelStateErrorsExtensions.GetModelStateErrorMessages(ModelState);
+                _logger.LogInformation(LoggingEvents.GetItem, "ModelState error with form values: " + errorMessages);
+                return BadRequest(); //ToDo: quoi?
             }
 
             var user = await _userAccessor.GetUser();
