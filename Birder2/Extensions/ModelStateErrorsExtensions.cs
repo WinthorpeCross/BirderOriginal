@@ -5,13 +5,13 @@ namespace Birder2.Extensions
 {
     public static class ModelStateErrorsExtensions
     {
-        public static string GetModelStateErrorMessages(ModelStateDictionary ModelState)
+        public static string GetModelStateErrorMessages(ModelStateDictionary modelState)
         {
             string validationErrors = string.Join("; ",
-                    ModelState.Values.Where(E => E.Errors.Count > 0)
-                    .SelectMany(E => E.Errors)
-                    .Select(E => E.ErrorMessage)
-                    .ToArray());
+                    modelState.Values.Where(E => E.Errors.Count > 0)
+                        .SelectMany(E => E.Errors)
+                        .Select(E => E.ErrorMessage)
+                        .ToArray());
 
             return validationErrors;
         }
