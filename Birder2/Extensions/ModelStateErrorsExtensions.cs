@@ -5,6 +5,7 @@ namespace Birder2.Extensions
 {
     public static class ModelStateErrorsExtensions
     {
+        //ToDo: change to an extension method?
         public static string GetModelStateErrorMessages(ModelStateDictionary modelState)
         {
             string validationErrors = string.Join("; ",
