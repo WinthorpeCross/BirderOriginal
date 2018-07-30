@@ -104,14 +104,14 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="4.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="dropzone" Version="4.2.0" />
     <PackageReference Include="EfCore.TestSupport" Version="1.4.0" />
     <PackageReference Include="FlickrNet" Version="4.0.4-alpha" />
     <PackageReference Include="knockoutjs" Version="3.4.2" />
-    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="7.5.0" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.1" />
+    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="7.6.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.2" />
     <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.0" />
     <PackageReference Include="Microsoft.Azure.KeyVault.Core" Version="3.0.0" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" Version="1.0.3" />
