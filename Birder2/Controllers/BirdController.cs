@@ -39,7 +39,7 @@ namespace Birder2.Controllers
             if (!ModelState.IsValid)
             {
                 var errorMessages = ModelStateErrorsExtensions.GetModelStateErrorMessages(ModelState);
-                _logger.LogInformation(LoggingEvents.GetItem, "ModelState error with form values: " + errorMessages);
+                _logger.LogInformation(LoggingEvents.GetItem, "ModelState error with form values: {0}", errorMessages);
                 return BadRequest("ModelState error with form values: " + errorMessages);
             }
 
