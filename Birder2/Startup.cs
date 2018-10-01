@@ -38,6 +38,7 @@ namespace Birder2
             });
 
 
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
                 //.AddCookie(options =>
@@ -52,6 +53,7 @@ namespace Birder2
             {
                 options.SignIn.RequireConfirmedEmail = true;
                 options.User.RequireUniqueEmail = true;
+                // Password settings: require any eight letters or numbers
                 options.Password.RequireDigit = true;
                 options.Password.RequiredLength = 8;
                 options.Password.RequiredUniqueChars = 2;
@@ -64,10 +66,12 @@ namespace Birder2
 
             services.AddAutoMapper();
 
-            // Add application services
+            // Add application service s.
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddSingleton<IMachineClockDateTime, MachineClockDateTime>();
+
             services.AddTransient<IApplicationUserAccessor, ApplicationUserAccessor>();
+
             services.AddScoped<IBirdRepository, BirdRepository>();
             services.AddScoped<IObservationRepository, ObservationRepository>();
             services.AddScoped<ISideBarRepository, SideBarRepository>();
@@ -75,8 +79,11 @@ namespace Birder2
             services.AddScoped<IObservationsAnalysisService, ObservationsAnalysisService>();
             services.AddScoped<ILIstService, ListService>();
             services.AddScoped<IImageApiHelperService, ImageApiHelperService>();
+
+            //ToDo: Work out what type of service these should really be - Singletons?
             services.AddTransient<IStreamService, StreamService>();
             services.AddTransient<IFlickrService, FlickrService>();
+
             services.AddTransient<IImageStorageService, ImageStorageService>();
 
             services.AddMvc().AddJsonOptions

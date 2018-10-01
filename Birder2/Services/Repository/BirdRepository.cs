@@ -43,21 +43,20 @@ namespace Birder2.Services
 
         public IQueryable<Bird> AllBirdsList(int birdId)
         {
-            return _dbContext.Birds
-                    .Where(b => b.BirdId == birdId)
-                        .Include(bcs => bcs.BirdConserverationStatus)
-                            .OrderByDescending(v => v.EnglishName)
-                                .AsNoTracking();
+            return _dbContext.Birds.Where(b => b.BirdId == birdId)
+                .Include(bcs => bcs.BirdConserverationStatus)
+                        .OrderByDescending(v => v.EnglishName)
+                            .AsNoTracking();
         }
 
         public IQueryable<Bird> CommonBirdsList()
         {
             return _dbContext.Birds
-                        .Include(bcs => bcs.BirdConserverationStatus)
-                            .Where(b => b.BirderStatus == BirderStatus.Common)
-                                .OrderBy(bs => bs.BirderStatus)
-                                    .ThenBy(en => en.EnglishName)
-                                        .AsNoTracking();
+                .Include(bcs => bcs.BirdConserverationStatus)
+                    .Where(b => b.BirderStatus == BirderStatus.Common)
+                     .OrderBy(bs => bs.BirderStatus)
+                        .ThenBy(en => en.EnglishName)
+                            .AsNoTracking();
         }
 
         public async Task<Bird> GetBirdDetails(int? id)
