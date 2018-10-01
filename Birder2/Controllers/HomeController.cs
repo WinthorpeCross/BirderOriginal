@@ -19,6 +19,11 @@ namespace Birder2.Controllers
             _cache = memoryCache;
         }
 
+        public IActionResult index()
+        {
+            return View();
+        }
+
         [AllowAnonymous]
         public IActionResult Contact()
         {
