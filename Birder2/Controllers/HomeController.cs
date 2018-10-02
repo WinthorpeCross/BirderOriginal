@@ -19,7 +19,7 @@ namespace Birder2.Controllers
             _cache = memoryCache;
         }
 
-        public IActionResult index()
+        public IActionResult Index()
         {
             return View();
         }

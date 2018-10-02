@@ -520,7 +520,7 @@ namespace Birder2.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(Observation.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Index), "Home");
             }
         }
 
