@@ -5,7 +5,7 @@
     <UserSecretsId>aspnet-Birder2-93D4229D-DE28-4026-BE48-156ABE712AEC</UserSecretsId>
     <ApplicationIcon>wwwroot\favicon.ico</ApplicationIcon>
     <FileVersion>1.1.4.0</FileVersion>
-    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
   </PropertyGroup>
 
   <ItemGroup>
