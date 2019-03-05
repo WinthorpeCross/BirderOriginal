@@ -92,7 +92,6 @@ namespace Birder2
             //    app.UseRewriter(options);
             //}
 
-            //app.UseWelcomePage()
             //app.UseDefaultFiles();
             app.UseStaticFiles();
 

@@ -8,10 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-
-namespace ImageResizeWebApp.Helpers
+namespace Birder2.Extensions
 {
-    public static class StorageHelper
+    public static class StorageExtension
     {
         public static bool IsImage(IFormFile file)
         {
@@ -45,15 +44,14 @@ namespace ImageResizeWebApp.Helpers
 
             if (containerExists.Result != true)
             {
-
                 await container.CreateIfNotExistsAsync();
 
                 BlobContainerPermissions permissions = new BlobContainerPermissions
                 {
                     PublicAccess = BlobContainerPublicAccessType.Blob
                 };
-                await container.SetPermissionsAsync(permissions);
 
+                await container.SetPermissionsAsync(permissions);
             }
 
             // Get the reference to the block blob from the container

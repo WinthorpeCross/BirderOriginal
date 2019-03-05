@@ -51,7 +51,7 @@ namespace Birder2
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
-                options.SignIn.RequireConfirmedEmail = true;
+                //options.SignIn.RequireConfirmedEmail = true;
                 options.User.RequireUniqueEmail = true;
                 // Password settings: require any eight letters or numbers
                 options.Password.RequireDigit = true;

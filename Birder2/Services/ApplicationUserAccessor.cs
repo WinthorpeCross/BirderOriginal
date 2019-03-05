@@ -9,7 +9,8 @@ namespace Birder2.Services
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHttpContextAccessor _context;
-        public ApplicationUserAccessor(UserManager<ApplicationUser> userManager, IHttpContextAccessor context)
+        public ApplicationUserAccessor(UserManager<ApplicationUser> userManager,
+                                            IHttpContextAccessor context)
         {
             _userManager = userManager;
             _context = context;

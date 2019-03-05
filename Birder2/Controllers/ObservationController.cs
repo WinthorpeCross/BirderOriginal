@@ -20,20 +20,20 @@ namespace Birder2.Controllers
     public class ObservationController : Controller
     {
         private const int pageSize = 15;
-        private readonly IObservationRepository _observationRepository;
-        private readonly IMachineClockDateTime _systemClock;
-        private readonly IApplicationUserAccessor _userAccessor;
-        private readonly ILogger _logger;
         private readonly IObservationsAnalysisService _observationsAnalysisService;
+        private readonly IObservationRepository _observationRepository;
+        private readonly IApplicationUserAccessor _userAccessor;
+        private readonly IMachineClockDateTime _systemClock;
+        private readonly ILogger _logger;
 
         public ObservationController(IObservationsAnalysisService observationsAnalysisService,
-                                        IApplicationUserAccessor userAccessor,
-                                            IObservationRepository observationRepository,
+                                        IObservationRepository observationRepository,
+                                            IApplicationUserAccessor userAccessor,
                                                 IMachineClockDateTime systemClock,
                                                     ILogger<Network> logger)
         {
-            _observationRepository = observationRepository;
             _observationsAnalysisService = observationsAnalysisService;
+            _observationRepository = observationRepository;
             _userAccessor = userAccessor;
             _systemClock = systemClock;
             _logger = logger;
@@ -44,6 +44,13 @@ namespace Birder2.Controllers
             if (page == 0)
             {
                 page = 1;
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var errorMessages = ModelStateErrorsExtensions.GetModelStateErrorMessages(ModelState);
+                _logger.LogInformation(LoggingEvents.GetItem, "ModelState error with form values: " + errorMessages);
+                return BadRequest(); //ToDo: quoi?
             }
 
             var user = await _userAccessor.GetUser();
@@ -155,6 +162,8 @@ namespace Birder2.Controllers
             }
         }
 
+        //ToDo: Move to ObservationApiController
+        //ToDo: Antiforgery in Api Actions
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public async Task<JsonResult> CreateSingle([FromBody]CreateSingleObservationViewModel viewModel)
@@ -215,11 +224,12 @@ namespace Birder2.Controllers
                 viewModel.MessageToClient = errors;
                 return Json(JsonConvert.SerializeObject(viewModel));
             }
-
         }
 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //ToDo: Move to ObservationApiController
+        //ToDo: Antiforgery in Api Actions
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public async Task<JsonResult> Post([FromBody]CreateObservationViewModel viewModel)
@@ -340,46 +350,10 @@ namespace Birder2.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _userAccessor.GetUser();
-
-            if (user == null)
-            {
-                return NotFound(); //ToDo: Need to return an alternative here!
-            }
-
-            var observation = await _observationRepository.GetObservationDetails(id);
-
-            if (observation == null)
-            {
-                return NotFound();
-            }
-
-            var viewModel = new ObservationDetailsDto();
-            viewModel.SelectedObservation = observation;
-            viewModel.ObservationId = observation.ObservationId;
-
-            if (observation.ApplicationUserId == user.Id)
-            {
-                viewModel.IsObservationOwner = true;
-               
-            }
-
-            return View(viewModel);
-        }
-
         // ToDo: Research overposting attacks.
         [HttpPost]
         public async Task<JsonResult> Edit([FromBody]EditObservationViewModel viewModel)
         {
-            // ToDo: Look into this update method.
 
             //if (id != viewModel.Observation.ObservationId)
             //{
@@ -390,13 +364,9 @@ namespace Birder2.Controllers
             //    return Json(JsonConvert.SerializeObject(viewModel));
             //}
 
-            //
-            //ToDo: this action should be accessible ONLY to the observation's owner...
-            // check if editor is the same as the original.  Only the owner is allowed to edit their own observations.
-            //
             var user = await _userAccessor.GetUser();
 
-            if (user.Id != viewModel.Observation.ApplicationUserId)
+            if (viewModel.Observation.ApplicationUserId != user.Id)
             {
                 viewModel.IsModelStateValid = false;
                 viewModel.MessageToClient = "An error occurred (2).";
@@ -452,6 +422,41 @@ namespace Birder2.Controllers
 
             //return Json(JsonConvert.SerializeObject(ModelState));
             return Json(JsonConvert.SerializeObject(viewModel));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userAccessor.GetUser();
+
+            if (user == null)
+            {
+                return NotFound(); //ToDo: Need to return an alternative here!
+            }
+
+            var observation = await _observationRepository.GetObservationDetails(id);
+
+            if (observation == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = new ObservationDetailsDto();
+            viewModel.SelectedObservation = observation;
+            viewModel.ObservationId = observation.ObservationId;
+
+            if (observation.ApplicationUserId == user.Id)
+            {
+                viewModel.IsObservationOwner = true;
+
+            }
+
+            return View(viewModel);
         }
 
         public async Task<IActionResult> Delete(int? id)

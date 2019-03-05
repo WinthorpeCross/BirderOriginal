@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Birder2.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Birder2.Data;
-using Birder2.Models;
-using Birder2.Services;
-using Birder2.ViewModels;
+using System.Threading.Tasks;
 
 namespace Birder2.Controllers
 {
@@ -19,8 +11,8 @@ namespace Birder2.Controllers
         private readonly IObservationsAnalysisService _observationsAnalysisService;
 
         public ListController(ILIstService listService,
-                                    IApplicationUserAccessor userAccessor,
-                                        IObservationsAnalysisService observationsAnalysisService)
+                                IApplicationUserAccessor userAccessor,
+                                    IObservationsAnalysisService observationsAnalysisService)
         {
             _listService = listService;
             _userAccessor = userAccessor;
@@ -36,16 +28,13 @@ namespace Birder2.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
+
             if(string.IsNullOrEmpty(userName))
             {
                 userName = user.UserName;
             }
 
             var viewModel = _listService.GetLifeList(userName);
-            //{
-            //    ObservationsAnalysisDto = await _observationsAnalysisService.GetObservationAnalysis(user),
-            //    LifeList = _listService.GetLifeList(user.Id)
-            //};
 
             return View(viewModel);
         }

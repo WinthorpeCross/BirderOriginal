@@ -1,5 +1,5 @@
-﻿using Birder2.Services;
-using ImageResizeWebApp.Helpers;
+﻿using Birder2.Extensions;
+using Birder2.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -46,13 +46,13 @@ namespace Birder2.Controllers
 
                 foreach (var formFile in files)
                 {
-                    if (StorageHelper.IsImage(formFile))
+                    if (StorageExtension.IsImage(formFile))
                     {
                         if (formFile.Length > 0)
                         {
                             using (Stream stream = formFile.OpenReadStream())
                             {
-                                isUploaded = await StorageHelper.UploadFileToStorage(stream, observationId.ToString(), formFile.FileName, _config["BlobStorageKey"], _config["BlobStorage:Account"]);
+                                isUploaded = await StorageExtension.UploadFileToStorage(stream, observationId.ToString(), formFile.FileName, _config["BlobStorageKey"], _config["BlobStorage:Account"]);
                             }
                         }
                     }
@@ -103,7 +103,7 @@ namespace Birder2.Controllers
 
                     return BadRequest("No observationId is supplied");
 
-                List<string> thumbnailUrls = await StorageHelper.GetThumbNailUrls(observationId.ToString(), _config["BlobStorageKey"], _config["BlobStorage:Account"]);
+                List<string> thumbnailUrls = await StorageExtension.GetThumbNailUrls(observationId.ToString(), _config["BlobStorageKey"], _config["BlobStorage:Account"]);
 
                 if(thumbnailUrls.Count == 0)
                 {

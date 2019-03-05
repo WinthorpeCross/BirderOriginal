@@ -17,10 +17,19 @@ namespace Birder2.Services
 
         public IEnumerable<Bird> AllBirdsDropDownList()
         {
-            return _dbContext.Birds
-                 .OrderBy(ob => ob.BirderStatus)
-                    .ThenBy(a => a.EnglishName)
-                        .ToList();
+            var birds = _dbContext.Birds
+                            .OrderBy(ob => ob.BirderStatus)
+                                .ThenBy(a => a.EnglishName)
+                                    .ToList();
+
+            var defaultOption = new Bird()
+            {
+                BirdId = 0,
+                EnglishName = "Choose a bird species..."
+            };
+            birds.Insert(0, defaultOption);
+
+            return birds;
         }
 
         public IQueryable<Bird> AllBirdsList()

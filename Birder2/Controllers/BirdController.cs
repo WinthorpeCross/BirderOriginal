@@ -26,91 +26,51 @@ namespace Birder2.Controllers
             _logger = logger;
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Index(SortFilterBirdIndexOptions options, int page)
-        //{
-        //    _logger.LogInformation(LoggingEvents.ListItems, "Bird Index called");
-        //    try
-        //    {
-        //        if (page == 0)
-        //        {
-        //            page = 1;
-        //        }
-        //        BirdIndexViewModel viewModel = new BirdIndexViewModel();
-        //        viewModel.AllBirdsDropDownList = _birdRepository.AllBirdsDropDownList();
-        //        if (options.SelectedBirdId == 0)
-        //        {
-        //            if (options.ShowAll == false)
-        //            {
-        //                viewModel.BirdsList = await _birdRepository.CommonBirdsList().GetPaged(page, pageSize);
-        //                viewModel.ShowAll = options.ShowAll;
-        //                viewModel.ShowInTable = options.ShowInTable;
-        //            }
-        //            else
-        //            {
-        //                viewModel.BirdsList = await _birdRepository.AllBirdsList().GetPaged(page, pageSize);
-        //                viewModel.ShowAll = options.ShowAll;
-        //                viewModel.ShowInTable = options.ShowInTable;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            viewModel.BirdsList = await _birdRepository.AllBirdsList(options.SelectedBirdId).GetPaged(page, pageSize);
-        //            viewModel.SelectedBirdId = options.SelectedBirdId;
-        //            viewModel.ShowInTable = options.ShowInTable;
-        //        }
-        //        return View(viewModel);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // What to log?
-        //        _logger.LogError(LoggingEvents.GetItemNotFound, ex, "Index({birdId}) error", options.SelectedBirdId);
-        //        //_logger.LogError($"failed to return Birds details page: {ex}");//  <--
-        //        return NotFound();
-        //    }
-        //}
-
         [HttpGet]
         public async Task<IActionResult> Index(SortFilterBirdIndexOptions options)
         {
             _logger.LogInformation(LoggingEvents.ListItems, "Bird Index called");
-            try
+
+            if (options.Page == 0)
             {
-                if (options.page == 0)
-                {
-                    options.page = 1;
-                }
-                BirdIndexViewModel viewModel = new BirdIndexViewModel();
+                options.Page = 1;
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var errorMessages = ModelStateErrorsExtensions.GetModelStateErrorMessages(ModelState);
+                _logger.LogInformation(LoggingEvents.GetItem, "ModelState error with form values: " + errorMessages);
+                return BadRequest("ModelState error with form values: " + errorMessages);
+            }
+
+            try
+            { 
+                var viewModel = new BirdIndexViewModel();
                 viewModel.AllBirdsDropDownList = _birdRepository.AllBirdsDropDownList();
-                if (options.SelectedBirdId == 0)
+
+                if (options.SelectedBirdId != 0)
                 {
+                    return RedirectToAction("Details", new { id = options.SelectedBirdId });
+                }
+                else
+                { 
                     if (options.BirdStatusFilter == BirdIndexStatusFilter.Common)
                     {
-                        viewModel.BirdsList = await _birdRepository.CommonBirdsList().GetPaged(options.page, options.SelectedPageListSize);
-                        //viewModel.BirdStatusFilter = options.BirdStatusFilter;
+                        viewModel.BirdsList = await _birdRepository.CommonBirdsList().GetPaged(options.Page, options.SelectedPageListSize);
                         viewModel.ListFormat = options.ListFormat;
                     }
                     else
                     {
-                        viewModel.BirdsList = await _birdRepository.AllBirdsList().GetPaged(options.page, options.SelectedPageListSize);
-                        //viewModel.BirdStatusFilter = options.BirdStatusFilter;
+                        viewModel.BirdsList = await _birdRepository.AllBirdsList().GetPaged(options.Page, options.SelectedPageListSize);
                         viewModel.ListFormat = options.ListFormat;
                     }
                 }
-                else
-                {
-                    viewModel.BirdsList = await _birdRepository.AllBirdsList(options.SelectedBirdId).GetPaged(options.page, options.SelectedPageListSize);
-                    viewModel.SelectedBirdId = options.SelectedBirdId;
-                    viewModel.ListFormat = options.ListFormat;
-                }
-                //viewModel.SelectedPageListSize = options.SelectedPageListSize;
+
                 return View(viewModel);
             }
             catch (Exception ex)
             {
-                // What to log?
                 _logger.LogError(LoggingEvents.GetItemNotFound, ex, "Index({birdId}) error", options.SelectedBirdId);
-                //_logger.LogError($"failed to return Birds details page: {ex}");//  <--
                 return NotFound();
             }
         }
@@ -125,28 +85,23 @@ namespace Birder2.Controllers
                 return NotFound();
             }
 
-            var model = new BirdDetailViewModel();
-
             try
             {
-                model.Bird = await _birdRepository.GetBirdDetails(id);
-                model.BirdPhotos = _flickrService.GetFlickrPhotoCollection(model.Bird.Species);
+                var ViewModel = new BirdDetailViewModel();
+                ViewModel.Bird = await _birdRepository.GetBirdDetails(id);
+                ViewModel.BirdPhotos = _flickrService.GetFlickrPhotoCollection(ViewModel.Bird.Species);
 
-                if (model.Bird == null)
+                if (ViewModel.Bird == null)
                 {
                     _logger.LogWarning(LoggingEvents.GetItemNotFound, "Details({ID}) BIRD NOT FOUND", id);
                     return NotFound();
                 }
-                else
-                {
-                    return View(model);
-                }
+
+                return View(ViewModel);
             }
             catch (Exception ex)
             {
-                // What to log?
                 _logger.LogError(LoggingEvents.GetItemNotFound, ex, "Details({ID}) error", id);
-                //_logger.LogError($"failed to return Birds details page: {ex}");//  <--
                 return NotFound();
             }
         }

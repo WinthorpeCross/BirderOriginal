@@ -8,7 +8,6 @@ using System.Diagnostics;
 
 namespace Birder2.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         private readonly IConfiguration _config;
@@ -20,13 +19,13 @@ namespace Birder2.Controllers
             _cache = memoryCache;
         }
 
-        [AllowAnonymous]
-        public IActionResult Contact()
+        public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Index()
+        [AllowAnonymous]
+        public IActionResult Contact()
         {
             return View();
         }
@@ -49,15 +48,10 @@ namespace Birder2.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-        //public IActionResult Error()
-        //{
-        //    //ToDo: 
-        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        //}
     }
 }
