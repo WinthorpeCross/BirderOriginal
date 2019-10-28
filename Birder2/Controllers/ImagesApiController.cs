@@ -117,7 +117,6 @@ namespace Birder2.Controllers
             {
                 return BadRequest(ex.Message);
             }
-
         }
     }
 }
